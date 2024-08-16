@@ -120,10 +120,10 @@ main {
   .title_post { color:$color-orange; }
   .title_post:hover,
   .category:hover {
-    color:$color-blue;
+    color:$color-violet;
   }
   .date { color:#ccc; }
-  .category { color:$color-violet; }
+  .category { color:$color-violet !important; }
 }
 
 .pagination-number,

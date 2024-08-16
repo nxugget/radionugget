@@ -70,7 +70,7 @@
   .info-post { font-size:0.875rem; }
 
   .title_post {
-    color: $color-orange;
+    color: $color-violet;
     font-weight:600;
     font-size:1rem;
     line-height:2rem;
@@ -82,9 +82,9 @@
   }
   .title_post:hover,
   .category:hover {
-    color:$color-blue;
+    color:$color-orange;
   }
-  .category{ color:$color-violet !important; }
+  .category{ color:$color-orange !important; }
 
   .txt_post {
     display:-webkit-box;
