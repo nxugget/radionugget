@@ -153,7 +153,7 @@ La **path loss** (pertes de propagation) en `dB` pour un site en plein air suive
 Okkk, on a notre `PL=183.0799972138613`
 
 ### Transmit Power
-On arrive au bout là, plus qu'à additionner tout ça ainsi que les autres pertes qui nous sont données et on aura enfin ce que l'on recherhe, le **transmit power**
+On arrive au bout là, plus qu'à additionner tout ça ainsi que les autres pertes qui nous sont données et on aura enfin ce que l'on recherche, le **transmit power**
 ```bash
 >>> transmit_line_losses = 1
 >>> transmit_pointing_loss = 1.74
@@ -177,7 +177,7 @@ Determine the transmit power (in W) to achieve 10dB of Eb/No margin (above minim
 Sorry, you lost
 Wrong! Maybe next time.
 ```
-AIE 🥲. Pourtant, le résultat est vraiment super cohérant. 
+AIE 🥲. Pourtant, le résultat est vraiment super cohérent. 
 Du coup, on va brute force, tant pis. Voici le script : 
 ```python
 from pwn import *

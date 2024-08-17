@@ -4,7 +4,7 @@ date: "20-07-2024"
 description: "Explorez l'interface graphique du logiciel SatDump permettant de faciliter la récupération de données satellites en temps réel"
 thumbnail: "/assets/img/thumbnail/satdump.webp"
 ---
-Durant [mon premier projet](../../Projects/NOAA.html) pour récupérer les images des satellites **NOAA**, j'avais évoqué le logiciel [Satdump](https://github.com/SatDump/SatDump) permettant de grandement nous simplifier la vie.
+Durant [mon premier projet](../../Projects/NOAA.html) pour récupérer les images des satellites **NOAA**, j'avais évoqué le logiciel [Satdump](https://github.com/SatDump/SatDump) permettant de considérablement nous simplifier la vie.
 Aujourd'hui, je vais vous présenter sa version graphique avec une démo :) 
 
 # Offline processing
@@ -16,7 +16,7 @@ Mais on va pas trop s'y attarder, ça reste intuitif, passons plutôt à l'ongle
 # Settings
 ![Settings SatDump](../../../assets/img/pages/space/satellite/satdump/satdump2.png)
 Ici, on va venir régler la position de notre récepteur (ça servira pour les prédictions de passage des satellites).
-Donc, on y met notre **latitude**, **longitude**, **altitude**, éventuellement les couleurs (si on les veut) qui seront affichées sur les images qu'on récupèrent.
+Donc, on y met notre **latitude**, **longitude**, **altitude**, éventuellement les couleurs (si on les veut) qui seront affichées sur les images qu'on récupère.
 On voit aussi en bas la dernière fois que les [TLE](orbits.html) ont été mis à jour.
 Ceci étant fait, allons dans l'onglet principal **Recorder**. 
 
@@ -33,7 +33,7 @@ On peut y voir l'**azimuth** et l'**élevation** de n'importe quel satellite (do
 Pour rappel, l'**azimuth**, c'est en quelque sorte la **direction** qu'indiquerait une boussole vers le satellite.
 L'**élevation**, ça serait l'angle avec lequel il faut "lever les yeux" pour voir le satellite.
 
-![Schéma azimuthet élevation](../../../assets/img/pages/space/satellite/satdump/satdump9.svg)
+![Schéma azimuth et élevation](../../../assets/img/pages/space/satellite/satdump/satdump9.svg)
 En dessous, le **polar plot**, très pratique, qui permet d'avoir une représentation graphique de nos deux valeurs. 
 Le haut du graphique, ça représente l'**azimuth** à **0°**, le bas **180°**.
 Le centre du graphique, c'est pour une **élevation** à **90°**, le premier anneau à partir du centre, **60°**, le second **30°** et le dernier, **0°** donc l'horizon.  
@@ -41,16 +41,16 @@ De plus, le **polar plot** permet de représenter le prochain passage d'un satel
 On a aussi le **AOS** (**A**cquisition **O**f **S**ignal) qui indique dans combien de temps on pourrait enregistrer le signal pour commencer l'écoute.
 À présent, cliquons en bas sur le bouton **Schedule and Config**
 ![Recorder Schedule SatDump](../../../assets/img/pages/space/satellite/satdump/satdump5.png)
-C'est ici qu'on va pouvoir prédire les prochains passage des satellites et éventuellement, lancer automatiquement l'acquisition du signal. 
+C'est ici qu'on va pouvoir prédire les prochains passages des satellites et éventuellement, lancer automatiquement l'acquisition du signal. 
 Alors, en haut, on choisit les satellites qui nous intéressent.
 On peut choisir l'élevation minimale pour laquelle on accepte que le prochain passage doit être prédit. Donc, dans mon cas, tout ce qui est en dessous de **40°** ne sera pas prédit. 
 Une fois qu'on sélectionne les satellites qu'on veut écouter, on voit qu'on peut les "configurer". 
 ![Recorder Schedule SatDump](../../../assets/img/pages/space/satellite/satdump/satdump6.png)
 Les informations comme la **fréquence** ou le mode de transmission doivent être remplies manuellement. 
-On peut alors cliquer sur le bouton **Update Passes** pour voir apparaître les prochains passage de nos satellites. Attention, l'heure indiquée est en **UTC**, je ne sais pas comment la modifier en heure française. 
+On peut alors cliquer sur le bouton **Update Passes** pour voir apparaître les prochains passages de nos satellites. Attention, l'heure indiquée est en **UTC**, je ne sais pas comment la modifier en heure française. 
 Dans mon cas, le prochain passage est donc prévu à **20h21** jusqu'à **20h37** avec une élevation maximale de **61°** :
 ![Schedule SatDump](../../../assets/img/pages/space/satellite/satdump/satdump10.png)
-Toute cette partie sert dans le cas où vous souhaitez laisser votre ordinateur relier à l'antenne et que les enregistrements se fassent tout seul. Mais on peut aussi s'en servir pour rapidement jeter un coup d'oeil pour le prochain passage et faire les choses après plus ou moins manuellement.
+Toute cette partie sert dans le cas où vous souhaitez laisser votre ordinateur relié à l'antenne et que les enregistrements se fassent tout seul. Mais on peut aussi s'en servir pour rapidement jeter un coup d'oeil pour le prochain passage et faire les choses après plus ou moins manuellement.
 
 ## Recording
 Vite fait, l'onglet **Recording**.
@@ -71,14 +71,14 @@ Voici une capture d'écran lorsque le satellite passe :
 ![Recording SatDmp](../../../assets/img/pages/space/satellite/satdump/satdump11.png)
 On peut voir en bas en temps réel le scan progressif du satellite apparaître. Aussi, on constate la position du satellite avec le point rouge sur le **polar plot**.
 Une fois l'acquisition terminée, on appuie sur le **Stop** de l'onglet **Processing** (Pas celui de l'onglet **Device** si non, **SatDump** ne va pas comprendre que le traitement est terminé). 
-Et l'on peut à présent décaller sur l'onglet **Viewer** pour voir nos résultats.
+Et l'on peut à présent décaler sur l'onglet **Viewer** pour voir nos résultats.
 
 # Viewer
-Voilà mon image, bon elle est pas dingue mais c'est pour la demo.
+Voilà mon image, bon elle est pas dingue mais c'est pour la démo.
 ![Viewer MCIR SatDump](../../../assets/img/pages/space/satellite/satdump/satdump12.png)
 Cet onglet est vraiment génial, on va pouvoir traiter en temps réel notre image, là par exemple, j'ai appliqué le mode d'image **MCIR** qui permet d'avoir de fausses couleurs sur notre image.
 On peut jouer avec les différents paramètres en fonction de ce que l'on souhaite mettre en valeur. 
 Par exemple, afficher des couleurs pour les probabilités de pluie, les frontières des pays et bien d'autres trucs sympas.
 ![Viewer MCIR rain SatDump](../../../assets/img/pages/space/satellite/satdump/satdump13.png)
-Et voilà pour ce super **SatDump** qui permet en un seul logiciel de faire plusieurs choses à la fin, de la prédiction, de l'acquisition de signal et même le traitement de ce denier. Peut-être un jour, j'aurais la possibilité de tester un **rotor** d'antenne car **SatDump** les prend en charge, ça peut être cool. 
+Et voilà pour ce super **SatDump** qui permet en un seul logiciel de faire plusieurs choses à la fin, de la prédiction, de l'acquisition de signal et même le traitement de ce dernier. Peut-être un jour, j'aurais la possibilité de tester un **rotor** d'antenne car **SatDump** les prend en charge, ça peut être cool. 
 Évidemment, je n'ai pas tout présenté, je vous laisser explorer le reste par vous même :)

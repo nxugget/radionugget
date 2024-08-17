@@ -4,13 +4,13 @@ date: "28-05-2024"
 description: "Explorez les six paramètres essentiels pour décrire une orbite et la représentation standardisée des TLE pour prédire le passage des satellites."
 thumbnail: "/assets/img/thumbnail/orbit.webp"
 ---
-Pour prédire le passage d'un satellite, il faut comprendre comment on décrit une orbite. Et pour ça, on a besoin de **6 paramètres**. Ils nous permettront d'avoir une réprésentation standardisée que l'on nomme **TLE**.
+Pour prédire le passage d'un satellite, il faut comprendre comment on décrit une orbite. Et pour ça, on a besoin de **6 paramètres**. Ils nous permettront d'avoir une représentation standardisée que l'on nomme **TLE**.
 Dans ce cours, on va explorer chacun de ces paramètres qui ont des noms barbares mais je vais tenter de les expliquer à ma manière avec une approche simpliste en utilisant le super site [Orbital Mechanics](https://orbitalmechanics.info/) alors tenez bon et ne fuyez pas :) 
 Je vous invite grandement pour chaque paramètre d'aller les tester sur le site.
 
 # Le demi-grand axe
 ![Schema demi-grand axe](../../../assets/img/pages/space/satellite/orbit/orbit1.svg)
-Noté `a`, il réprésente la moitié du grand axe d'une ellipse.
+Noté `a`, il représente la moitié du grand axe d'une ellipse.
 Voilà ce que ça donne quand on modifie cette valeur : 
 ![Orbital Mechanics demi-grand axe](../../../assets/img/pages/space/satellite/orbit/orbit2.webp)
 
@@ -27,9 +27,9 @@ Changement de `e` :
 ![Orbital Mechanics excentricité](../../../assets/img/pages/space/satellite/orbit/orbit4.webp)
 
 # L'inclinaison
-Noté `i`, c'est l'angle d'inclinaison du **plan de l'obite** par rapport au **plan equatorial**. 
+Noté `i`, c'est l'angle d'inclinaison du **plan de l'orbite** par rapport au **plan équatorial**. 
 On comprend mieux comme ça : 
-En **bleu**, c'est le plan de l'**orbite terreste**.
+En **bleu**, c'est le plan de l'**orbite terrestre**.
 En **orange**, c'est le plan de l'**orbite du satellite**.
 ![Orbital Mechanics inclinaison](../../../assets/img/pages/space/satellite/orbit/orbit6.webp)
 On distingue **3** types d'**inclinaison** : 
@@ -41,7 +41,7 @@ On distingue **3** types d'**inclinaison** :
 Oui, toujours plus compliqué. Noté `Ω`, c'est l'angle entre le **nœud ascendant** et le **point vernal**.  
 D'abord, la notion de **nœud ascendant** et tant qu'on y est de **nœud descendant** avec ce schéma explicite :
 ![Schema nœud ascendant](../../../assets/img/pages/space/satellite/orbit/orbit7.svg)
-Donc, le **noeud ascendant**, c'est le croisement entre le plan de l'orbite terrestre et celle du satellite lorsque ce dernier "remonte".
+Donc, le **nœud ascendant**, c'est le croisement entre le plan de l'orbite terrestre et celle du satellite lorsque ce dernier "remonte".
 Le **nœud descendant**, c'est pareil mais inversement. 
 Ok, et maintenant le **point vernal**. En gros, c'est le **nœud ascendant** de l'orbite du **Soleil** avec celle de **La Terre**.
 L'**écliptique**, c'est l'orbite que décrit le **Soleil** autour de **La Terre**. 
@@ -69,9 +69,9 @@ Donc voilà, on a :
 - L'**orientation** de l'orbite grâce à l'**inclinaison**, la **longitude du nœud ascendant** et l'**argument du périastre**.
 - La **position** du satellite grâce à l'**anomalie vraie**.
   
-# TLE (Paramètres orbitaux à deux lignes)
+# TLE (paramètres orbitaux à deux lignes)
 Il existe un standard pour représenter les paramètres d'une orbite, c'est les **TLE** (**T**wo **L**ines **E**lements). 
-![Schema TLE](../../../assets/img/pages/space/satellite/orbit/ordbit13.png)
+![Schema TLE](../../../assets/img/pages/space/satellite/orbit/orbit13.png)
 On y retrouve sur la **deuxième ligne** les paramètres qu'on a appris. 
 Sur la première ligne, on a des informations concernant le satellite comme son **NORAD ID**. 
 

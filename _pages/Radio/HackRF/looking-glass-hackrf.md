@@ -9,7 +9,7 @@ L'un des gros avantages d'avoir un écran sur le **HackRF**, c'est de pouvoir af
 #  Basics
 Lançons cette application depuis l'écran d'accueil pour voir apparaître le joli **spectre** sur la droite. 
 ![Looking Glass HackRF Portapack](../../../assets/img/pages/radio/hackrf/lookingglass/lookingglass1.jpg)
-Plusieurs options s'offrent à nous dont nottament le **P** pour **P**resets. Ça nous permet de sélectionner des ranges de fréquences pré-enregistrées sur la carte SD.
+Plusieurs options s'offrent à nous dont notament le **P** pour **P**resets. Ça nous permet de sélectionner des plages de fréquences pré-enregistrées sur la carte SD.
 Par exemple, sur la capture, on est sur le preset **AVIATION 108** qui a pour range **108MHz** et **118MHz** représentés par le **MIN** et **MAX** affichés en haut. 
 La valeur **RANGE** indique la taille du spectre qu'on reçoit, donc là **10MHz** (118-108). 
 
@@ -24,14 +24,14 @@ Après, on a d'autres options mais pas si importantes que ça (à mon niveau).
 #  Audio
 Mettons-nous sur une range qu'on connaît qu'on peut écouter comme **FM BROADCAST USA** qui a plus ou moins la même range de stations radio qu'en **France**.
 ![Looking Glass HackRF Portapack](../../../assets/img/pages/radio/hackrf/lookingglass/lookingglass2.jpg)
-Une fois sélectionnée, on peut aller sur l'option **MARKER**, ça permet de bouger le p'tit curseur rouge en haut du spectre. Ainsi, on peut à peu près voir la fréquence de chaque pixel, on peut faire tourner la molette pour sélectionner précisement la fréquence qui nous intéresse. Par exemple, sur la capture du haut à droite, je sélectionnes la fréquence **102.8MHz** qui corespond à **SkyRock**.
+Une fois sélectionnée, on peut aller sur l'option **MARKER**, ça permet de bouger le p'tit curseur rouge en haut du spectre. Ainsi, on peut à peu près voir la fréquence de chaque pixel, on peut faire tourner la molette pour sélectionner précisément la fréquence qui nous intéresse. Par exemple, sur la capture du haut à droite, je sélectionne la fréquence **102.8MHz** qui correspond à **SkyRock**.
 En cliquant dessus, ça nous redirige vers l'application **Audio** où l'on peut continuer notre analyse. 
 ![Audio HackRF Portapack](../../../assets/img/pages/radio/hackrf/lookingglass/lookingglass3.jpg)
 Là où y a **SPEC**, on peut changer le décodeur, mettons **WFM** qui est la modulation utilisée pour les stations radios. Cette option devra être ajusté en fonction du signal, pour écouter les échanges entre les pilotes et les tours de contrôles, on mettra **AM** par exemple. 
-Une fois le bon décodeur choisie, on peut directement écouter notre signal radio depuis le **HackRF**. On peut aussi régler le volume en haut à droite (où y a le 89 sur ma capture). 
+Une fois le bon décodeur choisi, on peut directement écouter notre signal radio depuis le **HackRF**. On peut aussi régler le volume en haut à droite (où y a le 89 sur ma capture). 
 
 #  Exemples
-L'application **Looking Glass** permet pleins de choses que vous pourrez découvrir par vous même mais j'aimerais en profiter pour vous présenter le site [sigidwiki](https://www.sigidwiki.com/wiki/Signal_Identification_Guide) qui va nous permettre d'identifier le type de signal auquel on a à faire. En effet, ce dernier contient une énorme base de données de signaux connues que l'on peut rechercher à l'aide des nombreux filtres.
+L'application **Looking Glass** permet plein de choses que vous pourrez découvrir par vous même mais j'aimerais en profiter pour vous présenter le site [sigidwiki](https://www.sigidwiki.com/wiki/Signal_Identification_Guide) qui va nous permettre d'identifier le type de signal auquel on a à faire. En effet, ce dernier contient une énorme base de données de signaux connues que l'on peut rechercher à l'aide des nombreux filtres.
 ![Sigidwiki](../../../assets/img/pages/radio/hackrf/lookingglass/lookingglass5.png)
 Par exemple, on peut choisir la catégorie **Military**, repérer un signal qui nous intéresse, au pif le [RSDN-20](https://en.wikipedia.org/wiki/Alpha_(navigation)) et voir à quoi ressemble son spectre.
 ![RSDN-20 Sigidwiki ](../../../assets/img/pages/radio/hackrf/lookingglass/lookingglass6.png)

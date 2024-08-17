@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/budget_link.webp"
 ---
 Pour qu'une transmission radio fonctionne, il va falloir répondre à des exigences bien précises. En terme de débit, de taux d'erreur binaire ou même de disponibilités. 
 Le **bilan de liaison** (**budget link** en français) est un "outil" qui va comparer d'une part les **ressources** disponibles dans le système et d'autre part les **exigences** du service avec des calculs. Et ceux dans le but de savoir si l'un peut répondre à l'autre. 
-Pour la suite, je pars du principe que les notions vu dans [ce cours](../../Radio/Basics/gain-decibel.html) sont acquises :) 
+Pour la suite, je pars du principe que les notions vues dans [ce cours](../../Radio/Basics/gain-decibel.html) sont acquises :) 
 
 #  EIRP (Equivalent Isotropic Radiated Power)
 En français, la **PIRE** pour **P**uissance **I**sotrope **R**ayonnée **É**quivalente représente la mesure de la puissance rayonnée d'une antenne dans une direction spécifique par rapport à l'**antenne isotrope**. 
@@ -24,8 +24,8 @@ Sans trop rentrer dans le détail, ces pertes sont classées en **2** catégorie
 Ce sont celles que rencontre le signal en traversant l'espace. 
 On y retrouve les pertes à cause du vide spatial parce que oui, le vide spatial engendre une atténuation du signal.
 On a aussi les pertes dues à l'atmosphère : 
-Dans la **ionosphère** (couche haute), le signal est sujet à la **rotation de Fraday** causée par le champ magnétique de **La Terre**.
-Dans la **troposhère** (couche basse), on a des facteurs comme par exemple la **pluie** qui peuvent atténuer le signal.
+Dans la **ionosphère** (couche haute), le signal est sujet à la **rotation de Fraday** causée par le champ magnétique de **la Terre**.
+Dans la **troposphère** (couche basse), on a des facteurs comme par exemple la **pluie** qui peuvent atténuer le signal.
 
 ## Les pertes locales 
 Il s'agit des pertes que l'on retrouve proche des stations de sol. 
@@ -34,20 +34,20 @@ Ou encore celles dues aux composants des équipements satellites eux mêmes.
 
 #  System Noise
 Le bruit système est un élement qui dégrade la qualité du signal reçu. 
-Donc, dans la conception d'un satellite ou même d'autres trucs, on cherchera toujours à le minimiser le plus possible.
+Donc, dans la conception d'un satellite ou même d'autres trucs, on cherchera toujours à le minimiser autant que possible.
 2 termes sont à connaître : 
 - La **Densité spectrale de bruit** qui indique "combien de bruit" se trouve dans chaque petite portion de fréquence d'un signal. On l'exprime en `dB/Hz` ou `W/Hz`.
 - la **Température du bruit** généré par un composant spécifique. Plus la température est élevée, plus il y a de bruit.
 
 Différents facteurs peuvent amener du bruit. 
 ## Composants des récepteurs
-Il s'agit des composants électriques que l'on retrouve dans les systèmes de communication et qui peuvent causer du bruit en raison de leur température de fonctionnement. Du coup, ces composants génèrent intrèsequement une certaine forme de chaleur qui atténue le signal. 
+Il s'agit des composants électriques que l'on retrouve dans les systèmes de communication et qui peuvent causer du bruit en raison de leur température de fonctionnement. Du coup, ces composants génèrent intrinsèquement une certaine forme de chaleur qui atténue le signal. 
 
 ## Fond diffus cosmologique
 Plutôt classe celui-ci, il s'agit d'un rayonnement de fond qui provient du **big bang** et qui possède toujours un impact sur les composants des satellites.
 
 ## Bruit Atmosphérique
-Induit par **La Terre**, les décharges électriques dans l'atmosphère ou encore les variations de températures dans la journée peuvent génerer du bruit.
+Induit par **la Terre**, les décharges électriques dans l'atmosphère ou encore les variations de températures dans la journée peuvent génerer du bruit.
 
 #  Carrier-to-Noise Ratio & Signal-to-Noise Ratio
 Pour quantifier la qualité d'une antenne, on va utiliser 2 ratios.
