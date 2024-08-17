@@ -10,4 +10,4 @@ Il n'y a donc que quelques **orbites** spécifiques qui optimisent tout ça, et 
 
 # Orbite géostationnaire (GEO)
 Il s'agit d'une orbite qui match parfaitement avec la rotation de **La Terre**. Du coup, les satellites placés sur cette orbite apparaisse comme *"stationnaires"* ou immobiles au-dessus d'une position donnée.
-Voyhons leur couverture sur une carte en **2D**.
+Voyons leur couverture sur une carte en **2D**.
