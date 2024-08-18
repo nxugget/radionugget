@@ -14,8 +14,6 @@ svg { fill:#aaa; }
 
 .nav-item span { color:#ccc; }
 
-.nav-lh svg { fill:$color-orange; }
-
 .nav-list-expander {
   &:hover { 
     svg { fill:$color-orange; } 
@@ -184,11 +182,6 @@ main {
 .sidebar-left { background:none; }
 
 .site-tab { box-shadow:none; }
-
-.nav-lh {
-  &:before { background:rgba(#464647, 1); }
-  &:hover:before { background:rgba(#464647, .75); }
-}
 
 .nav-list li > .nav-list { background:none; }
 

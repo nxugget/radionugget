@@ -7,18 +7,28 @@ html, body {
 }
 
 .fonts-loaded {
-  a, span, p { font-family:"Nunito Sans", 'Lucida Sans', sans-serif; }
-  h1, h2, h3 { font-family:"Lato", Helvetica, sans-serif; }
-  mark { font-family:'Righteous', sans-serif; }
+  a, span, p { font-family: "Nunito Sans", 'Lucida Sans', sans-serif; }
+  h1, h2, h3 { font-family: "Lato", Helvetica, sans-serif; }
+  mark { font-family: 'Righteous', sans-serif; }
 }
 
-a { text-decoration:none; }
-a, span, p, h1, h2, h3, i { color:#3A241A; }
-a, span, p { font-family:'Lucida Sans', sans-serif; }
-h1, h2, h3, mark {
-  margin:0;
-  font-family:Helvetica, sans-serif;
+a, span, p, h1, h2, h3, i {
+  color: #3A241A;
 }
+
+body, a, span, p {
+  font-family: "Nunito Sans", 'Lucida Sans', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: "Lato", Helvetica, sans-serif;
+  margin: 0;
+}
+
+mark {
+  font-family: 'Righteous', sans-serif;
+}
+
 mark { background-color:transparent; }
 
 svg {

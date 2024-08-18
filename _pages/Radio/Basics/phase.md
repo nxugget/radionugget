@@ -7,7 +7,7 @@ thumbnail: "/assets/img/thumbnail/phase.webp"
 Les signaux ne se comportent pas tous de la même manière dans le temps entre eux. On va voir dans ce cours, la notion de **phase** et comment le **déphasage** peut modifier l'alignement des ondes.
 # Qu'est ce que la phase ?
 La **phase** d'un signal est une mesure qui permet de représenter la forme d'une **onde sinusoïdale** à un **instant donné**. On la note en **degrés** (de **0°** à **360°**) ou bien en **radians** (de **0** à **2π**).
-Mais alors, qu'est-ce que le nombre **π** à avoir avec nos **ondes radio** ? Replongeons dans la **trigonométrie** pour comprendre avec ce schéma 
+Mais alors, qu'est-ce que le nombre **π** à avoir avec nos **ondes radio** ? Replongeons dans la **trigonométrie** pour comprendre avec ce schéma :
 
 ![Schema trigo](../../../assets/img/pages/radio/radio_basics/phase/phase1.svg)
 Peu importe la fréquence d'un signal, la **période** de ce dernier (donc son cycle) correspondra à une rotation complète sur un cercle soit **360°** ou **2π**. 

@@ -16,10 +16,10 @@ A ce jour, il y en a 3 qui continuent d'émettre :
 Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut recevoir leurs 
 images. Ils ne sont plus en période d'exploitation mais tant que la **NASA** considère qu'ils ne sont pas un danger, ils continuent de les laisser tourner. 
 ## Orbite héliosynchrone
-Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de La Terre. 
+Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. 
 Ils se présentent toute l'année sous le même angle par rapport au Soleil comme le montre l'image ci-dessous : 
 ![Orbite hélosynchrone](../../assets/img/pages/projects/noaa/orbite.png)
-Ainsi, comme La Terre tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des logiciels ou sites web, on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
+Ainsi, comme la **Terre** tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des logiciels ou sites web, on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
 Par exemple, voici une liste de prédictions des 3 satellites au dessus de la ville où est installée mon antenne le 22 avril 2024 : 
 ![Prédictions satellite](../../assets/img/pages/projects/noaa/prediction_pass.png)
 ## Transmission APT

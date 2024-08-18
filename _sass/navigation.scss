@@ -52,11 +52,12 @@
   &.selected {
     span {
       font-weight:600;
-      text-decoration:underline;
     }
   }
 
-  a { font-weight:400; }
+  a { font-weight:400;
+      text-decoration: none;
+  }
 }
 
 .nav-list-link {
@@ -79,16 +80,10 @@
 
   &:hover {
     transform:scale(1.25);
-    svg { fill:$color-darkorange; }
+    svg { fill:$color-orange; }
   }
 }
 
-.nav-lh svg {
-  margin-left:-0.25rem;
-  position:relative;
-  fill:$color-darkorange;
-  transform:translateY(-2px);
-}
 .nav-sh svg { 
   width:14px;
   margin-left:0;
@@ -101,7 +96,6 @@
 .nav-list-expander svg { width:20px; }
 
 .nav-sh svg { width:16px; }
-.nav-lh svg { width:18px; }
 
 }
 
@@ -135,34 +129,11 @@
   align-items:center;
 
   &:hover {
-    span {
-      font-weight:600;
-      text-decoration:underline;
-    }
-
     transform:scale(.9);
   }
 }
 
-.nav-lh {
-  &:before {
-    content:"";
-    position:absolute;
-    display:block;
-    left:0;
-    border-radius:1.5rem;
-    background:rgba(gold, .375);
-    width:3rem;
-    height:3rem;
-    transition:.3s;
-  }
-  &:hover:before {
-    width:105%;
-    background:gold;
-  }
 
-  svg { transform:none; }
-}
 
 .nav-list-expander {
   background-color:transparent;

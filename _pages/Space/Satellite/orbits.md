@@ -33,8 +33,8 @@ En **bleu**, c'est le plan de l'**orbite terrestre**.
 En **orange**, c'est le plan de l'**orbite du satellite**.
 ![Orbital Mechanics inclinaison](../../../assets/img/pages/space/satellite/orbit/orbit6.webp)
 On distingue **3** types d'**inclinaison** : 
-- `0°≤i≤90°` : **Prograde**, le sens de l'orbite est le **même** que le sens de rotation de **La Terre** (ouest vers l'est).
-- `90°<i≤180°` : **Rétrograde**, le sens de l'orbite est à l'**inverse** du sens de rotation de **La Terre** (est vers l'ouest).
+- `0°≤i≤90°` : **Prograde**, le sens de l'orbite est le **même** que le sens de rotation de la **Terre** (ouest vers l'est).
+- `90°<i≤180°` : **Rétrograde**, le sens de l'orbite est à l'**inverse** du sens de rotation de la **Terre** (est vers l'ouest).
 - `i=90°` : **Orbite polaire**, cas particulier qui couvre toutes les latitudes. 
   
 # Longitude du nœud ascendant
@@ -43,8 +43,8 @@ D'abord, la notion de **nœud ascendant** et tant qu'on y est de **nœud descend
 ![Schema nœud ascendant](../../../assets/img/pages/space/satellite/orbit/orbit7.svg)
 Donc, le **nœud ascendant**, c'est le croisement entre le plan de l'orbite terrestre et celle du satellite lorsque ce dernier "remonte".
 Le **nœud descendant**, c'est pareil mais inversement. 
-Ok, et maintenant le **point vernal**. En gros, c'est le **nœud ascendant** de l'orbite du **Soleil** avec celle de **La Terre**.
-L'**écliptique**, c'est l'orbite que décrit le **Soleil** autour de **La Terre**. 
+Ok, et maintenant le **point vernal**. En gros, c'est le **nœud ascendant** de l'orbite du **Soleil** avec celle de la **Terre**.
+L'**écliptique**, c'est l'orbite que décrit le **Soleil** autour de la **Terre**. 
 L'**équateur céleste**, c'est le plan défini par l'**équateur terrestre**.
 ![Schema point vernal](../../../assets/img/pages/space/satellite/orbit/orbit8.svg)
 Et donc, pour en revenir à nos ~~aliens~~ moutons, je répète que la **longitude du nœud ascendant**,  c'est l'angle entre le **nœud ascendant** et le **point vernal**. 
@@ -56,7 +56,7 @@ Bon, j'avoue, c'est le plus dur de tous à assimiler mais voyons ce que si passe
 Noté `ω`, c'est l'angle entre le **nœud ascendant** et le **périastre**. 
 ![Schema argument du Périastre](../../../assets/img/pages/space/satellite/orbit/orbit10.svg)
 Donc le **périastre**, c'est le point sur l'orbite où le satellite est au plus proche de l'astre autour duquel il tourne. 
-Si l'astre c'est **La Terre**, on parle de **périgée** et d'**apogée** (**périhélie** et **aphélie** pour le **Soleil**).
+Si l'astre c'est la **Terre**, on parle de **périgée** et d'**apogée** (**périhélie** et **aphélie** pour le **Soleil**).
 Voyons ce qui se passe quand on change cet valeur : 
 ![Orbital Mechanics argument du Périastre](../../../assets/img/pages/space/satellite/orbit/orbit11.webp)
 
