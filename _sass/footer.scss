@@ -1,0 +1,49 @@
+#contact{
+    display:block;
+    position:relative;
+    width:75%;
+    transform:translateX(12.5%);
+    text-align:center;
+    padding: 1rem 0;
+
+    
+    ul{
+      text-align:center;
+      padding:0;
+      margin:0;
+
+      white-space:nowrap;
+      text-overflow:ellipsis;
+  
+      li{
+        display:inline-block;
+  
+        a {
+          display:block;
+          padding:10px;
+          transition:.3s;
+  
+          svg {
+            width:32px;
+            height: auto;
+            fill:dimgrey;
+          }
+  
+          &:hover{
+            svg { fill:orange; }
+  
+            transform:scale(1.5) translateY(-12.5%);
+          }
+        }
+      }
+    }
+  
+    span { 
+        font-size:1rem;
+
+    }
+    a { 
+        color:$color-orange;
+        font-size: 1rem;
+    }
+  }

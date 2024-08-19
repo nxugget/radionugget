@@ -26,12 +26,12 @@
     aspect-ratio:1;
     top:0;
 
-    svg { width:30px; }
+    svg { width:20px; }
 
   }
   #btn-nav { right:0; }
-  #btn-search { right:48px; }
-  #btn-brightness { right:96px; }
+  #btn-search { right:50px; }
+  #btn-brightness { right:100px; }
 
   .ico-dark {
     display:block;
@@ -47,17 +47,12 @@
 
 .site-avatar {
   img {
-    margin-right: 70%;
-    width:8rem;
+    margin-right: 90%;
+    width:2rem;
     aspect-ratio:1;
     border-radius:50%;
     outline-offset:-4.5rem;
     transition:.3s;
-
-    &:hover {
-      outline:4px solid $color-violet;
-      outline-offset:8px;
-    }
   }
 
   img + img { border-radius:50%; }
@@ -75,58 +70,6 @@
 .side-info {
   position:relative;
   width:100%;
-}
-
-#contact{
-  display:none;
-  position:relative;
-  width:75%;
-  transform:translateX(12.5%);
-  text-align:center;
-  padding:1rem 0;
-
-  &.contact-open { display:block; }
-
-  hr { 
-    border:0;
-    margin:0;
-  }
-
-  h3 { display:none; }
-
-  ul{
-    text-align:center;
-    padding:0;
-    margin:0;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-
-    li{
-      display:inline-block;
-      margin-top:8px;
-
-      a {
-        display:block;
-        padding:6px;
-        transition:.3s;
-
-        svg {
-          width:16px;
-          fill:dimgrey;
-        }
-
-        &:hover{
-          svg { fill:orange; }
-
-          transform:scale(1.5) translateY(-12.5%);
-        }
-      }
-    }
-  }
-
-  span { font-size:0.875rem; }
-  a { color:$color-orange; }
 }
 
 .sidebar-right{ display:none; }
@@ -199,12 +142,6 @@
   font-size:1.375rem; 
 }
 
-#contact {
-  ul li a svg { width:18px; }
-
-  span { font-size:1rem; }
-}
-
 }
 
 @include mq(desktop){
@@ -235,6 +172,11 @@
   display:inline-block;
   width:12rem;
   margin-right: auto;
+
+  &:hover {
+    outline:4px solid $color-violet;
+    outline-offset:8px;
+  }
 }
 
 .site-tab {
@@ -282,29 +224,6 @@
   display:contents;
 }
 
-#contact{
-  display:block;
-  width:calc(#{$sidebarwd} - 4rem);
-  margin-top:2rem;
-  padding:1rem 2rem;
-  transform:none;
-
-  hr { 
-    border-top:1px solid lightgrey;
-    margin:8px;
-  }
-
-  h3{
-    display:block;
-    position:absolute;
-    margin:0;
-    top:14px;
-    font-size:1rem;
-    transform:translateX(-50%);
-    left:50%;
-    background-color:#fff; 
-  }
-}
 
 .sidebar-right{
   display:flex;
