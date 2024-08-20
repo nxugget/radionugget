@@ -7,7 +7,7 @@ thumbnail: "/assets/img/thumbnail/sstv.webp"
 La **SSTV** (**S**low **S**can **T**elevision) est une méthode de transmission d'images avec des ondes radios. Ça existe depuis 1950 et ce n'est plus du tout utilisé aujourd'hui parce qu'envoyer une image, c'est quand même plus facile avec **Internet**. Néanmoins, pour les amateurs radios, c'est sympa à expérimenter.  
 Pour rentrer en détail dans son mode de fonctionnement, il y a ce [pdf](https://www.radioamateurs-france.fr/wp-content/uploads/2015/07/G-8-8-SSTV.pdf) qui est pas mal. 
 
-#  Comment la transmettre ?
+#  Transmission
 Depuis notre **HackRF**, on se rend dans l'onglet **Transmit**, puis **SSTV**. Cette dernière va nous permettre d'envoyer des images  stockées sur notre carte SD. (2 images sont déjà présentes avec le firmware).
 ![SSTV HackRF Portapack](../../../assets/img/pages/radio/hackrf/sstv/sstv1.png)
 Sur le **HackRF**, il y a 6 différents **mode de transmission** à notre disposition. Sans trop rentrer dans les détails, on va dire que la principale différence se joue sur le temps de transmission : 
@@ -23,7 +23,7 @@ Ensuite, on peut choisir la fréquence sur laquelle on veut émettre. On va choi
 Et on peut appuyer sur le bouton **Start** pour commencer à émettre.
 
 
-#  Et pour recevoir ?
+#  Réception
 Afin de recevoir ses signaux, on va utiliser le logiciel [MMSTV](https://hamsoft.ca/pages/mmsstv.php). C'est lui qui va récupérer en entrée un signal pour pouvoir le décoder en une image. 
 Par contre, il ne peut pas écouter le signal comme le ferait un logiciel **SDR** donc on va devoir écouter le signal avec par exemple **SDR++**, et renvoyer ce signal vers **MMSTV**. Pour ce faire, on va utiliser un câble audio virtuel en installant [VB-Audio](https://vb-audio.com/Cable/). Suffit juste d'installer les drivers et de redémarrer le PC pour s'en servir. 
 Lançons **SDR++** pour déjà voir si on a bien un signal 

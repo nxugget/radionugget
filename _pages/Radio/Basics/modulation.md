@@ -8,14 +8,14 @@ Les signaux bruts qu'on veut émettre sont souvent **faibles** et peuvent grande
 Et, bien que les sources d'émission se mettent plus ou moins d'accord pour utiliser des fréquences différentes, la **modulation** permet d'éviter les **interférences** en évitant que les signaux se mélangent. 
 De plus, avec toutes les perturbations et tout qu'on retrouve dans l'air (et dans l'eau), la **modulation** aide à rendre les signaux plus résistants à ces derniers. 
 
-#  Et comment on module alors ? 
+#  La modulation
 Imaginons qu'on ait un signal à transporter, du son par exemple. On l'appellera **signal modulant**. Ce type de signal a une fréquence **basse** et est très **faible**. 
 
 Pour le transporter et qu'il serve à quelque chose, il nous faut un autre signal qu'on apellera **onde porteuse** qui sera une onde avec une fréquence **élevée** et donc **puissante**. C'est elle qui transportera notre signal faible. 
 
 Avec nos deux signaux réunis, on va venir les **superposer** (c'est des maths derrière), et on obtient notre signal modulé. 
 
-#  C'est quoi l'amplitude 
+#  L'amplitude 
 L'**amplitude** d'un signal est en gros sa **hauteur maximale** par rapport à sa position au repos. C'est en quelque sorte la puissance du signal radio. 
 ![Schema amplitude](../../../assets/img/pages/radio/radio_basics/modulation/modulation1.svg)
 Cette valeur est importante pour déterminer la qualité du signal reçu. plus l'amplitude sera élevée, meilleure sera la qualité. Mais trop élevée par contre, ça pourrait abîmer le récepteur. 
@@ -29,7 +29,7 @@ Voilà ce qui nous affiche lorsque l'on lance notre programme :
 ![Logiciel GnuRadio](../../../assets/img/pages/radio/radio_basics/modulation/modulation3.png)
 On voit nos 2 jolies sinusoides. 
 
-#  Modulation d'Amplitude
+#  Modulation d'amplitude
 À présent, superposant nos deux signaux en les **multipliant**. On va pas rentrer dans les maths qui se cachent derrière (peut-être un jour). 
 ![Logiciel GnuRadio](../../../assets/img/pages/radio/radio_basics/modulation/modulation4.png)
 Donc ici, on a juste rajouté le bloc `Multiply` et on renvoie le signal modulé dans notre `Time Sink`. J'ai aussi laissé les 2 autres signaux reliés au `Time Sink` pour qu'on puisse mieux comprendre. 

@@ -90,7 +90,6 @@
   ),
   linear-gradient(
     to right,
-    $color-blue,
     $color-violet,
     $color-orange
   );
@@ -100,7 +99,7 @@
 
   &:hover {
     background-size:0 3px, 100% 3px;
-    box-shadow:0 3px 48px 12px $color-blue;
+    box-shadow:0 3px 48px 12px;
   }
 
   svg { margin-right:4px; }

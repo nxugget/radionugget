@@ -40,7 +40,7 @@ Ainsi, avec ces deux images capturées, on peut obtenir d'autres types d'image. 
 ![Image thermique NOAA](../../assets/img/pages/projects/noaa/image_thermique.png)
 C'est grâce à ce genre d'image que les personnes dans la météorologie (pas moi) seront à même de prédire le temps qu'il va faire ⛈️.
 
-## Fonctionnemen d'une antenne et SDR
+## Fonctionnement d'une antenne et SDR
 Pour cette partie, je vais tricher et vous recommander de lire 2 articles que j'ai fais, [le premier](../Radio/Basics/antennes.html) pour comprendre comment on choisit une antenne en fonction de la **fréquence** qu'on veut écouter.
 [Le second](../Radio/SDR/sdr.html) qui explique ce qu'est la **SDR** (**S**oftware **D**efined **R**adio).
 Pour la suite, je pars du principe que ces notions sont comprises :)

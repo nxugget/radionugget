@@ -41,6 +41,10 @@ svg { fill:#aaa; }
   }
 
   a { color:$color-violet; }
+  a:hover { 
+    color:$color-orange;
+    transition: 0.3s ease-in-out;
+   }
 }
 
 #post {

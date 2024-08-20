@@ -40,10 +40,21 @@
   
     span { 
         font-size:1rem;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
 
+    span.solhey {
+      margin-top: 0.5rem;
     }
     a { 
         color:$color-orange;
+        text-decoration: none;
         font-size: 1rem;
+        display: inline-block;
+    }
+    a:hover {
+      color: $color-violet;
+      transition: 0.3s ease-in-out;
     }
   }
