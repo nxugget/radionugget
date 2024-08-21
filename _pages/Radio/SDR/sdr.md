@@ -25,7 +25,7 @@ Les signaux radios sont analogiques et comportent une infinité de valeurs, et �
 Elle est rendue possible grâce à un **convertisseur analogique-numérique** (ADC). 
 Plus on prendra d'échantillons, plus on aura un signal numérique fidèle à la réalité mais plus il sera lourd et long à traiter.
 ![Schema fréquence d'échantillonnage](../../../assets/img/pages/radio/sdr/whatis_sdr/sdr1.svg)
-Il existe d'ailleurs un théorème, celui de **Nyquist–Shannon** qui dit que pour reconstruire à l'identique un signal analogique,  il doit être échantillonné à une fréquence au moins deux fois supérieure à sa fréquence maximale. En prenant une valeur 2 fois supérieure, on s'assure de reconstruire un signal analogique très précis. 
+Il existe d'ailleurs un théorème, celui de [Nyquist–Shannon](https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage) qui dit que pour reconstruire à l'identique un signal analogique,  il doit être échantillonné à une fréquence au moins deux fois supérieure à sa fréquence maximale. En prenant une valeur 2 fois supérieure, on s'assure de reconstruire un signal analogique très précis. 
 #  Récepteurs SDR 
 Numériser le signal et le traiter par logiciel a un nom, c'est la **SDR** (**S**oftware **D**efined **R**adio). Elle est rendue possible par des récepteurs comme par exemple celui-ci : 
 ![RTL SDR-V4](../../../assets/img/pages/radio/sdr/whatis_sdr/sdr2.png)

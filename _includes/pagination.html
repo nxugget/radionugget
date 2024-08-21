@@ -32,7 +32,9 @@
                         </a>
                         <div class="info-post">
                             {%- assign sub_page_tree = sub_page.path | split: "/" -%}
-                            {% if sub_page_tree.size > 2 %}
+                            {% if sub_page_tree.size == 4 %}
+                                <a href="{{ '/' | append: sub_page_tree[2] }}" class="category">{{ sub_page_tree[2] }}</a>
+                            {% elsif sub_page_tree.size == 3 %}
                                 <a href="{{ '/' | append: sub_page_tree[1] }}" class="category">{{ sub_page_tree[1] }}</a>
                             {% else %}
                                 <span class="category">None</span>
