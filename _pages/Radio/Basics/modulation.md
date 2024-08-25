@@ -13,16 +13,16 @@ Imaginons qu'on ait un signal à transporter, du son par exemple. On l'appellera
 
 Pour le transporter et qu'il serve à quelque chose, il nous faut un autre signal qu'on apellera **onde porteuse** qui sera une onde avec une fréquence **élevée** et donc **puissante**. C'est elle qui transportera notre signal faible. 
 
-Avec nos deux signaux réunis, on va venir les **superposer** (c'est des maths derrière), et on obtient notre signal modulé. 
+Avec nos deux signaux réunis, on va venir les **superposer** (c'est des maths derrière), et on obtient notre signal modulé. Il existe plusieurs manières de faire tout ça, et en guise d'exemple, on va voir le type de modulation le plus simple à appréhender, la **modulation d'amplitude**. 
 
 #  L'amplitude 
 L'**amplitude** d'un signal est en gros sa **hauteur maximale** par rapport à sa position au repos. C'est en quelque sorte la puissance du signal radio. 
 ![Schema amplitude](../../../assets/img/pages/radio/radio_basics/modulation/modulation1.svg)
 Cette valeur est importante pour déterminer la qualité du signal reçu. plus l'amplitude sera élevée, meilleure sera la qualité. Mais trop élevée par contre, ça pourrait abîmer le récepteur. 
-En **modulation d'amplitude** (AM), on va venir faire varier l'**amplitude** de l'**onde porteuse** en fonction de l'**amplitude** du **signal modulant**. 
-Pour mieux comprendre, on va utiliser **GNURadio**.
+En **modulation d'amplitude** noté **AM**, on va venir faire varier l'**amplitude** de l'**onde porteuse** en fonction de l'**amplitude** du **signal modulant**. 
+Pour mieux comprendre, on va utiliser un très célèbre logiciel nommé [GNURadio](https://www.google.com/search?client=safari&rls=en&q=gnuradio&ie=UTF-8&oe=UTF-8). Ce n'est pas très grave de ne pas savoir comme il fonctionne. Mais dans l'idée, ça permet de manipuler des signaux radio en utilisant des blocs qu'on vient relier entre eux.
 ![Logiciel GnuRadio](../../../assets/img/pages/radio/radio_basics/modulation/modulation2.png)
-On place 2 blocs `Signal Source`, un pour notre **Signal Modulant** qui a une fréquence de `20Hz` puis un second bloc qui sera notre onde porteuse avec une fréquence de `1000Hz` donc bien plus élevée que le signal modulant.
+On place 2 blocs `Signal Source` qui permettent de générer un signal, un pour notre **Signal Modulant** qui a une fréquence de `20Hz` puis un second bloc qui sera notre onde porteuse avec une fréquence de `1000Hz` donc bien plus élevée que le signal modulant.
 Le bloc `Throttle`, on s'en fiche pour ce cours mais sachez qu'il est là pour éviter de faire crash le PC en réduisant la cadence à laquelle le CPU voudrait éxecuter le programme. Un seul placé quelque part suffit, c'est pour ça que y en a un juste un. Bref, revenons à ce qui nous intéresse.
 Le bloc `QT GUI TIME SINK` va nous permettre de visualiser nos deux signaux dans le temps. 
 Voilà ce qui nous affiche lorsque l'on lance notre programme : 
@@ -32,7 +32,7 @@ On voit nos 2 jolies sinusoides.
 #  Modulation d'amplitude
 À présent, superposant nos deux signaux en les **multipliant**. On va pas rentrer dans les maths qui se cachent derrière (peut-être un jour). 
 ![Logiciel GnuRadio](../../../assets/img/pages/radio/radio_basics/modulation/modulation4.png)
-Donc ici, on a juste rajouté le bloc `Multiply` et on renvoie le signal modulé dans notre `Time Sink`. J'ai aussi laissé les 2 autres signaux reliés au `Time Sink` pour qu'on puisse mieux comprendre. 
+Donc ici, on a juste rajouté le bloc `Multiply` et on renvoie le signal modulé dans notre `Time Sink`. J'ai aussi laissé les 2 autres signaux reliés au `Time Sink` pour qu'on puisse mieux comprendre. Et pareil, le bloc `Throttle`, vous pouvez l'ignorer.
 Lançons le programme et laissons apparraître uniquement le **signal modulé** pour voir à quoi il ressemble. 
 ![Logiciel GnuRadio](../../../assets/img/pages/radio/radio_basics/modulation/modulation5.png)
 On peut voir cette forme caractéristique de l'**AM**. 

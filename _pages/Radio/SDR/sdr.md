@@ -10,7 +10,7 @@ L'inconvénient, c'est que chaque composant est une entité physique, ça coûte
 L'idée va être de numériser le signal le plus tôt possible pour l'envoyer à un **CPU** où l'on pourra commencer notre traitement du signal. L'avantage est que l'on pourra utiliser des algorithmes beaucoup plus complexes, notamment à l'aide des **nombres complexes** qui sont très difficiles à mettre en place avec des résistances ou autres. 
 Et oui, ces fameux nombres qu'on pensait inutiles au lycée ont une réelle utilité pour les signaux. 
 - La partie **réelle** du nombre sert à représenter l'**amplitude** (sa hauteur en quelque sorte) du signal.
-- La partie **imaginaire**, pour représenter sa **phase** (sa position dans le temps). 
+- La partie **imaginaire**, pour représenter sa [phase](../Basics/phase.html) (sa position dans le temps). 
 
 Ainsi, on va pouvoir simplifier des opérations mathématiques. 
 

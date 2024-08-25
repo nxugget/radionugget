@@ -1,10 +1,10 @@
 ---
-title: "Comprendre le fonctionnement des antennes en radiofréquence"
+title: "Notions de bases sur les antennes en radiofréquence"
 description: "Explorez les notions de base pour comprendre le fonctionnement des antennes en radiofréquence, des principes de fréquence et longueur d'onde à l'impédance"
 date: "13-05-2024"
 thumbnail: "/assets/img/thumbnail/antennes.webp"
 ---
-L'antenne est l'un des éléments les plus importants en **radiofréquence**. On en retrouve sous plein de formes, chacune optimisée pour une certaine fréquence. La science des antennes peut très vite devenir complexe, c'est pourquoi nous verrons dans ce cours simplement les bases.
+L'antenne est l'un des éléments les plus importants en **radiofréquence**. On en retrouve sous plein de formes, chacune optimisée pour une certaine fréquence. La science des antennes peut très vite devenir complexe, c'est pourquoi nous verrons dans ce cours simplement quelques bases.
 
 #  Fréquence
 Quand on branche une prise de courant dans une maison, le courant qui y circule est dit **alternatif**, cela signifie qu'il change de sens à intervalle régulier (Le courant va du + vers le - et vice-versa). Le changement ne se fait pas en mode brutal, mais progressivement, formant une jolie **sinusoïde**. 
