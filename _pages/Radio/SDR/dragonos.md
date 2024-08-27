@@ -40,7 +40,22 @@ Avant de continuer, il va falloir dire à **Virtual Box** de prendre en compte n
 À présent, on est prêts à écouter. Sur **SDR++**, dans **Source**, on sélectionne **RTL-SDR** et juste en dessous on choisit notre récepteur, on clique sur le bouton **Play** en haut et tout fonctionne nickel !
 
 ![DragonOS SDR++](../../../assets/img/pages/radio/sdr/dragonos/dragonos7.png)
+
+# Dossier partagé
+Lorsque vous voudrez travailler avec des fichiers de la **machine hôte** sur votre **VM**, vous aurez besoin d'un moyen de les faire passer. Une manière simple de le faire est de mettre en place un **dossier partagé**.
+Pour cela, dans un premier temps, il faut que les **Additions Invité** soient installées. C'est des pilotes qui permettent une meilleure interaction entre la **VM** et l'**hôte**.
+Donc, depuis la **VM**, en haut, on va dans **Devices -> Insert Guest Additions CD Image...**. Puis, on **Execute** le fichier `autorun.sh`.
+
+![Guest Additions VirtualBox](../../../assets/img/pages/radio/sdr/dragonos/dragonos9.png)
+Ensuite, on peut éteindre la **VM**, on clique sur **Settings** (l'engrenage jaune) puis **Shared Folders**. Clic droit et **Add Shared Folder**. 
+Enfin, on choisit quel dossier de notre machine hôte on veut partager et on coche **Auto-Mount**.
+
+![VirtualBox shared folder](../../../assets/img/pages/radio/sdr/dragonos/dragonos8.png)
+À présent, depuis la **VM**, dans l'explorateur de fichiers, on peut y voir notre dossier partagé sous le nom `sf_Downloads`.
+Si jamais vous avez une erreur comme quoi vous n'avez pas les permissions, ouvrez un **terminal** et tapez `sudo adduser [your-user] vboxsf` puis redémarrez la **VM** et ça devrait être bon.
+
 Et voilà, **DragonOS** est prêt à être utilisé !
+
 
 # Mon avis
 Alors, cette distribution est une solution très pratique pour gagner du temps, bien qu'on puisse s'en passer et installer nos tools directement en local sur notre machine hôte. Je préfère d'ailleurs cette option pour des questions de rapidité, car faire de la **SDR** sur une **VM** peut être très gourmand ce qui peut rendre de nombreuses tâches plus longues. On peut évidemment allouer de plus grosses ressources, mais avec un ordinateur portable classique, on en a pas toujours l'occasion. Après, en tant que hôte principal comme sur un **Raspberry**, je n'ai pas essayé mais ça doit être plus rapide déjà.
