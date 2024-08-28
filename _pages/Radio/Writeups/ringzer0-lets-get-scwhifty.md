@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/letsget.webp"
 ---
 Description du challenge : *The aliens are on to us... They've started wearing tin foil hats and switched things up with their radio transmission. Can you crack their latest message?*
 Le challenge est disponible à [cette adresse](https://ringzer0ctf.com/challenges/333).
-Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Radio/Basics/modulation.html) :) 
+Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Basics/modulation.html) :) 
 
 Le challenge commence avec un fichier `sdr-challenge2.cfile`. 
 Ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh). 

@@ -12,7 +12,7 @@ De plus, l'**AM** est bien plus robuste que la **FM**, ce qui permet au signal d
 Sa résistance lui permet aussi d'être moins sujet aux interférences des composants électroniques et des autres signaux radio. 
 
 ## Polarisation
-Les communications aéronautiques utilisent une **polarisation verticale**, il s'agit de la direction du champ électrique de notre **onde électromagnétique**. On fera un cours plus tard sur la polarisation mais en attenandat, [ce site](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) explique très bien les différents types de polarisation. Comprenez juste qu'une onde polarisée **verticalement** devra être reçue par une antenne placée **veritcalement**. Autrement, on risque de perdre une bonne partie du signal.
+Les communications aéronautiques utilisent une **polarisation verticale**, il s'agit de la direction du champ électrique de notre **onde électromagnétique**. On fera un cours plus tard sur la polarisation mais en attenndant, [ce site](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) explique très bien les différents types de polarisation. Comprenez juste qu'une onde polarisée **verticalement** devra être reçue par une antenne placée **veritcalement**. Autrement, on risque de perdre une bonne partie du signal.
 
 
 ## Fréquence

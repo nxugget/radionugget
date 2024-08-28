@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/thomas.webp"
 ---
 Description du challenge : *The aliens' capabilities have advanced and they've decided to improve the reliability of their transmissions. Can you crack their message?*
 Le challenge est disponible à [cette adresse](https://ringzer0ctf.com/challenges/334).
-Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Radio/Basics/modulation.html) :) 
+Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Basics/modulation.html) :) 
 
 Le challenge commence avec un fichier `sdr-challenge3.cfile`. 
 Ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh). 
