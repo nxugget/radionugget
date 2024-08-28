@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/noaa.webp"
 ---
 # Compréhension du projet 
 ## Qui sont-ils
-Les satellites **NOAA** (**N**ational **O**ceanic and **A**tmospheric **A**dministration) sont des satellites météorologiques américains à orbite polaire qui sont à une altitude de 850km. 
+Les satellites **NOAA** (**N**ational **O**ceanic and **A**tmospheric **A**dministration) sont des satellites météorologiques américains à **orbite polaire** qui sont à une altitude de 850km. 
 Pour comparer, l'**ISS** est à 400km. 
 A ce jour, il y en a 3 qui continuent d'émettre : 
 - **NOAA 15** à `137.6200MHz`
@@ -15,8 +15,8 @@ A ce jour, il y en a 3 qui continuent d'émettre :
 
 Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut recevoir leurs 
 images. Ils ne sont plus en période d'exploitation mais tant que la **NASA** considère qu'ils ne sont pas un danger, ils continuent de les laisser tourner. 
-## Orbite héliosynchrone
-Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. 
+## Orbite héliosynchrone 
+Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Plus d'infos sur les types d'orbites [ici](../Space/Satellite/type-orbits.html).
 Ils se présentent toute l'année sous le même angle par rapport au Soleil comme le montre l'image ci-dessous : 
 ![Orbite hélosynchrone](../../assets/img/pages/projects/noaa/orbite.png)
 Ainsi, comme la **Terre** tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des logiciels ou sites web, on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
