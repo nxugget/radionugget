@@ -1,6 +1,6 @@
 ---
 title: "Écouter les communcations radio des pilotes d'avion"
-date: "25-08-2024"
+date: "30-08-2024"
 description: "Découvrez pourquoi les communications des pilotes d'avions utilisent la modulation d'amplitude et comment on peut les écouter ave cun récepteur SDR"
 thumbnail: "/assets/img/thumbnail/pilots.webp"
 ---
@@ -16,12 +16,12 @@ Les communications aéronautiques utilisent une **polarisation verticale**, il s
 
 
 ## Fréquence
-Peut-être avez-vous déjà vu le **spectre de répartition des fréquences** de l'[ANFR](https://www.anfr.fr)
+Peut-être avez-vous déjà vu le **spectre de répartition des fréquences** de l'[ANFR](https://www.anfr.fr).
 ![Spectre répartition fréquences ANFR](../../../assets/img/pages/radio/sdr/pilots/pilots1.webp)
 Ouais, dur d'y voir sans l'ouvrir en grand, mais zoomons sur la partie qui nous intéresse, la bande allouée aux communications en aéronatique qui se situe dans les [VHF](https://fr.wikipedia.org/wiki/Très_haute_fréquence).
 ![Bande VHF ANFR](../../../assets/img/pages/radio/sdr/pilots/pilots2.webp)
 On les retrouve entre **108** et **137MHz**. 
-Super, on en sait déjà un peu plus sur leurs communications mais maintenant, il va falloir savoir quelle fréquence sont utilisées autour de nous afin de les écouter.
+Super, on en sait déjà un peu plus sur leurs communications mais maintenant, il va falloir savoir quelle fréquence entre **108** et **137MHz** sont utilisées autour de nous afin de les écouter.
 
 
 # Récupérer les bonnes informations
@@ -32,4 +32,4 @@ On peut voir sur le côté tout un tas de fréquences utilisées par l'aéroport
 Bref, je vais pas faire un cours sur **Openaip** qui est très intuitif à utiliser, chacun récuperera les fréquences qui lui intéressent.
 
 # Passons à l'écoute
-Avec tout ce que l'on a vu, on peut enfin passer à l'écoute des communications aéronautiques. Dans les faits, avec **openaip**, vu qu'on connait les fréquences, on peut déjà avec un simple talkie walkie style **Baofeng** commencer l'écoute. Mais, on peut faire mieux avec la **SDR** 
+Avec tout ce que l'on a vu, on peut enfin passer à l'écoute des communications aéronautiques. Dans les faits, avec **openaip**, vu qu'on connait les fréquences, on peut déjà avec un simple talkie walkie style **Baofeng** commencer l'écoute. Mais, on peut faire mieux avec la **SDR**.

@@ -15,11 +15,10 @@ En radiofréquence, on utilise les **décibels** pour exprimer le gain des anten
 Ce qu'il faut retenir, c'est que les **décibels**, ça permet surtout de représenter de gros écarts de puissance de manière plus compacte et compréhensible.
 
 #  Le gain
-Le gain, pour une antenne, ça permet de mesurer sa capacité à concentrer l'énergie dans une direction particulière par rapport à l'antenne **isotrope**. Iso quoi ? 
-Il s'agit d'une antenne théorique qui **n'existe pas** réellement, qui rayonne de manière **uniforme** dans **toutes** les directions autour d'elle. 
-Pour mieux comprendre, on va voir des **diagrammes de rayonnement** et ça sera d'un coup plus clair. C'est juste un moyen de montrer comment une antenne rayonne autour d'elle. 
-Donc, sur l'image du dessous, en rose, on a notre antenne **isotrope** théorique qui a son diagramme de rayonnement constitué d'un seul cercle. Son gain est de **0** et nous sert de référence.
-Car en effet, on a une deuxième antenne, un **dipole** qui lui favorise son rayonnement dans **2** directions. Ainsi, on voit que ce dernier rayonne plus loin que l'antenne **isotrope**. Ce surplus est ce qu'on appelle le **gain**.
+Le gain, pour une antenne, ça permet de mesurer sa capacité à concentrer l'énergie dans une direction particulière par rapport à l'antenne **isotrope**. Il s'agit d'une antenne théorique qui **n'existe pas** réellement, qui rayonne de manière **uniforme** dans **toutes** les directions autour d'elle. 
+Pour mieux comprendre, on va voir des **diagrammes de rayonnement** qui montrent comment une antenne rayonne autour d'elle. 
+Donc, sur l'image du dessous, en orange, on a notre antenne **isotrope** théorique qui a son diagramme de rayonnement constitué d'un seul cercle. Son gain est de **0** et nous sert de référence.
+Car en effet, on a une deuxième antenne, en violet, un **dipole** qui lui favorise son rayonnement dans **2** directions. Ainsi, on voit que ce dernier rayonne plus loin que l'antenne **isotrope**. Ce surplus est ce qu'on appelle le **gain**.
 ![Schema gain](../../../assets/img/pages/radio/radio_basics/power/power2.svg)
 Le gain d'une antenne **dipole** est donc de **2,15dB**. D'ailleurs, lui aussi sert aussi de référence. Ainsi, on parlera de **dBi** qu'on on prend comme référence l'antenne **i**sotrope. Et on parlera de **dBd** qu'on on aura pour référence l'antenne dipole. 
 On peut au passage retenir ces 2 formules : `dBi = dBd + 2.14` et `dBd = dBi - 2.14`

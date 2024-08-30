@@ -1,5 +1,5 @@
 ---
-title: "Satdump GUI pour récupérer les images satellites"
+title: "Satdump GUI pour récupérer des images satellites"
 date: "20-07-2024"
 description: "Explorez l'interface graphique du logiciel SatDump permettant de faciliter la récupération de données satellites en temps réel"
 thumbnail: "/assets/img/thumbnail/satdump.webp"
@@ -74,7 +74,7 @@ Une fois l'acquisition terminée, on appuie sur le **Stop** de l'onglet **Proces
 Et l'on peut à présent décaler sur l'onglet **Viewer** pour voir nos résultats.
 
 # Viewer
-Voilà mon image, bon elle est pas dingue mais c'est pour la démo.
+Et voilà mon image :
 ![Viewer MCIR SatDump](../../../assets/img/pages/space/satellite/satdump/satdump12.png)
 Cet onglet est vraiment génial, on va pouvoir traiter en temps réel notre image, là par exemple, j'ai appliqué le mode d'image **MCIR** qui permet d'avoir de fausses couleurs sur notre image.
 On peut jouer avec les différents paramètres en fonction de ce que l'on souhaite mettre en valeur. 

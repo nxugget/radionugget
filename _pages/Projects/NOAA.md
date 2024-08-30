@@ -1,30 +1,27 @@
 ---
 title: "Réception d'images satellites NOAA"
 date: "17-05-2024"
-description: "Découvrez comment recevoir et décoder les images des satellites météorologiques NOAA automatiquement à l'aide d'une antenne V-dipôle et d'un récepteur SDR"
+description: "Découvrez comment recevoir et décoder les images des satellites météorologiques NOAA en mode APT de manière automatique à l'aide d'une antenne V-dipôle et d'un récepteur SDR"
 thumbnail: "/assets/img/thumbnail/noaa.webp"
 ---
-# Compréhension du projet 
-## Qui sont-ils
-Les satellites **NOAA** (**N**ational **O**ceanic and **A**tmospheric **A**dministration) sont des satellites météorologiques américains à **orbite polaire** qui sont à une altitude de 850km. 
-Pour comparer, l'**ISS** est à 400km. 
-A ce jour, il y en a 3 qui continuent d'émettre : 
-- **NOAA 15** à `137.6200MHz`
-- **NOAA 18** à `137.9125MHz`
-- **NOAA 19** à `137.1000MHz` 
+Pour tout curieux souhaitant débuter dans le milieu de la [SDR](../Radio/SDR/sdr.html), recevoir des images satellites en fabriquant sa propre antenne est un excellent point de départ pour acquérir des bases en **radiofréquence**. On va pousser ce projet un peu plus loin en faisant en sorte que ces images satellites se récupèrent **automatiquement**.
 
-Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut recevoir leurs 
-images. Ils ne sont plus en période d'exploitation mais tant que la **NASA** considère qu'ils ne sont pas un danger, ils continuent de les laisser tourner. 
+# Compréhension du projet 
+## Qui sont les NOAA ?
+Les satellites [NOAA](https://fr.wikipedia.org/wiki/NOAA_POES) sont des satellites météorologiques américains situés à une altitude de **850km**. Pour comparer, l'**ISS** est à 400km. 
+À ce jour, il y en a 3 qui continuent d'émettre : 
+![Satellite NOAA](../../assets/img/pages/projects/noaa/noaa.svg)
+Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut recevoir leurs images. Ils ne sont plus en période d'exploitation mais tant que la **NASA** considère qu'ils ne sont pas un danger, ils continuent de les laisser tourner. 
 ## Orbite héliosynchrone 
-Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Plus d'infos sur les types d'orbites [ici](../Space/Satellite/type-orbits.html).
-Ils se présentent toute l'année sous le même angle par rapport au Soleil comme le montre l'image ci-dessous : 
-![Orbite hélosynchrone](../../assets/img/pages/projects/noaa/orbite.png)
+Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Ce sont des orbites dites **polaire** et plus précisément **héliosynchrone**. Mais pour plus d'infos sur les différents types d'orbites, tu peux cliquer [ici](../Space/Satellite/type-orbits.html).
+Ils se présentent toute l'année sous le même angle par rapport au Soleil : 
+![Orbite polaire](../../assets/img/pages/space/satellite/type-orbits/type-orbits6.svg)
 Ainsi, comme la **Terre** tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des logiciels ou sites web, on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
-Par exemple, voici une liste de prédictions des 3 satellites au dessus de la ville où est installée mon antenne le 22 avril 2024 : 
-![Prédictions satellite](../../assets/img/pages/projects/noaa/prediction_pass.png)
+Par exemple, voici une liste de prédictions des 3 **NOAA** au dessus de la ville où est installée mon antenne le **22 avril 2024**: 
+![Prédictions satellite](../../assets/img/pages/projects/noaa/prediction_pass.svg)
 ## Transmission APT
 Les **NOAA** ne prennent pas directement des photos de la Terre. Ils en font plutôt un **scan** comme le ferait un scanner papier à une vitesse de 2 lignes par seconde, donc c'est lent. 
-Pour cela ils vont utiliser le mode [APT](https://en.wikipedia.org/wiki/Automatic_picture_transmission) (**A**utomatic **P**icture **T**ransmission). Il date de 1960 et seules 3 satellites l'utilisent encore. 
+Pour cela ils vont utiliser le mode [APT](https://en.wikipedia.org/wiki/Automatic_picture_transmission) (**A**utomatic **P**icture **T**ransmission). Il date de 1960 et seules ces 3 satellites l'utilisent encore. 
 La qualité est de 4km pour 1 pixel donc il ne faut pas zoomer si non, c'est très moche. 
 Voici un exemple d'image transmise que j'ai reçu avec ce système :
 ![Image brut APT NOAA](../../assets/img/pages/projects/noaa/image_reel.png)
@@ -49,13 +46,13 @@ Pour la suite, je pars du principe que ces notions sont comprises :)
 # Mise en place du projet
 ## Partie matérielle
 ### Fabrication de l'anntenne
-Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle**. 
-Comme on l'a vu sur la partie des antennes, pour que notre antenne soit **résonnante** à la fréquence de **137MHz**, on peut faire le calcul suivant : `λ=300/137≈2.18m`
-
+Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. Ce n'est pas l'antenne optimale pour ce projet (à cause de sa polarisation) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter.
+Les signaux **APT** sont très résistants donc au final, même avec une antenne non parfaite, on recevra quand même des trucs, le plus important, c'est surtout d'avoir un ciel dégagé avec l'antenne placée le plus haut possible.
+Comme vu sur les cours des antennes, pour qu'elle soit **résonnante** à la fréquence de **137MHz**, on peut faire le calcul suivant : `λ=300/137≈2.18m`.
 On va faire une antenne **demi-onde** donc elle devra faire une longueur de `2.18/2` soit `1.09m`. 
 De plus, comme on fait un **dipôle**, on va devoir diviser à nouveau par **2** pour avoir la longueur de chaque pôle. Donc `1.09/2≈0.54`. On sait à présent que chaque pôle devra faire **54cm** pour être efficace au **137MHz**. 
 Afin d'avoir une impédance de **50Ω**, l'angle formé par les 2 pôles doit être de **120°**. Voici un schéma qui reprend la même logique. 
-![Schema antenne v-dipôle](../../assets/img/pages/projects/noaa/schema_antenne.svg)
+![Schema antenne v-dipôle](../../assets/img/pages/projects/noaa/vdipole_schema.svg)
 Le raccordement entre les pôles et le câble se fait avec un domino. On relie la tige centrale du câble à l'un, et la tresse autour du câble à l'autre. 
 Premier test avec une antenne rateau trouvé en déchetterie que j'ai remodelé : 
 ![prototype antenne v-dipôle](../../assets/img/pages/projects/noaa/first_try.jpg)
@@ -78,8 +75,9 @@ Elle est pratique car on peut y visser les pôles et régler leur orientation ce
 En ce qui concerne la soudure, j’ai oublié de prendre en photo l’intérieur mais chaque tube de cuivre est soudé à un câble respectif qui lui même est déjà relié d’usine à la prise coaxiale dans le boitier. J’ai un peu redécoupé la partie blanche pour pas que ça fasse trop gros. Dans le boitier blanc, il y a déjà une prise coaxiale pour l’arrivée d’un câble. Donc on a plus qu’à venir visser notre cable coaxial dessus et on est tout bon. 
 On ressort le testeur d’antenne et voici le résultat final : 
 ![Testeur d'antenne N1201SA](../../assets/img/pages/projects/noaa/testeur_antenne2.png)
-- Le VSWR est très proche de 1 ce qui est vraiment pas mal pour le coup. 
-- L'impédance de 42Ω n'est pas parfaite mais reste tout à fait correct. 
+- Le **VSWR** est très proche de **1** ce qui est vraiment pas mal pour le coup. 
+- L'**impédance** de **42Ω** n'est pas parfaite mais reste tout à fait correct. 
+
 ### Placement et Orientation
 Les **NOAA** avec leur orbite polaire arrive soit par le **nord** soit par le **sud**. Par conséquant, on doit orienter l'antenne dans l'une de ses directions n'importe laquelle. Si on la place vers le **nord** alors que le satellite arrivait par le **sud**, on aura juste à retourner l'image.  :) 
 Voilà le rendu final de l'antenne sur le toit orienté plein **sud** dans mon cas : 
@@ -99,6 +97,8 @@ On a plus qu'à lancer l'installation et nous voilà avec un site web affichant 
 A l'aide du dépôt **Github** précédemment cité, un serveur web **nginx** est créé en `localhost` sur le **Raspberry**. 
 Ce dernier est configuré avec une adresse **IP fixe** et est donc accessible que depuis le réseau local. 
 Afin d'y avoir accès depuis n'importe où, j'ai mis en place un serveur VPN avec **Wireguard** sur ma box Internet. Ainsi, tant que je dispose du fichier wireguard `.conf`, je peux accéder au réseau local et donc au **Raspberry** depuis n'importe où, y compris le téléphone !  
+**EDIT** : Afin d'avoir une station publique, j'ai refait le setup en créant un sous domaine [station.radionugget.com](https://station.radionugget.com) associé à l'adresse IP de ma box internet. Grâce au tool **GitHub**, on a la possibilité de générer des certificats **HTTPS** très facilement pour améliorer la sécurité du site. 
+
 ### Prédiction
 On a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les [TLE](../Space/Satellite/orbits.html) (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres oribtaux** des objets en **orbitre terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
 Une fois récupérée, on a une base de donnée à jour contenant la position des satellites qui nous intéressent. 
@@ -147,16 +147,15 @@ Décortiquons là en prenant comme exemple la prédiction de **NOAA 15** vu pré
 ### ~~Magie~~ Conversion 
 Ok, à présent, on a un super fichier audio. Il nous reste plus qu'à le transformer en une image à l'aide du logiciel `WXtoIMG`. Ce dernier prend uniquement en entrée notre fichier `.wav` et s'occupe de faire la magie tout seul. On peut lui spécifier un mode de transformation pour l'image. Ce dernier va combiner les 2 images reçues du satellite pour en créer une selon notre besoin. Par exemple, on peut en générer une thermique comme celle qu'on a vu au début mais on peut aussi lui demander de coloriser l'image du mieux qu'il peut et même afficher les frontières le long des mers et océans. Voici un des résultats que j'ai reçue le **18 avril** par **NOAA 18** :  
 ![Image NOAA MSA](../../assets/img/pages/projects/noaa/image_couleur.jpg)
+Les images que je récupèrent sont disponibles sur ma station [juste ici](https://station.radionugget.com/captures).
 
 # Suite et Améliorations
 ## HRPT
 En réalité, ces satellites peuvent envoyer de plus belles images que ça. On l'a dit, mais le protocole **APT** date de **1960** alors que ces satellites ont été envoyés dans les années **2000**. En fait, c'est juste pour une question de rétro-compatibilité avec de vieux équipements. Mais si non, les météorologues vont utiliser un protocole plus récent, le [HRPT](https://en.wikipedia.org/wiki/High-resolution_picture_transmission) ( **H**igh-**R**esolution **P**icture **T**ransmissions). Les **NOAA** envoient avec ce mode sur des fréquences plus hautes, **1700MHz**. Leur récéption demande plus de conaissance et surtout une antenne tout autre. Il s'agit de la suite logique de ce projet afin d'avoir des images toujours plus belles car là où l'**APT** nous donnait du **4km/pixel**, l'**HRPT** nous donne du **1km/pixel**. C'est comme passé d'un écran **FULL HD** à de la **4K** :)  
 ## Setup Raspberry
 Actuellement, le **Raspberry** est à plus de **10m** de l'antenne et est alimenté avec son transformateur d'origine et connecté en **Wi-Fi**. 
-Ok, mais on peut faire mieux même si c'est pour un gain minime sur le projet (le but c'est d'apprendre de toute façon). 
-Donc actuellement, je réfléchis à une solution pour venir mettre le **Raspberry** dans une boîte étanche directement en dessous de la tuile où se situe l'antenne. Cela me permettrait de passer de **11m** à **5m**. Ça permettra de minimiser les pertes dans la câble. 
-De plus, toute interferance est bonne à enlever, même minime. On l'a vu avec les composants graphiques. 
-On peut faire une pierre 2 coups afin d'enlever les mini interferences du transformateur ET avoir une connexion **Ethernet** qui sera bien meilleure que par **Wi-Fi**. Pour cela, on va utiliser un **PoE Splitter** qui va nous permettre à la fois d'alimenter le **Raspberry** ET de lui fournir une connexion à travers un seul câble Ethernet qui part du splitter jusqu'à un port **PoE** de ma box Internet. 
+Je réfléchis donc à une solution pour placer le **Raspberry** directement en dessous de la tuile où se situe l'antenne. Cela me permettrait de passer de **11m** à **5m** et ainsi minimiser les pertes dans la câble. 
+On peut faire une pierre 2 coups afin d'enlever les mini interférences du transformateur ET avoir une connexion **Ethernet** qui sera bien meilleure que par **Wi-Fi**. Pour cela, on va utiliser un **PoE Splitter** qui va nous permettre à la fois d'alimenter le **Raspberry** ET de lui fournir une connexion à travers un seul câble Ethernet qui part du splitter jusqu'à un port **PoE** de ma box Internet. 
 ![PoE splitter](../../assets/img/pages/projects/noaa/poe_splitter.png)
 ## Filtre et amplificateur
 Bien que la clé **SDR** a pour rôle d'enregistrer dans la fréquence qu'on lui demande, elle n'est pas parfaite et il y aura toujours des signaux parasites autour. Pour régler ce problème, on peut utiliser un **LNA** (**L**ow **N**oise **A**mplicator). Il va nous permettre de filtrer les signaux dans une gamme de fréquence bien spécifique. 
@@ -164,6 +163,8 @@ J'ai donc invesit dans un **LNA 137MHz**. Ce dernier va laisser passer que les f
 Voici à quoi ressemble ce dernier sans son chassis : 
 ![Filtre SawBird NOAA](../../assets/img/pages/projects/noaa/sawbird.png)
 Il est important de le placer au plus prêt de l'antenne, afin d'amplifier le signal dès que possible. Ainsi, on est sur que le signal ne se perde pas durant le trajet. 
+
+⚠️ **EDIT** : Ça change vraiment rien d'avoir un filtre, (du moins dans mon cas) donc je ne recommande pas d'investir dans un filtre pour les signaux **NOAA** qui sont assez résistants pour être captés même sans filtre.
 ## SatDump
 [Satdump](../Space/Satellite/satdump.html) est un nouveau venu dans le milieu de la réception d'images satellites. Il s'agit d'une solution tout-en-un permettant à la fois l'enregistrement ET la conversion de l'audio en image. 
 Il existe en ligne de commande et avec une interface graphique. Il est récent, "joli" et plus performant d'après ce qu'on entend. En effet, `WXtoIMG` est un vieux logiciel qui n'est même plus maintenu malheuresement. 
