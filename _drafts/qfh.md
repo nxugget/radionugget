@@ -30,7 +30,7 @@ C'est parti, on va commencer par regrouper notre cuivre pour que tous nos morcea
 ![QFH cuivre et PVC](../../assets/img/pages/projects/qfh/qfh2.webp)
 
 Passons au trou en haut de notre antenne. Afin de faciliter le bricolage de cette dernière, j'ai utilisé un manchon **PVC** qu'on va venir placer au dessus de l'antenne. C'est dedans qu'on va raccorder nos 4 tiges du haut. 
-Il va falloir faire 4 trous parfaitement perpendiculaire autour de notre manchon. Pour ça, toujours depuis [ce site](http://jcoppens.com/ant/qfh/calc.en.php), si on descend plus bas, on a une section bien pratique **Generate a drilling template**. On le remplis (correctement), avec le diamètre du tube où vous allez faire les trous, donc dans mon cas, le manchon qui fait exactement **58mm** de diamètre et on met aussi le diamètre des tiges qui vont rentrer dans les trous donc pour moi **9.5mm**.
+Il va falloir faire 4 trous parfaitement perpendiculaire autour de notre manchon. Pour ça, toujours depuis [ce site](http://jcoppens.com/ant/qfh/calc.en.php), si on descend plus bas, on a une section bien pratique **Generate a drilling template**. On le remplis (correctement), avec le diamètre extérieur du tube où vous allez faire les trous, donc dans mon cas, le manchon qui fait exactement **58mm** de diamètre et on met aussi le diamètre des tiges qui vont rentrer dans les trous donc pour moi **9.5mm**.
 
 ![Generate a drilling template](../../assets/img/pages/projects/qfh/qfh3.webp)
 Une fois fait, ça nous sort un template à imprimer, on peut découper et garde uniquement la partie **Top**.
@@ -51,6 +51,18 @@ Retirons la plaque et passons à la **soudure à l'étain** avec le câble coaxi
 
 ![DIY QFH](../../assets/img/pages/projects/qfh/qfh8.webp)
 Pour la soudure de la tige central du câble, ça ne pose pas de problème, par contre, pour la tresse, ça ne prenait pas, donc on la placé dans une cosse qui elle même est soudée à la plaque.
-On peut à présent remettre le manchon en haut du tube. On en profite aussi pour faire 2 trous sur le tube de **PVC** afin d'enrouler 4 fois la câble coaxial autour du tube. Cela permet de réaliser un **balun**. Sans trop rentrer dans les détails, ça permet de faire comme une **bobine** et ainsi adapter l'**impédance** du **câble** avec celle de l'**antenne** et ainsi améliorer les performances de notre antenne.
+On peut à présent remettre le manchon en haut du tube. 
+Passons au tige du bas en revenant sur la section **Generate a drilling template** sur le [calcualteur](https://jcoppens.com/ant/qfh/calc.en.php).
+Cette fois-ci, pour le **Vertical  support tube diamter**, on va devoir prendre le diamètre extérieur du **tube**, **52mm** dans mon cas (⚠️ Attention à pas prendre celui du manchon).
+Pour le **Horizontal support tube diamter**, c'est toujours le même, le diamètre de nos tube de cuivre, **9.5mm**.
+
+![Generate a drilling template](../assets/img/pages/projects/qfh/qfh10.webp)
+Ensuite, on découpe la partie **Bottom** de notre template pour l'enrouler autour du tube. Pour savoir à quelle distance il faut le placer, notez sur le template la valeur **695.10mm** qui représente la distance que vous devez mesurer en partant des tiges du haut jusqu'au point **A**. En fait, il s'agit de la distance **H2** sur le schéma du début.
+
+![DIY QFH](../../assets/img/pages/projects/qfh/qfh9.webp)
+À présent, c'est optionnel mais on peut faire faire 2 trous sur le tube de **PVC** afin d'enrouler le câble coaxial autour du tube. Cela permet de réaliser un **balun**. Sans trop rentrer dans les détails, ça permet de faire comme une **bobine** et ainsi adapter l'**impédance** du **câble** avec celle de l'**antenne** et ainsi améliorer les performances de notre antenne.
+
+![DIY QFH](../../assets/img/pages/projects/qfh/qfh11.webp)
+Très bien, ça commence à prendre forme, on va pouvoir s'atatquer aux courbures des longues tiges.
 
 # Tests

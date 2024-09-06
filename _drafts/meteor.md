@@ -19,6 +19,9 @@ La principale différence avec les **NOAA** est leur mode de transmission qui se
 Pour cet article, 2 **METEOR-M** vont nous intéresser :
 
 ![METEOR-M N2 satellite](../../../assets/img/pages/space/satellite/meteor/meteor1.svg)
+A noter que le **METEOR M2-4** est toujours en phase de test. Du coup, sa fréquence varie des fois entre **137.1** et **137.9MHz** et pareil pour le [débit de symbole](https://fr.wikipedia.org/wiki/Rapidit%C3%A9_de_modulation) qui varie entre **72** et **80Kbit/s**. 
+Pour vérifier, on peut utiliser [ce site](https://usradioguy.com/meteor-satellite/) qui permet de savoir l'état actuel du **satellite**. Voici l'état actuel le **02/09/2024** : 
+![METEOR M2 status](../../../assets/img/pages/space/satellite/meteor/meteor3.png)
 
 # Comment on les écoute
 
@@ -32,4 +35,4 @@ Puis dans l'onglet `Processing`, on sélectionnes **METEOR M2-x LRPT 72k**. On p
 ⚠️ Une fois le satellite passé, on clique depuis la section `Processing` sur le bouton **Stop** et uniquement après, on peut arrêter l'écoute avec le bouton **Stop** de l'onglet **Device**. Attention de ne pas inverser cet ordre car ça risque de perdre l'enregistrement que vous venez de faire.
 
 # Traitement de l'image
-Une fois l'écoute terminée, après quelques instants, on peut décalrer sur l'onglet `Viewer` pour voir nos images et leur faire du post-traitement.
+Une fois l'écoute terminée, après quelques instants, on peut décaler sur l'onglet `Viewer` pour voir nos images et leur faire du post-traitement.
