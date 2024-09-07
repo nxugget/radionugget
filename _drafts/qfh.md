@@ -25,11 +25,10 @@ De là, on peut en tirer un schéma.
 ![Schéma antenne QFH](../assets/img/pages/projects/qfh/qfh1.svg)
 
 ## Pratique
-C'est parti, on va commencer par regrouper notre cuivre pour que tous nos morceaux soient prêt ainsi que les coude 90°. On se coupe aussi un morceau de **PVC** de **1m20**.
+C'est parti, on va commencer par dresser la liste exacte de ce dont on va avoir besoin (hors outils). En ce qui concerne le cuivre, j'avais déjà des couronnes qu'on utilise pour la climatisation. C'est du cuivre dit **recuit**, et qui donc est maléable.
+![list QFH DIY](../../assets/img/pages/projects/qfh/qfh2.svg)
 
-![QFH cuivre et PVC](../../assets/img/pages/projects/qfh/qfh2.webp)
-
-Passons au trou en haut de notre antenne. Afin de faciliter le bricolage de cette dernière, j'ai utilisé un manchon **PVC** qu'on va venir placer au dessus de l'antenne. C'est dedans qu'on va raccorder nos 4 tiges du haut. 
+On va commencer par faire les trous en haut de notre antenne. Afin de faciliter le bricolage de cette dernière, j'ai utilisé un manchon **PVC** qu'on va venir placer au dessus de l'antenne. C'est dedans qu'on va raccorder nos 4 tiges du haut. 
 Il va falloir faire 4 trous parfaitement perpendiculaire autour de notre manchon. Pour ça, toujours depuis [ce site](http://jcoppens.com/ant/qfh/calc.en.php), si on descend plus bas, on a une section bien pratique **Generate a drilling template**. On le remplis (correctement), avec le diamètre extérieur du tube où vous allez faire les trous, donc dans mon cas, le manchon qui fait exactement **58mm** de diamètre et on met aussi le diamètre des tiges qui vont rentrer dans les trous donc pour moi **9.5mm**.
 
 ![Generate a drilling template](../../assets/img/pages/projects/qfh/qfh3.webp)
@@ -63,6 +62,11 @@ Ensuite, on découpe la partie **Bottom** de notre template pour l'enrouler auto
 À présent, c'est optionnel mais on peut faire faire 2 trous sur le tube de **PVC** afin d'enrouler le câble coaxial autour du tube. Cela permet de réaliser un **balun**. Sans trop rentrer dans les détails, ça permet de faire comme une **bobine** et ainsi adapter l'**impédance** du **câble** avec celle de l'**antenne** et ainsi améliorer les performances de notre antenne.
 
 ![DIY QFH](../../assets/img/pages/projects/qfh/qfh11.webp)
-Très bien, ça commence à prendre forme, on va pouvoir s'atatquer aux courbures des longues tiges.
+
+A présent, on va s'occuper de fixer les coudes aux extrémités de nos 4 longues tiges. Les coudes que l'on trouve sur le marché ne sont pas **recuits** contrairement aux tubes de cuivre qui se vendent en couronne comme celui que j'utilise. 
+Afin de rendre nos coudes plus maléables, on va nous même les recuire. Pour cela, on les chauffe jusqu'à qu'ils deviennent rouge avec par exemple un chalumeau et directement après on les refroidit dans de l'eau.
+Une fois que c'est fait, on peut les insérer aux 2 extrémités des tubes, les écraser avec une pince adaptée et ça devrait tenir. 
+
+![DIY QFH](../../assets/img/pages/projects/qfh/qfh12.webp)
 
 # Tests
