@@ -26,7 +26,7 @@ Pour vérifier, on peut utiliser [ce site](https://usradioguy.com/meteor-satelli
 # Place à l'écoute
 Concernant l'antenne, je vais utiliser exactement la même que durant [ce projet](../../Projects/NOAA.html).
 Pour la réception, va utiliser [SatDump](./satdump.html) pour récupérer les signaux satellites. Je ne vais pas rentrer dans tous les détails de configuration, j'ai déjà fait un cours sur **SatDump** [ici](./satdump.html) :) 
-Dans un premier temps, il faut savoir quand est-ce que va passer le satellite. Pour ceux qui vivent en **France**, les passages sont tous répertoriées sur [ma station](https://station.radionugget.com). Mais on peut aussi directement les voir avec la section `Tracking` de **SatDump** ou utiliser des sites web.
+Dans un premier temps, il faut connaître le prochain passage du satellite. Pour ceux qui vivent en **France**, les passages sont tous répertoriés sur [ma station](https://station.radionugget.com). Mais on peut aussi directement les voir avec la section `Tracking` de **SatDump** ou utiliser des sites web.
 
 Bref, quand un satellite est là, dans la section `Device`, on a juste à sélectionner notre récepteur **SDR** et choisir un **gain**, dans mon cas, **40**, puis **Start**.
 Dans la section `Processing`, on sélectionne **METEOR M2-x LRPT 72k**. On peut aussi cocher la case **DC Blocking** et à nouveau, on lance en cliquant sur **Start**.
@@ -41,4 +41,5 @@ D'ailleurs, on peut mieux faire ressortir le signal en modifiant quelques valeur
 L'écoute étant terminée, on peut après quelques instants décaler sur l'onglet `Viewer` pour voir nos images et appliquer du post-traitement. Après colorisation, voici l'image que j'ai reçue : 
 
 ![image METEOR M2-4](../../../assets/img/thumbnail/meteor.webp)
-Les bandes noires sont des interférences, probablement dû à mon antenne qui n'est pas parfaite mais on peut voir que la qualité de l'image est vraiment pas mal par rapport au **NOAA**.
+Les bandes noires sont les moments où le signal n'était pas assez fort pour être capté, probablement dû à mon antenne qui n'est pas parfaite. Mais on peut voir que la qualité de l'image est vraiment pas mal par rapport au **NOAA**.
+À vous de jouer à présent !
