@@ -157,6 +157,8 @@ Actuellement, le **Raspberry** est à plus de **10m** de l'antenne et est alimen
 Je réfléchis donc à une solution pour placer le **Raspberry** directement en dessous de la tuile où se situe l'antenne. Cela me permettrait de passer de **11m** à **5m** et ainsi minimiser les pertes dans la câble. 
 On peut faire une pierre 2 coups afin d'enlever les mini interférences du transformateur ET avoir une connexion **Ethernet** qui sera bien meilleure que par **Wi-Fi**. Pour cela, on va utiliser un **PoE Splitter** qui va nous permettre à la fois d'alimenter le **Raspberry** ET de lui fournir une connexion à travers un seul câble Ethernet qui part du splitter jusqu'à un port **PoE** de ma box Internet. 
 ![PoE splitter](../../assets/img/pages/projects/noaa/poe_splitter.png)
+
+⚠️ **EDIT** : C'est en fait une très mauvaise idée au vue du bruit que génère ce type d'alimentation. Je suis donc resté avec l'alim officiel du **Raspberry**. Attention à ne pas non plus mettre de longues rallonges électriques, ça crée des chutes de tension qui à leur tour génère du bruit.
 ## Filtre et amplificateur
 Bien que la clé **SDR** a pour rôle d'enregistrer dans la fréquence qu'on lui demande, elle n'est pas parfaite et il y aura toujours des signaux parasites autour. Pour régler ce problème, on peut utiliser un **LNA** (**L**ow **N**oise **A**mplicator). Il va nous permettre de filtrer les signaux dans une gamme de fréquence bien spécifique. 
 J'ai donc invesit dans un **LNA 137MHz**. Ce dernier va laisser passer que les fréquences dans les **137MHz** et en plus amplifier le signal avec un ajout minimal de bruit. 
