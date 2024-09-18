@@ -4,7 +4,7 @@
 
 
 
-Ce site web a pour but de faire découvrir le monde des **radiofréquences** ainsi que la **cybersécurité** dans l'industrie **aérospatiale**. Le tout avec quand c'est nécessaire, des schémas tout mignon. 
+Ce site web a pour but de faire découvrir le monde des **radiofréquences** et des **satellites**. Le tout avec quand c'est nécessaire, des schémas tout mignon. 
 
 ![image](https://github.com/radionugget/radionugget/assets/112083511/1de65452-c40e-4701-8a00-6605794b2522)
 
