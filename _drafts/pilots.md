@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/pilots.webp"
 ---
 # Comment les pilotes communiquent ?
 ## Modulation 
-Les communications aéronautiques utilisent comme type de modulation, l'**AM**. J'en ai fais un cours juste [ici](../Basics/modulation.html) si ça ne te parles pas. Mais pourquoi ce type de modulation est utilisée alors que la majorité des communications radio utilisent la [FM](https://fr.wikipedia.org/wiki/Modulation_de_fréquence#:~:text=En%20modulation%20de%20fréquence%2C%20l,(atténuation%20et%20bruit%20importants).).
+Les communications aéronautiques utilisent comme type de modulation, l'**AM**. J'en ai fais un cours juste [ici](../Basics/am.html) si ça ne te parles pas. Mais pourquoi ce type de modulation est utilisée alors que la majorité des communications radio utilisent la [FM](https://fr.wikipedia.org/wiki/Modulation_de_fréquence#:~:text=En%20modulation%20de%20fréquence%2C%20l,(atténuation%20et%20bruit%20importants).).
 En effet, la **FM** possède une bien meilleure qualité de signal, mais, c'est plus complexe à mettre en oeuvre, le matériel nécessaire est de fait plus énergivore et plus lourd ce qui représente une belle contrainte dans l'aviation. Surtout que les communications servent à transporter uniquement de la voix donc un signal de meilleure qualité n'est qu'un luxe non nécessaire.
 De plus, l'**AM** est bien plus robuste que la **FM**, ce qui permet au signal d'être plus résistant face aux obstacles comme les conditions méteos, les montagnes, les gros bâtiments et j'en passe. De fait, le signal peut porter sur de plus grandes distances. 
 Sa résistance lui permet aussi d'être moins sujet aux interférences des composants électroniques et des autres signaux radio. 

@@ -14,7 +14,7 @@ Connectons-nous à l'instance du challenge :
 On nous demande de convertir une série de **bits** en un échantillon **I/Q** en modulation [QPSK](https://fr.wikipedia.org/wiki/Phase-shift_keying) (**Q**uadrature **P**hase **S**hift **K**eying). 
 
 # Modulation QPSK
-La modulation **QPSK** est une modulation de phase **numérique** où l'on va modifier la **phase** de la **porteuse** pour transmettre des données. Tu peux retrouver un cours sur ce qu'est la modulation [juste là](../../Radio/Basics/modulation.html) et sur la phase [juste ici](../../Radio/Basics/phase.html).
+La modulation **QPSK** est une modulation de phase **numérique** où l'on va modifier la **phase** de la **porteuse** pour transmettre des données. Tu peux retrouver un cours sur ce qu'est la modulation [juste là](../../Radio/Basics/am.html) et sur la phase [juste ici](../../Radio/Basics/phase.html).
 
 Concrètement, pour cette modulation, les bits sont regroupés par **paires** donc on a 4 combinaisons possibles : `00`, `01`,`10`,`11` et ainsi **4 phases** possibles. En général, chacune d'entre elles est espacée de **90°**. Par exemple,  on pourrait avoir `00` à **0°**, `01` à **90°**, `11` à **180°** et `10` à **270°**.
 On peut aussi le voir sur ce schéma avec d'autres valeurs mais qui restent espacées de **90°** :
