@@ -1,42 +1,56 @@
 ---
-title: "Notions de bases sur les antennes en radiofréquence"
-description: "Explorez les notions de base pour comprendre le fonctionnement des antennes en radiofréquence, des principes de fréquence et longueur d'onde à l'impédance"
+title: "Comment choisir son antenne ?"
+description: "Explorez les notions de base pour comprendre le fonctionnement des antennes en radiofréquence afin de bien choisir la votre"
 date: "13-05-2024"
 thumbnail: "/assets/img/thumbnail/antennes.webp"
 ---
-L'antenne est l'un des éléments les plus importants en **radiofréquence**. On en retrouve sous plein de formes, chacune optimisée pour une certaine fréquence. La science des antennes peut très vite devenir complexe, c'est pourquoi nous verrons dans ce cours simplement quelques bases.
+Une antenne n'est rien de plus qu'un morceau de métal. Son but est de transformer une **énergie électrique** en une **onde électromagnétique** pour transmettre un **signal radio** et inversement pour en recevoir. Nous allons dans ce cours voir les différentes notions importantes à comprendre afin de bien choisir son antenne, que ça soit pour un [HackRF](../HackRF/presentation-hackrf-portapack.html), un projet [SDR](../SDR/sdr.html) ou n'importe.
 
-#  Fréquence
+# Fréquence
+Pour choisir son antenne, il va d'abord falloir savoir sur quelle **fréquence** on veut travailler. Mais d'abord, c'est quoi la **fréquence** ?
 Quand on branche une prise de courant dans une maison, le courant qui y circule est dit **alternatif**, cela signifie qu'il change de sens à intervalle régulier (Le courant va du + vers le - et vice-versa). Le changement ne se fait pas en mode brutal, mais progressivement, formant une jolie **sinusoïde**. 
 ![Schema courant alternatif sinusoïdal](../../../assets/img/pages/radio/radio_basics/antennes/antenne1.svg)
 
-En **France** par exemple, cet intervalle oscille à **50Hz**, ça signifie qu'il change de sens **100 fois par seconde**. C'est ce qu'on appelle la **fréquence** avec comme unité le **Hertz**. 
+En **France** par exemple, cet intervalle oscille à **50Hz**, ça signifie qu'il change de sens **100 fois par seconde**. C'est ce qu'on appelle la **fréquence** avec comme unité le [Hertz](https://fr.wikipedia.org/wiki/Hertz). 
 Une **radio**, c'est aussi un **oscillateur**, on parle de [VFO](https://fr.wikipedia.org/wiki/Oscillateur_%C3%A0_fr%C3%A9quence_variable) (**V**ariable **F**requency **O**scillator), terme barbare pour dire qu'on peut changer la fréquence. 
 Par exemple, en voiture, on peut tourner la roulette pour mettre une fréquence de **102.4MHz** (NRJ). Cela signifie qu'on a **102,4 millions** d'**oscillations** par seconde ! 
-#  Longueur
-L'antenne la plus basique qu'on puisse faire est une antenne **dipôle**. C'est juste deux pièces de métal de **même longueur** reliées par un câble coaxial. 
-La longueur ne se choisit évidemment pas au hasard. Les transmissions radio se propagent avec une longueur physique qu'on appelle **longueur d'onde**. 
+
+#  Longueur d'onde
+Le facteur le plus important d'une antenne est sa longueur que l'on choisira en fonction de la **fréquence** qui nous intéresse. On dira que notre antenne est **résonante** à une fréquence spécifique. Ce qui signifie qu'elle transformera efficacement l'**énergie électrique** en **onde radio** et inversement.
+Pour que notre antenne soit en **résonance** avec une fréquence, elle devra correspondre à une proportion spécifique de la **longueur d'onde du signal**.
+
 ![Schema longueur d'onde](../../../assets/img/pages/radio/radio_basics/antennes/antenne2.svg)
-Elle se calcule avec cette formule : `λ = c / f`
-avec **λ** la longueur d'onde en **m**, **c** la célérité de la lumière en **m/s** et **f** la période en **Hz**. 
+La longueur d'onde se calcule ainsi, sachant qu'on a une version simplifiée comme on connaît la **vitesse de la lumière** et que l'on travaille surtout avec des **fréquences** en `MHz` :
 
-Pour faire des calculs plus simples, dans notre cas, la vitesse à laquelle se déplace l'onde est la vitesse de la lumière dans l'air donc **300 000 000m/s** et nos fréquences sont en **MHz** donc on pourrait transformer notre formule en : `λ=300/f`
-avec **f** en **MHz** et **λ** toujours en **m**. 
+![Formule longueur d'onde](../../../assets/img/pages/radio/radio_basics/antennes/antenne3.svg)
+Quand on a calculé la **longueur d'onde** du signal qu'on souhaite exploiter, on va pouvoir choisir une **fraction** de cette valeur pour dimensionner l'antenne, généralement une **demi-onde** (`λ/2`) ou une **quart d'onde** (`λ/4`).
+Par exemple, supposons qu'on veut une antenne pour travailler sur la fréquence `433MHz`, on calcule sa **longueur d'onde** : `300/433≈0.70cm`. Si on part sur une antenne **demi-onde**, sa longueur devra donc être égale à la **moitié** de la longueur d'onde soit `34.5cm`.
+Une fois qu'on connaît la taille de notre antenne, il va falloir déterminer quelle forme elle va prendre. Mais avant ça, il va falloir faire une parenthèse sur la notion d'**impédance**.
 
-Donc, pour en revenir à notre longueur d'antenne, cette dernière est directement liée à la longueur d'onde. En fait, dans le cas d'un **dipôle** simple, la longueur de l'antenne est égale à la **moitié** de la **longueur d'onde**. Et donc, chaque **pôle** fait **un quart** de la longueur d'onde. On parle d'antenne **demi-onde**. 
-Bref, tout ça pour dire qu'on dira qu'une antenne est **résonnante** à une certaine fréquence si elle est adaptée à cette dernière. Et d'ailleurs, ça peut se mesurer avec un appareil spécifique. Il nous donne le **SWR** (**S**tanding **W**ave **R**atio), le **rapport d'onde stationnaire**. Plus cette valeur sera proche de **1** et plus l'antenne sera **résonnante** à une certaine fréquence. 
-#  Impédance 
-Dernière notion importante à prendre en compte dans une antenne, il s'agit de l'**impédance**. 
-En **électricité**, on utilise souvent des **résistances**, elles ont des valeurs fixes en **Ohm** noté **Ω**. Cela permet de s'opposer à un courant électrique. 
-Ok, mais en radio, on va souvent utiliser des **condensateurs** et des **bobines** et ces derniers ont une résistance qui sera variable en fonction de le **fréquence** du courant. 
-- On parle de **conductance** pour un **condensateur** (unité en **Farad**) 
-- On parle d'**inductance** pour une **bobine** (unité en **Henry**). 
+# Impédance
+Alors, on va faire simple. Pour que notre signal radio soit efficacement transféré entre l'antenne et le récepteur/émetteur, il faut que les **deux** soient bien adaptés  l'un à l'autre. Cette adaptation est déterminée par une propriété appelée **impédance**.
+Il faut la voir comme la **résistance** d'un circuit électrique mais adaptée aux **courants alternatifs**. En **radiofréquence**, on voudra que l'**impédance** de l'antenne match avec celle de notre appareil de réception/émission. Une valeur est utilisée presque partout de manière général, c'est `50Ω`. C'est par exemple l'**impédance** des récepteurs **SDR**. Bref, ça signifie qu'on cherchera toujours à avoir une antenne au plus proche de ce `50Ω`.
 
-Plus la fréquence dans un circuit sera élévé, plus un **condensateur** aura une **conductance** **faible** et donc s'opposera moins au courant. C'est d'ailleurs comme ça qu'on peut faire un filtre **passe-haut** qui laissera passer que les hautes fréquences.
-À l'inverse, pour une **bobine**, plus la fréquence est basse, plus son **inductance** est **faible**. Et cette fois, on peut faire des filtres **passe-bas**. 
+# Types d'antenne
+Ils existent tout un tas de type d'antenne donc on va pas pouvoir toutes les présenter, mais voyons quand même les 2 principales.
+## Dipôle
+L'antenne la plus basique que l'on puisse faire est une antenne **dipôle**. Dans sa version basique, il s'agira d'une antenne **demi-onde** (`λ/2`), avec chacun des pôles qui aura une longueur de `λ/4`. Cette dernière est alimenté en son milieu et se place de manière isolée dans l'espace et loin du sol.
 
-À noter qu'en mettant ces deux composants en parallèle avec leurs caractéristiques modifiables, on va pouvoir choisir des fréquences bien précises, c'est comme ça que fonctionne les **VFO**. 
-Bref, voilà pourquoi on parle d'**impédance**, c'est ni plus ni moins que la **résistance** dans un **courant alternatif**.
+![Schema dipole](../../../assets/img/pages/radio/radio_basics/antennes/antenne4.svg)
+L'angle entre les **2 pôles** peut être ajuster afin de régler l'**impédance** de notre antenne. Dans le cas où ils sont droits comme sur le schéma, on aura une impédance de `75Ω`. En mettant un angle de `120°`, on aura nos `50Ω` comme sur [ce projet](../../Projects/NOAA.html).
+De plus, le **dipôle** peut être placé **horizontalement** ou **verticalement** selon la [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) des ondes que l'on souhaite exploiter.
 
-En radio, une valeur est devenue une norme internationale car elle est un bon compromis entre facteurs techniques et pratiques, c'est **50Ω**. Ça permet de minimiser au mieux les pertes et par conséquent, les constructeurs se sont mis d'accord pour faire du matériel avec cette impédance comme les câbles coaxiaux par exemple. 
-Donc pour la réalisation d'une antenne, il faudra veiller à avoir une valeur au plus proche de ce **50Ω**. 
+## Ground plane
+Pour l'antenne **ground plane**, on va avoir un conducteur **vertical** d'une longueur d'un quart d'onde (`λ/4`) qui va être monté au-dessus d'un **plan de masse** que l'on appelle **ground plane**, d'où le nom. Ce plan de masse agit comme un **miroir** qui vient "compléter" l'antenne en réflétant les ondes devenant ainsi l'équivalent d'un **dipôle**.
+Pour former ce plan de masse, on peut utiliser des tiges métalliques qu'on appelle des **radiants** réparties uniformement autour de la base donnant à notre antenne une apparence d'araignée 🕷️. Pareil que pour le **dipôle**, si on veut une antenne à `50Ω`, il faudra un angle de `120°` entre les brins.
+
+![Schema ground plane radiales](../../../assets/img/pages/radio/radio_basics/antennes/antenne5.svg)
+Autrement, on peut utiliser la terre, la mer, un toit de voiture, n'importe tant que c'est conducteur. D'ailleurs, certaines antennes de **talkie-walkie** en sont aussi à partir du moment où on le tient en main car notre corps fait office de **plan de masse**.
+
+![Schema ground plane](../../../assets/img/pages/radio/radio_basics/antennes/antenne6.svg)
+
+# Conclusion
+Si vous êtes en possession de [ce genre de kit](https://fr.aliexpress.com/item/1005005952566458.html?spm=a2g0o.productlist.main.5.73d9dbXPdbXPEG&algo_pvid=525e2d1d-0980-4b25-9e4f-38905fefd577&algo_exp_id=525e2d1d-0980-4b25-9e4f-38905fefd577-2&pdp_npi=4%40dis%21EUR%2148.30%2148.30%21%21%2151.30%2151.30%21%4021059dbe17169245427093658e3802%2112000035000699472%21sea%21FR%214844539949%21&curPageLogUid=JaGxsn71xaP6&utparam-url=scene%3Asearch%7Cquery_from%3A), vous devriez déjà mieux comprendre comment ajuster votre antenne en fonction de ce que vous voulez faire. Vous allez pouvoir utiliser les différents accessoires fournis avec pour mettre en place votre **dipôle demi-onde** en ajustant la longueur des tiges selon ce que vous voulez écouter.
+Dans le cas des antennes rétractables comme celles vendues avec ce style de [HackRF](https://fr.aliexpress.com/item/4000247041639.html?spm=a2g0o.order_list.order_list_main.4.4c3f5e5bxHkKxh&gatewayAdapt=glo2fra), on viendra ajuster la longueur de l'antenne pour qu'elle corresponde au **quart** de la **longueur d'onde** de la fréquence qu'on souhaite utiliser (`λ/4`).
+Bref, il existe une infinité de possibilités, n'hésitez pas à me contacter sur [Instagram](https://www.instagram.com/radionugget/) si vous avez des questions :)
+Si vous êtes intéressés par faire vos propres antennes ou tout simplement tester les performances de celles que vous achetées, je prépare un cours qui expliquera comment on évalue si notre antenne est **résonante** à une certaine fréquence.
