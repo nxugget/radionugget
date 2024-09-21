@@ -15,9 +15,11 @@ Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut r
 ## Orbite héliosynchrone 
 Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Ce sont des orbites dites **polaire** et plus précisément **héliosynchrone**. Mais pour plus d'infos sur les différents types d'orbites, tu peux cliquer [ici](../Space/Satellite/type-orbits.html).
 Ils se présentent toute l'année sous le même angle par rapport au Soleil : 
+
 ![Orbite polaire](../../assets/img/pages/space/satellite/type-orbits/type-orbits6.svg)
-Ainsi, comme la **Terre** tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des logiciels ou sites web, on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
+Ainsi, comme la **Terre** tourne sur elle même, le satellite peut balayer toute sa surface. Grâce à des [logiciels](https://www.qsl.net/kd2bd/predict.html) ou [sites web](https://www.amsat.org/track/), on peut calculer ses orbites et prévoir le passage de chacun par rapport à des coordonnées géographiques. 
 Par exemple, voici une liste de prédictions des 3 **NOAA** au dessus de la ville où est installée mon antenne le **22 avril 2024**: 
+
 ![Prédictions satellite](../../assets/img/pages/projects/noaa/prediction_pass.svg)
 ## Transmission APT
 Les **NOAA** ne prennent pas directement des photos de la Terre. Ils en font plutôt un **scan** comme le ferait un scanner papier à une vitesse de 2 lignes par seconde, donc c'est lent. 
@@ -32,10 +34,10 @@ La transmission est composée de **deux canaux d'images**, des **informations t�
 - Les **2** bandes à **droite** de chaque image sont les données **télémétriques**. Il s'agit d'informations envoyés concerant le satellite ainsi que des données pour la météo (C'est à ça qui sert après tout). 
   
 Toutes ces données vont être envoyées ligne par ligne à l'horizontal. 
-Avant d'être diffusées, les images recoivent des corrections géométriques permettant ainsi d'être exempt de la **distorsion** causée par la **courbure** de la Terre (**Car la Terre n'est pas plate**).
+Avant d'être diffusées, les images recoivent des corrections géométriques permettant ainsi d'être exempt de la **distorsion** causée par la **courbure** de la Terre ([Car oui, la Terre n'est pas plate](https://www.youtube.com/watch?v=l4Po4cdCsI0)).
 Ainsi, avec ces deux images capturées, on peut obtenir d'autres types d'image. Par exemple, voici une image thermique générée par les deux images précédentes : 
 ![Image thermique NOAA](../../assets/img/pages/projects/noaa/image_thermique.png)
-C'est grâce à ce genre d'image que les personnes dans la météorologie (pas moi) seront à même de prédire le temps qu'il va faire ⛈️.
+C'est grâce à ce genre d'image que les personnes dans la météorologie seront à même de prédire le temps qu'il va faire ⛈️.
 
 ## Fonctionnement d'une antenne et SDR
 Pour cette partie, je vais tricher et vous recommander de lire 2 articles que j'ai fais, [le premier](../Radio/Basics/antennes.html) pour comprendre comment on choisit une antenne en fonction de la **fréquence** qu'on veut écouter.
@@ -46,7 +48,7 @@ Pour la suite, je pars du principe que ces notions sont comprises :)
 # Mise en place du projet
 ## Partie matérielle
 ### Fabrication de l'anntenne
-Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. Ce n'est pas l'antenne optimale pour ce projet (à cause de sa polarisation) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter.
+Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. Ce n'est pas l'antenne optimale pour ce projet (à cause de sa [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml)) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter.
 Les signaux **APT** sont très résistants donc au final, même avec une antenne non parfaite, on recevra quand même des trucs, le plus important, c'est surtout d'avoir un ciel dégagé avec l'antenne placée le plus haut possible.
 Comme vu sur les cours des antennes, pour qu'elle soit **résonnante** à la fréquence de **137MHz**, on peut faire le calcul suivant : `λ=300/137≈2.18m`.
 On va faire une antenne **demi-onde** donc elle devra faire une longueur de `2.18/2` soit `1.09m`. 
@@ -85,7 +87,7 @@ Voilà le rendu final de l'antenne sur le toit orienté plein **sud** dans mon c
 Évidemment, la parabole et l'antenne râteau n'ont rien à voir pour ce projet. 
 ### Raspberry
 Pour ce projet, j'utilise un **Raspberry 4 model B** qui tourne sur **Raspbian lite OS** en **64-bits**. Il n'aura pas d'**interface graphique** afin d'éviter toutes fréquences parasites provoquées par la consommation du **CPU** et de la **RAM** à cause des composants graphiques. 
-Ce dernier sera placé dans les combles dans un tupperware avec comme récepteur SDR la clé **RTL-SDR V4**. Il est relié par **11m** de câble coaxial :
+Ce dernier sera placé dans les combles dans un tupperware avec comme récepteur SDR la clé **RTL-SDR V4**. Il est relié par **11m** de câble coaxial **TV** au pif mais c'est mieux de prendre un bon câble style du **RG58**:
 ![RTL-SDR V4 sur Raspberry](../../assets/img/pages/projects/noaa/tupperware.jpg)
 ## Partie logicielle
 ### Github

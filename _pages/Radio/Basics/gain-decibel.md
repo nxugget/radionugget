@@ -4,7 +4,7 @@ description: "Apprenez à évaluer la puissance des systèmes radio en utilisant
 date: "30-05-2024"
 thumbnail: "/assets/img/thumbnail/power.webp"
 ---
-Quand il s'agit de comparer les puissances entre des antennes, on entend souvent parler de **décibel**, de **gain** et de plein d'autres acronymes. Avec ce cours, on va passer en revue ces différentes notions sans trop les approfondir non plus :) 
+Quand il s'agit de comparer les puissances entre des antennes, on entend souvent parler de **décibel**, de **gain**. Avec ce cours, on va passer en revue ces différentes notions sans trop rentrer dans les détails :) 
 
 #  Les décibels 
 Les **décibels** (**dB**) sont une unité **logarithmique** utilisée pour exprimer le rapport entre deux valeurs.

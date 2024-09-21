@@ -36,7 +36,7 @@ Numériser le signal et le traiter par logiciel a un nom, c'est la **SDR** (**S*
 Ces récepteurs bon marché ([lien vers un super kit pour débuter](https://fr.aliexpress.com/item/1005005952566458.html?spm=a2g0o.productlist.main.5.73d9dbXPdbXPEG&algo_pvid=525e2d1d-0980-4b25-9e4f-38905fefd577&algo_exp_id=525e2d1d-0980-4b25-9e4f-38905fefd577-2&pdp_npi=4%40dis%21EUR%2148.30%2148.30%21%21%2151.30%2151.30%21%4021059dbe17169245427093658e3802%2112000035000699472%21sea%21FR%214844539949%21&curPageLogUid=JaGxsn71xaP6&utparam-url=scene%3Asearch%7Cquery_from%3A)), se branchent en **USB** à un ordinateur équipé d'un logiciel **SDR** (il en existe plusieurs). On retrouve un port **MCX** (**M**icro **C**oaxial e**X**tended), c'est un connecteur **coaxial** plus petit que l'on relie à notre antenne. Ce dernier ne permet que la réception des signaux mais pas la transmission. Pour bénéficier des deux, il faudrait par exemple utiliser un [HackRF](../HackRF/presentation-hackrf-portapack.html). 
 
 # Logiciels SDR 
-Une fois en possession d'un récepteur **SDR**, on a plus qu'à s'équiper d'un logiciel **SDR**. À titre personnel, mon favori est [SDR++](https://www.sdrpp.org/) pour tout ce qui va être "écoute". 
+Une fois en possession d'un récepteur **SDR**, on n'a plus qu'à s'équiper d'un logiciel **SDR**. À titre personnel, mon favori est [SDR++](https://www.sdrpp.org/) pour tout ce qui va être "écoute". 
 ![SDR++](../../../assets/img/pages/radio/sdr/dragonos/dragonos7.png)
 [SatDump](../../Space/Satellite/satdump.html) qui est une copie de **SDR++** mais spécialisée pour l'écoute et le décodage des signaux **satellites**.
 ![SatDump](../../../assets/img/pages/space/satellite/satdump/satdump11.png)
