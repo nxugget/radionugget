@@ -11,10 +11,10 @@ En revanche, il existe des versions custom qui se vendent bien moins chère sur 
 
 #  C'est quoi le HackRF ? 
 Le **HackRF** ou **HackRF One**, c'est pareil, a été inventé et fabriqué par la société [Great Scott Gadgets](https://greatscottgadgets.com/). 
-C'est à la fois un émetteur et un récepteur [SDR](../SDR/sdr.html) qui possède une bande de fréquence super large de **1MHz** à **6GHz** (6000MHz). 
-Donc on peut écouter et émettre sur tout pleins de fréquences, intercepter et rejouer de signaux, c'est plutôt pas mal. Il est **half-duplex**, ça veut dire qu'il ne peut pas **recevoir** et **transmettre** en même temps. 
+C'est à la fois un émetteur et un récepteur [SDR](../SDR/sdr.html) qui possède une bande de fréquence super large de `1MHz` à `6GHz` (6000MHz). 
+Donc on peut écouter et émettre sur tout pleins de fréquences, intercepter et rejouer des signaux, ce qui est plutôt pas mal. Il est **half-duplex**, ça veut dire qu'il ne peut pas **recevoir** et **transmettre** en même temps. 
 Mais ⚠️**ATTENTION**⚠️, pour ce qui est d'**émettre**, c'est **illégal** sur la plupart des fréquences (En **France** comme ailleurs).  
-Maintenant, à des fins éducatives et de manière **responsable**, il n'y a (**pour moi**) pas de soucis à émettre sur des fréquences non autorisées. Par **responsable**, j'entends par exemple de ne pas utiliser la fonction **Jamming** du **HackRF** qui permet donc de brouiller les signaux sur une fréquence choisie. Même si ça marche que sur de la **courte distance**, on sait jamais ce qui a autour. Bref, on verra tout ça plus tard :) 
+Maintenant, le **HackRF** a une puissance d'émission faible, ce qui ne devrait pas poser de soucis. Il vaut quand même mieux de se renseigner sur ce qui a autour de soit pour être sur de pas faire de bêtises.
 
 #  Et le Portapack alors ? 
 Ce qu'on appelle le **HackRF Portapack**, c'est un boitier avec un écran **LCD**, des touches pour se déplacer dans un menu, et surtout une batterie.  Ainsi, on peut se servir de son **HackRF** sans avoir besoin de le relier à un ordinateur ce qui le rend complètement autonome. Pour ce qui est du kit que je vous présente, le **firmware** utilisé pour faire tourner tous les tools sur le **HackRF Portapack** se nomme [Mayhem](https://github.com/portapack-mayhem/mayhem-firmware) (qui est un **fork** d'un ancien plus maintenu nommé [Havoc](https://github.com/furrtek/portapack-havoc/)).
@@ -24,12 +24,14 @@ J'ai pris le **Bundle 2** du lien que j'ai donné en intro. Ce dernier est compo
 On retrouve aussi **3 antennes** : 
 - Une télescopique calibrée pour des fréquences de **40MHz** à **6GHz**.
 - Une **Wi-Fi** pour le **2.4GHz** et **5GHz**.
-- Une **antenne à fouet** (whip antenna) pour des fréquences de **700MHz** à **2700MHZ**. Ce type d'antenne a une base magnétique qui permet de la fixer sur des surfaces métalliques (comme des voitures). La partie en spirale s'appelle une **bobine de chargement** (coil). 
+- Une **antenne à fouet** (whip antenna) pour des fréquences de **700MHz** à **2700MHZ**. Ce type d'antenne a une base magnétique qui permet de la fixer sur des surfaces métalliques (comme des voitures).
 
-Et enfin, notre **HackRF Portapack** | **Un clic** sur le gros bouton pour l'allumer, 2 clics pour éteindre :)
+Et enfin, notre **HackRF Portapack** :
+
 ![Ecran HackRF Portapack](../../../assets/img/pages/radio/hackrf/presentation/top.JPEG)
-On ne va pas s'attarder sur le menu puisque que je ferais un article dédié pour tout ça. 
-L'avant du boitier se présente comme ça : 
+On ne va pas s'attarder sur le menu puisque que je ferais des articles dédiés pour tout ça. 
+L'avant du boitier se présente ainsi :
+
 ![Panneau avant HackRF Portapack](../../../assets/img/pages/radio/hackrf/presentation/front.JPEG)
 On y retrouve : 
 - Un endroit où y mettre une carte **MicroSD** (Il n'y en a pas de fourni dans le kit mais c'est important d'en mettre une pour accéder à + de fonctionnalités).
@@ -42,6 +44,7 @@ On y retrouve :
 - Enfin, **ANT** (**Ant**enna), un connecteur de type **SMA femelle** pour y connecter notre antenne.
 
 Pour ce qui est de l'arrière du boitier : 
+
 ![Panneau arrière HackRF Portapack](../../../assets/img/pages/radio/hackrf/presentation/back.JPEG)
 On a : 
 - Le port **USB** pour connecter le **HackRF** à un **PC** et le recharger aussi.
@@ -50,4 +53,14 @@ On a :
   - Un **CLKIN** (Clock Input) pour recevoir et se synchroniser avec une horloge externe
   - Un **CLKOUT** (Clock Output) pour fournir son propre signal d'horloge à d'autres appareils
 
-Et voilà, ça sera tout pour cette présentation, la suite sur les différentes fonctionnalités à venir :) 
+# Premier pas
+Avant de commencer, si vous avez un modèle différent du mien, identifizr bien quel type de **PortaPack** vous avez grâce à [ce site ](https://github.com/portapack-mayhem/mayhem-firmware/wiki/PortaPack-Versions). Ça pourrait avoir un impact sur la manière dont vous le mettrez à jour. 
+⚠️ Avant de l'allumer, mettez votre antenne, c'est pas bon du tout de la mettre ou de la changer quand le **HackRF** est allumé, ça risque de l'endommager.
+Bref, pour l'allumer, un clic sur le gros bouton, 2 clics pour l'éteindre.
+Normalement, le **HackRF** arrive flashé avec le dernier **firmware** mais vous pouvez quand même le faire manuellement en vous rendant sur le site [hackrf.app](https://hackrf.app/). Branchez votre **HackRF**, le site devrait le reconnaître et tout en bas, vous avez le bouton `Manage Firmware`.
+
+![HackRF App](../../../assets/img/pages/radio/hackrf/presentation/hackrfapp.png)
+Vous avez la possibilité de choisir la dernière version la plus stable, la version beta ou même un autre firmware custom.
+À noter que depuis ce site, vous allez pouvoir aussi gérer les fichiers de votre **HackRF** et même le contrôler.
+
+Voilà. À présent, vous pouvez commencer à vous amuser avec votre **HackRF Portapack** :)

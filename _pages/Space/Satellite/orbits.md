@@ -1,10 +1,10 @@
 ---
 title: "Comprendre les TLE et les orbites des satellites"
-date: "28-05-2024"
+date: "25-05-2024"
 description: "Explorez les six paramètres essentiels pour décrire une orbite et la représentation standardisée des TLE pour prédire le passage des satellites."
 thumbnail: "/assets/img/thumbnail/orbit.webp"
 ---
-Pour prédire le passage d'un satellite, il faut comprendre comment on décrit une orbite. Et pour ça, on a besoin de **6 paramètres**. Ils nous permettront d'avoir une représentation standardisée que l'on nomme **TLE**.
+Pour prédire le passage d'un satellite, il faut comprendre comment on décrit une orbite. Et pour ça, on a besoin de **6 paramètres**. Ils nous permettront d'avoir une représentation standardisée que l'on nomme **TLE** (**T**wo **L**ine **Elements**).
 Dans ce cours, on va explorer chacun de ces paramètres qui ont des noms barbares mais je vais tenter de les expliquer à ma manière avec une approche simpliste en utilisant le super site [Orbital Mechanics](https://orbitalmechanics.info/) alors tenez bon et ne fuyez pas :) 
 Je vous invite grandement pour chaque paramètre d'aller les tester sur le site.
 
@@ -77,6 +77,5 @@ Sur la première ligne, on a des informations concernant le satellite comme son 
 
 
 Et c'est bon, on a réussi à arriver jusqu'au bout, **BRAVO** 😎.
-Le but n'est pas de tout connaître par cœur mais d'avoir une idée de ce qu'on abordera par la suite. 
 Retenez surtout qu'on va souvent utiliser les **TLE** car c'est grâce à eux qu'on pourra prédire le passage d'un satellite à un endroit bien précis. 
-Pour ceux qui auraient besoin d'une autre représentation visuelle, y a [cette super vidéo](https://www.youtube.com/watch?v=QZrYaKwZwhI)
+Pour ceux qui auraient besoin d'une autre représentation visuelle, y a [cette super vidéo](https://www.youtube.com/watch?v=QZrYaKwZwhI.

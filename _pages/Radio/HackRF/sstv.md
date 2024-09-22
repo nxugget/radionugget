@@ -1,7 +1,7 @@
 ---
 title: "Transmission SSTV avec le HackRF Portapack"
 description: "Découvrez comment transmettre et recevoir des images en Slow Scan Television (SSTV) à l'aide du HackRF Portapack H2 One et du logiciel MMSTV"
-date: "25-05-2024"
+date: "30-05-2024"
 thumbnail: "/assets/img/thumbnail/sstv.webp"
 ---
 La **SSTV** (**S**low **S**can **T**elevision) est une méthode de transmission d'images avec des ondes radios. Ça existe depuis 1950 et ce n'est plus du tout utilisé aujourd'hui parce qu'envoyer une image, c'est quand même plus facile avec **Internet**. Néanmoins, pour les amateurs radios, c'est sympa à expérimenter.  
