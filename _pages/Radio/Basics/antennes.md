@@ -1,6 +1,6 @@
 ---
-title: "Comment choisir son antenne ?"
-description: "Explorez les notions de base pour comprendre le fonctionnement des antennes en radiofréquence afin de bien choisir la votre"
+title: "Comment choisir son antenne pour la SDR ? "
+description: "Explorez les notions de base pour comprendre le fonctionnement des antennes en radiofréquence afin de bien choisir la votre pour vos projets en SDR"
 date: "13-05-2024"
 thumbnail: "/assets/img/thumbnail/antennes.webp"
 ---
@@ -32,7 +32,7 @@ Alors, on va faire simple. Pour que notre signal radio soit efficacement transf�
 Il faut la voir comme la **résistance** d'un circuit électrique mais adaptée aux **courants alternatifs**. En **radiofréquence**, on voudra que l'**impédance** de l'antenne match avec celle de notre appareil de réception/émission. Une valeur est utilisée presque partout de manière général, c'est `50Ω`. C'est par exemple l'**impédance** des récepteurs **SDR**. Bref, ça signifie qu'on cherchera toujours à avoir une antenne au plus proche de ce `50Ω`.
 
 # Types d'antenne
-Ils existent tout un tas de type d'antenne donc on va pas pouvoir toutes les présenter, mais voyons quand même les 2 principales.
+Ils existent tout un tas de type d'antenne donc on va pas toutes les présenter, mais jetons un coup d'œil à 3 d'entre elles importantes à connaître.
 ## Dipôle
 L'antenne la plus basique que l'on puisse faire est une antenne **dipôle**. Dans sa version basique, il s'agira d'une antenne **demi-onde** (`λ/2`), avec chacun des pôles qui aura une longueur de `λ/4`. Cette dernière est alimenté en son milieu et se place de manière isolée dans l'espace et loin du sol.
 
@@ -48,6 +48,13 @@ Pour former ce plan de masse, on peut utiliser des tiges métalliques qu'on appe
 Autrement, on peut utiliser la terre, la mer, un toit de voiture, n'importe tant que c'est conducteur. D'ailleurs, certaines antennes de **talkie-walkie** en sont aussi à partir du moment où on le tient en main car notre corps fait office de **plan de masse**.
 
 ![Schema ground plane](../../../assets/img/pages/radio/radio_basics/antennes/antenne6.svg)
+
+## Yagi
+Les antennes **Yagi** utilisables des ondes [HF](https://fr.wikipedia.org/wiki/Haute_fr%C3%A9quence) aux ondes [UHF](https://fr.wikipedia.org/wiki/Ultra_haute_fr%C3%A9quence), sont des antennes **directives**. On les appelle aussi antennes *râteaux*, c'est celles que l'on a en général sur nos toits pour la télévision terrestre.
+L'idée est de partir sur un **dipôle** demi-onde (`λ/2`) ou une antenne de type *trombone*, et d'ajouter des éléments parasites non alimentés afin de **concentrer** l'énergie dans une direction. On aura des élements **directeurs**, plus courts que le **dipôle**, placés devant lui et des éléments **réflecteurs** qui eux, seront plus long à l'arrière. 
+
+![Schema Yagi](../../../assets/img/pages/radio/radio_basics/antennes/antennes7.svg)
+En augmentant le nombre d'éléments, l'**impédance** diminue et le **gain** augmente ↗️. Ces antennes sont très pratiques dans le cas où l'on souhaite travailler avec un signal qui vient d'une direction bien précise, afin de **concentrer** toute son énergie vers lui.
 
 # Conclusion
 Si vous êtes en possession de [ce genre de kit](https://fr.aliexpress.com/item/1005005952566458.html?spm=a2g0o.productlist.main.5.73d9dbXPdbXPEG&algo_pvid=525e2d1d-0980-4b25-9e4f-38905fefd577&algo_exp_id=525e2d1d-0980-4b25-9e4f-38905fefd577-2&pdp_npi=4%40dis%21EUR%2148.30%2148.30%21%21%2151.30%2151.30%21%4021059dbe17169245427093658e3802%2112000035000699472%21sea%21FR%214844539949%21&curPageLogUid=JaGxsn71xaP6&utparam-url=scene%3Asearch%7Cquery_from%3A), vous devriez déjà mieux comprendre comment ajuster votre antenne en fonction de ce que vous voulez faire. Vous allez pouvoir utiliser les différents accessoires fournis avec pour mettre en place votre **dipôle demi-onde** en ajustant la longueur des tiges selon ce que vous voulez écouter.
