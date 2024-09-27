@@ -38,7 +38,8 @@ L'antenne la plus basique que l'on puisse faire est une antenne **dipôle**. Dan
 
 ![Schema dipole](../../../assets/img/pages/radio/radio_basics/antennes/antenne4.svg)
 L'angle entre les **2 pôles** peut être ajuster afin de régler l'**impédance** de notre antenne. Dans le cas où ils sont droits comme sur le schéma, on aura une impédance de `75Ω`. En mettant un angle de `120°`, on aura nos `50Ω` comme sur [ce projet](../../Projects/NOAA.html).
-De plus, le **dipôle** peut être placé **horizontalement** ou **verticalement** selon la [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) des ondes que l'on souhaite exploiter.
+De plus, une **dipôle** peut être placé **horizontalement** ou **verticalement** selon la [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) des ondes que l'on souhaite exploiter.
+Enfin, ce type d'antenne concentre son énergie dans deux directions, la rendant très efficace lorsque l'on connaît la direction du signal que l'on souhaite recevoir.
 
 ## Ground plane
 Pour l'antenne **ground plane**, on va avoir un conducteur **vertical** d'une longueur d'un quart d'onde (`λ/4`) qui va être monté au-dessus d'un **plan de masse** que l'on appelle **ground plane**, d'où le nom. Ce plan de masse agit comme un **miroir** qui vient "compléter" l'antenne en réflétant les ondes devenant ainsi l'équivalent d'un **dipôle**.
@@ -48,6 +49,7 @@ Pour former ce plan de masse, on peut utiliser des tiges métalliques qu'on appe
 Autrement, on peut utiliser la terre, la mer, un toit de voiture, n'importe tant que c'est conducteur. D'ailleurs, certaines antennes de **talkie-walkie** en sont aussi à partir du moment où on le tient en main car notre corps fait office de **plan de masse**.
 
 ![Schema ground plane](../../../assets/img/pages/radio/radio_basics/antennes/antenne6.svg)
+Ces antennes sont **omnidirectionnelles** donc pratique quand on ne connaît pas forcément la direction du signal que l'on souhaite recevoir. 
 
 ## Yagi
 Les antennes **Yagi** utilisables des ondes [HF](https://fr.wikipedia.org/wiki/Haute_fr%C3%A9quence) aux ondes [UHF](https://fr.wikipedia.org/wiki/Ultra_haute_fr%C3%A9quence), sont des antennes **directives**. On les appelle aussi antennes *râteaux*, c'est celles que l'on a en général sur nos toits pour la télévision terrestre.
@@ -57,7 +59,7 @@ L'idée est de partir sur un **dipôle** demi-onde (`λ/2`) ou une antenne de ty
 En augmentant le nombre d'éléments, l'**impédance** diminue et le **gain** augmente ↗️. Ces antennes sont très pratiques dans le cas où l'on souhaite travailler avec un signal qui vient d'une direction bien précise, afin de **concentrer** toute son énergie vers lui.
 
 # Conclusion
-Si vous êtes en possession de [ce genre de kit](https://fr.aliexpress.com/item/1005005952566458.html?spm=a2g0o.productlist.main.5.73d9dbXPdbXPEG&algo_pvid=525e2d1d-0980-4b25-9e4f-38905fefd577&algo_exp_id=525e2d1d-0980-4b25-9e4f-38905fefd577-2&pdp_npi=4%40dis%21EUR%2148.30%2148.30%21%21%2151.30%2151.30%21%4021059dbe17169245427093658e3802%2112000035000699472%21sea%21FR%214844539949%21&curPageLogUid=JaGxsn71xaP6&utparam-url=scene%3Asearch%7Cquery_from%3A), vous devriez déjà mieux comprendre comment ajuster votre antenne en fonction de ce que vous voulez faire. Vous allez pouvoir utiliser les différents accessoires fournis avec pour mettre en place votre **dipôle demi-onde** en ajustant la longueur des tiges selon ce que vous voulez écouter.
-Dans le cas des antennes rétractables comme celles vendues avec ce style de [HackRF](https://fr.aliexpress.com/item/4000247041639.html?spm=a2g0o.order_list.order_list_main.4.4c3f5e5bxHkKxh&gatewayAdapt=glo2fra), on viendra ajuster la longueur de l'antenne pour qu'elle corresponde au **quart** de la **longueur d'onde** de la fréquence qu'on souhaite utiliser (`λ/4`).
-Bref, il existe une infinité de possibilités, n'hésitez pas à me contacter sur [Instagram](https://www.instagram.com/radionugget/) si vous avez des questions :)
-Si vous êtes intéressés par faire vos propres antennes ou tout simplement tester les performances de celles que vous achetées, je prépare un cours qui expliquera comment on évalue si notre antenne est **résonante** à une certaine fréquence.
+Vous devriez déjà mieux comprendre comment choisir votre antenne et ajuster sa longueur en fonction de ce que vous voulez recevoir.
+
+Il existe une infinité de possibilités, n'hésitez pas à me contacter sur [Instagram](https://www.instagram.com/radionugget/) si vous avez des questions :)
+Si vous êtes intéressés par faire vos propres antennes ou tout simplement tester les performances de celles que vous achetées, je prépare un cours qui expliquera comment on évalue si notre antenne est **efficace** pour une certaine fréquence.
