@@ -6,22 +6,20 @@ thumbnail: "/assets/img/thumbnail/orbit.webp"
 ---
 Pour prédire le passage d'un satellite, il faut comprendre comment on décrit une orbite. Et pour ça, on a besoin de **6 paramètres**. Ils nous permettront d'avoir une représentation standardisée que l'on nomme **TLE** (**T**wo **L**ine **Elements**).
 Dans ce cours, on va explorer chacun de ces paramètres qui ont des noms barbares mais je vais tenter de les expliquer à ma manière avec une approche simpliste en utilisant le super site [Orbital Mechanics](https://orbitalmechanics.info/) alors tenez bon et ne fuyez pas :) 
-Je vous invite grandement pour chaque paramètre d'aller les tester sur le site.
 
 # Le demi-grand axe
 ![Schema demi-grand axe](../../../assets/img/pages/space/satellite/orbit/orbit1.svg)
-Noté `a`, il représente la moitié du grand axe d'une ellipse.
+Noté `a`, il représente la moitié du **grand axe** d'une ellipse.
 Voilà ce que ça donne quand on modifie cette valeur : 
 ![Orbital Mechanics demi-grand axe](../../../assets/img/pages/space/satellite/orbit/orbit2.webp)
 
 # L'excentricité
-Noté `e`, ça représente l'aplatissement d'une ellipse. Elle se calcule à partir des longueurs du **demi-grand axe** `a` et du **demi-petit axe** `b` avec cette formule : 
-![Formule excentricité](../../../assets/img/pages/space/satellite/orbit/orbit5.svg)
-
+Noté `e`, ça représente l'aplatissement d'une ellipse. Elle se calcule à partir des longueurs du **demi-grand axe** `a` et du **demi-petit axe** `b` avec cette [formule](https://fr.wikipedia.org/wiki/Excentricité_orbitale#Calcul_de_l'excentricité_d'une_orbite).
 Pour `e=0`, on a un cercle parfait (orbite & chemin fermé).
 Pour `0<e<1`, on a une ellipse (orbite & chemin fermé). C'est ce type d'**excentricité** qu'on aura affaire pour les **satellites**.
 Pour `e=1`, on a une **parabole** (trajectoire ouverte).
 Pour `e>1`, on a une **hyperbole** (trajectoire ouverte).
+
 ![Schema excentricité](../../../assets/img/pages/space/satellite/orbit/orbit3.svg)
 Changement de `e` :
 ![Orbital Mechanics excentricité](../../../assets/img/pages/space/satellite/orbit/orbit4.webp)
@@ -78,4 +76,4 @@ Sur la première ligne, on a des informations concernant le satellite comme son 
 
 Et c'est bon, on a réussi à arriver jusqu'au bout, **BRAVO** 😎.
 Retenez surtout qu'on va souvent utiliser les **TLE** car c'est grâce à eux qu'on pourra prédire le passage d'un satellite à un endroit bien précis. 
-Pour ceux qui auraient besoin d'une autre représentation visuelle, y a [cette super vidéo](https://www.youtube.com/watch?v=QZrYaKwZwhI.
+Pour ceux qui auraient besoin d'une autre représentation visuelle, y a [cette super vidéo](https://www.youtube.com/watch?v=QZrYaKwZwhI).

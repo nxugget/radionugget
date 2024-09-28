@@ -1,7 +1,7 @@
 ---
 title: "Writeup Hack-A-Sat : Linky"
 description: "Writeup du challenge HackASat Linky"
-date: "03-06-2024"
+date: "30-05-2024"
 thumbnail: "/assets/img/thumbnail/linky.webp"
 ---
 Description du challenge : *Years have passed since our satellite was designed, and the Systems Engineers didn't do a great job with the documentation. Partial information was left behind in the user documentation and we don't know what power level we should configure the Telemetry transmitter to ensure we have 10 dB of Eb/No margin over the minimum required for BER (4.4 dB)*

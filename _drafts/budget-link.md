@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/budget_link.webp"
 ---
 Pour qu'une transmission radio fonctionne, il va falloir répondre à des exigences bien précises. En terme de débit, de taux d'erreur binaire ou même de disponibilités. 
 Le **bilan de liaison** (**budget link** en français) est un "outil" qui va comparer d'une part les **ressources** disponibles dans le système et d'autre part les **exigences** du service avec des calculs. Et ceux dans le but de savoir si l'un peut répondre à l'autre. 
-Pour la suite, je pars du principe que les notions vues dans [ce cours](../../Radio/Basics/gain-decibel.html) sont acquises :) 
+Pour la suite, je vous invite à connaître les notions vues dans [ce cours](../../Radio/Basics/power.html) :) 
 
 #  EIRP (Equivalent Isotropic Radiated Power)
 En français, la **PIRE** pour **P**uissance **I**sotrope **R**ayonnée **É**quivalente représente la mesure de la puissance rayonnée d'une antenne dans une direction spécifique par rapport à l'**antenne isotrope**. 
