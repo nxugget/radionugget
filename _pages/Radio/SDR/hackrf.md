@@ -1,5 +1,5 @@
 ---
-title: "Présentation du HackRF Portapack avec firmware Mayhem"
+title: "Présentation du HackRF Portapack"
 description: "Découvrez le HackRF-Portapack H2 One d'Aliexpress et son firmware Mayhem pour la SDR."
 date: "21-05-2024"
 thumbnail: "/assets/img/thumbnail/hackrf.webp"
@@ -22,7 +22,6 @@ Ce qu'on appelle le **HackRF Portapack**, c'est un boitier avec un écran **LCD*
 Voilà notre **HackRF Portapack** :
 
 ![Ecran HackRF Portapack](../../../assets/img/pages/radio/hackrf/presentation/top.JPEG)
-On ne va pas s'attarder sur le menu puisque que je ferais des articles dédiés pour tout ça. 
 L'avant du boitier se présente ainsi :
 
 ![Panneau avant HackRF Portapack](../../../assets/img/pages/radio/hackrf/presentation/front.JPEG)
