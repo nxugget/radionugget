@@ -33,8 +33,9 @@ Il faut la voir comme la **résistance** d'un circuit électrique mais adaptée 
 
 # Types d'antenne
 Ils existent tout un tas de type d'antenne donc on va pas toutes les présenter, mais jetons un coup d'œil à 3 d'entre elles importantes à connaître.
-## Dipôle
-L'antenne la plus basique que l'on puisse faire est une antenne **dipôle**. Dans sa version basique, il s'agira d'une antenne **demi-onde** (`λ/2`), avec chacun des pôles qui aura une longueur de `λ/4`. Cette dernière est alimenté en son milieu et se place de manière isolée dans l'espace et loin du sol.
+## Dipôle (Doublet)
+L'antenne la plus basique que l'on puisse faire est une antenne **doublet**. Elle existe en mode replié (qu'on appelle [trombone](https://rogerbeep.fr/les-cours-2/antennes-ouvertes-fermees/#:~:text=Une%20antenne%20est%20ferm%C3%A9e%20lorsque,est%20proche%20de%20200%20%CE%A9%20.)) et en mode classique qu'on appelle **dipôle**. C'est sur cette dernière qu'on va s'intéresser bien que la **trombone** suit le même principe. 
+Dans sa version basique, il s'agira d'une antenne **demi-onde** (`λ/2`), avec chacun des pôles qui aura une longueur de `λ/4`. Cette dernière est alimenté en son milieu et se place de manière isolée dans l'espace et loin du sol.
 
 ![Schema dipole](../../../assets/img/pages/radio/radio_basics/antennes/antenne4.svg)
 L'angle entre les **2 pôles** peut être ajuster afin de régler l'**impédance** de notre antenne. Dans le cas où ils sont droits comme sur le schéma, on aura une impédance de `75Ω`. En mettant un angle de `120°`, on aura nos `50Ω` comme sur [ce projet](../../Projects/NOAA.html).
