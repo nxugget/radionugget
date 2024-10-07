@@ -91,17 +91,41 @@ Si tout fonctionne, en théorie on pourrait s'arrêter là pour le projet, mais 
 ### Github
 Pour ce projet, j'ai décidé d'utiliser ce [dépôt Git](https://github.com/jekhokie/raspberry-noaa-v2) qui va grandement nous être utile. 
 Pour l'installer, on le `git clone` sur le **Raspberry**, puis on édite le fichier `config/settings.yml` pour y mettre nos coordonnées **géographiques** ainsi que d'autres paramètres selon nos besoins. 
-On a plus qu'à lancer l'installation et nous voilà avec un site web affichant tous les passages prévus des satellites, un enregistrement qui se lance automatiquement et une page **Capture** avec l'ensemble des images récupérées. Super pratique ! 
+Voici quelques exemples de paramètres que j'ai changé : 
+{% highlight bash %}
+# Les coordonnées de où est installée votre antenne.
+latitude: 37.2387771634851
+longitude: -115.80047482064876
+altitude: 1360
+
+# Le logiciel satdump est plus récent et plus efficace. 
+noaa_decoder: 'satdump'
+meteor_decoder: 'satdump'
+
+# Le signal au début et la fin du passage est très faible ce qui crée pas mal de bruit sur notre image. On peut alors rogner ces parties pour avoir une meilleure image. 
+noaa_crop_toptobottom: true
+
+# Perso, j'aime bien avoir une image naturelle sans les frontières et grilles.
+noaa_map_crosshair_enable: false
+...
+noaa_map_grid_degrees: 0.0
+...
+noaa_map_country_border_enable: false
+...
+noaa_map_state_border_enable: false
+{% endhighlight %}
+
+On a plus qu'à lancer l'installation en exécutant le script `./install_and_upgrade.sh` (ça prend du temps) et nous voilà avec un site web affichant tous les passages prévus des satellites, un enregistrement qui se lance automatiquement et une page **Capture** avec l'ensemble des images récupérées. Super pratique ! 
 ### Accès à distance 
-A l'aide du dépôt **Github** précédemment cité, un serveur web **nginx** est créé en `localhost` sur le **Raspberry** accessible donc que depuis le réseau local. 
+Après l'installation, un serveur web **nginx** est créé en `localhost` sur le **Raspberry** accessible donc que depuis le réseau local. 
 Si vous avez un **nom de domaine** et que vous souhaitez accéder à votre site depuis n'importe où, vous pouvez associer votre site à l'adresse IP de votre box internet. Grâce au tool **GitHub**, on a la possibilité de générer des certificats **HTTPS** très facilement pour améliorer la sécurité du site. Vous pouvez consulter [ce guide](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/tls_webserver.md) pour en savoir plus. Dans mon cas, ma station est accessible depuis [ici](https://station.radionugget.com).
 
 ### Prédiction
-On a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les [TLE](../Space/Satellite/orbits.html) (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres oribtaux** des objets en **orbitre terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
-Une fois récupérée, on a une base de donnée à jour contenant la position des satellites qui nous intéressent. 
-Ainsi, on peut faire appel à l'outil `predict` qui comme son nom l'indique, va prédire le passage des satellites en sa basant sur les **TLE**, et sur une **position géographique**. Ce dernier va nous donner une intervalle durant laquelle le satellite va passer en nous indiquant l'élévation maximale du passage. 
+Pour prédire le passage des satellites, on a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les [TLE](../Space/Satellite/orbits.html) (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres orbitaux** des objets en **orbite terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
+Une fois récupérée, on a une base de données à jour contenant la position des satellites qui nous intéressent. 
+Ainsi, on peut faire appel à l'outil `predict` qui va prédire le passage des satellites en sa basant sur les **TLE**, et sur la **position géographique** du fichier `setting.yml`. Ce dernier va nous donner un intervalle durant laquelle le satellite va passer en nous indiquant l'élévation maximale du passage. 
 Un exemple de la commande lancée manuellement : 
-```bash
+{% highlight bash %}
 > nugget@noaa:~ $ predict -p "NOAA 15" -t /home/nugget/.config/satdump/satdump_tles.txt
 1714330922 Sun 28Apr24 19:02:02    0  173  192   17  358   3297  35014 * 0.000000
 1714331020 Sun 28Apr24 19:03:40    7  175  196   23  359   2648  35014 * 0.000000
@@ -116,40 +140,29 @@ Un exemple de la commande lancée manuellement :
 1714331713 Sun 28Apr24 19:15:13    8  341  226   63   16   2543  35014 * 0.000000
 1714331810 Sun 28Apr24 19:16:50    1  343  230   69   21   3185  35014 * 0.000000
 1714331830 Sun 28Apr24 19:17:10    0  344  230   70   23   3314  35014 * 0.000000
-```
-Ici, on demande les prédictions du satellite **NOAA 15** en précisant un fichier **TLE** à jour. L'élvation est indiqué par la **5ème** colonne.
+{% endhighlight %}
+Ici, on demande les prédictions du satellite **NOAA 15** en précisant un fichier **TLE** à jour. L'élévation est indiqué par la **5ème** colonne.
 On voit que le prochain passage aura lieu entre **19:02** (première ligne) et **19:17** (dernière ligne) et que l'élévation maximale aura lieu à **19:09** (6ème ligne) et sera de **64°**. 
-À noter que j'ai configuré l'outil pour qu'il fasse les enregistrements uniquement pour les passages avec une élévation supérieure à **40°**, autrement, la réception n'est pas top. 
+
+### Traitement du signal
 Mais au final, qu'est ce qu'on enregistre, des images ? Et bien non. En réalité, l'enregistrement consiste en la récupération d'un fichier audio ! 
-La commande principale est celle-ci : 
-```bash
-timeout "${RECORD_TIME}" rtl_fm -f "${FREQUENCY}M" -s 60k -g 40 -p 55 - | sox -t raw -r 60k -es -b 16 -c 1 - "${wav_file}" rate 11025
-```
-Décortiquons là en prenant comme exemple la prédiction de **NOAA 15** vu précédemment : 
-- `timeout "${RECORD_TIME}"` -> On laisse tourner la commande pendant `${RECORD_TIME}` secondes. Dans notre cas, ça serait la soustraction entre le timestamp de la dernière ligne et la première soit `1714331830-1714330922=908`  qui vaut environ **15 minutes**. 
-- `rtl_fm` est la commande permettant de démarrer l'enregistrement avec notre clé **SDR**. On lui passe comme argument : 
-	- `-f` -> La fréquence en **MHz** qui est de **137.62** pour **NOAA 15**.
-	- `-s` -> La fréquence d'échantillonage en **kHz**. Dans notre cas, on capture **60 000** échantillons du signal chaque seconde. **60k** est une bonne valeur pour conserver une bonne qualité sans avoir un fichier trop lourd.  
-	- `-g` -> Le [gain](../Radio/Basics/power.html) est une mesure de l'amplification du signal par rapport au bruit de fond. Plus cette valeur est élevée, plus on pourra percevoir des signaux faibles mais en contrepartie il y aura plus de bruit. Il faut alors trouver un juste milieu en faitant plusieurs essais afin de conserver le signal sans avoir trop de bruit. À ce jour, je n'ai pas encore trouvé la valeur idéale mais **40** me convient. 
-	- `-p` -> Il s'agit de la **préaccentuation**. Il s'agit d'une technique pour compenser les pertes et améliorer le bruit en fonction du récepteur **SDR**. **55** semble faire unanimité pour ma clé **RTL-SDR V4**
-	- `-` -> C'est juste pour dire de ne pas rediriger le résultat de la commande dans un fichier ou sur le terminal mais va être redrigié vers la commande `sox` avec le `|`. 
-- `sox` est une commande nous permettant de faire des opérations sur des fichiers audio. Ici, on va s'en servir pour obtenir un fichier `.wav` : 
-	- `-t` -> On indique qu'en entrée, on a un fichier brut `.raw`. (C'est ce que nous sort `rtl_fm`).
-	- `-r` -> On précise à quel fréquence d'échantillonage est le fichier brut. Donc, il faut que ça soit aussi **60k**.
-	- `-es` -> On spécifie l'encodage des échantillons. `es` désigne un encodage avec **virgule flotante avec signe**. C'est juste pour avoir une représentation plus précise qu'avec un encodage avec **entier**. 
-	- `-b` -> C'est la résolution des échantillons en **bits**. Donc là, nos échantillons sont représenté par des nombres en **16 bits**. C'est une norme courante dans le traitement numérique cette valeur. Ça permet des échantillons pas trop lourd mais avec une précision suffissante quand même. 
-	- `-c` -> Le nombre de canal, faut le spécifier et comme on est pas en stéréo, on met **1** ce qui signifie **mono** donc. 
-	- `rate` -> On réduit la fréquence d'échantillonage à **11025Hz** car le tool qu'on utilisera par la suite pour la conversion demande cette valeur. 
-  
-### ~~Magie~~ Conversion 
-Ok, à présent, on a un super fichier audio. Il nous reste plus qu'à le transformer en une image à l'aide du logiciel `WXtoIMG`. Ce dernier prend uniquement en entrée notre fichier `.wav` et s'occupe de faire la magie tout seul. On peut lui spécifier un mode de transformation pour l'image. Ce dernier va combiner les 2 images reçues du satellite pour en créer une selon notre besoin. Par exemple, on peut en générer une thermique comme celle qu'on a vu au début mais on peut aussi lui demander de coloriser l'image du mieux qu'il peut et même afficher les frontières le long des mers et océans. Voici un des résultats que j'ai reçue le **18 avril** par **NOAA 18** :  
-![Image NOAA MSA](../../assets/img/pages/projects/noaa/image_couleur.jpg)
-Les images que je récupèrent sont disponibles sur ma station [juste ici](https://station.radionugget.com/captures).
+La commande principale ressemble à ça : 
+{% highlight bash %}
+./satdump live noaa_apt --source $receiver --samplerate $samplerate $ppm_correction --frequency "${NOAA_FREQUENCY}e6" --sdrpp_noise_reduction $gain_option $GAIN  $crop_topbottom --start_timestamp $PASS_START --save_wav $finish_processing --timeout $CAPTURE_TIME 
+{% endhighlight %}
+On va pas rentrer dans les détails de chacun des arguments mais cette commande permet d'enregistrer le signal et de le traiter en même temps afin de convertir le **signal audio** en une **image**. Vous trouverez des infos sur les arguments [ici](https://docs.satdump.org/pipelines.html) et [ici](https://docs.satdump.org/sdr_options.html).
+
+### Récupération des images
+Une fois tout le traitement terminé, [satdump](../Space/Satellite/satdump.html) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
+Voici un exemple de la même image de **NOAA 19** reçue mais avec un traitement différent :
+![NOAA images](../../assets/img/pages/projects/noaa/image_noaa.jpg)  
+Comme vous pouvez le voir, il y a pas mal de bandes en plein milieu, ce sont des interférences dues à mon antenne qui n'est pas parfaite. J'y travaille afin d'avoir une image parfaitement nette.
+Les images que je récupère sont disponibles sur ma station [juste ici](https://station.radionugget.com/captures).
 
 # Suite et Améliorations
 ## METEOR
-Si vous avez tout correctement configuré, vous avez du voir qu'il y a 2 autres satellites appelés **METEOR** qui sont récupérés. Ce sont aussi des satellites météos qui émettent sur les `137MHz`. C'est pour cela qu'avec le même matériel que pour les **NOAA**, vous pouvez les recevoir. Plus d'infos sur ces satellites russes [ici](../Space/Satellite/meteor.html).
+Si vous avez tout correctement configuré, vous avez dû voir qu'il y a 2 autres satellites appelés **METEOR** qui sont récupérés. Ce sont aussi des satellites météos qui émettent sur les `137MHz`. C'est pour cela qu'avec le même matériel que pour les **NOAA**, vous pouvez les recevoir. Plus d'infos sur ces satellites russes [ici](../Space/Satellite/meteor.html).
 
 ## HRPT
-En réalité, ces satellites peuvent envoyer de plus belles images que ça. On l'a dit, mais le protocole **APT** date de **1960** alors que ces satellites ont été envoyés dans les années **2000**. En fait, c'est juste pour une question de rétro-compatibilité avec de vieux équipements. Mais si non, les météorologues vont utiliser un protocole plus récent, le [HRPT](https://en.wikipedia.org/wiki/High-resolution_picture_transmission) ( **H**igh-**R**esolution **P**icture **T**ransmissions). Les **NOAA** envoient avec ce mode sur des fréquences plus hautes, **1700MHz**. Leur récéption demande plus de conaissance et surtout une antenne tout autre. Il s'agit de la suite logique de ce projet afin d'avoir des images toujours plus belles car là où l'**APT** nous donnait du **4km/pixel**, l'**HRPT** nous donne du **1km/pixel**. C'est comme passé d'un écran **FULL HD** à de la **4K** :)  
+En réalité, ces satellites peuvent envoyer de plus belles images que ça. On l'a dit, mais le protocole **APT** date de **1960** alors que ces satellites ont été envoyés dans les années **2000**. En fait, c'est juste pour une question de rétro-compatibilité avec de vieux équipements. Mais sinon, les météorologues vont utiliser un protocole plus récent, le [HRPT](https://en.wikipedia.org/wiki/High-resolution_picture_transmission) ( **H**igh-**R**esolution **P**icture **T**ransmissions). Les **NOAA** envoient avec ce mode sur des fréquences plus hautes, **1700MHz**. Leur réception demande plus de connaissance et surtout une antenne tout autre. Il s'agit de la suite logique de ce projet afin d'avoir des images toujours plus belles car là où l'**APT** nous donnait du **4km/pixel**, l'**HRPT** nous donne du **1km/pixel**. C'est comme passé d'un écran **FULL HD** à de la **4K** :)  
 

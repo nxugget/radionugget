@@ -54,7 +54,7 @@ Ces antennes sont **omnidirectionnelles** donc pratique quand on ne connaît pas
 
 ## Yagi
 Les antennes **Yagi** utilisables des ondes [HF](https://fr.wikipedia.org/wiki/Haute_fr%C3%A9quence) aux ondes [UHF](https://fr.wikipedia.org/wiki/Ultra_haute_fr%C3%A9quence), sont des antennes **directives**. On les appelle aussi antennes *râteaux*, c'est celles que l'on a en général sur nos toits pour la télévision terrestre.
-L'idée est de partir sur un **dipôle** demi-onde (`λ/2`) ou une antenne de type *trombone*, et d'ajouter des éléments parasites non alimentés afin de **concentrer** l'énergie dans une direction. On aura des élements **directeurs**, plus courts que le **dipôle**, placés devant lui et des éléments **réflecteurs** qui eux, seront plus long à l'arrière. 
+L'idée est de partir sur un **doublet** demi-onde (`λ/2`), et d'ajouter des éléments parasites non alimentés afin de **concentrer** l'énergie dans une direction. On aura des élements **directeurs**, plus courts que le **doublet**, placés devant lui et des éléments **réflecteurs** qui eux, seront plus long à l'arrière. 
 
 ![Schema Yagi](../../../assets/img/pages/radio/radio_basics/antennes/antennes7.svg)
 En augmentant le nombre d'éléments, l'**impédance** diminue et le **gain** augmente ↗️. Ces antennes sont très pratiques dans le cas où l'on souhaite travailler avec un signal qui vient d'une direction bien précise, afin de **concentrer** toute son énergie vers lui.
