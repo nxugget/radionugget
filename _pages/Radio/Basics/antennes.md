@@ -4,7 +4,7 @@ description: "Explorez les notions de base pour comprendre le fonctionnement des
 date: "13-05-2024"
 thumbnail: "/assets/img/thumbnail/antennes.webp"
 ---
-Une antenne n'est rien de plus qu'un morceau de métal. Son but est de transformer une **énergie électrique** en une **onde électromagnétique** pour transmettre un **signal radio** et inversement pour en recevoir. Nous allons dans ce cours voir les différentes notions importantes à comprendre afin de bien choisir son antenne, que ça soit pour un [HackRF](../SDR/hackrf.html), un projet [SDR](../SDR/sdr.html) ou n'importe.
+Une antenne n'est rien de plus qu'un morceau de métal. Son but est de transformer une **énergie électrique** en une **onde électromagnétique** pour transmettre un **signal radio** et inversement pour en recevoir. Nous allons dans ce cours voir les différentes notions importantes à comprendre afin de bien choisir son antenne, que ça soit pour un projet [SDR](../SDR/sdr.html) ou n'importe.
 
 # Fréquence
 Pour choisir son antenne, il va d'abord falloir savoir sur quelle **fréquence** on veut travailler. Mais d'abord, c'est quoi la **fréquence** ?

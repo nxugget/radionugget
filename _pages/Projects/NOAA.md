@@ -75,7 +75,7 @@ Voilà le rendu final de l'antenne sur le toit orienté plein **sud** dans mon c
 Évidemment, la parabole et l'antenne râteau n'ont rien à voir pour ce projet. 
 ### Raspberry
 Pour ce projet, j'utilise un **Raspberry 4 model B** qui tourne sur **Raspbian lite OS** en **64-bits**. Il n'aura pas d'**interface graphique** afin d'éviter toutes fréquences parasites provoquées par la consommation du **CPU** et de la **RAM** à cause des composants graphiques. 
-Ce dernier sera placé dans les combles dans un tupperware pour le protéger de la poussière. Pour le récepteur **SDR**, j'utilise la clé **RTL-SDR V4**. Elle sera reliée à l'antenne par **11m** de câble coaxial **TV** au pif mais c'est mieux de prendre un bon câble style du **RG58**
+Ce dernier sera placé dans les combles dans un tupperware pour le protéger de la poussière. Pour le récepteur **SDR**, j'utilise la clé **RTL-SDR V4**. Elle sera reliée à l'antenne par **5m** de câble coaxial **TV** de récup, mais c'est mieux de prendre un bon câble style du **RG58**.
 
 ![RTL-SDR V4 sur Raspberry](../../assets/img/pages/projects/noaa/tupperware.jpg)
 
