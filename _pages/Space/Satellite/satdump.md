@@ -17,7 +17,7 @@ Mais on va pas trop s'y attarder, ça reste intuitif, passons plutôt à l'ongle
 ![Settings SatDump](../../../assets/img/pages/space/satellite/satdump/satdump2.png)
 Ici, on va venir régler la position de notre récepteur (ça servira pour les prédictions de passage des satellites).
 Donc, on y met notre **latitude**, **longitude**, **altitude**, éventuellement les couleurs (si on les veut) qui seront affichées sur les images qu'on récupère.
-On voit aussi en bas la dernière fois que les [TLE](orbits.html) ont été mis à jour.
+On voit aussi en bas la dernière fois que les [TLE](tle.html) ont été mis à jour.
 Ceci étant fait, allons dans l'onglet principal **Recorder**. 
 
 # Recorder
