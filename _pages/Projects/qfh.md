@@ -1,6 +1,6 @@
 ---
 title: "Fabrication d'une antenne quadrifilaire (QFH)"
-date: "17-10-2024"
+date: "21-10-2024"
 description: "Apprenez à fabriquer votre propre antenne quadrifilaire (QFH) faite maison (DIY) pour la fréquence 137MHz afin de recevoir des images satellites NOAA et METEOR"
 thumbnail: "/assets/img/thumbnail/qfh.webp"
 ---
