@@ -32,8 +32,8 @@ Pour décoder une image, le logiciel **SSTV** attend en entrée le signal audio.
 Pour réaliser ce câble virtuel, le plus simple est d'installer [VB-cable](https://vb-audio.com/Cable/).
 
 ## Matériel
-L'idéal pour recevoir un bon signal serait de se faire une antenne spécialement calibrée pour la fréquence à laquelle l'**ISS** envoie son signal. Comme j'avais la flemme, j'ai utilisé ce que j'avais déjà à savoir une antenne **QFH 137MHz** et une antenne **Yagi** pour la télévision terrestre. 
-L'antenne **Yagi** étant **directive**, il va falloir suivre la position de l'**ISS** à la main, y a pleins d'applis pour la tracker. Pour l'antenne **QFH**, elle est **omnidirectionnelle** donc rien de spécial à faire. 
+L'idéal pour recevoir un bon signal serait de se faire une antenne spécialement calibrée pour la fréquence à laquelle l'**ISS** envoie son signal. Comme j'avais la flemme, j'ai utilisé ce que j'avais déjà à savoir une antenne [QFH 137MHz](../../Projects/qfh.html) et une antenne **Yagi** pour la télévision terrestre. 
+L'antenne **Yagi** étant **directive**, il va falloir suivre la position de l'**ISS** à la main, y a pleins d'applis pour la tracker. Pour l'antenne [QFH](../../Projects/qfh.html), elle est **omnidirectionnelle** donc rien de spécial à faire. 
 Côté **SDR**, n'importe quel récepteur fera l'affaire, j'ai eu des résultats correctes avec la clé [RTL-SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html) et le [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html).
 
 #  Réception
@@ -58,3 +58,4 @@ On a plus qu'à lancer l'audio depuis **Audacity** et automatiquement, le logici
 Voici quelques exemples d'images que j'ai reçue, à gauche avec l'antenne **QFH** et à droite avec la **Yagi**  : 
 ![ARISS SSTV](../../../assets/img/pages/radio/sdr/sstv/sstv6.jpg)
 
+Si vous voulez vous entraîner à décoder des signaux **SSTV**, vous avez des challenges comme [celui-ci](https://www.root-me.org/fr/Challenges/Reseau/RF-Transmission-satellite) sur **Root-me** ou [celui-là](https://app.hackthebox.com/challenges/Signals) sur **HackTheBox**.

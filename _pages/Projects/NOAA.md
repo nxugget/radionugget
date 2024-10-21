@@ -47,7 +47,8 @@ Ainsi, je vous recommande de lire les 2 articles que j'ai fais, [le premier](../
 # Mise en place du projet
 ## Partie matérielle
 ### Fabrication de l'anntenne
-Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. Ce n'est pas l'antenne optimale pour ce projet (à cause de sa [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml)) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter.
+Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. De fait, son **diagramme de rayonnement** sera dirigé vers le ciel. Ça permet aussi de grandement réduire les interférences en provenance des signaux terrestres polarisés **veriticalement**.
+Malgré tout ça, ce n'est pas l'antenne optimale pour ce projet (à cause de sa [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml)) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter. Si non, on pourrait directement partir sur une antenne [QFH](../../Projects/qfh.html).
 Les signaux **APT** sont très résistants donc au final, même avec une antenne non parfaite, on recevra quand même des trucs, le plus important, c'est surtout d'avoir un ciel dégagé avec l'antenne placée le plus haut possible.
 Comme vu sur les cours des antennes, pour qu'elle soit **résonnante** à la fréquence de **137MHz**, on peut faire le calcul suivant : `λ=300/137≈2.18m`.
 On va faire une antenne **demi-onde** donc elle devra faire une longueur de `2.18/2` soit `1.09m`. 

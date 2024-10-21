@@ -25,7 +25,7 @@ Pour vérifier, on peut utiliser [ce site](https://usradioguy.com/meteor-satelli
 ![METEOR M2 status](../../../assets/img/pages/space/satellite/meteor/meteor3.png)
 
 # Place à l'écoute
-Côté antenne, j'utilise une **QFH** pour les `137MHz`. Elle possède une **polarisation circulaire gauche** ce qui est parfait pour les **METEOR** puisqu'ils émettent avec une **polarisation circulaire droite**.
+Côté antenne, j'utilise une [QFH](../../Projects/qfh.html) pour les `137MHz`. Elle possède une **polarisation circulaire gauche** ce qui est parfait pour les **METEOR** puisqu'ils émettent avec une **polarisation circulaire droite**.
 Pour la réception, on va utiliser [SatDump](./satdump.html). Je ne vais pas rentrer dans tous les détails de configuration, j'ai déjà fait un cours sur **SatDump** [ici](./satdump.html) :) 
 D'abord, à l'aide de la section `Tracking` de **SatDump** ou en utilisant [un site web](https://www.n2yo.com/?s=33591), on va check quand est-ce que le satellite va passer. Cette section nous permet aussi de savoir "où en est" le satellite nottament en observant son **élevation**.
 
