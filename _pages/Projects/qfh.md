@@ -56,7 +56,7 @@ Pour la courbure, plusieurs techniques existent mais dans mon cas, j'ai fait la 
 
 ![Schema courbure QFH](../../assets/img/pages/projects/qfh/qfh13.svg)
 
-⚠️ MAIS ATTENTION, les signaux satellites qu'on veut recevoir ont une **polarisation circulaire DROITE** (**RHCP**). Ça veut dire qu'il faut courber nos tubes dans le sens **antihoraire** quand on regarde depuis le haut afin de donner à notre antenne une **polarisation circulaire GAUCHE** (**LHCP**) !
+⚠️ MAIS ATTENTION, les signaux satellites qu'on veut recevoir ont une **polarisation circulaire DROITE** (**RHCP**). Ça veut dire qu'il faut courber nos tubes dans le sens **antihoraire** quand on regarde depuis le haut.
 Quand on est satisfait de sa courbure, on peut fixer définitivement les coudes aux tubes. J'avais la chance d'avoir accès à de l'abrasure forte qui est plus simple et plus rapide que la soudure à l'étain. 
 
 ![DIY QFH](../../assets/img/pages/projects/qfh/qfh12.webp)
