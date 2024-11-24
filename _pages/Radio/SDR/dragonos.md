@@ -5,14 +5,13 @@ description: "Découvrez DragonOS, une distribution Linux conçue pour la radio 
 thumbnail: "/assets/img/thumbnail/dragonos.webp"
 ---
 La distribution [DragonOS](https://cemaxecuter.com/) est un fork de [Lubuntu](https://lubuntu.fr/) mais spécialisé pour la [SDR](sdr.html). Elle possède déjà un grand nombre d'outils installés bien pratiques comme par exemple [GNURadio](https://www.gnuradio.org/). C'est super cool pour gagner du temps car nombre de ces tools en radio sont vieux et peuvent être compliqués à mettre en place. 
-Malgré ces gros avantages, en fin d'article, j'expliquerai pourquoi je ne pense pas que ce soit la meilleure option, même pour les débutants.
 
 # Installation
 Pour récupérer l'**iso**, on se rend juste [ici](https://sourceforge.net/projects/dragonos-focal/files/latest/download). Ensuite, il nous faut un **hyperviseur** comme **VirtualBox** ou **VMWare**, peu importe. Dans mon cas, comme je suis sur **Windows**, je vais rester au plus simple avec **VirtualBox** que l'on peut télécharger directement [ici](https://www.virtualbox.org/wiki/Downloads). Pour les **Mac ARM**, il faudra utiliser **VMWare** :) 
 On peut lancer **VirtualBox** et cliquer sur le bouton **New** afin d'y importer notre **iso**.
 
 ![VirtualBox New](../../../assets/img/pages/radio/sdr/dragonos/dragonos1.png)
-On peut cliquer sur **Next** pour allouer nos ressources matérielles. Je ne sais pas trop ce qui est le mieux, mais pour la **mémoire vive**, **4Go** devrait faire l'affaire. Dans le doute, comme il y a des logiciels qui peuvent être très gourmands, je mets **8Go** (8192Mb). Pour le **CPU**, pareil, ça dépend de votre configuration, je le monte à **6** mais **2** ou **4** devraient suffire. 
+On clique sur **Next** pour allouer nos ressources matérielles. Pour la **mémoire vive**, **4Go** devrait faire l'affaire. Dans le doute, comme il y a des logiciels qui peuvent être très gourmands, je mets **8Go** (8192Mb). Pour le **CPU**, pareil, ça dépend de votre configuration, je le monte à **6** mais **2** ou **4** devraient suffire. 
 
 ![VirtualBox Hardware](../../../assets/img/pages/radio/sdr/dragonos/dragonos2.png)
 Puis, on reclique sur **Next** pour allouer l'espace disque. Il faut le mettre à **30Go** minimum puisque vous rencontrerez plus tard une étape pour laquelle les **30Go** minimum seront nécessaires.
@@ -55,10 +54,3 @@ Enfin, on choisit quel dossier de notre machine hôte on veut partager et on coc
 Si jamais vous avez une erreur comme quoi vous n'avez pas les permissions, ouvrez un **terminal** et tapez `sudo adduser [your-user] vboxsf` puis redémarrez la **VM** et ça devrait être bon.
 
 Et voilà, **DragonOS** est prêt à être utilisé !
-
-
-# Mon avis
-Alors, cette distribution est une solution très pratique pour gagner du temps, bien qu'on puisse s'en passer et installer nos tools directement en local sur notre machine hôte. Je préfère d'ailleurs cette option pour des questions de rapidité, car faire de la **SDR** sur une **VM** peut être très gourmand ce qui peut rendre de nombreuses tâches plus longues. On peut évidemment allouer de plus grosses ressources, mais avec un ordinateur portable classique, on en a pas toujours l'occasion. Après, en tant que hôte principal comme sur un **Raspberry**, je n'ai pas essayé mais ça doit être plus rapide déjà.
-De plus, apprendre à configurer soi-même les logiciels, installer les bonnes librairies permet de mieux comprendre ce que l'on fait et surtout d'être plus efficace pour debugger. 
-C'est pour cela que même pour un débutant, je ne recommande pas d'installer directement **DragonOS** afin d'y aller étape par étape. 
-D'autre part, au fil de mon apprentissage, je reviendrai sur cet avis si je me rends compte que certains tools bien spécifiques sont vraiment une horreur à configurer :)
