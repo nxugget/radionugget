@@ -1,7 +1,7 @@
 ---
 title: "Writeup RingZer0 CTF : You Turn Me On And Off"
 description: "Writeup du challenge RingZer0 CTF You Turn Me On And Off"
-date: "04-07-2024"
+date: "27-06-2024"
 thumbnail: "/assets/img/thumbnail/turnme.webp"
 ---
 Description du challenge : *We captured alien radio data... Can you crack their message?*

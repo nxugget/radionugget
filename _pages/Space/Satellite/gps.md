@@ -1,6 +1,6 @@
 ---
 title: "Comprendre les systèmes de positionnement par satellites"
-date: "27-06-2024"
+date: "04-07-2024"
 description: "Explorez les principes fondamentaux des systèmes de positionnement par satellites (GNSS), y compris le GPS, et comprenez comment ils déterminent des positions géographiques précises"
 thumbnail: "/assets/img/thumbnail/gps.webp"
 ---

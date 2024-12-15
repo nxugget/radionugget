@@ -1,6 +1,6 @@
 ---
 title: "Satdump GUI pour récupérer des images satellites"
-date: "12-07-2024"
+date: "11-07-2024"
 description: "Explorez l'interface graphique du logiciel SatDump permettant de faciliter la récupération de données satellites en temps réel"
 thumbnail: "/assets/img/thumbnail/satdump.webp"
 ---

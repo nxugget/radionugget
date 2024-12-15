@@ -1,7 +1,7 @@
 ---
 title: "Writeup Hack-A-Sat : Fiddlin' John Carson"
 description: "Writeup du challenge HackASat Fiddlin' John Carson"
-date: "20-07-2024"
+date: "20-08-2024"
 thumbnail: "/assets/img/thumbnail/kepler.webp"
 ---
 Description du challenge : *Your spacecraft has provided its Cartesian ICRF position (km) and velocity (km/s). What is its orbit (expressed as Keplerian elements)?*

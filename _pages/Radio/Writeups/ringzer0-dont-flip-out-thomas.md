@@ -1,7 +1,7 @@
 ---
 title: "Writeup RingZer0 CTF : Don't flip out, Thomas!"
 description: "Writeup du challenge RingZer0 CTF Don't flip out, Thomas!"
-date: "11-07-2024"
+date: "12-07-2024"
 thumbnail: "/assets/img/thumbnail/thomas.webp"
 ---
 Description du challenge : *The aliens' capabilities have advanced and they've decided to improve the reliability of their transmissions. Can you crack their message?*

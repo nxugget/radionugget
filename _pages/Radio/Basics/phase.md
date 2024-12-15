@@ -1,7 +1,7 @@
 ---
 title: "Les notions de phase et de déphasage d'un signal "
 description: "Explorez la notion de phase dans les signaux, en apprenant à identifier les différents types de déphasage, tels que l'opposition de phase et la quadrature de phase."
-date: "17-08-2024"
+date: "17-07-2024"
 thumbnail: "/assets/img/thumbnail/phase.webp"
 ---
 Les signaux ne se comportent pas tous de la même manière dans le temps entre eux. On va voir dans ce cours, la notion de **phase** et comment le **déphasage** peut modifier l'alignement des ondes.
