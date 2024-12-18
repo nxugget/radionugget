@@ -47,10 +47,7 @@ Pour l'antenne **ground plane**, on va avoir un conducteur **vertical** d'une lo
 Pour former ce plan de masse, on peut utiliser des tiges métalliques qu'on appelle des **radiants** réparties uniformement autour de la base donnant à notre antenne une apparence d'araignée 🕷️. Pareil que pour le **dipôle**, si on veut une antenne à `50Ω`, il faudra un angle de `120°` entre les brins.
 
 ![Schema ground plane radiales](../../../assets/img/pages/radio/radio_basics/antennes/antenne5.svg)
-Autrement, on peut utiliser la terre, la mer, un toit de voiture, n'importe tant que c'est conducteur. D'ailleurs, certaines antennes de **talkie-walkie** en sont aussi à partir du moment où on le tient en main car notre corps fait office de **plan de masse**.
-
-![Schema ground plane](../../../assets/img/pages/radio/radio_basics/antennes/antenne6.svg)
-Ces antennes sont **omnidirectionnelles** donc pratique quand on ne connaît pas forcément la direction du signal que l'on souhaite recevoir. 
+Autrement, on peut utiliser la terre, la mer, un toit de voiture, n'importe tant que c'est conducteur. 
 
 ## Yagi
 Les antennes **Yagi** utilisables des ondes [HF](https://fr.wikipedia.org/wiki/Haute_fr%C3%A9quence) aux ondes [UHF](https://fr.wikipedia.org/wiki/Ultra_haute_fr%C3%A9quence), sont des antennes **directives**. On les appelle aussi antennes *râteaux*, c'est celles que l'on a en général sur nos toits pour la télévision terrestre.
@@ -63,4 +60,3 @@ En augmentant le nombre d'éléments, l'**impédance** diminue et le **gain** au
 Vous devriez déjà mieux comprendre comment choisir votre antenne et ajuster sa longueur en fonction de ce que vous voulez recevoir.
 
 Il existe une infinité de possibilités, n'hésitez pas à me contacter sur [Instagram](https://www.instagram.com/radionugget/) si vous avez des questions :)
-Si vous êtes intéressés par faire vos propres antennes ou tout simplement tester les performances de celles que vous achetées, je prépare un cours qui expliquera comment on évalue si notre antenne est **efficace** pour une certaine fréquence.
