@@ -1,7 +1,7 @@
 ---
 title: "Writeup Hack-A-Sat : Linky"
 description: "Writeup du challenge HackASat Linky"
-date: "19-12-2024"
+date: "20-12-2024"
 thumbnail: "/assets/img/thumbnail/linky.webp"
 ---
 Description du challenge : *Years have passed since our satellite was designed, and the Systems Engineers didn't do a great job with the documentation. Partial information was left behind in the user documentation and we don't know what power level we should configure the Telemetry transmitter to ensure we have 10 dB of Eb/No margin over the minimum required for BER (4.4 dB)*.
@@ -46,7 +46,7 @@ Calculate and provide the receive antenna gain in dBi:
 Ok, ça fait pas mal d'informations. Première question, on doit calculer le gain de l'**antenne réceptrice**. 
 
 #  1. Calcul du gain 
-Pour calculer le gain, on va utiliser la formule `G = 10log(n4πa/λ^2)` trouvée sur ce [site](https://calculator.academy/antenna-gain-calculator-2/).
+Pour calculer le gain, on va utiliser la formule `G = 10log(n4πa/λ^2)` ([lien formule](https://calculator.academy/antenna-gain-calculator-2/)).
 - `n` -> l'**efficacité** de réception de l'antenne. Ça correspond au rapport entre l’énergie électromagnétique captée et l’énergie réellement transmise au récepteur. Ça dépend nottament des matériaux utilisés pour fabriquer la parabole, son design et d'autres trucs. Dans notre cas, elle nous est donnée, elle vaut `0.55`.
 - `λ` -> la **longueur d'onde**. On l'a aussi, elle vaut `0.025m`. 
 - `a` -> la surface d'**aperture physique** de la parabole. Alors, ça on l'a pas mais on peut le calculer facilement. C'est juste la surface réelle qui capte les ondes. On nous donne le diamètre de notre parabole donc au final, sa surface physique, c'est juste son aire qui se calcule avec la formule `π*r^2` avec `r` le rayon. 
@@ -81,7 +81,7 @@ Prochaine tâche, on doit calculer le [rapport gain sur température de bruit](h
 
 #  2. Calcul du G/T (Gain-To-Noise Temperature)
 Le **G/T** est une mesure de performance d’une antenne, exprimant le **gain de l’antenne** par rapport au **bruit thermique** générée par les composants internes d'un système.
-Cette fois-ci, on peut utiliser la formule `G/T = G - 10log(N)` de ce [site](https://www.rfwireless-world.com/calculators/Antenna-G-T-ratio.html).
+Cette fois-ci, on peut utiliser la formule `G/T = G - 10log(N)` ([lien formule](https://www.rfwireless-world.com/calculators/Antenna-G-T-ratio.html)).
 - `G` -> l'**antenna gain**, on l'a calculé avant, mais **attention**, on veut le **G/T** de la **station de sol** (ground terminal), pas juste de l'**antenne** donc il faut aussi prendre en compte les pertes de transmission qui nous sont donnés `Receive Line Loss (antenna to LNA) (dB): -2`.
 - `N` -> le **system noise temperature** nous est donné à `522K`. 
   
@@ -126,7 +126,7 @@ Le **RSSI** tient compte du **SNR**, des **pertes de pointages**, du **G/T** et 
 ### 3.1.1 SNR
 Dans un premier temps, il nous faut calculer le `S/N` ou `SNR` qui mesure le rapport entre la puissance du **signal** et le **bruit**. 
 ![SNR](../../../assets/img/pages/space/hackasat/linky/linky3.svg)
-C'est lui qui détermine la qualité du signal et on peut le calculer avec la formule `S/N = Eb/No * 10log(Rb/B)` de [ce site](https://www.rfwireless-world.com/calculators/Eb-N0-and-BER-calculator.html).
+C'est lui qui détermine la qualité du signal et on peut le calculer avec la formule `S/N = Eb/No * 10log(Rb/B)` ([lien formule](https://www.rfwireless-world.com/calculators/Eb-N0-and-BER-calculator.html)).
 Le **BER** (**B**it **E**rror **R**ate) c'est le rapport de bits reçus avec des erreurs par rapport au nombre total de bits transmis. Par exemple :
 
 ![BER](../../../assets/img/pages/space/hackasat/linky/linky2.svg)
@@ -148,8 +148,8 @@ On peut à présent faire le calcul :
 Ce qui nous donne un `S/N` de `86.4dB`.
 
 ### 3.1.2 Pertes de pointage de l'antenne réceptrice
-Lorsque l’antenne n’est pas parfaitement alignée avec la source du signal, une partie de l’énergie est perdue. Cette perte doit être prise en compte pour ajuster le calcul de la puissance reçue. Ces pertes peuvent se calculer ainsi : `pertes de pointages = -12 * (erreur de pointage/largeur de faisceau)^2`. Cette formule découle d'autres formules plus complexes, inutile de rentrer dans les détails. 
-Pour récupérer la **largeur de faisceau** de la parabole réceptrice ([beam width](https://en.wikipedia.org/wiki/Beam_diameter)) on aura besoin de  cette formule : `BW=(λ/D)*70` avec `λ` la longueur d'onde en `m` et `D` le diamètre de la parabole en `m` ([formule](https://www.calculatorultra.com/fr/tool/antenna-beamwidth-calculator.html?utm_source=chatgpt.com#gsc.tab=0)).
+Lorsque l’antenne n’est pas parfaitement alignée avec la source du signal, une partie de l’énergie est perdue. Cette perte doit être prise en compte pour ajuster le calcul de la puissance reçue. Ces pertes peuvent se calculer ainsi : `pertes de pointages = -12 * (erreur de pointage/largeur de faisceau)^2` ([lien formule](https://www.microwavejournal.com/articles/3371-antenna-selection-to-minimize-pointing-requirements)). 
+Pour récupérer la **largeur de faisceau** de la parabole réceptrice ([beam width](https://en.wikipedia.org/wiki/Beam_diameter)) on aura besoin de  cette formule : `BW=(λ/D)*70` avec `λ` la longueur d'onde en `m` et `D` le diamètre de la parabole en `m` ([lien formule](https://www.calculatorultra.com/fr/tool/antenna-beamwidth-calculator.html?utm_source=chatgpt.com#gsc.tab=0)).
 Enfin, on peut calculer les pertes de pointages :
 ```bash
 >>> λ = 0.025 #m
@@ -177,7 +177,7 @@ Notre **RSSI** vaut donc environ `-162.5dBW`.
 
 ## 3.2 Calculer les pertes de propagation
 On a plusieurs pertes déjà données, il faut juste calculer en plus les **pertes de parcours**. Elles représentent l'atténuation naturelle d'un signal lorsqu'il se propage due à la dispersion de l'énergie sur une surface de plus en plus grande avec la distance.
-La formule est la suivante : `Pertes de parcours = -20*log10(λ/(4*π*D)` avec `λ` la longueur d'onde en `m` et `D` la distance du parcours en `m` ([formule](https://fr.wikipedia.org/wiki/Équation_des_télécommunications#Expression_logarithmique)). 
+La formule est la suivante : `Pertes de parcours = -20*log10(λ/(4*π*D)` avec `λ` la longueur d'onde en `m` et `D` la distance du parcours en `m` ([lien formule](https://fr.wikipedia.org/wiki/Équation_des_télécommunications#Expression_logarithmique)). 
 Calculons tout ça : 
 ```bash
 >>> import np as np
@@ -210,7 +210,7 @@ Rappellons la formule `PIRE = RSSI - toutes les pertes de propagation` et passon
 Super, notre **PIRE** vaut `25dBW`.
 
 ## 3.4 Calcul final du Transit Power
-Allez, on y est presque, on rappelle que pour calculer la **puissance d'émission**, on doit appliquer cette formule : `P = PIRE + L - G` mais pour une raison que je n'ai pas encore comprise, on va devoir soustraire `L` au lieu de l'additioner. Je suis resté bloqué longtemps sur ça avant de regarder la correction. Si quelqu'un a la réponse, je suis preneur :) 
+Allez, on y est presque, on rappelle que pour calculer la **puissance d'émission**, on doit appliquer cette formule : `P = PIRE + L - G`. `tx_line_loss` nous est donné égal à `-1`. Sa valeur étant déjà négative puisque c'est une perte, il faut la soustraire dans notre formule au lieu de l'additioner. Elle devient donc `P = PIRE - L - G`. 
 ```bash
 >>> tx_line_loss = -1 #dB
 >>> tx_antenna_gain = 16.23 #dB
