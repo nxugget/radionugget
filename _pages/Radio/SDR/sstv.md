@@ -48,6 +48,7 @@ La station n'émet pas en continue donc si vous recevez rien au début c'est nor
 ![SDR++ SSTV](../../../assets/img/pages/radio/sdr/sstv/sstv4.png)
 
 Une autre tonalité marquera la fin de la transmission, vous pouvez stopper l'enregistrement, noter où le fichier `.wav` est enregistré et passer au décodage de notre signal.
+Voici un exemple de ce que vous allez entendre :  <audio controls><source src="{{ '/assets/audio/sstv.mp3' | relative_url }}" type="audio/mpeg"></audio>
 
 # Décodage
 On ouvre notre enregistrement avec [Audacity](https://www.audacityteam.org) et on change l'**output** en allant au milieu dans `Audio Setup` -> `Playback Device` et on sélectionnes `VB-Cable`. 
