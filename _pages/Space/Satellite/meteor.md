@@ -4,14 +4,14 @@ date: "07-09-2024"
 description: "Apprenez à écouter les satellites russes METEOR-M afin de récupérer leur images avec le même matériel utilisé pour récupérer les images des satellites NOAA"
 thumbnail: "/assets/img/thumbnail/meteor.webp"
 ---
-Les satellites américains **NOAA** que l'on a vu durant [mon premier projet](../../Projects/NOAA.html) sont un peu le point de départ de tout amateur radio satellite. Mais, il existe d'autres satellites très similaires, qui produisent de meilleures images avec plus ou moins le même matériel que pour les **NOAA**, ce sont les satellites russes **METEOR** 🇷🇺. 
+Les satellites américains **NOAA** que l'on a vu durant [mon premier projet]({{ site.data.links.noaa }}) sont un peu le point de départ de tout amateur radio satellite. Mais, il existe d'autres satellites très similaires, qui produisent de meilleures images avec plus ou moins le même matériel que pour les **NOAA**, ce sont les satellites russes **METEOR** 🇷🇺. 
 
 # Qui sont les METEOR ?
 Les **METEOR** sont des satellites météorologiques soviétiques, puis russes. Depuis **1964**, **70** modèles ont été lancés. Pour cet article, on va s'intéresser uniquement au dernier, ceux de la série **METEOR-M** dont voici l'historique :
 
 ![METEOR-M](../../../assets/img/pages/space/satellite/meteor/meteor2.svg)
 
-Comme leurs homologues NOAA, la série de satellites **METEOR-M** se situe à une altitude d'environ **800km** et possèdent une orbite **polaire** et plus précisément **héliosynchrone**. Ainsi, ils font constamment face au **Soleil** 🌞. Plus d'infos sur les types d'orbites [juste ici](./type-orbits.html).
+Comme leurs homologues NOAA, la série de satellites **METEOR-M** se situe à une altitude d'environ **800km** et possèdent une orbite **polaire** et plus précisément **héliosynchrone**. Ainsi, ils font constamment face au **Soleil** 🌞. Plus d'infos sur les types d'orbites [juste ici]({{ site.data.links.orbits }}).
 
 ![Orbite polaire](../../../assets/img/pages/space/satellite/type-orbits/type-orbits6.svg)
 L'orbite **héliosynchrone** va leur permettre de passer par les mêmes endroits à la même [heure solaire](https://fr.wikipedia.org/wiki/Temps_solaire) **2 fois par jour**. 
@@ -25,8 +25,8 @@ Pour vérifier, on peut utiliser [ce site](https://usradioguy.com/meteor-satelli
 ![METEOR M2 status](../../../assets/img/pages/space/satellite/meteor/meteor3.png)
 
 # Place à l'écoute
-Côté antenne, j'utilise une [QFH](../../Projects/qfh.html) pour les `137MHz`. Elle possède une **polarisation circulaire gauche** ce qui est parfait pour les **METEOR** puisqu'ils émettent avec une **polarisation circulaire droite**.
-Pour la réception, on va utiliser [SatDump](./satdump.html). Je ne vais pas rentrer dans tous les détails de configuration, j'ai déjà fait un cours sur **SatDump** [ici](./satdump.html) :) 
+Côté antenne, j'utilise une [QFH]({{ site.data.links.qfh }}) pour les `137MHz`. Elle possède une **polarisation circulaire gauche** ce qui est parfait pour les **METEOR** puisqu'ils émettent avec une **polarisation circulaire droite**.
+Pour la réception, on va utiliser [SatDump]({{ site.data.links.satdump }}). Je ne vais pas rentrer dans tous les détails de configuration, j'ai déjà fait un cours sur **SatDump** [ici]({{ site.data.links.satdump }}) :) 
 D'abord, à l'aide de la section `Tracking` de **SatDump** ou en utilisant [un site web](https://www.n2yo.com/?s=33591), on va check quand est-ce que le satellite va passer. Cette section nous permet aussi de savoir "où en est" le satellite nottament en observant son **élevation**.
 
 ![SatDump Tracking](../../../assets/img/pages/space/satellite/meteor/meteor5.png)

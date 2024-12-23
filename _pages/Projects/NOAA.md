@@ -4,7 +4,7 @@ date: "17-05-2024"
 description: "Découvrez comment recevoir et décoder les images des satellites météorologiques NOAA en mode APT de manière automatique à l'aide d'une antenne V-dipôle, d'un récepteur SDR et d'un Raspberry"
 thumbnail: "/assets/img/thumbnail/noaa.webp"
 ---
-Pour tout curieux souhaitant débuter dans le milieu de la [SDR](../Radio/SDR/sdr.html), recevoir des images satellites en fabriquant sa propre antenne est un excellent point de départ pour acquérir des bases en **radiofréquence**. On va pousser ce projet un peu plus loin en faisant en sorte que ces images satellites se récupèrent **automatiquement**.
+Pour tout curieux souhaitant débuter dans le milieu de la [SDR]({{ site.data.links.sdr }}), recevoir des images satellites en fabriquant sa propre antenne est un excellent point de départ pour acquérir des bases en **radiofréquence**. On va pousser ce projet un peu plus loin en faisant en sorte que ces images satellites se récupèrent **automatiquement**.
 
 # Compréhension du projet 
 ## Qui sont les NOAA ?
@@ -14,7 +14,7 @@ Les satellites [NOAA](https://fr.wikipedia.org/wiki/NOAA_POES) sont des satellit
 ![Satellite NOAA](../../assets/img/pages/projects/noaa/noaa.svg)
 Leur fréquence étant publique, n'importe qui avec le matériel adéquat peut recevoir leurs images. Ils ne sont plus en période d'exploitation mais tant que la **NASA** considère qu'ils ne sont pas un danger, ils continuent de les laisser tourner. 
 ## Orbite héliosynchrone 
-Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Ce sont des orbites dites **polaire** et plus précisément **héliosynchrone**. Mais pour plus d'infos sur les différents types d'orbites, tu peux cliquer [ici](../Space/Satellite/type-orbits.html).
+Ces satellites ont une orbite circulaire qui les font passer d'un pôle à l'autre de la **Terre**. Ce sont des orbites dites **polaire** et plus précisément **héliosynchrone**. Mais pour plus d'infos sur les différents types d'orbites, tu peux cliquer [ici]({{ site.data.links.orbits }}).
 Ils se présentent toute l'année sous le même angle par rapport au Soleil : 
 
 ![Orbite polaire](../../assets/img/pages/space/satellite/type-orbits/type-orbits6.svg)
@@ -41,14 +41,14 @@ C'est grâce à ce genre d'image que les personnes dans la météorologie seront
 
 ## Fonctionnement d'une antenne et SDR
 Pour récupérer leur images, il va nous falloir une **antenne** ainsi qu'un récepteur **SDR**.
-Ainsi, je vous recommande de lire les 2 articles que j'ai fais, [le premier](../Radio/Basics/antennes.html) pour comprendre comment on choisit une antenne en fonction de la **fréquence** qu'on veut écouter.
-[Le second](../Radio/SDR/sdr.html) qui explique ce qu'est la **SDR** (**S**oftware **D**efined **R**adio).
+Ainsi, je vous recommande de lire les 2 articles que j'ai fais, [le premier]({{ site.data.links.radio.antenna }}) pour comprendre comment on choisit une antenne en fonction de la **fréquence** qu'on veut écouter.
+[Le second]({{ site.data.links.radio.sdr }}) qui explique ce qu'est la **SDR** (**S**oftware **D**efined **R**adio).
 
 # Mise en place du projet
 ## Partie matérielle
 ### Fabrication de l'anntenne
 Pour ce projet, j'ai décidé de partir sur une antenne **V-dipôle** qui sera placée **horizontalement**. De fait, son **diagramme de rayonnement** sera dirigé vers le ciel. Ça permet aussi de grandement réduire les interférences en provenance des signaux terrestres polarisés **veriticalement**.
-Malgré tout ça, ce n'est pas l'antenne optimale pour ce projet (à cause de sa [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml)) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter. Si non, on pourrait directement partir sur une antenne [QFH](../../Projects/qfh.html).
+Malgré tout ça, ce n'est pas l'antenne optimale pour ce projet (à cause de sa [polarisation](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml)) mais ça reste la plus simple à construire donc on va partir là dessus pour débuter. Si non, on pourrait directement partir sur une antenne [QFH]({{ site.data.links.radio.qfh }}).
 Les signaux **APT** sont très résistants donc au final, même avec une antenne non parfaite, on recevra quand même des trucs, le plus important, c'est surtout d'avoir un ciel dégagé avec l'antenne placée le plus haut possible.
 Comme vu sur les cours des antennes, pour qu'elle soit **résonnante** à la fréquence de **137MHz**, on peut faire le calcul suivant : `λ=300/137≈2.18m`.
 On va faire une antenne **demi-onde** donc elle devra faire une longueur de `2.18/2` soit `1.09m`. 
@@ -87,7 +87,7 @@ Il est important de le placer au plus prêt de l'antenne, afin d'amplifier le si
 ⚠️ Mais attention, l'efficacité d'un filtre dépendra de pleins de facteurs compelxes. Car même si le signal du NOAA sera amplifié, le **bruit parasite** le sera aussi. Et dans mon cas, pour l'avoir testé, ça ne change vraiment rien d'avoir un filtre donc je ne recommande pas d'investir dedans.
 
 ## Partie logicielle
-Afin de tester toute notre chaîne matérielle, on peut d'abord brancher notre récepteur **SDR** à un ordinateur avec un logiciel comme [SatDump]([../Space/Satellite/satdump.html](https://www.satdump.org/about/)) et tenter de récupérer un signal manuellement. J'en ai fais un guide [juste ici](../Space/Satellite/satdump.html).
+Afin de tester toute notre chaîne matérielle, on peut d'abord brancher notre récepteur **SDR** à un ordinateur avec un logiciel comme [SatDump]({{ site.data.links.satdump }}) et tenter de récupérer un signal manuellement. J'en ai fais un guide [juste ici]({{ site.data.links.satdump }}).
 Si tout fonctionne, en théorie on pourrait s'arrêter là pour le projet, mais pour aller plus loin, on va faire en sorte d'automatiser tout ça pour avoir un site qui contiendra toutes nos images récupérées 🖼️.
 ### Github
 Pour ce projet, j'ai décidé d'utiliser ce [dépôt Git](https://github.com/jekhokie/raspberry-noaa-v2) qui va grandement nous être utile. 
@@ -122,7 +122,7 @@ Après l'installation, un serveur web **nginx** est créé en `localhost` sur le
 Si vous avez un **nom de domaine** et que vous souhaitez accéder à votre site depuis n'importe où, vous pouvez associer votre site à l'adresse IP de votre box internet. Grâce au tool **GitHub**, on a la possibilité de générer des certificats **HTTPS** très facilement pour améliorer la sécurité du site. Vous pouvez consulter [ce guide](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/tls_webserver.md) pour en savoir plus. Dans mon cas, ma station est accessible depuis [ici](https://station.radionugget.com).
 
 ### Prédiction
-Pour prédire le passage des satellites, on a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les [TLE](../Space/Satellite/tle.html) (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres orbitaux** des objets en **orbite terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
+Pour prédire le passage des satellites, on a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les [TLE]({{ site.data.links.tle }}) (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres orbitaux** des objets en **orbite terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
 Une fois récupérée, on a une base de données à jour contenant la position des satellites qui nous intéressent. 
 Ainsi, on peut faire appel à l'outil `predict` qui va prédire le passage des satellites en sa basant sur les **TLE**, et sur la **position géographique** du fichier `setting.yml`. Ce dernier va nous donner un intervalle durant laquelle le satellite va passer en nous indiquant l'élévation maximale du passage. 
 Un exemple de la commande lancée manuellement : 
@@ -154,7 +154,7 @@ La commande principale ressemble à ça :
 On va pas rentrer dans les détails de chacun des arguments mais cette commande permet d'enregistrer le signal et de le traiter en même temps afin de convertir le **signal audio** en une **image**. Vous trouverez des infos sur les arguments [ici](https://docs.satdump.org/pipelines.html) et [ici](https://docs.satdump.org/sdr_options.html).
 
 ### Récupération des images
-Une fois tout le traitement terminé, [satdump](../Space/Satellite/satdump.html) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
+Une fois tout le traitement terminé, [satdump]({{ site.data.links.satdump }}) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
 Voici un exemple de la même image de **NOAA 19** reçue mais avec un traitement différent :
 ![NOAA images](../../assets/img/pages/projects/noaa/image_noaa.jpg)  
 Comme vous pouvez le voir, il y a pas mal de bandes en plein milieu, ce sont des interférences dues à mon antenne qui n'est pas parfaite. J'y travaille afin d'avoir une image parfaitement nette.
@@ -162,7 +162,7 @@ Les images que je récupère sont disponibles sur ma station [juste ici](https:/
 
 # Suite et Améliorations
 ## METEOR
-Si vous avez tout correctement configuré, vous avez dû voir qu'il y a 2 autres satellites appelés **METEOR** qui sont récupérés. Ce sont aussi des satellites météos qui émettent sur les `137MHz`. C'est pour cela qu'avec le même matériel que pour les **NOAA**, vous pouvez les recevoir. Plus d'infos sur ces satellites russes [ici](../Space/Satellite/meteor.html).
+Si vous avez tout correctement configuré, vous avez dû voir qu'il y a 2 autres satellites appelés **METEOR** qui sont récupérés. Ce sont aussi des satellites météos qui émettent sur les `137MHz`. C'est pour cela qu'avec le même matériel que pour les **NOAA**, vous pouvez les recevoir. Plus d'infos sur ces satellites russes [ici]({{ site.data.links.meteor }}).
 
 ## HRPT
 En réalité, ces satellites peuvent envoyer de plus belles images que ça. On l'a dit, mais le protocole **APT** date de **1960** alors que ces satellites ont été envoyés dans les années **2000**. En fait, c'est juste pour une question de rétro-compatibilité avec de vieux équipements. Mais sinon, les météorologues vont utiliser un protocole plus récent, le [HRPT](https://en.wikipedia.org/wiki/High-resolution_picture_transmission) ( **H**igh-**R**esolution **P**icture **T**ransmissions). Les **NOAA** envoient avec ce mode sur des fréquences plus hautes, **1700MHz**. Leur réception demande plus de connaissance et surtout une antenne tout autre. Il s'agit de la suite logique de ce projet afin d'avoir des images toujours plus belles car là où l'**APT** nous donnait du **4km/pixel**, l'**HRPT** nous donne du **1km/pixel**. C'est comme passé d'un écran **FULL HD** à de la **4K** :)  

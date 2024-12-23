@@ -4,7 +4,7 @@ date: "21-12-2024"
 description: "Découvrez comment recevoir les signaux HRPT des satellites sur la bande L à 1,7GHz"
 thumbnail: "/assets/img/thumbnail/hrpt.webp"
 ---
-Après s'être amusé avec les signaux [APT](./NOAA.html) et [LRPT](../Space/Satellite/meteor.html) sur les fréquences `137MHz`, passons à l'étape supérieure en recevant d'autre signaux satellites utilisant un tout autre mode, le **HRPT**.
+Après s'être amusé avec les signaux [APT]({{ site.data.links.noaa }}) et [LRPT]({{ site.data.links.space.meteor }}) sur les fréquences `137MHz`, passons à l'étape supérieure en recevant d'autre signaux satellites utilisant un tout autre mode, le **HRPT**.
 Plus dur à recevoir, ce mode nous permettra d'avoir les mêmes images qu'avant mais avec une résolution de `1km/pixel` au lieu des `4km/pixel` des précédents modes.
 
 # Quels satellites ?
@@ -32,12 +32,12 @@ Les européens [Metop](https://fr.wikipedia.org/wiki/MetOp) émettent aussi en u
 C'est les satellites les plus intéressants à recevoir de la liste avec de magnifiques images.
 
 ![Metop HRPT Frequency](../../../assets/img/pages/space/satellite/hrpt/hrpt4.svg)
-Une plus belle image ne vient pas sans inconvénient. En effet, leur signal est plus faible et leur bande passante plus importante ne pourra pas être reçu entièrement avec des récepteurs [SDR](../../Radio/SDR/sdr.html) classiques.
+Une plus belle image ne vient pas sans inconvénient. En effet, leur signal est plus faible et leur bande passante plus importante ne pourra pas être reçu entièrement avec des récepteurs [SDR]({{ site.data.links.sdr }}) classiques.
 À noter que **Metop A** a été [désorbité en 2021](https://www.eumetsat.int/fr/desorbitation-reussie-pour-le-premier-satellite-meteorologique-europeen-en-orbite-polaire).
 
 # Matériels nécessaires
 ## Antenne
-En [bande L](https://fr.wikipedia.org/wiki/Bande_L_(radio)) à une fréquence de `1,7GHz`, les ondes radio sont beaucoup plus faibles que celles pour la réception **APT** et **LRPT** à `137Mhz`. On ne va donc pas pouvoir utiliser une antenne **omnidirectionelle** comme une [QFH](../../Projects/qfh.html).
+En [bande L](https://fr.wikipedia.org/wiki/Bande_L_(radio)) à une fréquence de `1,7GHz`, les ondes radio sont beaucoup plus faibles que celles pour la réception **APT** et **LRPT** à `137Mhz`. On ne va donc pas pouvoir utiliser une antenne **omnidirectionelle** comme une [QFH]({{ site.data.links.qfh }}).
 L'idéal est d'avoir une parabole avec une tête héliocidal. Au minimum, elle devra avoir un diamètre de `80cm`. En augmentant ce dernier, se sera plus facile de tracker le satellite à la main mais plus lourd à déplacer.
 Pour ma part, je vais utiliser l'antenne que j'ai fabriqué dont vous retrouverez un guide prochainement.
 [DIY dish antenna with helicoidal feed]()

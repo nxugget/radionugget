@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/thomas.webp"
 ---
 Description du challenge : *The aliens' capabilities have advanced and they've decided to improve the reliability of their transmissions. Can you crack their message?*
 Le challenge est disponible à [cette adresse](https://ringzer0ctf.com/challenges/334).
-Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Basics/am.html) :) 
+Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours]({{ site.data.links.am }}) :) 
 
 Le challenge commence avec un fichier `sdr-challenge3.cfile`. 
 Ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh). 
@@ -15,12 +15,12 @@ Ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh).
 Comme pour les 2 précédents challenges, on a plusieurs morceaux, zoomant sur l'un d'entre eux. 
 
 ![Universal Radio Hacker](../../assets/img/pages/writeups/thomas/thomas2.webp)
-Ça ressemble clairement à de l'**ASK**. Si ce type de modulation ne te dit rien, je t'invite à d'abord lire le writeup de [ce challenge](ringzer0-you-turn-me-on-and-off.html) qui traite d'**ASK**. 
+Ça ressemble clairement à de l'**ASK**. Si ce type de modulation ne te dit rien, je t'invite à d'abord lire le writeup de [ce challenge]({{ site.data.links.onandoff }}) qui traite d'**ASK**. 
 On peut alors sélectionner `ASK` comme type de modulation et pour le `Samples/Symbol`, on peut le faire manuellement en sélectionnant le morceau le plus petit pour noter le nombre entouré en **rouge**.
 
 ![Universal Radio Hacker](../../assets/img/pages/writeups/thomas/thomas3.webp)
 On met la vue en `ASCII` pour voir ce que donne notre signal décodé. On obtient 3 lignes similaires mais qui ne veulent pas dire grand chose. 
-J'oublie pas que durant le [premier challenge](ringzer0-you-turn-me-on-and-off.html), j'avais pris du temps à comprendre pourquoi ça décoder pas car j'avais laissé le `Pause Threshold` à `8`. Donc, je le remets à `0` pour le désactiver. Et à présent, le signal décodé donne ça : 
+J'oublie pas que durant le [premier challenge]({{ site.data.links.onandoff }}), j'avais pris du temps à comprendre pourquoi ça décoder pas car j'avais laissé le `Pause Threshold` à `8`. Donc, je le remets à `0` pour le désactiver. Et à présent, le signal décodé donne ça : 
 
 ![Universal Radio Hacker](../../assets/img/pages/writeups/thomas/thomas4.webp)
 Bon, ok pas ouf MAIS, on sait que ce challenge est le dernier de sa série et au vu de la description, les **aliens** ont "**amélioré**" la fiabilité de leur transmission. 

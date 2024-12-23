@@ -32,10 +32,10 @@ What is its orbit (expressed as Keplerian elements a, e, i, Ω, ω, and υ)?
 Semimajor axis, a (km):
 ```
 On va devoir à partir d'une **position cartésienne** et d'une **vitesse** retrouver les **paramètres d'orbite** de notre vaisseau spatial. 
-Il est important  de comprendre de quoi on parle quand on évoque les **paramètres d'orbite**. Heureusement pour toi, j'ai fait un petit cours que tu peux consuler [juste ici](../Satellite/tle.html) :) 
+Il est important  de comprendre de quoi on parle quand on évoque les **paramètres d'orbite**. Heureusement pour toi, j'ai fait un petit cours que tu peux consuler [juste ici]({{ site.data.links.tle }}) :) 
 
 Voici un petit schema de ce que représente les différentes données qu'on a (le placement du vaisseau est arbitraire, il ne correspond pas à ses coordonnées réelles, flemme de faire un truc en 3D) : 
-![Schema challenge](../../../assets/img/pages/space/hackasat/kepler/kepler1.svg)
+![Schema challenge](../../assets/img/pages/writeups/kepler/kepler1.svg)
 
 Bon, en vrai, les calculs pour trouver les **paramètres d'orbite** sont plutôt compliqués, donc on va juste apprendre à utiliser la bibliothèque **Python** [poliastro](https://github.com/poliastro/poliastro) pour arriver à nos fins. 
 

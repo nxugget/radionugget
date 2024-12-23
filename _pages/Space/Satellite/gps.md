@@ -10,7 +10,7 @@ On va aujourd'hui comprendre comment fonctionne tout ça, dans les grandes ligne
 # Introduction
 Ce qu'on appelle **GPS** (**G**lobal **P**ositioning **S**ystem) n'est qu'un type de **GNSS** opéré par les **États-Unis** depuis les années 70. Mais il en existe d'autres, comme le **Galileo** en **Europe** (opérationnel en 2024 et plus précis que le **GPS**), le **GLONASS** en **Russie** ou encore le **BeiDou** en **Chine**. 
 Donc, dans le vie courante, lorsque l'on parle de **"GPS"**, on entend par là le terme générique **GNSS** quel qu'il soit.
-Dans le cas de la constellation **GPS**, c'est 24 satellites qui orbitent autour de **la Terre** à une altitude d'environ **20000km** sur l'[orbite terrestre moyenne](type-orbits.html) de sorte à ce qu'il est toujours au moins **4 satellites** visibles en même temps. 
+Dans le cas de la constellation **GPS**, c'est 24 satellites qui orbitent autour de **la Terre** à une altitude d'environ **20000km** sur l'[orbite terrestre moyenne]({{ site.data.links.orbits }}) de sorte à ce qu'il est toujours au moins **4 satellites** visibles en même temps. 
 <br>
 ![Schema GPS](../../../assets/img/pages/space/satellite/gps/gps4.svg)
 Ces derniers émettent en permanence des **ondes radios** et comme on connaît leur **position**, on peut grâce à de la **triangulation** déterminer la distance entre le satellite et le récepteur sur **Terre**. 

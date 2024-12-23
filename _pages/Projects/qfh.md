@@ -4,12 +4,12 @@ date: "21-10-2024"
 description: "Apprenez à fabriquer votre propre antenne quadrifilaire (QFH) faite maison (DIY) pour la fréquence 137MHz afin de recevoir des images satellites NOAA et METEOR"
 thumbnail: "/assets/img/thumbnail/qfh.webp"
 ---
-Lors de mon tout premier projet de [réception d'images satellites](./NOAA.html), j'avais fait une antenne **V-dipôle**. Elle a l'avantage d'être très facile à réaliser et d'obtenir des résultats très convaincants. 
+Lors de mon tout premier projet de [réception d'images satellites]({{ site.data.links.noaa }}), j'avais fait une antenne **V-dipôle**. Elle a l'avantage d'être très facile à réaliser et d'obtenir des résultats très convaincants. 
 Le souci, c'est les bandes grises d'**interférences** que j'ai sur toutes mes images comme par exemple [celle-ci](https://station.radionugget.com/images/NOAA-19-20240816-201800-MCIR.jpg).
 J'ai essayé énormément de choses afin de les enlever, mais je n'y suis jamais parevenu. J'ai donc décidé de changer d'antenne par une **antenne quadrifilaire** ou antenne **QFH** (**Q**uadri**F**ilar **H**elicoidal). On verra bien si ça résoudra le problème :) 
 
 # Fonctionnement d'une antenne QFH
-L'antenne **QFH** est composée de 2 boucles **hélicoïdales**, enroulées autour d'un axe central chacune déphasées de **90°** l'une par rapport à l'autre. Plus d'info sur le **déphasage** [ici](../Radio/Basics/phase.html).
+L'antenne **QFH** est composée de 2 boucles **hélicoïdales**, enroulées autour d'un axe central chacune déphasées de **90°** l'une par rapport à l'autre. Plus d'info sur le **déphasage** [ici]({{ site.data.links.phase }}).
 Grâce à ce **déphasage**, les **hélices** produisent une **polarisation circulaire**. Il faut le voir comme la "direction" (du **champ électrique**) de notre onde.
 
 ![Polarisation circulaire](../../assets/img/pages/projects/qfh/qfh17.gif)

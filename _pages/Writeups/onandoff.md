@@ -8,7 +8,7 @@ Description du challenge : *We captured alien radio data... Can you crack their 
 
 Le challenge est disponible à [cette adresse](https://ringzer0ctf.com/challenges/332).
 
-Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Basics/am.html) :) 
+Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours]({{ site.data.links.am }}) :) 
 
 On commence avec un fichier `sdr-challenge1.cfile`, ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh). 
 

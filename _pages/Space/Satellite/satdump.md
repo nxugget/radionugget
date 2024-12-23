@@ -4,7 +4,7 @@ date: "11-07-2024"
 description: "Explorez l'interface graphique du logiciel SatDump permettant de faciliter la récupération de données satellites en temps réel"
 thumbnail: "/assets/img/thumbnail/satdump.webp"
 ---
-Durant [mon premier projet](../../Projects/NOAA.html) pour récupérer les images des satellites **NOAA**, j'avais évoqué le logiciel [Satdump](https://github.com/SatDump/SatDump) permettant de considérablement nous simplifier la vie.
+Durant [mon premier projet]({{ site.data.links.noaa }}) pour récupérer les images des satellites **NOAA**, j'avais évoqué le logiciel [Satdump](https://github.com/SatDump/SatDump) permettant de considérablement nous simplifier la vie.
 Aujourd'hui, je vais vous présenter sa version graphique avec une démo :) 
 
 # Offline processing
@@ -17,13 +17,13 @@ Mais on va pas trop s'y attarder, ça reste intuitif, passons plutôt à l'ongle
 ![Settings SatDump](../../../assets/img/pages/space/satellite/satdump/satdump2.png)
 Ici, on va venir régler la position de notre récepteur (ça servira pour les prédictions de passage des satellites).
 Donc, on y met notre **latitude**, **longitude**, **altitude**, éventuellement les couleurs (si on les veut) qui seront affichées sur les images qu'on récupère.
-On voit aussi en bas la dernière fois que les [TLE](tle.html) ont été mis à jour.
+On voit aussi en bas la dernière fois que les [TLE]({{ site.data.links.tle }}) ont été mis à jour.
 Ceci étant fait, allons dans l'onglet principal **Recorder**. 
 
 # Recorder
 ## Device
 ![Recorder Device SatDump](../../../assets/img/pages/space/satellite/satdump/satdump3.png)
-Ici, on choisit notre récepteur [SDR](../../Radio/SDR/sdr.html), dans mon cas, un **HackRF**. On peut choisir notre **fréquence** d'écoute et notre **samplerate**.
+Ici, on choisit notre récepteur [SDR]({{ site.data.links.sdr }}), dans mon cas, un **HackRF**. On peut choisir notre **fréquence** d'écoute et notre **samplerate**.
 Aussi, on peut modifier différents paramètres en fonction du récepteur **SDR**. On retrouve les différentes options possibles [ici](https://docs.satdump.org/sdr_options.html).
 J'ai activé le **Bias-Tee**, ça permet d'alimenter un [filtre LNA](https://www.amazon.fr/gp/product/B07TWPR871/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) directement avec son récepteur **SDR**. Mais si vous n'utilisez pas de filtre, n'activez pas cette option !
 Sautons quelques sections pour voir celle permettant de voir et prédire le passage des satellites, l'onglet **Tracking**. 

@@ -6,7 +6,7 @@ thumbnail: "/assets/img/thumbnail/letsget.webp"
 ---
 Description du challenge : *The aliens are on to us... They've started wearing tin foil hats and switched things up with their radio transmission. Can you crack their latest message?*
 Le challenge est disponible à [cette adresse](https://ringzer0ctf.com/challenges/333).
-Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours](../Basics/am.html) :) 
+Pour comprendre le writeup, il est important de comprendre la notion de modulation, alors n'hésite pas à jeter un oeil sur [ce cours]({{ site.data.links.am }}) :) 
 
 Le challenge commence avec un fichier `sdr-challenge2.cfile`, ouvrons-le avec [Universal Radio Hacker](https://github.com/jopohl/urh). 
 
@@ -29,7 +29,7 @@ Faisons un clic droit dessus, puis `Add Derived plot` et `Add Frequency Plot`. E
 Cela nous permet de faire une analyser plus précise en observant clairement la puissance du signal varier au fil du temps à une fréquence spécifique. 
 Et au vue de la forme, on est à présent sur qu'il s'agit d'une modulation **FSK**, on peut alors extraire uniquement cette partie du signal en faisant un clic droit sur le morceau du haut (**pas celui du bas !**), puis `Export samples to file...`. On le laisse en `.f32`. 
 À présent, ouvrons le à nouveau avec **Universal Radio Hacker** :
-À partir de là, je vais aller plus vite car j'avais déjà expliqué comment trouver les bons paramètres dans [le précédent challenge](ringzer0-you-turn-me-on-and-off.html) donc n'hésite pas à y jeter un coup d'oeil si tu comprends pas tout ce qui suit.  
+À partir de là, je vais aller plus vite car j'avais déjà expliqué comment trouver les bons paramètres dans [le précédent challenge]({{ site.data.links.onandoff }}) donc n'hésite pas à y jeter un coup d'oeil si tu comprends pas tout ce qui suit.  
 Donc, on sélectionnes comme modulation `FSK`, on peut cliquer sur `Autodetect parameters` ce qui permet de trouver le `Samples/Symbol` tout seul et en basculant la vue de `Bits` en `ASCII`, on obtient direct le flag :) 
 
 ![Universal Radio Hacker](../../assets/img/pages/writeups/letsget/letsget6.webp)
