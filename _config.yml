@@ -27,6 +27,7 @@ plugins:
 
 exclude:
   - docs/
+  - vendor
 
 collections:
   pages:
@@ -46,3 +47,5 @@ kramdown:
   input: GFM
   hard_wrap: true
   math_engine: mathjax
+
+incremental: true
