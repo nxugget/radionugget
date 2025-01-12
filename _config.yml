@@ -21,7 +21,6 @@ giscus_category: "Q&A"
 giscus_categoryId: "DIC_kwDOL8zpzs4CfbXu"
 
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
   - jekyll-loading-lazy
 

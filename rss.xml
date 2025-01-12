@@ -1,0 +1,24 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ site.title }}</title>
+  <subtitle>{{ site.description }}</subtitle>
+  <link href="{{ site.url }}/rss.xml" rel="self"/>
+  <link href="{{ site.url }}/" rel="alternate"/>
+  <id>{{ site.url }}/rss.xml</id>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  {% assign pages_with_dates = site.pages | where_exp: "page", "page.date != nil" %}
+  {% for page in pages_with_dates %}
+  {% unless page.title == "Index" %}
+  <entry>
+    <title>{{ page.title | xml_escape }}</title>
+    <link href="{{ site.url }}{{ page.url }}"/>
+    <id>{{ site.url }}{{ page.url }}</id>
+    <updated>{{ page.date | date_to_xmlschema }}</updated>
+    <summary>{{ page.excerpt | strip_html | xml_escape }}</summary>
+  </entry>
+  {% endunless %}
+  {% endfor %}
+</feed>
