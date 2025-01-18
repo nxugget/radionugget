@@ -1,6 +1,6 @@
 ---
 title: "Les bandes de fréquences radio satellites"
-date: "12-01-2025"
+date: "18-01-2025"
 description: "Découvrez les différentes types de bandes de fréquences utilisées par les communications satellites"
 thumbnail: "/assets/img/thumbnail/frequency_satellites.webp"
 ---

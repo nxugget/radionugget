@@ -24,7 +24,7 @@ Dans le rectangle rouge, on entre nos coordonnées géographiques puis on clique
 
 ## Logiciel
 On peut faire de la **SSTV** avec un simple **talkie-walkie** permettant d'écouter le signal et en même temps, depuis un logiciel le décoder. C'est la méthode la plus simple, mais le décodage du signal se fait avec un micro (téléphone ou ordinateur), ce qui n'est pas optimal.  
-Dans mon cas, je vais procéder avec la [SDR]({{ site.data.links.sdr}}) en utilisant le logiciel [SDR++](https://www.sdrpp.org) pour recevoir le signal et [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) pour le décoder car étant sur **Mac** c'est le seul fiable que j'ai trouvé. Si vous êtes sur **Linux**, prenez [QSSTV](https://doc.ubuntu-fr.org/qsstv) et si vous êtes sur **Windows**, utilisez [MMSTV](https://hamsoft.ca/pages/mmsstv.php). 
+Dans mon cas, je vais procéder avec la [SDR]({{ site.data.links.sdr }}) en utilisant le logiciel [SDR++](https://www.sdrpp.org) pour recevoir le signal et [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) pour le décoder car étant sur **Mac** c'est le seul fiable que j'ai trouvé. Si vous êtes sur **Linux**, prenez [QSSTV](https://doc.ubuntu-fr.org/qsstv) et si vous êtes sur **Windows**, utilisez [MMSTV](https://hamsoft.ca/pages/mmsstv.php). 
 
 Pour décoder une image, le logiciel **SSTV** attend en entrée le signal audio. Or, notre signal audio étant présent sur notre logiciel **SDR**, il va falloir trouver un moyen de relier les deux logiciels. Pour cela, la solution la plus simple à mettre en oeuvre est l'utilisation d'un **câble audio virtuel**. Voici un schéma de comment ça fonctionne : 
 
