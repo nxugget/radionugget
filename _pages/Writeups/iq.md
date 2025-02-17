@@ -9,6 +9,7 @@ Description du challenge : *Convert the provided series of transmit bits into in
 Le challenge est disponible à [cette adresse](https://github.com/cromulencellc/hackasat-qualifier-2021/tree/main/iq).
 
 Connectons-nous à l'instance du challenge : 
+
 ![HackASat IQ challenge](../../assets/img/pages/writeups/iq/iq1.png)
 
 On nous demande de convertir une série de **bits** en un échantillon **I/Q** en modulation [QPSK](https://fr.wikipedia.org/wiki/Phase-shift_keying) (**Q**uadrature **P**hase **S**hift **K**eying). 
@@ -18,6 +19,7 @@ La modulation **QPSK** est une modulation de phase **numérique** où l'on va mo
 
 Concrètement, pour cette modulation, les bits sont regroupés par **paires** donc on a 4 combinaisons possibles : `00`, `01`,`10`,`11` et ainsi **4 phases** possibles. En général, chacune d'entre elles est espacée de **90°**. Par exemple,  on pourrait avoir `00` à **0°**, `01` à **90°**, `11` à **180°** et `10` à **270°**.
 On peut aussi le voir sur ce schéma avec d'autres valeurs mais qui restent espacées de **90°** :
+
 ![QPSK Schema](../../assets/img/pages/writeups/iq/iq3.png)
 
 # Échantillon IQ
@@ -45,6 +47,7 @@ print(bits_pair) # ['01', '00', '00', '11', '01', '11', '00', '10', '01', '10', 
 
 Chaque combinaison de bits est mappée à un point spécifique dans le plan **I/Q** où **I** (**In-phase**) est l'axe **horizontal** et **Q** (**Quadrature**) l'axe **vertical**.
 Par rapport au diagramme qui nous est donné, on peut déduire la façon de coder nos bits : 
+
 ![HackASat IQ challenge](../../assets/img/pages/writeups/iq/iq2.svg)
 Ainsi, on peut faire une table de mappage en utilisant un **dictionnaire** et sortir une liste `iq_samples` qui contient nos `bits` mappés : 
 {% highlight py %}

@@ -2,7 +2,7 @@
 title: "Chasse aux radiosondes météo"
 date: "19-01-2025"
 description: "Partons à l'aventure pour chasser les radiosondes météos"
-thumbnail: "/assets/img/thumbnail/radiosonde.webp"
+thumbnail: "/assets/img/thumbnail/sondehunter.webp"
 ---
 Chaque jour, environ **1 000** à **1 500** radiosondes sont lancées dans le monde entier par des agences météorologiques. Ces dernières finissent par retomber au sol quelque part, livrées à elles mêmes dans un monde hostile 😥. De là est né l'activité de **chasseurs de radiosondes** consistant à tracker ces dernières dans le but de les retrouver ! 
 
@@ -19,11 +19,11 @@ Bien qu'une radiosonde coute environ `300€`, leur récupération n'est pas pri
 ## SondeHub
 Pour avoir de nombreuses informations sur la position des **RS**, on va utiliser le super [SondeHub](https://sondehub.org/). Voici comment cela se présente : 
 
-![SondeHub](../../../assets/img/pages/radio/ground/radiosonde/radiosonde1.png)
+![SondeHub](../../../assets/img/pages/radio/ground/sondehunter/sondehunter.png)
 
 Alors, les cercles gris sont des sites de lancements, on peut voir par exemple juste à droite de l'aéroport celui de **Bordeaux-Merignac**. Un tracé rose part de ce dernier, il s'agit de la trajectoire du ballon qui a été envoyé. A l'autre extrémité de ce tracé rosé, on a une **prédiction** d'où le ballon va atterir. Cette dernière est a vérifier régulièrement car elle change. On a aussi la position exacte du ballon représenté par l'icone de ce dernier. 
 Les points verts sont quant à eux les stations mis en place par des particuliers qui grâce à leur installation permettent de détecter les signaux radios des **RS** afin de partager par la suite leur position sur [SondeHub](https://sondehub.org/). On verra en fin d'article comme contribuer en faisant sa propre station. A noter la ligne verte que l'on voit qui représente quelle station capte et partage actuellement le signal du ballon. 
 
 
 ## En Route 
-Une fois que l'on sait à peu près où le aballon va atterir, si ce dernier n'est pas trop loin de chez vous, on peut partir à la chasse.
+Une fois que l'on sait à peu près où le ballon va atterir, si ce dernier n'est pas trop loin de chez soit, on peut partir à la chasse.
