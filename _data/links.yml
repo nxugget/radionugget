@@ -1,5 +1,6 @@
-apt: /Projects/noaa
-qfh: /Projects/qfh
+adsb: /Radio/Ground/adsb
+apt: /Space/Satellite/noaa
+qfh: /Radio/Ground/qfh
 am: /Radio/Basics/am
 antenna: /Radio/Basics/antenna
 phase: /Radio/Basics/phase

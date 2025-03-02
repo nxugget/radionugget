@@ -15,7 +15,7 @@ Il ne faut pas confondre l'**ADSB-B** avec son prédécesseur, le [radar primair
 L'**ADS-B** quant à lui, qui est moins cher et fonctionne sur une plus grande couverture envoie une liste bien plus garnie de données sur l'appareil. Maintenant, le **radar primaire** reste toujours utilisé, déjà dans le cas où l'**ADS-B** ne fonctionnerait plus mais surtout pour repérer les engins pas très coopératifs 🏴‍☠️.
 
 
-# Fabrication de sa station ADSB-B
+# Fabrication de sa station ADS-B
 L'idée va être d'installer [Pi24](https://www.flightradar24.com/build-your-own), un **Linux** basé sur **Raspberry Pi OS Lite** qui permet d'automatiser la réception de données **ADS-B**, le traitement de ces dernières et l'envoie vers les serveurs de [FlightRadar](https://www.flightradar24.com/). Ça nous permettra de voir les aéronefs que l'on détecte depuis soit le **Raspberry**, soit **FlightRadar** directement. En partageant les données que l'on reçoit, on contribue au suivi mondial des vols. En échange, **FlightRadar24** vous offre un [abonnement Business](https://www.flightradar24.com/premium) d'une valeur de **500$/an** !
 
 ## Partie matérielle
