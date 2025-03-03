@@ -6,7 +6,7 @@
 
 Ce site web a pour but de faire découvrir le monde des **radiofréquences** et des **satellites**. Le tout avec quand c'est nécessaire, des schémas tout mignon. 
 
-![image](https://github.com/radionugget/radionugget/assets/112083511/1de65452-c40e-4701-8a00-6605794b2522)
+![image](https://github.com/user-attachments/assets/460a1c57-50b4-4ec8-8804-151f463aaf57)
 
 Je précise que mes articles seront écrit selon **mon point de vue** de **passionné** mais pas celui d'un expert donc. 
 Ainsi, n'hésitez pas à me corriger et à me donner des conseils, ce sera **bénéfique** pour tout le monde ! 
