@@ -17,7 +17,7 @@ Quand on ouvre un fichier avec **URH**, il essaie automatiquement de décoder le
 Pour commencer, il faut savoir de quelle type de modulation il s'agit. Pour des télécommandes de garage, c'est souvent une modulation de type [ASK](https://en.wikipedia.org/wiki/Amplitude-shift_keying) (**A**mplitude **S**hift **K**eying).
 Avec ce type de modulation, qui est numérique, on utilise l'**amplitude** du signal porteur pour représenter les données, où différentes **amplitudes** représentent différents **bits**. Par exemple : 
 
-![Schema ASK OOK](../../assets/img/pages/writeups/turnme/turnme3.svg) 
+![Schema ASK OOK](../../assets/img/pages/writeups/onandoff/onandoff3.svg) 
 On peut reconnaître visuellement qu'il s'agit bien d'**ASK** avec ces salves et ces temps de pauses qui ont une amplitude différente bien marquée.
 
 ![URH](../../assets/img/pages/writeups/garage/garage2.png)

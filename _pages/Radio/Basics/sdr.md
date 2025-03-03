@@ -37,9 +37,11 @@ Ces récepteurs bon marché ([lien vers un super kit pour débuter](https://fr.a
 
 # Logiciels SDR 
 Une fois en possession d'un récepteur **SDR**, on n'a plus qu'à s'équiper d'un logiciel **SDR**. À titre personnel, mon favori est [SDR++](https://www.sdrpp.org/) pour tout ce qui va être "écoute". 
+
 ![SDR++](../../../assets/img/pages/radio/basics/dragonos/dragonos7.png)
-[SatDump]({{ site.data.links.satdump }}) qui est une copie de **SDR++** mais spécialisée pour l'écoute et le décodage des signaux **satellites**.
+[SatDump](https://www.satdump.org/download/) qui est une copie de **SDR++** mais spécialisée pour l'écoute et le décodage des signaux **satellites**.
+
 ![SatDump](../../../assets/img/pages/space/satellite/meteor/meteor6.png)
-Et mention honorable aussi pour [SDRAngel](https://www.sdrangel.org/) bien pratique avec ses plugins permettant par exemple d'afficher des cartes interactives comme dans le cas de réception [ADS-B](https://fr.wikipedia.org/wiki/Automatic_dependent_surveillance-broadcast).  
+Et mention honorable aussi pour [SDRAngel](https://www.sdrangel.org/) bien pratique avec ses plugins permettant par exemple d'afficher des cartes interactives comme dans le cas de réception [ADS-B]({{ site.data.links.adsb }}).  
 
 À noter qu'il existe une distribution **Linux** du nom de [DragonOS]({{ site.data.links.dragonos }}) qui permet d'avoir tous ces logiciels directement installés et configurés tout seul :)

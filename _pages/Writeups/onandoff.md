@@ -23,9 +23,8 @@ Et donc, en **OOK**, pour représenter un **bit** à **1**, on va envoyer un sig
 ![Schema ASK OOK](../../assets/img/pages/writeups/onandoff/onandoff3.svg)
 Ce type de modulation est très utilisé pour envoyer des données numériques comme avec des clés de portail. 
 Depuis **URH**, on peut sélectionner comme type de modulation `ASK`. On peut aussi changer le `Show data as` en sélectionnant `ASCII` afin de pouvoir lire les données en clair.
-Truc important à trouver, c'est le `Samples/Symbol` qui fait référence au nombre de fois que le signal est mesuré (échantillonné) pour chaque symbole transmis. 
-Comme pour nous c'est une modulation binaire, si on met le `Samples/Symbol` à `10`, ça veut dire que pour **chaque bit transmis**, le signal sera échantillonné **10 fois**. 
-Cette valeur est super importante à trouver puisque c'est grâce à elle qu'on pourra correctement décoder notre signal. Pour la trouver, soit on clique sur `Autodetect`, des fois ça marche (comme ici où il me trouve `200`) mais apprenons à le faire manuellement quand même :)  
+Truc important à trouver, c'est le `Samples/Symbol` qui pour une modualtion numérique représente la taille d'**1 bit**
+Pour la trouver, soit on clique sur `Autodetect`, des fois ça marche (comme ici où il me trouve `200`) mais apprenons à le faire manuellement quand même :)  
 
 ![Universal Radio Hacker](../../assets/img/pages/writeups/onandoff/onandoff4.png)
 Pour ce faire, on va devoir repérer le **plus petit** morceau de signal. 

@@ -57,6 +57,4 @@ L'idée est de partir sur un **doublet** demi-onde (`λ/2`), et d'ajouter des é
 En augmentant le nombre d'éléments, l'**impédance** diminue et le **gain** augmente ↗️. Ces antennes sont très pratiques dans le cas où l'on souhaite travailler avec un signal qui vient d'une direction bien précise, afin de **concentrer** toute son énergie vers lui.
 
 # Conclusion
-Vous devriez déjà mieux comprendre comment choisir votre antenne et ajuster sa longueur en fonction de ce que vous voulez recevoir.
-
-Il existe une infinité de possibilités, n'hésitez pas à me contacter sur [Instagram](https://www.instagram.com/radionugget/) si vous avez des questions :)
+Vous devriez déjà mieux comprendre comment choisir votre antenne et ajuster sa longueur en fonction de ce que vous voulez recevoir :)

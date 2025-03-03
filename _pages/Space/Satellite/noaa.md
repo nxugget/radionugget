@@ -87,7 +87,7 @@ Il est important de le placer au plus prêt de l'antenne, afin d'amplifier le si
 ⚠️ Mais attention, l'efficacité d'un filtre dépendra de pleins de facteurs compelxes. Car même si le signal du NOAA sera amplifié, le **bruit parasite** le sera aussi. Et dans mon cas, pour l'avoir testé, ça ne change vraiment rien d'avoir un filtre donc je ne recommande pas d'investir dedans.
 
 ## Partie logicielle
-Afin de tester toute notre chaîne matérielle, on peut d'abord brancher notre récepteur **SDR** à un ordinateur avec un logiciel comme [SatDump]({{ site.data.links.satdump }}) et tenter de récupérer un signal manuellement. J'en ai fais un guide [juste ici]({{ site.data.links.satdump }}).
+Afin de tester toute notre chaîne matérielle, on peut d'abord brancher notre récepteur **SDR** à un ordinateur avec un logiciel comme [SatDump](https://www.satdump.org/download/) et tenter de récupérer un signal manuellement. 
 Si tout fonctionne, en théorie on pourrait s'arrêter là pour le projet, mais pour aller plus loin, on va faire en sorte d'automatiser tout ça pour avoir un site qui contiendra toutes nos images récupérées 🖼️.
 ### Github
 Pour ce projet, j'ai décidé d'utiliser ce [dépôt Git](https://github.com/jekhokie/raspberry-noaa-v2) qui va grandement nous être utile. 
@@ -154,7 +154,7 @@ La commande principale ressemble à ça :
 On va pas rentrer dans les détails de chacun des arguments mais cette commande permet d'enregistrer le signal et de le traiter en même temps afin de convertir le **signal audio** en une **image**. Vous trouverez des infos sur les arguments [ici](https://docs.satdump.org/pipelines.html) et [ici](https://docs.satdump.org/sdr_options.html).
 
 ### Récupération des images
-Une fois tout le traitement terminé, [satdump]({{ site.data.links.satdump }}) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
+Une fois tout le traitement terminé, [satdump](https://www.satdump.org/download/) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
 Voici un exemple de la même image de **NOAA 19** reçue mais avec un traitement différent :
 ![NOAA images](../../assets/img/pages/projects/noaa/image_noaa.jpg)  
 Comme vous pouvez le voir, il y a pas mal de bandes en plein milieu, ce sont des interférences dues à mon antenne qui n'est pas parfaite. J'y travaille afin d'avoir une image parfaitement nette.
