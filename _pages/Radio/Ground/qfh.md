@@ -26,7 +26,7 @@ Pour la fabrication de l'antenne, on va se servir de [ce calculateur](http://jco
 
 Bref, pour tout le reste, on peut laisser par défaut, c'est très bien puis on clique sur **Calculate**. 
 De là, on peut en tirer un schéma en à peu près. À noter les `-0.5cm` sur les **4 brins du haut uniquement** afin de laisser de la place entre eux pour les relier.
-![Schéma antenne QFH](../assets/img/pages/projects/qfh/qfh1.svg)
+![Schéma antenne QFH](../../../assets/img/pages/projects/qfh/qfh1.svg)
 
 ## Bricolage
 C'est parti, on va commencer par dresser la liste de ce dont on va avoir besoin (hors outils). En ce qui concerne le cuivre, j'avais déjà des couronnes qu'on utilise pour la climatisation. C'est du cuivre dit **recuit**, et qui donc est malléable.
@@ -47,7 +47,7 @@ Ensuite, on l'enroule autour de notre tube de **PVC**. À ce moment, c'est impor
 Revenons sur la section **Generate a drilling template** du [calculateur](https://jcoppens.com/ant/qfh/calc.en.php). Cette fois-ci, on va prendre le diamètre extérieur du **tube PVC** (`52mm`).
 ⚠️ Attention à ne pas prendre celui du manchon comme pour le haut de l'antenne.
 
-![Generate a drilling template](../assets/img/pages/projects/qfh/qfh10.webp)
+![Generate a drilling template](../../assets/img/pages/projects/qfh/qfh10.webp)
 Ensuite, on découpe la partie **Bottom** de notre template pour l'enrouler autour du tube. Pour savoir à quelle distance il faut le placer, notez sur le template la valeur `695.10mm` qui représente la distance que vous devez mesurer en partant des tiges du haut jusqu'au point **A**. En fait, il s'agit de la distance **H2** sur le schéma de l'antenne.
 
 ### Courbure des tubes
