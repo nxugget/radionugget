@@ -52,7 +52,6 @@ const SpaceExplore = () => {
 			window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
 		} 
 		else if (event.deltaY < 0 && step === 1) {
-			// Retour en arrière
 			setStep(0);
 			setPassed(false);
 			setBodyOverflow("hidden");
