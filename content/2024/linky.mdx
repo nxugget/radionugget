@@ -53,7 +53,7 @@ Pour calculer le gain, on va utiliser la formule `G = 10log(n4πa/λ^2)` ([lien 
 - `λ` -> la **longueur d'onde**. On l'a aussi, elle vaut `0.025m`. 
 - `a` -> la surface d'**aperture physique** de la parabole. Alors, ça on l'a pas mais on peut le calculer facilement. C'est juste la surface réelle qui capte les ondes. On nous donne le diamètre de notre parabole donc au final, sa surface physique, c'est juste son aire qui se calcule avec la formule `π*r^2` avec `r` le rayon. 
 
-![Dish schema](/images/blog/writeups/linky/linky1.svg)
+![Dish schema](/images/blog/2024/linky/linky1.svg)
 On peut à présent faire les calculs en `Python` par exemple.
 ```bash
 >>> import np as np
@@ -116,7 +116,7 @@ Pour la calculer, on va se servir la formule de la [PIRE](https://fr.wikipedia.o
 - `G` -> le gain de l'antenne **émettrice** en `dB`.
 
 Voici un exemple de calcul de **PIRE** : 
-![PIRE](/images/blog/writeups/linky/linky4.svg)
+![PIRE](/images/blog/2024/linky/linky4.svg)
 
 Retournons la formule pour isoler la **puissance d'émission** : `PIRE = P - L + G <=> P = PIRE + L - G`.
 Malheuresement, la **PIRE** ne nous ai pas donné mais on peut la calculer avec le [RSSI](https://fr.wikipedia.org/wiki/Received_Signal_Strength_Indicator) qui représente le niveau de **puissance en réception** d'un signal. Ce dernier est définit par la formule suivante : `RSSI = PIRE - L` avec `L` les pertes de propagation.
@@ -127,11 +127,11 @@ Le **RSSI** tient compte du **SNR**, des **pertes de pointages**, du **G/T** et 
 
 ### 3.1.1 SNR
 Dans un premier temps, il nous faut calculer le `S/N` ou `SNR` qui mesure le rapport entre la puissance du **signal** et le **bruit**. 
-![SNR](/images/blog/writeups/linky/linky3.svg)
+![SNR](/images/blog/2024/linky/linky3.svg)
 C'est lui qui détermine la qualité du signal et on peut le calculer avec la formule `S/N = Eb/No * 10log(Rb/B)` ([lien formule](https://www.rfwireless-world.com/calculators/Eb-N0-and-BER-calculator.html)).
 Le **BER** (**B**it **E**rror **R**ate) c'est le rapport de bits reçus avec des erreurs par rapport au nombre total de bits transmis. Par exemple :
 
-![BER](/images/blog/writeups/linky/linky2.svg)
+![BER](/images/blog/2024/linky/linky2.svg)
 Le **Eb/No** quant à lui permet de mesurer la qualité d'un **signal numérique**. C'est aussi un rapport mais entre l'énergie nécessaire à envoyé pour `1 bit` et le **bruit**. Donc plus le **Eb/No** est élevée, plus le **BER** diminue et plus la transmission est fiable.
 - Le **Eb/No** pour le **BER**, on nous le donne, c'est `4.4dB`. D'après la question, on sait qu'on a une marge de `10dB` donc le **Eb/No** vaudra `14.4dB`.
 - Pour le **débit binaire**, pareil, on nous le donne, c'est `10000000.0bps` donc `10Mbps`.

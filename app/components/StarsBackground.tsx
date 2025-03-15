@@ -64,25 +64,20 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   );
 
   useEffect(() => {
-    const updateStars = () => {
+    const resizeCanvas = () => {
       if (canvasRef.current) {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-        setStars(generateStars(width, height));
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        setStars(generateStars(window.innerWidth, window.innerHeight));
       }
     };
 
-    updateStars();
-    window.addEventListener("resize", updateStars);
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
     return () => {
-      window.removeEventListener("resize", updateStars);
+      window.removeEventListener("resize", resizeCanvas);
     };
   }, [generateStars]);
 
@@ -125,7 +120,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      className={cn("absolute top-0 left-0 w-full h-full", className)}
+      className={cn("absolute top-0 left-0 w-full h-full z-0", className)}
     />
   );
 };

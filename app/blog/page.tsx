@@ -47,16 +47,16 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
   const displayedArticles = filteredArticles.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
 
   return (
-    <main className="h-screen flex flex-col items-center mx-auto w-full px-6 md:px-20 pt-10">
+    <main className="h-screen flex flex-col items-center mx-auto w-full px-6 md:px-20 pt-5">
       
       {/* ✅ Filtres par tag */}
       <div className="flex flex-wrap gap-4 mb-6">
         {allTags.map((tag) => (
           <Link
             key={tag}
-            href={activeTag === tag ? "/blog" : `/blog?tag=${tag}`} // Basculer l'état du tag
+            href={activeTag === tag ? "/blog" : `/blog?tag=${tag}`}
             className={`px-4 py-2 rounded-md text-white font-bold ${
-              activeTag === tag ? "bg-purple-700" : "bg-gray-800 hover:bg-purple-600"
+              activeTag === tag ? "bg-purple" : "bg-gray-800 hover:bg-purple"
             }`}
           >
             #{tag}
@@ -67,9 +67,9 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
       {/* ✅ Grille des articles */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full ">
         {displayedArticles.map(({ slug, metadata }) => (
-          <CardContainer key={slug} className="inter-var">
+          <CardContainer key={slug} className="inter-var bg-grid-white/[0.1] dark:bg-grid-gray-800/[0.2]">
             <Link href={`/blog/${slug}`} className="w-full">
-              <CardBody className="bg-black relative group/card border border-white/[0.2] h-[40vh] w-[50vh] flex flex-col justify-between rounded-xl p-6">
+              <CardBody className="bg-[#1d1c1c] relative group/card border border-white/[0.2] h-[40vh] w-[50vh] flex flex-col justify-between rounded-xl p-6">
                 
                 <CardItem translateZ="60" className="text-2xl font-bold text-white h-[65px] flex items-center">
                   {metadata.title}
@@ -91,9 +91,10 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
 
                 <div className="mt-2 flex flex-wrap gap-2">
                   {metadata.tags.map((tag: string) => (
-                    <CardItem key={tag} translateZ="30" as="span" className="bg-purple-700 text-white px-4 py-2 text-md font-medium rounded-md">
+                    <CardItem key={tag} translateZ="30" as="span" className="bg-purple text-white px-4 py-2 text-md font-medium rounded-md">
                       #{tag}
                     </CardItem>
+                  
                   ))}
                 </div>
 
@@ -105,17 +106,18 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
 
       {/* ✅ Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-8 space-x-4 pb-6">
+        <div className="flex justify-center mt-8 space-x-4 pb-10">
           {Array.from({ length: totalPages }).map((_, index) => (
             <Link
               key={index}
               href={`/blog?page=${index + 1}${activeTag ? `&tag=${activeTag}` : ""}`}
               className={`px-6 py-4 rounded-lg text-white font-bold ${
-                index + 1 === currentPage ? "bg-purple-700" : "bg-gray-800 hover:bg-purple-600"
+                index + 1 === currentPage ? "bg-purple" : "bg-gray-800 hover:bg-purple"
               }`}
             >
               {index + 1}
             </Link>
+          
           ))}
         </div>
       )}

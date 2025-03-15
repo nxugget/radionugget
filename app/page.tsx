@@ -6,36 +6,28 @@ import BestProjects from "./components/best-projects";
 
 export default function Home() {
   const [scrollPhase, setScrollPhase] = useState(0);
-  const navbarHeight = 80; // Ajuste selon la hauteur de ta navbar
-  const scrollLockTime = 800;
-  let isScrolling = false;
+  const navbarHeight = 80; 
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
-      if (isScrolling) return;
-
-      const bestProjects = document.getElementById("best-projects");
-
-      if (scrollPhase === 1 && event.deltaY > 0) {
-        // 🔹 Étape 2 : Scroll automatique vers best-projects
-        setScrollPhase(2);
-        if (bestProjects) {
-          const top = bestProjects.offsetTop - navbarHeight;
-          window.scrollTo({ top, behavior: "smooth" });
+      if (event.deltaY > 50) {
+        if (scrollPhase === 0) {
+          setScrollPhase(1);
+        } else if (scrollPhase === 1) {
+          setScrollPhase(2);
+          document.getElementById("best-projects")?.scrollIntoView({ behavior: "smooth" });
         }
-      } else if (scrollPhase === 2 && event.deltaY < 0) {
-        // 🔹 Retour à SpaceExplore
-        setScrollPhase(1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (event.deltaY < -50) {
+        if (scrollPhase === 2) {
+          setScrollPhase(1);
+          document.getElementById("space-explore")?.scrollIntoView({ behavior: "smooth" });
+        } else if (scrollPhase === 1) {
+          setScrollPhase(0);
+        }
       }
-
-      isScrolling = true;
-      setTimeout(() => {
-        isScrolling = false;
-      }, scrollLockTime);
     };
 
-    window.addEventListener("wheel", handleScroll, { passive: false });
+    window.addEventListener("wheel", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleScroll);
@@ -43,17 +35,12 @@ export default function Home() {
   }, [scrollPhase]);
 
   return (
-    <main className="overflow-hidden">
-      {/* 🔹 Space Explore */}
-      <section id="space-explore" className="h-screen w-full">
-        <SpaceExplore onScrollComplete={() => {
-          // Dès que l'animation est terminée, on passe en phase 1 pour que le scroll vers best-projects fonctionne
-          setScrollPhase(1);
-        }} />
+    <main className="overflow-auto">
+      <section id="space-explore" className="h-screen w-full overflow-hidden relative">
+        <SpaceExplore scrollPhase={scrollPhase} />
       </section>
 
-      {/* 🔹 Best Projects */}
-      <section id="best-projects" className="h-screen w-full bg-gray-900 flex items-center justify-center pt-[80px]">
+      <section id="best-projects" className="h-screen w-full bg-transparent flex items-center justify-center pt-[80px]">
         <BestProjects />
       </section>
     </main>

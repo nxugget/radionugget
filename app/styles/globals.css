@@ -4,10 +4,20 @@
 
 html, body {
   width: 100%;
-  height: 100%;
-  overflow: auto !important;
+  min-height: 100vh; /* 🔹 Assure que la page couvre tout l'écran */
+  overflow: auto; /* 🔹 Permet le scroll */
   background-color: rgb(32, 30, 30);
   position: relative;
+}
+
+/* Fond étoilé en arrière-plan fixe */
+.stars-background {
+  position: fixed; /* 🔹 Fixe l'élément pour qu'il couvre tout l'écran */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* 🔹 Le met en arrière-plan */
 }
 
 /* Empêche le contenu d'être caché derrière le fond */
