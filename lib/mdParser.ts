@@ -22,7 +22,7 @@ export function getAllPosts() {
 
       posts.push({
         title: data.title,
-        slug: `${category}/${filename.replace(".md", "")}`,
+        slug: `${category}/${filename.replace(".mdx", "")}`,
         date: data.date,
         category,
       });
@@ -33,7 +33,7 @@ export function getAllPosts() {
 }
 
 export async function getPostBySlug(category: string, slug: string) {
-  const filePath = path.join(contentDirectory, category, `${slug}.md`);
+  const filePath = path.join(contentDirectory, category, `${slug}.mdx`);
   const fileContents = fs.readFileSync(filePath, "utf8");
 
   const { data, content } = matter(fileContents);

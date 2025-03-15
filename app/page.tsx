@@ -6,37 +6,33 @@ import BestProjects from "./components/best-projects";
 
 export default function Home() {
   const [scrollPhase, setScrollPhase] = useState(0);
+  const navbarHeight = 80; // Ajuste selon la hauteur de ta navbar
+  const scrollLockTime = 800;
+  let isScrolling = false;
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
-      event.preventDefault();
+      if (isScrolling) return;
 
-      const spaceExplore = document.getElementById("space-explore");
-      const textBlock = document.querySelector(".text-block"); // Sélectionne le texte principal
+      const bestProjects = document.getElementById("best-projects");
 
-      if (scrollPhase === 0 && event.deltaY > 0) {
-        // 🔹 Étape 1 : Lancer le zoom de space_explore.jsx
-        setScrollPhase(1);
-        spaceExplore?.classList.add("zoomed");
-        textBlock?.classList.remove("reset-text"); // Retirer la réinitialisation si présente
-      } else if (scrollPhase === 1 && event.deltaY > 0) {
-        // 🔹 Étape 2 : Scroll smooth vers best-projects
+      if (scrollPhase === 1 && event.deltaY > 0) {
+        // 🔹 Étape 2 : Scroll automatique vers best-projects
         setScrollPhase(2);
-        document.getElementById("best-projects")?.scrollIntoView({
-          behavior: "smooth",
-        });
+        if (bestProjects) {
+          const top = bestProjects.offsetTop - navbarHeight;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
       } else if (scrollPhase === 2 && event.deltaY < 0) {
-        // 🔹 Retour vers space_explore si on scroll vers le haut
+        // 🔹 Retour à SpaceExplore
         setScrollPhase(1);
-        spaceExplore?.scrollIntoView({
-          behavior: "smooth",
-        });
-      } else if (scrollPhase === 1 && event.deltaY < 0) {
-        // 🔹 Reset au début si on revient en arrière
-        setScrollPhase(0);
-        spaceExplore?.classList.remove("zoomed");
-        textBlock?.classList.add("reset-text"); // Ajouter la classe pour réinitialiser le texte
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
+
+      isScrolling = true;
+      setTimeout(() => {
+        isScrolling = false;
+      }, scrollLockTime);
     };
 
     window.addEventListener("wheel", handleScroll, { passive: false });
@@ -48,13 +44,16 @@ export default function Home() {
 
   return (
     <main className="overflow-hidden">
-      {/* 🔹 Section Space Explore (Parallax) */}
+      {/* 🔹 Space Explore */}
       <section id="space-explore" className="h-screen w-full">
-        <SpaceExplore />
+        <SpaceExplore onScrollComplete={() => {
+          // Dès que l'animation est terminée, on passe en phase 1 pour que le scroll vers best-projects fonctionne
+          setScrollPhase(1);
+        }} />
       </section>
 
-      {/* 🔹 Section Best Projects */}
-      <section id="best-projects" className="h-screen w-full bg-gray-900 flex items-center justify-center">
+      {/* 🔹 Best Projects */}
+      <section id="best-projects" className="h-screen w-full bg-gray-900 flex items-center justify-center pt-[80px]">
         <BestProjects />
       </section>
     </main>

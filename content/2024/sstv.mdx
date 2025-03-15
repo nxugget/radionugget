@@ -1,8 +1,10 @@
 ---
 title: "Recevoir des images en provenance de l'ISS"
 summary: "Découvrez comment recevoir des images en SSTV provenant de l'ISS dans le cadre du programme ARISS"
-publishedAt: "12-10-2024"
-image: "/images/blog/thumbnail/sstv.webp"
+date: "2024-10-12"
+thumbnail: "/images/blog/thumbnail/sstv.webp"
+tags: ["radio", "space"]
+slug: "sstv"
 ---
 Connaissez-vous le programme [ARISS](https://fr.wikipedia.org/wiki/ARISS) (Amateur Radio on the International Space Station) ? Il permet aux radioamateurs du monde entier de communiquer avec les astronautes à bord de la [ISS](https://fr.wikipedia.org/wiki/Station_spatiale_internationale). Dans le cadre de ce programme, **ARISS** diffuse parfois des images en utilisant un protocole du nom de **SSTV**, permettant ainsi aux passionnés comme nous de recevoir des photos directement depuis l'espace.
 
@@ -24,7 +26,7 @@ Dans le rectangle rouge, on entre nos coordonnées géographiques puis on clique
 
 ## Logiciel
 On peut faire de la **SSTV** avec un simple **talkie-walkie** permettant d'écouter le signal et en même temps, depuis un logiciel le décoder. C'est la méthode la plus simple, mais le décodage du signal se fait avec un micro (téléphone ou ordinateur), ce qui n'est pas optimal.  
-Dans mon cas, je vais procéder avec la [<SmartLink href="/blog/radio/basics/sdr">SDR</SmartLink>] en utilisant le logiciel [SDR++](https://www.sdrpp.org) pour recevoir le signal et [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) pour le décoder car étant sur **Mac** c'est le seul fiable que j'ai trouvé. Si vous êtes sur **Linux**, prenez [QSSTV](https://doc.ubuntu-fr.org/qsstv) et si vous êtes sur **Windows**, utilisez [MMSTV](https://hamsoft.ca/pages/mmsstv.php). 
+Dans mon cas, je vais procéder avec la [<SmartLink slug="sdr">SDR</SmartLink>] en utilisant le logiciel [SDR++](https://www.sdrpp.org) pour recevoir le signal et [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) pour le décoder car étant sur **Mac** c'est le seul fiable que j'ai trouvé. Si vous êtes sur **Linux**, prenez [QSSTV](https://doc.ubuntu-fr.org/qsstv) et si vous êtes sur **Windows**, utilisez [MMSTV](https://hamsoft.ca/pages/mmsstv.php). 
 
 Pour décoder une image, le logiciel **SSTV** attend en entrée le signal audio. Or, notre signal audio étant présent sur notre logiciel **SDR**, il va falloir trouver un moyen de relier les deux logiciels. Pour cela, la solution la plus simple à mettre en oeuvre est l'utilisation d'un **câble audio virtuel**. Voici un schéma de comment ça fonctionne : 
 

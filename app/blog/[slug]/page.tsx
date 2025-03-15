@@ -1,28 +1,79 @@
-import { getPostBySlug } from "@/lib/posts";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
+import SmartLink from "../../components/SmartLink";
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+export default async function Article({ params }: { params: { slug?: string } }) {
+  if (!params?.slug) return <p className="text-white text-center">404</p>;
+
+  const contentDir = path.join(process.cwd(), "content");
+  const years = fs.readdirSync(contentDir).filter((year) => fs.statSync(path.join(contentDir, year)).isDirectory());
+
+  let filePath = "";
+  let metadata = null;
+  let content = "";
+
+  for (const year of years) {
+    const possiblePath = path.join(contentDir, year, `${params.slug}.mdx`);
+    if (fs.existsSync(possiblePath)) {
+      filePath = possiblePath;
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      const parsed = matter(fileContent);
+      metadata = parsed.data; // Métadonnées (title, date, thumbnail)
+      content = parsed.content; // Contenu MDX sans les métadonnées
+      break;
+    }
+  }
+
+  if (!filePath || !metadata) return <p className="text-white text-center">404</p>;
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-4xl font-bold text-white">{post.metadata.title}</h1>
-      <p className="text-gray-400">{new Date(post.metadata.publishedAt).toLocaleDateString()}</p>
+    <main className="flex justify-center py-8 min-h-screen">
+      <div className="w-full max-w-7xl px-8">
 
-      <Image src={post.metadata.image} alt={post.metadata.title} width={800} height={400} className="rounded-md mt-4" />
+        {/* 🔥 HEADER AVEC IMAGE BLURRED */}
+        <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden rounded-lg shadow-lg">
+          {/* Image blurred en background */}
+          <div className="absolute inset-0">
+            <Image 
+              src={metadata.thumbnail} 
+              alt={metadata.title} 
+              fill 
+              className="object-cover blur-md brightness-50" // 🔽 Réduction du blur
+              priority
+            />
+          </div>
 
-      <article className="prose prose-invert mt-6">
-        {post.content ? <MDXRemote source={post.content} /> : <p className="text-gray-400">Aucun contenu disponible.</p>}
-      </article>
+          {/* Texte au-dessus */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2">{metadata.title}</h1>
+            <p className="text-lg md:text-xl opacity-80">{metadata.date}</p>
+          </div>
+        </div>
 
-      {/* 🔹 Tags */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        {post.metadata.tags.map((tag) => (
-          <span key={tag} className="bg-purple-700 text-white px-2 py-1 text-xs rounded-md">
-            #{tag}
-          </span>
-        ))}
+        {/* ARTICLE CONTAINER */}
+        <article className="bg-[#1a1a1a] text-white rounded-lg shadow-xl p-8 mt-10 prose prose-invert max-w-none">
+          <MDXRemote
+            source={content} // ✅ Utilisation de `content` sans métadonnées
+            components={{
+              SmartLink: (props) => <SmartLink {...props} className="text-[#b400ff] transition-colors duration-300 hover:text-[#8000bf]" />, // ✅ Même style que <a>
+              strong: (props) => <strong className="text-[#ffaa00] font-semibold" {...props} />,
+              a: (props) => <a className="text-[#b400ff] transition-colors duration-300 hover:text-[#8000bf]" {...props} />,
+              p: (props) => <p className="mb-4 leading-relaxed" {...props} />,
+              h1: (props) => <h1 className="text-4xl font-bold mt-8 mb-4 text-white border-b-4 border-gray-500 pb-2" {...props} />,
+              h2: (props) => <h2 className="text-3xl font-bold mt-6 mb-3 text-white" {...props} />,
+              h3: (props) => <h3 className="text-2xl font-semibold mt-5 mb-2 text-white" {...props} />,
+              img: (props) => (
+                <div className="flex justify-center my-6">
+                  <Image {...props} className="rounded-lg shadow-lg max-w-full" alt={props.alt || "Image"} width={900} height={500} />
+                </div>
+              ),
+            }}
+          />
+        </article>
+
       </div>
     </main>
   );

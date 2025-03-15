@@ -1,14 +1,15 @@
 ---
 title: "Monter une station ADS-B reliée à FlightRadar"
-publishedAt: "24-02-2025"
+date: "2025-02-24"
 summary: "Mettez en place votre propre station ADSB pour détecter les avions autour de chez vous et obtenez gratuitement un abonnement FlightRadar de 500€/an"
-image: "/images/blog/thumbnail/adsb.webp"
-tags: ["sdr", "radio"]
+thumbnail: "/images/blog/thumbnail/adsb.webp"
+tags: ["radio"]
+slug: "adsb"
 ---
 L'avion est à ce jour l'un des moyens de transport les plus populaires. Au vu de l'augmentation importante du nombre de vols, il est primordial pour la trafic aérien de se soucier des risques de collision. Ainsi est née une norme internationale que l'on appelle **ADS-B**. C'est cette même norme qui permet également à n'importe qui de suivre le trafic aérien sur des applications et sites comme [FlightRadar](https://www.flightradar24.com/).
 
 # Comment fonctionne l'ADS-B
-L'**ADS-B** pour **A**utomatic **D**ependent **S**urveillance-**B**roadcast permet à un avion d'envoyer **2 fois par seconde** sa position (obtenu via [<SmartLink href="/blog/space/satellite/gps">GNSS</SmartLink>] ainsi que d'autres informations à tous récepteurs pouvant décoder l'**ADSB** comme les aéroports, les autres aéronefs et bientôt, nous :)
+L'**ADS-B** pour **A**utomatic **D**ependent **S**urveillance-**B**roadcast permet à un avion d'envoyer **2 fois par seconde** sa position (obtenu via [<SmartLink slug="gps">GNSS</SmartLink>] ainsi que d'autres informations à tous récepteurs pouvant décoder l'**ADSB** comme les aéroports, les autres aéronefs et bientôt, nous :)
 Ces informations sont envoyées sur la fréquence `1090MHz`.
 
 ![ADSB Schema](/images/blog/radio/ground/adsb/adsb1.svg)
@@ -22,11 +23,11 @@ L'idée va être d'installer [Pi24](https://www.flightradar24.com/build-your-own
 ## Partie matérielle
 Pour avoir notre station **ADSB-B**, il va nous falloir 3 éléments principaux : 
 - Un **Raspberry** avec une carte **SD** d'au moins `8Go`
-- Un récepteur [<SmartLink href="/blog/radio/basics/sdr">SDR</SmartLink>]
+- Un récepteur [<SmartLink slug="sdr">SDR</SmartLink>]
 - Une antenne pour la fréquence `1090MHz`
 
 Côté **Raspberry**, vous avez une [liste ici](https://rpilocator.com/) qui recence tous les modèles compatibles avec [Pi24](https://www.flightradar24.com/build-your-own). J'ai opté pour un [Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/) pour sa petite taille :)
-Pour le récepteur, une clé [<SmartLink href="/blog/radio/basics/sdr">SDR</SmartLink>] suffira. Dans mon cas, ce sera le [RTL-SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html).
+Pour le récepteur, une clé [<SmartLink slug="sdr">SDR</SmartLink>] suffira. Dans mon cas, ce sera le [RTL-SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html).
 Enfin, pour la partie antenne, vous pouvez en acheter des toutes faites comme [celle-ci](https://www.passion-radio.fr/adsb/ant-1090-1042.html) mais dans notre cas, on va fabriquer une antenne **ground plane** d'**un quart-d'onde** dont on a déjà parlé dans [<SmartLink href="/blog/radio/basics/antenna">ce cours</SmartLink>].
 Pour connaître ces dimensions, on va utiliser ce [calculateur](https://m0ukd.com/calculators/quarter-wave-ground-plane-antenna-calculator/) qui nous indique qu'on aura besoin d'une tige de `6.5cm` et 4 autres de `7.3cm`. On obtiendra quelque chose comme ça :
 
