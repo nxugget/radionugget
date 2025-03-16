@@ -56,7 +56,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
             key={tag}
             href={activeTag === tag ? "/blog" : `/blog?tag=${tag}`}
             className={`px-4 py-2 rounded-md text-white font-bold ${
-              activeTag === tag ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+              activeTag === tag ? "bg-purple" : "bg-gray-900 hover:bg-purple"
             }`}
           >
             #{tag}
@@ -64,7 +64,6 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
         ))}
       </div>
 
-      {/* ✅ Grille des articles */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full ">
         {displayedArticles.map(({ slug, metadata }) => (
           <CardContainer key={slug} className="inter-var bg-grid-white/[0.1] dark:bg-grid-gray-800/[0.2]">
@@ -112,7 +111,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
               key={index}
               href={`/blog?page=${index + 1}${activeTag ? `&tag=${activeTag}` : ""}`}
               className={`px-6 py-4 rounded-lg text-white font-bold ${
-                index + 1 === currentPage ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                index + 1 === currentPage ? "bg-purple" : "bg-gray-900 hover:bg-purple"
               }`}
             >
               {index + 1}

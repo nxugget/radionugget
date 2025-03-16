@@ -7,23 +7,42 @@ import Image from "next/image";
 export const Navbar = () => {
   const [navHeight, setNavHeight] = useState(0);
   const navRef = useRef<HTMLDivElement | null>(null);
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (navRef.current) {
       setNavHeight(navRef.current.offsetHeight);
-      console.log("Navbar initial height:", navRef.current.offsetHeight);
     }
 
     const handleResize = () => {
       if (navRef.current) {
         setNavHeight(navRef.current.offsetHeight);
-        console.log("Navbar resized, new height:", navRef.current.offsetHeight);
       }
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Ouvrir le menu immédiatement
+  const openToolsMenu = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsAnimating(false);
+    setIsToolsOpen(true);
+  };
+
+  // Fermer le menu avec un effet smooth
+  const closeToolsMenu = () => {
+    setIsAnimating(true); // Déclenche l'animation de fermeture
+    timeoutRef.current = setTimeout(() => {
+      setIsToolsOpen(false);
+      setIsAnimating(false);
+    }, 300); // Attend la fin de l'animation avant de masquer complètement
+  };
 
   return (
     <>
@@ -65,12 +84,19 @@ export const Navbar = () => {
                 Blog
               </Link>
 
-              {/* Tools Menu (affiché automatiquement au hover) */}
-              <div className="relative group">
+              {/* Tools Menu (avec délai et animation de fermeture smooth) */}
+              <div
+                className="relative"
+                onMouseEnter={openToolsMenu}
+                onMouseLeave={closeToolsMenu}
+              >
+                {/* Bouton Tools */}
                 <button className="text-white text-lg font-medium flex items-center gap-1 transition duration-300 hover:text-purple hover:scale-105">
                   Tools
                   <svg
-                    className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      isToolsOpen ? "rotate-180" : ""
+                    }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -82,23 +108,31 @@ export const Navbar = () => {
                   </svg>
                 </button>
 
-                {/* Dropdown Menu affiché au survol */}
-                <div
-                  className="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-lg rounded-lg shadow-lg overflow-hidden transition-all duration-300 opacity-0 scale-95 translate-y-2 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0"
-                >
-                  <Link
-                    href="/grid-square"
-                    className="block px-4 py-3 text-white text-md hover:text-orange transition duration-300 hover:pl-6"
+                {/* Dropdown Menu (maintenant avec animation fluide) */}
+                {isToolsOpen && (
+                  <div
+                    className={`absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-lg rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
+                      isAnimating
+                        ? "opacity-0 scale-95 translate-y-2"
+                        : "opacity-100 scale-100 translate-y-0"
+                    }`}
+                    onMouseEnter={openToolsMenu} // Empêche la fermeture si on est dessus
+                    onMouseLeave={closeToolsMenu} // Ferme avec effet smooth
                   >
-                    Grid Square
-                  </Link>
-                  <Link
-                    href="/satellite-prediction"
-                    className="block px-4 py-3 text-white text-md hover:text-orange transition duration-300 hover:pl-6"
-                  >
-                    Satellite Prediction
-                  </Link>
-                </div>
+                    <Link
+                      href="/tools/grid-square"
+                      className="block px-4 py-3 text-white text-md transition-all duration-300 hover:text-orange hover:translate-x-2"
+                    >
+                      Grid Square
+                    </Link>
+                    <Link
+                      href="/tools/satellite-prediction"
+                      className="block px-4 py-3 text-white text-md transition-all duration-300 hover:text-orange hover:translate-x-2"
+                    >
+                      Satellite Prediction
+                    </Link>
+                  </div>
+                )}
               </div>
 
               <Link
@@ -107,12 +141,6 @@ export const Navbar = () => {
               >
                 Gallery
               </Link>
-              {/* <Link
-                href="/aboutme"
-                className="text-white text-lg font-medium hover:text-purple transition duration-300 hover:scale-105"
-              >
-                About Me
-              </Link> */}
             </div>
           </div>
         </div>

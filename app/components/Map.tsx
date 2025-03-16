@@ -21,21 +21,24 @@ const WORLD_BOUNDS: LatLngBoundsExpression = [
 
 /**
  * Calcule le Grid Square selon le niveau de détail.
- * - Niveau 1 : 2 lettres (grandes zones)
- * - Niveau 2 : +2 chiffres (zones intermédiaires)
- * - Niveau 3 : +2 lettres (zones fines)
+ * - Niveau 1 : 2 lettres (grandes zones) => ex. "IN"
+ * - Niveau 2 : +2 chiffres (zones intermédiaires) => ex. "IN94"
+ * - Niveau 3 : +2 lettres (zones fines) => ex. "IN94SK"
  */
 const getGridSquare = (lat: number, lon: number, detailLevel: number) => {
+  // 1) Calcule les 2 lettres de base (Field)
   const fieldLon = Math.floor((lon + 180) / 20);
   const fieldLat = Math.floor((lat + 90) / 10);
   let gridSquare = `${String.fromCharCode(65 + fieldLon)}${String.fromCharCode(65 + fieldLat)}`;
 
+  // 2) Ajoute les 2 chiffres (Square) si on est au moins au niveau 2
   if (detailLevel >= 2) {
     const squareLon = Math.floor(((lon + 180) % 20) / 2);
     const squareLat = Math.floor(((lat + 90) % 10) / 1);
     gridSquare += `${squareLon}${squareLat}`;
   }
 
+  // 3) Ajoute les 2 lettres suivantes (Subsquare) si on est au niveau 3
   if (detailLevel === 3) {
     const subLon = Math.floor((((lon + 180) % 2) / 2) * 24);
     const subLat = Math.floor((((lat + 90) % 1) / 1) * 24);
@@ -47,20 +50,20 @@ const getGridSquare = (lat: number, lon: number, detailLevel: number) => {
 
 /**
  * Détermine le niveau de détail en fonction du zoom.
- * - Zoom < 4  => Niveau 1 (grandes zones)
- * - 4 <= Zoom < 8 => Niveau 2 (intermédiaire)
- * - Zoom >= 8 => Niveau 3 (fines zones)
+ * - Zoom < 7  => Niveau 1 (2 lettres)
+ * - 7 <= Zoom < 11 => Niveau 2 (ex. "IN94")
+ * - Zoom >= 11 => Niveau 3 (ex. "IN94SK")
  */
 const getDetailLevel = (zoom: number) => {
-  if (zoom < 4) return 1;
-  if (zoom < 8) return 2;
+  if (zoom < 7) return 1;
+  if (zoom < 11) return 2;
   return 3;
 };
 
 /**
  * Label affiché au centre de chaque rectangle de la grille.
- * On l'affiche en rouge, un peu plus gros, et on varie légèrement
- * la taille selon le niveau de détail.
+ * On l'affiche avec la même couleur/transparence que la grille,
+ * tout en ajustant la taille de la police selon le niveau de détail.
  */
 const GridLabel = ({
   position,
@@ -114,7 +117,7 @@ const MouseTracker = ({
 
 /**
  * Calcule et affiche dynamiquement la grille selon le niveau de zoom,
- * avec des pas (latStep / lonStep) adaptés pour limiter le nombre de cases.
+ * avec des pas (latStep / lonStep) adaptés à chaque niveau.
  */
 const GridLayer = () => {
   const map = useMap();
@@ -133,17 +136,17 @@ const GridLayer = () => {
       let latStep: number, lonStep: number;
 
       if (detailLevel === 1) {
-        // Grandes zones
+        // Grandes zones => 20° x 10°
         latStep = 10;
         lonStep = 20;
       } else if (detailLevel === 2) {
-        // Zones intermédiaires
-        latStep = 5;
-        lonStep = 10;
-      } else {
-        // Zones fines (uniquement quand zoom >= 8)
+        // Zones intermédiaires => 1° x 2°
         latStep = 1;
         lonStep = 2;
+      } else {
+        // Zones fines => subdivision de 1° x 2° en 24x24 => ~0.0417° x ~0.0833°
+        latStep = 1 / 24;
+        lonStep = 2 / 24;
       }
 
       const startLat = Math.floor(bounds.getSouth() / latStep) * latStep;
@@ -176,6 +179,7 @@ const GridLayer = () => {
       setGridSquares(newGridSquares);
     };
 
+    // Met à jour la grille au chargement et lors des déplacements/zoom
     updateGrid();
     map.on("zoomend", updateGrid);
     map.on("moveend", updateGrid);
@@ -193,10 +197,12 @@ const GridLayer = () => {
           <Rectangle
             bounds={square.bounds}
             pathOptions={{
-              color: "red",     // Même couleur que le label
+              // Rouge légèrement plus visible
+              color: "rgba(255, 0, 0, 0.4)",
               weight: 1,
               fillOpacity: 0,
-              opacity: 0.8,     // Lignes un peu plus opaques
+              // Opacité globale du trait
+              opacity: 0.4,
             }}
           />
           <GridLabel
@@ -229,7 +235,7 @@ export default function Map({
         center={center}
         zoom={3}
         minZoom={2.5}
-        maxZoom={12}
+        maxZoom={15}
         maxBounds={WORLD_BOUNDS}
         scrollWheelZoom={true}
         className="h-[85vh] w-full rounded-lg"
@@ -245,7 +251,8 @@ export default function Map({
 
       <style jsx global>{`
         .grid-label {
-          color: red; /* Même couleur que la grille */
+          /* Rouge semi-transparent, un peu plus visible que 0.3 */
+          color: rgba(255, 0, 0, 0.4);
           text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
           background: transparent;
           border: none;
