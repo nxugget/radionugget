@@ -51,17 +51,17 @@ const SpaceExplore = ({ scrollPhase }: { scrollPhase: number }) => {
                     {/* Backgrounds */}
                     <div
                         className={`absolute top-0 left-0 w-full h-full bg-center bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"}`}
-                        style={{ backgroundImage: "url('/images/background1.webp')", zIndex: 0 }}
+                        style={{ backgroundImage: "url('/images/background4.png')", zIndex: 0 }}
                     ></div>
                         
                     <div
                         className={`absolute inset-0 bg-center bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"}`}
-                        style={{ backgroundImage: "url('/images/background2.webp')", zIndex: 1 }}
+                        style={{ backgroundImage: "url('/images/background.webp')", zIndex: 1 }}
                     ></div>
                         
                     <div
                         className={`absolute inset-0 bg-center bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"}`}
-                        style={{ backgroundImage: "url('/images/background3.webp')", zIndex: 2 }}
+                        style={{ backgroundImage: "url('/images/background.webp')", zIndex: 2 }}
                     ></div>
 
 

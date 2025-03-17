@@ -466,7 +466,6 @@ export default function SatelliteTracker() {
         </div>
 
         <div className="mt-6 w-full flex justify-center">
-          <div className="bg-black rounded-lg p-4 shadow-lg">
             <SatelliteTimeline
               passes={allPredictions.flatMap((pred) =>
                 pred.passes.map((pass) => ({
@@ -479,7 +478,6 @@ export default function SatelliteTracker() {
               useLocalTime={useLocalTime}
               utcOffset={utcOffset}
             />
-          </div>
         </div>
       </div>
       {/* Bannière de cookies */}
