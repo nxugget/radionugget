@@ -1,104 +1,128 @@
-// satelliteAPI.ts
 
-interface SatellitePass {
-  startUTC: number;
-  endUTC: number;
-  maxEl: number;
+"use server";
+
+import fs from "fs";
+import path from "path";
+import {
+  twoline2satrec,
+  propagate,
+  gstime,
+  eciToEcf,
+  ecfToLookAngles,
+} from "satellite.js";
+
+function deg2rad(deg: number): number {
+  return (deg * Math.PI) / 180;
 }
 
-export async function fetchSatellitePasses(
-  satelliteId: string,
-  lat: number,
-  lon: number,
-  elevation: number,
-  count: number
-) {
-  const API_KEY = "MW3QMW-54CFE9-M3FN58-5FPP"; // Mets ta vraie clé API ici
-  const alt = 10;
-  const url = `https://api.n2yo.com/rest/v1/satellite/passes/${satelliteId}/${lat}/${lon}/${alt}/${count}/&apiKey=${API_KEY}`;
+function rad2deg(rad: number): number {
+  return (rad * 180) / Math.PI;
+}
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Erreur API: ${response.status} ${response.statusText}`);
-    }
-    const data = await response.json();
-    if (!data.passes || data.passes.length === 0) {
-      throw new Error("Aucune donnée de passage trouvée.");
-    }
-    return data.passes.map((pass: SatellitePass) => ({
-      startTime: new Date(pass.startUTC * 1000).toUTCString(),
-      endTime: new Date(pass.endUTC * 1000).toUTCString(),
-      maxElevation: pass.maxEl,
-    }));
-  } catch (error) {
-    throw new Error("Erreur lors de la récupération des prédictions.");
+export interface Satellite {
+  name: string;
+  id: string;
+  category?: string;
+}
+
+export interface SatellitePassData {
+  startTime: string;
+  endTime: string;
+  maxElevation: number;
+}
+
+export interface TleSatellite extends Satellite {
+  tle1: string;
+  tle2: string;
+}
+
+const TLE_FILE_PATH = path.join(process.cwd(), "data", "tle.json");
+
+/**
+ * Récupère la liste des satellites disponibles avec filtre optionnel.
+ */
+export async function getSatellites(category?: string): Promise<Satellite[]> {
+  if (!fs.existsSync(TLE_FILE_PATH)) {
+    throw new Error("TLE data file not found. Please run the TLE update script.");
   }
+  const data = fs.readFileSync(TLE_FILE_PATH, "utf8");
+  const tleSatellites: TleSatellite[] = JSON.parse(data);
+
+  let satellites = tleSatellites.map(({ name, id, category }) => ({ name, id, category }));
+
+  if (category) {
+    satellites = satellites.filter((sat) => sat.category === category);
+  }
+
+  return satellites;
 }
 
-export async function fetchFilteredSatellites() {
-  const TLE_WEATHER_URL = "https://celestrak.org/NORAD/elements/weather.txt";
-  const TLE_RADIO_URL = "https://celestrak.org/NORAD/elements/amateur.txt";
+/**
+ * Prévoit les passages d'un satellite entre deux moments donnés.
+ */
+export async function getSatellitePasses(
+  satelliteId: string,
+  latitude: number,
+  longitude: number,
+  elevation: number,
+  utcOffset: number,
+  startTime: number = Math.floor(Date.now() / 1000),
+  endTime: number = startTime + 86400 // 24h de prévisions
+): Promise<SatellitePassData[]> {
+  const data = fs.readFileSync(TLE_FILE_PATH, "utf8");
+  const tleSatellites = JSON.parse(data);
+  const tle = tleSatellites.find((s: any) => s.id === satelliteId);
+  if (!tle) throw new Error("Satellite TLE not found");
 
-  const fetchTLE = async (url: string) => {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Erreur API: ${response.status} ${response.statusText}`);
-      }
-      const text = await response.text();
-      const lines = text.split("\n");
-      let satellites = [];
-      for (let i = 0; i < lines.length; i += 3) {
-        if (lines[i].trim()) {
-          satellites.push({
-            name: lines[i].trim(),
-            id: lines[i + 1].substring(2, 7),
-          });
-        }
-      }
-      return satellites;
-    } catch {
-      return [];
-    }
+  const satrec = twoline2satrec(tle.tle1, tle.tle2);
+  const observerGd = {
+    latitude: deg2rad(latitude),
+    longitude: deg2rad(longitude),
+    height: elevation / 1000,
   };
 
-  const weatherSatellites = await fetchTLE(TLE_WEATHER_URL);
-  const radioSatellites = await fetchTLE(TLE_RADIO_URL);
+  const passes: SatellitePassData[] = [];
+  let step = 60; // Vérification toutes les 60 secondes
+  let currentPass: SatellitePassData | null = null;
 
-  const weatherSatellitesWithCat = weatherSatellites.map((sat) => ({
-    ...sat,
-    category: "weather",
-  }));
-  const radioSatellitesWithCat = radioSatellites.map((sat) => ({
-    ...sat,
-    category: "amateur",
-  }));
+  for (let t = startTime; t <= endTime; t += step) {
+    const date = new Date(t * 1000);
+    const positionAndVelocity = propagate(satrec, date);
 
-  return [...weatherSatellitesWithCat, ...radioSatellitesWithCat];
-}
-
-export async function fetchSatellitesList() {
-  const TLE_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle";
-
-  try {
-    const response = await fetch(TLE_URL);
-    if (!response.ok) {
-      throw new Error(`Erreur API: ${response.status} ${response.statusText}`);
+    if (!positionAndVelocity || typeof positionAndVelocity === "boolean" || !positionAndVelocity.position) {
+      continue; // On saute cette itération si la propagation échoue
     }
-    const text = await response.text();
-    const lines = text.split("\n");
-    let satellites = [];
-    for (let i = 0; i < lines.length; i += 3) {
-      if (lines[i].trim()) {
-        satellites.push({
-          name: lines[i].trim(),
-          id: lines[i + 1].substring(2, 7),
-        });
+
+    const positionEci = positionAndVelocity.position as { x: number; y: number; z: number };
+    const gmst = gstime(date);
+    const positionEcf = eciToEcf(positionEci, gmst);
+    const lookAngles = ecfToLookAngles(observerGd, positionEcf);
+    const elevationDeg = rad2deg(lookAngles.elevation);
+
+    if (elevationDeg > 0) {
+      if (!currentPass) {
+        // Début d'un passage
+        currentPass = {
+          startTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
+          endTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
+          maxElevation: elevationDeg,
+        };
+      } else {
+        // Mise à jour de la fin du passage et de l'élévation max
+        currentPass.endTime = new Date((t + utcOffset * 3600) * 1000).toISOString();
+        currentPass.maxElevation = Math.max(currentPass.maxElevation, elevationDeg);
       }
+    } else if (currentPass) {
+      // Fin d'un passage, on l'ajoute
+      passes.push(currentPass);
+      currentPass = null;
     }
-    return satellites;
-  } catch {
-    return [];
   }
+
+  if (currentPass) {
+    passes.push(currentPass);
+  }
+
+  return passes;
 }
+

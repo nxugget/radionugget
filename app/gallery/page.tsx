@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FocusCards } from "../components/focus-cards"; // Import correct
+import { FocusCards } from "../components/focus-cards"; 
 
 const Gallery = () => {
   const [images, setImages] = useState<{ title: string; src: string }[]>([]);
@@ -26,7 +26,7 @@ const Gallery = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex justify-center px-2 py-10">
+    <div className="min-h-screen flex justify-center px-2 py-3">
       <FocusCards cards={images} />
     </div>
   );

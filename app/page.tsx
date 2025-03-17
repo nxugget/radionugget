@@ -6,7 +6,6 @@ import BestProjects from "./components/best-projects";
 
 export default function Home() {
   const [scrollPhase, setScrollPhase] = useState(0);
-  const navbarHeight = 80; 
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -35,12 +34,12 @@ export default function Home() {
   }, [scrollPhase]);
 
   return (
-    <main className="overflow-auto">
+    <main className="overflow-hidden">
       <section id="space-explore" className="h-screen w-full overflow-hidden relative">
         <SpaceExplore scrollPhase={scrollPhase} />
       </section>
 
-      <section id="best-projects" className="h-screen w-full bg-transparent flex items-center justify-center pt-[80px]">
+      <section id="best-projects" className="h-screen w-full flex items-center justify-center">
         <BestProjects />
       </section>
     </main>

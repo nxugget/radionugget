@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaLocationArrow } from "react-icons/fa6";
 import { TypewriterEffectSmooth } from "./typewritter-effect"; 
 import { useRef } from "react";
 import { useInView } from "framer-motion"; 
+import { PinContainer } from "./3D-pin";
 
 const projects = [
   {
@@ -43,7 +43,7 @@ const BestProjects = () => {
   const isInView = useInView(titleRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-20 h-screen flex flex-col items-center justify-center bg-transparent"> {/* ✅ Ajout bg-transparent ici */}
+    <section className="py-20 h-full w-full flex flex-col items-center justify-center">
       <div ref={titleRef}>
         {isInView && (
           <TypewriterEffectSmooth
@@ -61,29 +61,26 @@ const BestProjects = () => {
           />
         )}
       </div>
-
-      <div className="grid gap-10 px-6 md:px-20 lg:px-40 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2 h-[80vh]">
-        {projects.map(({ id, title, des, img, sourceCode }) => (
-          <div 
-            key={id} 
-            className="relative bg-gray-800/90 rounded-2xl p-6 shadow-lg transition transform hover:scale-105 flex flex-col justify-between"
-          > {/* ✅ Fond seulement ici, pas sur la section */}
-            <Image src={img} alt={title} width={500} height={300} className="rounded-xl mb-4 w-full h-60 object-cover" />
-            <h3 className="text-2xl font-semibold">{title}</h3>
-            <p className="text-gray-400 text-sm mt-2">{des}</p>
-            <div className="mt-4 flex justify-between items-center">
-              <Link href={sourceCode} className="text-[#b400ff] text-sm flex items-center">
-                Read More <FaLocationArrow className="ml-2" />
-              </Link>
-            </div>
+      <div className="grid gap-8 px-10 md:px-20 lg:px-40 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-full h-full">
+        {projects.map(({ id, title, img, sourceCode }) => (
+          <div key={id} className="w-full h-full">
+            <Link href={sourceCode} className="block w-full h-full">
+              <PinContainer title="Read More" className="w-full h-full">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                  <Image src={img} alt={title} layout="fill" objectFit="cover" className="absolute inset-0 w-full h-full" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-black/50 backdrop-blur-md rounded-xl p-4 w-3/4 text-center">
+                      <h3 className="text-xl font-bold text-white">{title}</h3>
+                    </div>
+                  </div>
+                </div>
+              </PinContainer>
+            </Link>
           </div>
         ))}
       </div>
     </section>
   );
 };
-
-
-
 
 export default BestProjects;

@@ -37,18 +37,18 @@ export const Navbar = () => {
 
   // Fermer le menu avec un effet smooth
   const closeToolsMenu = () => {
-    setIsAnimating(true); // Déclenche l'animation de fermeture
+    setIsAnimating(true);
     timeoutRef.current = setTimeout(() => {
       setIsToolsOpen(false);
       setIsAnimating(false);
-    }, 300); // Attend la fin de l'animation avant de masquer complètement
+    }, 300);
   };
 
   return (
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 w-full z-50 backdrop-blur-md shadow-md px-8 py-4 flex items-center justify-between bg-black/40 transition-all duration-300"
+        className="fixed top-0 w-full z-20 backdrop-blur-md bg-black/30 shadow-md px-8 py-4 flex items-center justify-between transition-all duration-300"
       >
         {/* Partie gauche : Logo + Texte */}
         <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ export const Navbar = () => {
 
         {/* Conteneur des liens */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <div className="bg-black/30 backdrop-blur-lg rounded-full px-10 py-3">
+          <div className="bg-black/10 backdrop-blur-xl rounded-full px-10 py-3 shadow-md">
             <div className="flex gap-10">
               <Link
                 href="/"
@@ -108,16 +108,16 @@ export const Navbar = () => {
                   </svg>
                 </button>
 
-                {/* Dropdown Menu (maintenant avec animation fluide) */}
+                {/* Dropdown Menu avec animation fluide */}
                 {isToolsOpen && (
                   <div
-                    className={`absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-lg rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
+                    className={`absolute left-0 mt-2 w-48 bg-black/20 backdrop-blur-xl rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
                       isAnimating
                         ? "opacity-0 scale-95 translate-y-2"
                         : "opacity-100 scale-100 translate-y-0"
                     }`}
-                    onMouseEnter={openToolsMenu} // Empêche la fermeture si on est dessus
-                    onMouseLeave={closeToolsMenu} // Ferme avec effet smooth
+                    onMouseEnter={openToolsMenu}
+                    onMouseLeave={closeToolsMenu}
                   >
                     <Link
                       href="/tools/grid-square"

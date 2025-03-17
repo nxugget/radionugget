@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body className="relative w-full min-h-screen overflow-hidden bg-black">
                 {/* Fond étoilé */}
-                <StarsBackground className="absolute top-0 left-0 w-full h-full z-0" />
+                <StarsBackground className="absolute top-0 left-0 w-full h-full z-[-1]" />
                 <ShootingStars />
 
                 {/* Contenu principal */}

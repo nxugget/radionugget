@@ -198,7 +198,7 @@ const GridLayer = () => {
             bounds={square.bounds}
             pathOptions={{
               // Rouge légèrement plus visible
-              color: "rgba(255, 0, 0, 0.4)",
+              color: "rgba(255, 170, 0, 0.4)",
               weight: 1,
               fillOpacity: 0,
               // Opacité globale du trait
@@ -251,8 +251,7 @@ export default function Map({
 
       <style jsx global>{`
         .grid-label {
-          /* Rouge semi-transparent, un peu plus visible que 0.3 */
-          color: rgba(255, 0, 0, 0.4);
+          color: rgba(255, 170, 0, 0.4);
           text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
           background: transparent;
           border: none;

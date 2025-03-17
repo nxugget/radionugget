@@ -19,7 +19,7 @@ export const Card = React.memo(
     onSelect: (src: string) => void;
     selectedImage: string | null;
   }) => {
-    const isSelected = selectedImage === card.src;
+    const isHovered = hovered === index;
 
     return (
       <div
@@ -28,8 +28,8 @@ export const Card = React.memo(
         onClick={() => onSelect(card.src)}
         className={cn(
           "relative rounded-lg overflow-hidden h-[400px] md:h-[500px] w-full transition-all duration-300 ease-out cursor-pointer",
-          hovered !== null && hovered !== index ? "blur-[2px] scale-[0.98]" : "",
-          selectedImage && !isSelected ? "brightness-75" : ""
+          hovered !== null && !isHovered ? "blur-[3px] scale-[0.98]" : "",
+          isHovered ? "scale-105" : ""
         )}
       >
         {/* Image */}
@@ -37,17 +37,17 @@ export const Card = React.memo(
           src={card.src}
           alt={card.title}
           fill
-          className="object-cover absolute inset-0 transition-transform duration-300 ease-out transform group-hover:scale-105"
+          className="object-cover absolute inset-0 transition-transform duration-300 ease-out"
         />
-        
-        {/* Overlay + Titre */}
+
+        {/* Image Title with Black Transparent Background */}
         <div
           className={cn(
-            "absolute inset-0 bg-black/20 backdrop-blur-sm flex items-end py-4 px-3 transition-opacity duration-300",
-            hovered === index ? "opacity-100" : "opacity-0"
+            "absolute bottom-2 left-2 bg-black/60 px-3 py-2 rounded-md transition-opacity duration-300",
+            isHovered ? "opacity-100" : "opacity-0"
           )}
         >
-          <div className="text-lg md:text-xl font-medium text-white">
+          <div className="text-white text-lg md:text-xl font-medium">
             {card.title}
           </div>
         </div>
@@ -67,22 +67,19 @@ export function FocusCards({ cards }: { cards: CardProps[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
-  const [isVisible, setIsVisible] = useState(false); // Pour animation smooth
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Gérer l'ouverture avec animation fluide
   const openImage = (src: string) => {
     setSelectedImage(src);
     setZoom(1);
-    setTimeout(() => setIsVisible(true), 10); // Délai pour déclencher l'animation
+    setTimeout(() => setIsVisible(true), 10);
   };
 
-  // Fermer l'image avec transition fluide
   const closeImage = () => {
     setIsVisible(false);
-    setTimeout(() => setSelectedImage(null), 300); // Attendre la fin de l'animation avant de cacher
+    setTimeout(() => setSelectedImage(null), 300);
   };
 
-  // Gestion du zoom avec la molette
   const handleWheel = (event: React.WheelEvent<HTMLImageElement>) => {
     event.preventDefault();
     setZoom((prevZoom) => {
@@ -107,7 +104,7 @@ export function FocusCards({ cards }: { cards: CardProps[] }) {
         ))}
       </div>
 
-      {/* Affichage en grand avec zoom + animation smooth */}
+      {/* Full-screen Image View with Zoom */}
       {selectedImage && (
         <div 
           className={cn(

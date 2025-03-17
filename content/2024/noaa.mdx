@@ -122,7 +122,7 @@ noaa_map_state_border_enable: false
 On a plus qu'à lancer l'installation en exécutant le script `./install_and_upgrade.sh` (ça prend du temps) et nous voilà avec un site web affichant tous les passages prévus des satellites, un enregistrement qui se lance automatiquement et une page **Capture** avec l'ensemble des images récupérées. Super pratique ! 
 ### Accès à distance 
 Après l'installation, un serveur web **nginx** est créé en `localhost` sur le **Raspberry** accessible donc que depuis le réseau local. 
-Si vous avez un **nom de domaine** et que vous souhaitez accéder à votre site depuis n'importe où, vous pouvez associer votre site à l'adresse IP de votre box internet. Grâce au tool **GitHub**, on a la possibilité de générer des certificats **HTTPS** très facilement pour améliorer la sécurité du site. Vous pouvez consulter [ce guide](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/tls_webserver.md) pour en savoir plus. Dans mon cas, ma station est accessible depuis [ici](https://station.radionugget.com).
+Si vous avez un **nom de domaine** et que vous souhaitez accéder à votre site depuis n'importe où, vous pouvez associer votre site à l'adresse IP de votre box internet. Grâce au tool **GitHub**, on a la possibilité de générer des certificats **HTTPS** très facilement pour améliorer la sécurité du site. Vous pouvez consulter [ce guide](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/tls_webserver.md) pour en savoir plus.
 
 ### Prédiction
 Pour prédire le passage des satellites, on a un **cronjob** qui va se lancer chaque jour à **00h00**. Il va s'occuper d'aller chercher les <SmartLink slug="tle">TLE</SmartLink> (**T**wo **L**ines **E**lements) des satellites en ligne. Il s'agit d'une représentation standardisée des **paramètres orbitaux** des objets en **orbite terrestre**. C'est grâce à ces paramètres que l'on va pouvoir prédire à quelle heure un satellite va passer au dessus d'un point donné. 
@@ -161,7 +161,6 @@ Une fois tout le traitement terminé, [satdump](https://www.satdump.org/download
 Voici un exemple de la même image de **NOAA 19** reçue mais avec un traitement différent :
 ![NOAA images](/images/blog/2024/noaa/image_noaa.jpg)  
 Comme vous pouvez le voir, il y a pas mal de bandes en plein milieu, ce sont des interférences dues à mon antenne qui n'est pas parfaite. J'y travaille afin d'avoir une image parfaitement nette.
-Les images que je récupère sont disponibles sur ma station [juste ici](https://station.radionugget.com/captures).
 
 # Suite et Améliorations
 ## METEOR

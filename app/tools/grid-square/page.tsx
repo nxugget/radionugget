@@ -138,13 +138,13 @@ export default function GridSquareCalculator() {
       <div className="w-full max-w-[98%] lg:max-w-[1600px] mt-5">
         <div className="w-full bg-gray-900 text-white text-left py-2 px-4 rounded-t-md shadow-md flex items-center">
           <span className="text-orange-400 font-bold">Latitude:&nbsp;</span>
-          <span className="text-yellow-400">{mousePosition.lat.toFixed(4)}</span>
+          <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
           &nbsp;|&nbsp;
           <span className="text-white font-bold">Longitude:&nbsp;</span>
-          <span className="text-cyan-400">{mousePosition.lon.toFixed(4)}</span>
+          <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
           &nbsp;|&nbsp;
           <span className="text-white font-bold">Grid Square:&nbsp;</span>
-          <span className="font-bold text-green-400">{mousePosition.grid}</span>
+          <span className="font-bold text-orange">{mousePosition.grid}</span>
           <span className="text-gray-400 font-bold ml-auto">
             UTC Time: {utcTime.toISOString().split("T")[1].split(".")[0]}
           </span>

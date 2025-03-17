@@ -1,5 +1,3 @@
-// SatelliteSearch.tsx
-
 "use client";
 
 import { useState, useMemo } from "react";
@@ -12,18 +10,19 @@ interface Satellite {
 
 interface SatelliteSearchProps {
   satellites: Satellite[];
-  onSelect: (sat: Satellite) => void;
-  onAddAll: (sats: Satellite[]) => void;
+  selectedSatelliteId: string | null;
+  onSelect: (id: string) => void;
 }
 
 export default function SatelliteSearch({
   satellites,
+  selectedSatelliteId,
   onSelect,
-  onAddAll,
 }: SatelliteSearchProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
+  // Filtrage par nom et par catégorie
   const filteredSatellites = useMemo(() => {
     return satellites.filter((sat) => {
       const matchesQuery = sat.name.toLowerCase().includes(query.toLowerCase());
@@ -36,66 +35,82 @@ export default function SatelliteSearch({
 
   return (
     <div className="flex flex-col">
+      {/* Barre de recherche */}
       <div className="flex flex-wrap gap-2 items-center mb-3">
         <input
           type="text"
           placeholder="Rechercher..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
+          className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400
+                     focus:ring-2 focus:ring-purple outline-none duration-300
+                     placeholder:text-zinc-600 placeholder:opacity-50
+                     rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
         />
-        <button
-          onClick={() => onAddAll(filteredSatellites)}
-          className="px-4 py-2 text-sm font-medium rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors"
-        >
-          Add All
-        </button>
       </div>
 
+      {/* Boutons de filtre */}
       <div className="mt-1 flex flex-wrap gap-2">
         <button
           onClick={() => setActiveFilter("all")}
-          className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
-            activeFilter === "all"
-              ? "bg-purple-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-purple-200"
+          className={`px-4 py-2 rounded-md text-white font-bold ${
+            activeFilter === "all" ? "bg-purple" : "bg-gray-900 hover:bg-purple"
           }`}
         >
           Tous
         </button>
         <button
           onClick={() => setActiveFilter("weather")}
-          className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+          className={`px-4 py-2 rounded-md text-white font-bold ${
             activeFilter === "weather"
-              ? "bg-purple-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-purple-200"
+              ? "bg-purple"
+              : "bg-gray-900 hover:bg-purple"
           }`}
         >
           Weather
         </button>
         <button
           onClick={() => setActiveFilter("amateur")}
-          className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+          className={`px-4 py-2 rounded-md text-white font-bold ${
             activeFilter === "amateur"
-              ? "bg-purple-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-purple-200"
+              ? "bg-purple"
+              : "bg-gray-900 hover:bg-purple"
           }`}
         >
           Amateur
         </button>
       </div>
 
-      <div className="max-h-[300px] overflow-y-auto mt-3 flex flex-col gap-2">
-        {filteredSatellites.map((sat) => (
-          <div
-            key={sat.id}
-            onClick={() => onSelect(sat)}
-            className="bg-zinc-700 text-white rounded-full p-3 text-sm font-medium cursor-pointer hover:bg-purple-600 transition-colors duration-200 ease-in-out"
-          >
-            <p>{sat.name}</p>
-            <p className="text-xs text-gray-300">{sat.category}</p>
-          </div>
-        ))}
+      {/* Liste des satellites filtrés */}
+      <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto mt-3">
+        {filteredSatellites.map((sat) => {
+          const isSelected = sat.id === selectedSatelliteId;
+          return (
+            <div
+              key={sat.id}
+              onClick={() => onSelect(sat.id)}
+              className={`group cursor-pointer rounded-md p-3 text-sm font-medium
+                ${
+                  isSelected
+                    ? "bg-orange text-black"
+                    : "bg-zinc-700 text-white hover:bg-orange hover:text-black"
+                }`}
+            >
+              <p>{sat.name}</p>
+              {sat.category && (
+                <p
+                  className={`text-xs ${
+                    isSelected
+                      ? "text-black"
+                      : "text-gray-300 group-hover:text-black"
+                  }`}
+                >
+                  {sat.category}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

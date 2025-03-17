@@ -36,7 +36,7 @@ export default function GridSquareInfo() {
             {/* Bouton pour fermer la popup */}
             <button
               onClick={() => setShowInfo(false)}
-              className="mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+              className="mt-4 px-4 py-2 bg-orange hover:bg-purple text-white rounded"
             >
               Fermer
             </button>

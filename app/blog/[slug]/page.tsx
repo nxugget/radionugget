@@ -7,7 +7,7 @@ import SmartLink from "../../components/SmartLink";
 import ScrollToTopButton from "../../components/ScrollToTopButton"; 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-
+import { TypewriterEffectSmooth } from "../../components/typewritter-effect"; // Assurez-vous que le chemin est correct
 
 export default async function Article({ params }: { params: { slug?: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
@@ -50,13 +50,20 @@ export default async function Article({ params }: { params: { slug?: string } })
           </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2">{metadata.title}</h1>
+            <TypewriterEffectSmooth
+              words={metadata.title.split(" ").map((word: string, index: number) => ({
+                text: word,
+                className: "text-white" 
+              }))}
+              className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2"
+              cursorClassName="bg-[#b400ff]"
+            />
             <p className="text-lg md:text-xl opacity-80">{metadata.date}</p>
           </div>
         </div>
 
         {/* ARTICLE CONTAINER */}
-        <article className="bg-[#1a1a1a] text-white rounded-lg shadow-xl p-8 mt-10 prose prose-invert max-w-none relative">
+        <article className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-8 mt-10 prose prose-invert max-w-none relative">
           <MDXRemote
             source={content}
             components={{
