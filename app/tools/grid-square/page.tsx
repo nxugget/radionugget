@@ -137,7 +137,7 @@ export default function GridSquareCalculator() {
 
       <div className="w-full max-w-[98%] lg:max-w-[1600px] mt-5">
         <div className="w-full bg-gray-900 text-white text-left py-2 px-4 rounded-t-md shadow-md flex items-center">
-          <span className="text-orange-400 font-bold">Latitude:&nbsp;</span>
+          <span className="text-whie font-bold">Latitude:&nbsp;</span>
           <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
           &nbsp;|&nbsp;
           <span className="text-white font-bold">Longitude:&nbsp;</span>

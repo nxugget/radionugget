@@ -12,26 +12,30 @@ interface SatelliteSearchProps {
   satellites: Satellite[];
   selectedSatelliteId: string | null;
   onSelect: (id: string) => void;
+  favorites: string[];
+  onToggleFavorite: (id: string) => void;
 }
 
 export default function SatelliteSearch({
   satellites,
   selectedSatelliteId,
   onSelect,
+  favorites,
+  onToggleFavorite,
 }: SatelliteSearchProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
-  // Filtrage par nom et par catégorie
+  // Filtrage par nom et par catégorie ou par favori
   const filteredSatellites = useMemo(() => {
     return satellites.filter((sat) => {
       const matchesQuery = sat.name.toLowerCase().includes(query.toLowerCase());
-      if (activeFilter === "all") {
-        return matchesQuery;
-      }
+      if (activeFilter === "all") return matchesQuery;
+      if (activeFilter === "favorite")
+        return matchesQuery && favorites.includes(sat.id);
       return matchesQuery && sat.category === activeFilter;
     });
-  }, [satellites, query, activeFilter]);
+  }, [satellites, query, activeFilter, favorites]);
 
   return (
     <div className="flex flex-col">
@@ -79,6 +83,16 @@ export default function SatelliteSearch({
         >
           Amateur
         </button>
+        <button
+          onClick={() => setActiveFilter("favorite")}
+          className={`px-4 py-2 rounded-md text-white font-bold ${
+            activeFilter === "favorite"
+              ? "bg-purple"
+              : "bg-gray-900 hover:bg-purple"
+          }`}
+        >
+          Favoris
+        </button>
       </div>
 
       {/* Liste des satellites filtrés */}
@@ -89,7 +103,7 @@ export default function SatelliteSearch({
             <div
               key={sat.id}
               onClick={() => onSelect(sat.id)}
-              className={`group cursor-pointer rounded-md p-3 text-sm font-medium
+              className={`group relative cursor-pointer rounded-md p-3 text-sm font-medium
                 ${
                   isSelected
                     ? "bg-orange text-black"
@@ -108,6 +122,18 @@ export default function SatelliteSearch({
                   {sat.category}
                 </p>
               )}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite(sat.id);
+                }}
+                className={`absolute top-2 right-2 text-xl transition-colors duration-300 ${
+                  favorites.includes(sat.id) ? "text-purple" : "text-gray-300"
+                } hover:text-black`}
+                title="Ajouter aux favoris"
+              >
+                {favorites.includes(sat.id) ? "★" : "☆"}
+              </button>
             </div>
           );
         })}

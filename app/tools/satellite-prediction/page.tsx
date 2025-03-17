@@ -1,11 +1,10 @@
-// page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import SatelliteSearch from "../../components/SatelliteSearch";
 import { TypewriterEffectSmooth } from "../../components/typewritter-effect";
 import { getSatellites, getSatellitePasses } from "@/lib/satelliteAPI";
-
+import SatelliteTimeline from "../../components/SatelliteTimeline";
 
 interface Satellite {
   name: string;
@@ -25,12 +24,35 @@ interface SatellitePrediction {
   passes: SatellitePassData[];
 }
 
+// Composant pour afficher la bannière de cookies
+function CookieBanner() {
+  const [visible, setVisible] = useState(true);
+
+  const handleAccept = () => {
+    setVisible(false);
+  };
+
+  if (!visible) return null;
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-between items-center">
+      <p className="text-sm mb-2 md:mb-0">
+        Pour sauvegarder tes favoris et ta position, cette page utilise des cookies. Ces derniers sont stockés uniquement sur ton appareil et personne d'autres n'y aura accès :)
+      </p>
+      <button onClick={handleAccept} className="bg-purple hover:bg-orange hover:text-black text-white px-4 py-2 transition-colors rounded-md">
+        Accepter
+      </button>
+    </div>
+  );
+}
+
 export default function SatelliteTracker() {
   const [satellites, setSatellites] = useState<Satellite[]>([]);
   const [selectedSatellites, setSelectedSatellites] = useState<Satellite[]>([]);
   const [allPredictions, setAllPredictions] = useState<SatellitePrediction[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-  // Configuration (le compteur de prédictions a été supprimé)
+  // Configuration
   const [elevation, setElevation] = useState(10);
   const [utcOffset, setUtcOffset] = useState(0);
   const [useLocalTime, setUseLocalTime] = useState(false);
@@ -50,11 +72,75 @@ export default function SatelliteTracker() {
   const [selectedAvailableId, setSelectedAvailableId] = useState<string | null>(null);
   const [selectedChosenId, setSelectedChosenId] = useState<string | null>(null);
 
-  const handleCleanAll = () => {
-    setSelectedSatellites([]);
-    setSelectedChosenId(null);
+  // Fonctions d'aide pour les cookies
+  const getCookieValue = (name: string) => {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
   };
-  
+
+  const updateCookie = (name: string, value: string, days: number = 365) => {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = `${name}=${value};${expires};path=/`;
+  };
+
+  // Charger les favoris et la position depuis les cookies au chargement
+  useEffect(() => {
+    const favCookie = getCookieValue("favorites");
+    if (favCookie) {
+      try {
+        setFavorites(JSON.parse(favCookie));
+      } catch (e) {
+        setFavorites([]);
+      }
+    }
+    const latCookie = getCookieValue("latitude");
+    if (latCookie) setLatitude(parseFloat(latCookie));
+    const lonCookie = getCookieValue("longitude");
+    if (lonCookie) setLongitude(parseFloat(lonCookie));
+    const cityCookie = getCookieValue("city");
+    if (cityCookie) setCity(cityCookie);
+    const gridCookie = getCookieValue("gridSquare");
+    if (gridCookie) setGridSquare(gridCookie);
+  }, []);
+
+  // Mettre à jour les cookies lors du changement de position
+  useEffect(() => {
+    updateCookie("latitude", latitude.toString());
+  }, [latitude]);
+
+  useEffect(() => {
+    updateCookie("longitude", longitude.toString());
+  }, [longitude]);
+
+  useEffect(() => {
+    updateCookie("city", city);
+  }, [city]);
+
+  useEffect(() => {
+    updateCookie("gridSquare", gridSquare);
+  }, [gridSquare]);
+
+  // Fonction pour basculer l'état "favoris" et mettre à jour le cookie
+  const toggleFavorite = (id: string) => {
+    setFavorites((prev) => {
+      let newFavorites;
+      if (prev.includes(id)) {
+        newFavorites = prev.filter((fav) => fav !== id);
+      } else {
+        newFavorites = [...prev, id];
+      }
+      updateCookie("favorites", JSON.stringify(newFavorites));
+      return newFavorites;
+    });
+  };
+
   useEffect(() => {
     const fetchSatellitesData = async () => {
       try {
@@ -161,7 +247,6 @@ export default function SatelliteTracker() {
         <div className="flex flex-col md:flex-row gap-6">
           {/* PARTIE GAUCHE : sélection des satellites */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
-            <h2 className="text-xl text-white">Sélection du satellite</h2>
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-white text-lg">Satellites disponibles</h3>
@@ -179,6 +264,8 @@ export default function SatelliteTracker() {
                   setSelectedAvailableId(id);
                   setSelectedChosenId(null);
                 }}
+                favorites={favorites}
+                onToggleFavorite={toggleFavorite}
               />
             </div>
 
@@ -221,7 +308,10 @@ export default function SatelliteTracker() {
               <div className="flex items-center justify-between">
                 <h3 className="text-white text-lg">Satellites sélectionnés</h3>
                 <button
-                  onClick={handleCleanAll}
+                  onClick={() => {
+                    setSelectedSatellites([]);
+                    setSelectedChosenId(null);
+                  }}
                   className="text-sm font-bold text-white hover:text-purple transition-colors"
                 >
                   Clean All
@@ -237,7 +327,7 @@ export default function SatelliteTracker() {
                         setSelectedChosenId(sat.id);
                         setSelectedAvailableId(null);
                       }}
-                      className={`group cursor-pointer rounded-md p-3 text-sm font-medium
+                      className={`group relative cursor-pointer rounded-md p-3 text-sm font-medium
                         ${
                           isSelected
                             ? "bg-orange text-black"
@@ -256,6 +346,18 @@ export default function SatelliteTracker() {
                           {sat.category}
                         </p>
                       )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(sat.id);
+                        }}
+                        className={`absolute top-2 right-2 text-xl transition-colors duration-300 ${
+                          favorites.includes(sat.id) ? "text-purple" : "text-gray-300"
+                        } hover:text-black`}
+                        title="Ajouter aux favoris"
+                      >
+                        {favorites.includes(sat.id) ? "★" : "☆"}
+                      </button>
                     </div>
                   );
                 })}
@@ -265,8 +367,6 @@ export default function SatelliteTracker() {
 
           {/* PARTIE DROITE : configuration */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl text-white mb-4">Configuration de la prédiction</h2>
-
             <div className="flex items-center gap-6">
               <label
                 htmlFor="localTime"
@@ -359,41 +459,31 @@ export default function SatelliteTracker() {
               >
                 PREDICT
               </button>
-              {loading && (
-                <div className="flex justify-center items-center mt-4">
-                  <div className="loader">
-                    <span></span>
-                  </div>
-                </div>
-              )}
+            
             </div>
             {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
           </div>
         </div>
 
-        <div className="mt-6">
-          {allPredictions.length > 0 &&
-            allPredictions.map((pred) => (
-              <div
-                key={pred.satelliteId}
-                className="bg-zinc-800 text-white p-4 rounded-md shadow-md mb-4"
-              >
-                <h3 className="text-lg font-bold mb-2">{pred.satelliteName}</h3>
-                {Array.isArray(pred.passes) && pred.passes.length > 0 ? (
-                  <ul>
-                    {pred.passes.map((pass, index) => (
-                      <li key={index} className="py-1">
-                        Passage {index + 1} → Début : {pass.startTime} | Fin : {pass.endTime} | Max Élévation : {pass.maxElevation}°
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-400">No passes</p>
-                )}
-              </div>
-            ))}
+        <div className="mt-6 w-full flex justify-center">
+          <div className="bg-black rounded-lg p-4 shadow-lg">
+            <SatelliteTimeline
+              passes={allPredictions.flatMap((pred) =>
+                pred.passes.map((pass) => ({
+                  satelliteName: pred.satelliteName,
+                  startTime: pass.startTime,
+                  endTime: pass.endTime,
+                  maxElevation: pass.maxElevation,
+                }))
+              )}
+              useLocalTime={useLocalTime}
+              utcOffset={utcOffset}
+            />
+          </div>
         </div>
       </div>
+      {/* Bannière de cookies */}
+      <CookieBanner />
     </div>
   );
 }

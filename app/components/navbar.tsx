@@ -111,7 +111,7 @@ export const Navbar = () => {
                 {/* Dropdown Menu avec animation fluide */}
                 {isToolsOpen && (
                   <div
-                    className={`absolute left-0 mt-2 w-48 bg-black/20 backdrop-blur-xl rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
+                    className={`absolute left-0 mt-2 w-48 bg-black backdrop-blur-xl rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
                       isAnimating
                         ? "opacity-0 scale-95 translate-y-2"
                         : "opacity-100 scale-100 translate-y-0"
