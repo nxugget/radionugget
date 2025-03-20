@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import Image from "next/image";
-import { CardContainer, CardBody, CardItem } from "../components/3D-card";
+import { CardContainer, CardBody, CardItem } from "./3Dcard";
 
 const POSTS_PER_PAGE = 6;
 

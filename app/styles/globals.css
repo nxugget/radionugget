@@ -2,31 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  width: 100%;
-  min-height: 100vh; /* 🔹 Assure que la page couvre tout l'écran */
-  overflow: auto; /* 🔹 Permet le scroll */
-  position: relative;
-}
-
-/* Fond étoilé en arrière-plan fixe */
-.stars-background {
-  position: fixed; /* 🔹 Fixe l'élément pour qu'il couvre tout l'écran */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1; /* 🔹 Le met en arrière-plan */
-}
-
-/* Empêche le contenu d'être caché derrière le fond */
-body > div {
-  position: relative;
-  z-index: 10;
-}
-
 /* Cache la scrollbar */
 ::-webkit-scrollbar {
   display: none;
 }
-

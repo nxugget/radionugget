@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SatelliteSearch from "../../components/SatelliteSearch";
-import { TypewriterEffectSmooth } from "../../components/typewritter-effect";
-import { getSatellites, getSatellitePasses } from "@/lib/satelliteAPI";
-import SatelliteTimeline from "../../components/SatelliteTimeline";
+import SatelliteSearch from "./SatelliteSearch";
+import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
+import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
+import SatelliteTimeline from "./SatelliteTimeline";
 
 interface Satellite {
   name: string;

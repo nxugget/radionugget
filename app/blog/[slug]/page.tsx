@@ -3,11 +3,11 @@ import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
-import SmartLink from "../../components/SmartLink";
-import ScrollToTopButton from "../../components/ScrollToTopButton"; 
+import SmartLink from "../SmartLink";
+import ScrollToTopButton from "../ScrollToTopButton"; 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { TypewriterEffectSmooth } from "../../components/typewritter-effect"; // Assurez-vous que le chemin est correct
+import { TypewriterEffectSmooth } from "@/app/components/Typewritter"; 
 
 export default async function Article({ params }: { params: { slug?: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
@@ -107,8 +107,6 @@ export default async function Article({ params }: { params: { slug?: string } })
         </article>
 
       </div>
-
-      {/* 🔼 BOUTON RETOUR EN HAUT (Client Component) */}
       <ScrollToTopButton />
     </main>
   );

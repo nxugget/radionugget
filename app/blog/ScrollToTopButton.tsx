@@ -1,4 +1,4 @@
-"use client"; // 👈 Indique que c'est un Client Component
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -26,7 +26,6 @@ const ScrollToTopButton = () => {
       hover:bg-orange active:scale-90`}
       aria-label="Retour en haut"
     >
-      {/* Flèche SVG propre et animée */}
       <svg
         className={`w-10 h-10 transition-transform duration-300 ${
           isHovered ? "translate-y-1" : "-translate-y-1"

@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getGridSquare } from "@/lib/gridSquare";
-import { TypewriterEffectSmooth } from "../../components/typewritter-effect";
+import { getGridSquare } from "@/src/lib/gridSquare";
+import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
 import dynamic from "next/dynamic";
-import GridSquareInfo from "../../components/GridSquareInfo"; 
+import GridSquareInfo from "./GridSquareInfo"; 
 
 // Import dynamique du composant Map
-const Map = dynamic(() => import("../../components/Map"), { ssr: false });
+const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });
 
 export default function GridSquareCalculator() {
   const [query, setQuery] = useState("");

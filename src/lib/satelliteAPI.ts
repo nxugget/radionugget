@@ -36,7 +36,7 @@ export interface TleSatellite extends Satellite {
   tle2: string;
 }
 
-const TLE_FILE_PATH = path.join(process.cwd(), "data", "tle.json");
+const TLE_FILE_PATH = path.join(process.cwd(), "src", "data", "tle.json");
 
 /**
  * Récupère la liste des satellites disponibles avec filtre optionnel.

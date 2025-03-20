@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getAllArticles } from "@/lib/getArticles";
-import clsx from "clsx"; // 📌 Fusion des classes Tailwind
+import { getAllArticles } from "@/src/lib/getArticles";
+import clsx from "clsx"; 
 
 const articles = getAllArticles();
 
@@ -16,8 +16,8 @@ export default function SmartLink({ slug, children, className, ...props }) {
     <Link
       href={article.path}
       className={clsx(
-        "text-purple transition-colors duration-300 hover:text-[#8000bf]", // 🔥 Style par défaut
-        className // Permet aux styles externes de s'appliquer
+        "text-purple transition-colors duration-300 hover:text-[#8000bf]", 
+        className 
       )}
       {...props}
     >

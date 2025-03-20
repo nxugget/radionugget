@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FocusCards } from "../components/focus-cards"; 
+import { FocusCards } from "./ImageGallery"; 
 
 const Gallery = () => {
   const [images, setImages] = useState<{ title: string; src: string }[]>([]);

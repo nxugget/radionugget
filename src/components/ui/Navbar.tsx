@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation"; // added
 import Link from "next/link";
 import Image from "next/image";
 
 export const Navbar = () => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [navHeight, setNavHeight] = useState(0);
   const navRef = useRef<HTMLDivElement | null>(null);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
@@ -41,14 +45,14 @@ export const Navbar = () => {
     timeoutRef.current = setTimeout(() => {
       setIsToolsOpen(false);
       setIsAnimating(false);
-    }, 300);
+    }, 500); // increased delay for easier submenu selection
   };
 
   return (
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 w-full z-20 backdrop-blur-md bg-black/30 shadow-md px-8 py-4 flex items-center justify-between transition-all duration-300"
+        className="fixed top-0 w-full z-[100000] isolate bg-black/30 backdrop-blur-md shadow-md px-8 py-4 flex items-center justify-between transition-all duration-300"
       >
         {/* Partie gauche : Logo + Texte */}
         <div className="flex items-center gap-3">
@@ -69,7 +73,7 @@ export const Navbar = () => {
 
         {/* Conteneur des liens */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <div className="bg-black/10 backdrop-blur-xl rounded-full px-10 py-3 shadow-md">
+          <div className="bg-black/30 backdrop-blur-xl rounded-full px-10 py-3 shadow-md">
             <div className="flex gap-10">
               <Link
                 href="/"
@@ -103,31 +107,27 @@ export const Navbar = () => {
                     <path
                       fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.23 8.27a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
                     />
                   </svg>
                 </button>
 
-                {/* Dropdown Menu avec animation fluide */}
                 {isToolsOpen && (
                   <div
-                    className={`absolute left-0 mt-2 w-48 bg-black backdrop-blur-xl rounded-lg shadow-lg overflow-hidden transition-all duration-300 ${
+                    className={`absolute left-0 top-full mt-1 bg-black backdrop-blur-xl rounded-lg shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-2 px-2 py-1 min-w-max ${
                       isAnimating
-                        ? "opacity-0 scale-95 translate-y-2"
+                        ? "opacity-0 scale-95 translate-y-0"
                         : "opacity-100 scale-100 translate-y-0"
                     }`}
-                    onMouseEnter={openToolsMenu}
-                    onMouseLeave={closeToolsMenu}
                   >
                     <Link
                       href="/tools/grid-square"
-                      className="block px-4 py-3 text-white text-md transition-all duration-300 hover:text-orange hover:translate-x-2"
+                      className="block px-4 py-2 text-white text-lg transition-all duration-300 hover:text-orange hover:translate-x-2 whitespace-nowrap"
                     >
                       Grid Square
                     </Link>
                     <Link
                       href="/tools/satellite-prediction"
-                      className="block px-4 py-3 text-white text-md transition-all duration-300 hover:text-orange hover:translate-x-2"
+                      className="block px-4 py-2 text-white text-lg transition-all duration-300 hover:text-orange hover:translate-x-2 whitespace-nowrap"
                     >
                       Satellite Prediction
                     </Link>
@@ -146,8 +146,8 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      {/* Spacer invisible pour compenser la navbar */}
-      <div style={{ height: navHeight }} />
+      {/* Supprimez ou commentez le spacer ci-dessous */}
+      {/* <div style={{ height: navHeight }} /> */}
     </>
   );
 };
