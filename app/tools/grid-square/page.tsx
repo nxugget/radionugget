@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getGridSquare } from "@/src/lib/gridSquare";
 import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
 import dynamic from "next/dynamic";
-import GridSquareInfo from "./GridSquareInfo"; 
+import GridSquareInfo from "./GridSquareInfo";
 
 // Import dynamique du composant Map
 const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });
@@ -17,13 +17,10 @@ export default function GridSquareCalculator() {
   const [mousePosition, setMousePosition] = useState({ lat: 0, lon: 0, grid: "" });
   const [copied, setCopied] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [utcTime, setUtcTime] = useState(new Date()); // Horloge UTC dynamique
+  const [utcTime, setUtcTime] = useState<Date | null>(null); // Fix hydration error
 
-  // État pour la position de la carte (latitude, longitude)
-  // On part sur Paris par défaut.
   const [mapCenter, setMapCenter] = useState<[number, number]>([48.8566, 2.3522]);
 
-  // Empêcher le TypewriterEffect de se relancer après un scroll
   useEffect(() => {
     if (!hasLoaded) {
       setHasLoaded(true);
@@ -32,7 +29,7 @@ export default function GridSquareCalculator() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setUtcTime(new Date()); // Mise à jour de l'heure UTC
+      setUtcTime(new Date()); // Update UTC time dynamically
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -135,9 +132,9 @@ export default function GridSquareCalculator() {
         )}
       </div>
 
-      <div className="w-full max-w-[98%] lg:max-w-[1600px] mt-5">
+      <div className="flex flex-col flex-grow w-full max-w-[98%] lg:max-w-[1600px] mt-5">
         <div className="w-full bg-gray-900 text-white text-left py-2 px-4 rounded-t-md shadow-md flex items-center">
-          <span className="text-whie font-bold">Latitude:&nbsp;</span>
+          <span className="text-white font-bold">Latitude:&nbsp;</span>
           <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
           &nbsp;|&nbsp;
           <span className="text-white font-bold">Longitude:&nbsp;</span>
@@ -146,11 +143,9 @@ export default function GridSquareCalculator() {
           <span className="text-white font-bold">Grid Square:&nbsp;</span>
           <span className="font-bold text-orange">{mousePosition.grid}</span>
           <span className="text-gray-400 font-bold ml-auto">
-            UTC Time: {utcTime.toISOString().split("T")[1].split(".")[0]}
+            UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
           </span>
         </div>
-
-        {/* On passe mapCenter à notre composant Map pour zoomer */}
         <Map center={mapCenter} setMousePosition={setMousePosition} />
       </div>
     </div>

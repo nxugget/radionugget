@@ -217,11 +217,41 @@ const GridLayer = () => {
 };
 
 /**
- * Composant principal de la carte, intégrant :
- * - Les tuiles de fond
- * - Le tracker de souris
- * - La couche de grille
+ * Ajoute un effet visuel pour distinguer la partie jour et nuit.
+ * La partie à l'ouest de la longitude 0 est plus sombre (nuit),
+ * et la partie à l'est est plus claire (jour).
  */
+const DayNightOverlay = () => {
+  return (
+    <>
+      {/* Partie nuit (à l'ouest de la longitude 0) */}
+      <Rectangle
+        bounds={[
+          [-90, -180],
+          [90, 0],
+        ]}
+        pathOptions={{
+          fillColor: "rgba(0, 0, 0, 0.6)", // Plus sombre
+          fillOpacity: 0.6,
+          stroke: false,
+        }}
+      />
+      {/* Partie jour (à l'est de la longitude 0) */}
+      <Rectangle
+        bounds={[
+          [-90, 0],
+          [90, 180],
+        ]}
+        pathOptions={{
+          fillColor: "rgba(255, 255, 255, 0.2)", // Plus clair
+          fillOpacity: 0.2,
+          stroke: false,
+        }}
+      />
+    </>
+  );
+};
+
 export default function Map({
   center,
   setMousePosition,
@@ -238,7 +268,7 @@ export default function Map({
         maxZoom={15}
         maxBounds={WORLD_BOUNDS}
         scrollWheelZoom={true}
-        className="h-[85vh] w-full rounded-lg"
+        className="h-[calc(100vh-200px)] w-full rounded-lg sm:h-[70vh]" // Adjust height dynamically
       >
         <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
         <TileLayer
@@ -247,6 +277,7 @@ export default function Map({
         />
         <MouseTracker setMousePosition={setMousePosition} />
         <GridLayer />
+        <DayNightOverlay />
       </MapContainer>
 
       <style jsx global>{`
