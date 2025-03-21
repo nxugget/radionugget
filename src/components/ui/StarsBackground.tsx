@@ -1,6 +1,12 @@
 "use client";
 import { cn } from "@/src/lib/utils";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  RefObject,
+  useCallback,
+} from "react";
 
 interface StarProps {
   x: number;
@@ -28,50 +34,71 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   className,
 }) => {
   const [stars, setStars] = useState<StarProps[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasRef: RefObject<HTMLCanvasElement> =
+    useRef<HTMLCanvasElement>(null!);
 
-  const generateStars = useCallback((width: number, height: number): StarProps[] => {
-    const area = width * height;
-    const numStars = Math.floor(area * starDensity);
-    return Array.from({ length: numStars }, () => {
-      const shouldTwinkle = allStarsTwinkle || Math.random() < twinkleProbability;
-      return {
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 0.05 + 0.5,
-        opacity: Math.random() * 0.5 + 0.5,
-        twinkleSpeed: shouldTwinkle
-          ? minTwinkleSpeed + Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
-          : null,
-      };
-    });
-  }, [starDensity, allStarsTwinkle, twinkleProbability, minTwinkleSpeed, maxTwinkleSpeed]);
+  const generateStars = useCallback(
+    (width: number, height: number): StarProps[] => {
+      const area = width * height;
+      const numStars = Math.floor(area * starDensity);
+      return Array.from({ length: numStars }, () => {
+        const shouldTwinkle =
+          allStarsTwinkle || Math.random() < twinkleProbability;
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 0.05 + 0.5,
+          opacity: Math.random() * 0.5 + 0.5,
+          twinkleSpeed: shouldTwinkle
+            ? minTwinkleSpeed +
+              Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
+            : null,
+        };
+      });
+    },
+    [
+      starDensity,
+      allStarsTwinkle,
+      twinkleProbability,
+      minTwinkleSpeed,
+      maxTwinkleSpeed,
+    ]
+  );
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const updateCanvasSize = () => {
+    const updateStars = () => {
       if (canvasRef.current) {
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = document.documentElement.scrollHeight;
-        setStars(generateStars(canvas.width, canvas.height));
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const { width, height } = canvas.getBoundingClientRect();
+        canvas.width = width;
+        canvas.height = height;
+        setStars(generateStars(width, height));
       }
     };
 
-    // Générer les étoiles une seule fois au chargement de la page
-    updateCanvasSize();
+    updateStars();
 
-    window.addEventListener("resize", updateCanvasSize); // Met à jour seulement lors d'un redimensionnement
+    const resizeObserver = new ResizeObserver(updateStars);
+    if (canvasRef.current) {
+      resizeObserver.observe(canvasRef.current);
+    }
 
     return () => {
-      window.removeEventListener("resize", updateCanvasSize);
+      if (canvasRef.current) {
+        resizeObserver.unobserve(canvasRef.current);
+      }
     };
-  }, [generateStars]);
+  }, [
+    starDensity,
+    allStarsTwinkle,
+    twinkleProbability,
+    minTwinkleSpeed,
+    maxTwinkleSpeed,
+    generateStars,
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -83,9 +110,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     let animationFrameId: number;
 
     const render = () => {
-      ctx.fillStyle = "rgba(5, 5, 20, 1)"; // Fond sombre
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
@@ -93,7 +118,9 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         ctx.fill();
 
         if (star.twinkleSpeed !== null) {
-          star.opacity = 0.5 + Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
+          star.opacity =
+            0.5 +
+            Math.abs(Math.sin((Date.now() * 0.001) / star.twinkleSpeed) * 0.5);
         }
       });
 
@@ -108,6 +135,9 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   }, [stars]);
 
   return (
-    <canvas ref={canvasRef} className={cn("fixed top-0 left-0 w-full h-full z-0", className)} />
+    <canvas
+      ref={canvasRef}
+      className={cn("h-full w-full absolute inset-0", className)}
+    />
   );
 };

@@ -216,42 +216,6 @@ const GridLayer = () => {
   );
 };
 
-/**
- * Ajoute un effet visuel pour distinguer la partie jour et nuit.
- * La partie à l'ouest de la longitude 0 est plus sombre (nuit),
- * et la partie à l'est est plus claire (jour).
- */
-const DayNightOverlay = () => {
-  return (
-    <>
-      {/* Partie nuit (à l'ouest de la longitude 0) */}
-      <Rectangle
-        bounds={[
-          [-90, -180],
-          [90, 0],
-        ]}
-        pathOptions={{
-          fillColor: "rgba(0, 0, 0, 0.6)", // Plus sombre
-          fillOpacity: 0.6,
-          stroke: false,
-        }}
-      />
-      {/* Partie jour (à l'est de la longitude 0) */}
-      <Rectangle
-        bounds={[
-          [-90, 0],
-          [90, 180],
-        ]}
-        pathOptions={{
-          fillColor: "rgba(255, 255, 255, 0.2)", // Plus clair
-          fillOpacity: 0.2,
-          stroke: false,
-        }}
-      />
-    </>
-  );
-};
-
 export default function Map({
   center,
   setMousePosition,
@@ -277,7 +241,6 @@ export default function Map({
         />
         <MouseTracker setMousePosition={setMousePosition} />
         <GridLayer />
-        <DayNightOverlay />
       </MapContainer>
 
       <style jsx global>{`

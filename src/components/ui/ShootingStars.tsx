@@ -41,15 +41,16 @@ const getRandomStartPoint = () => {
       return { x: 0, y: 0, angle: 45 };
   }
 };
+
 export const ShootingStars: React.FC<ShootingStarsProps> = ({
   minSpeed = 10,
-  maxSpeed = 20,
-  minDelay = 2000,
-  maxDelay = 4000,
+  maxSpeed = 30,
+  minDelay = 1000,
+  maxDelay = 3000,
   starColor = "#b400ff",
-  trailColor = "ffaa00",
-  starWidth = 8,
-  starHeight = 4,
+  trailColor = "#ffaa00",
+  starWidth = 10,
+  starHeight = 1,
   className,
 }) => {
   const [star, setStar] = useState<ShootingStar | null>(null);
@@ -108,6 +109,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
           };
         });
       }
+      requestAnimationFrame(moveStar);
     };
 
     const animationFrame = requestAnimationFrame(moveStar);

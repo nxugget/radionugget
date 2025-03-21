@@ -18,10 +18,12 @@ export const CardContainer = ({
   children,
   className,
   containerClassName,
+  style, // added style prop
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
+  style?: React.CSSProperties; // added style prop type
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -49,9 +51,7 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn("flex items-center justify-center", containerClassName)}
-        style={{
-          perspective: "1500px",
-        }}
+        style={{ perspective: "1500px", ...style }} // merge provided style
       >
         <div
           ref={containerRef}

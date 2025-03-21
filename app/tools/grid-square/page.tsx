@@ -72,64 +72,66 @@ export default function GridSquareCalculator() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-3">
-      <div className="w-full max-w-[90%] lg:max-w-[1400px]">
-        <div className="w-full flex justify-center">
-          {hasLoaded && (
-            <TypewriterEffectSmooth
-              words={[
-                { text: "Grid", className: "text-[#b400ff]" },
-                { text: "Square", className: "text-[#b400ff]" },
-                { text: "Calculator", className: "text-[#ffaa00]" },
-              ]}
-              className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2"
-              cursorClassName="bg-[#b400ff]"
+      <div className="w-full max-w-[60%] lg:max-w-[800px] mx-auto"> {/* Largeur réduite */}
+        <div className="bg-black/50 rounded-lg p-6 shadow-lg">
+          <div className="w-full flex justify-center">
+            {hasLoaded && (
+              <TypewriterEffectSmooth
+                words={[
+                  { text: "Grid", className: "text-[#b400ff]" },
+                  { text: "Square", className: "text-[#b400ff]" },
+                  { text: "Calculator", className: "text-white" },
+                ]}
+                className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2"
+                cursorClassName="bg-[#b400ff]"
+              />
+            )}
+          </div>
+
+          <GridSquareInfo />
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim() !== "") {
+                fetchCoordinates(query);
+              }
+            }}
+            className="flex items-center space-x-2 my-2 w-full max-w-md mx-auto"
+          >
+            <input
+              className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
+              autoComplete="off"
+              placeholder="Entrez une ville ou une adresse..."
+              name="text"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
+            <button
+              type="submit"
+              className="rounded-full bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 px-3 py-2 shadow-md duration-150 active:scale-95"
+            >
+              🔍
+            </button>
+          </form>
+
+          <p className="text-zinc-400 text-xs md:text-sm text-center">
+            Ex: Reykjavik ou Zone 51
+          </p>
+
+          {gridSquare && (
+            <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-md mx-auto">
+              <span className="font-bold text-green-400">Grid Square: {gridSquare}</span>
+              <button
+                onClick={handleCopy}
+                className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
+              >
+                {copied ? "✅" : "📋"}
+              </button>
+            </div>
           )}
         </div>
-
-        <GridSquareInfo />
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (query.trim() !== "") {
-              fetchCoordinates(query);
-            }
-          }}
-          className="flex items-center space-x-2 my-2 w-full max-w-md mx-auto"
-        >
-          <input
-            className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
-            autoComplete="off"
-            placeholder="Entrez une ville ou une adresse..."
-            name="text"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="rounded-full bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 px-3 py-2 shadow-md duration-150 active:scale-95"
-          >
-            🔍
-          </button>
-        </form>
-
-        <p className="text-zinc-400 text-xs md:text-sm text-center">
-          Ex: Reykjavik ou Zone 51
-        </p>
-
-        {gridSquare && (
-          <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-md mx-auto">
-            <span className="font-bold text-green-400">Grid Square: {gridSquare}</span>
-            <button
-              onClick={handleCopy}
-              className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
-            >
-              {copied ? "✅" : "📋"}
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="flex flex-col flex-grow w-full max-w-[98%] lg:max-w-[1600px] mt-5">

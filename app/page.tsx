@@ -102,37 +102,39 @@ export default function Home() {
           <div className="w-full flex justify-center items-center mx-auto px-4 mt-8 mb-4 whitespace-normal">
             <TypewriterEffectSmooth
               words={[
-                { text: "A", className: "text-[#b400ff]" },
-                { text: "small", className: "text-[#b400ff]" },
-                { text: "selection", className: "text-[#b400ff]" },
-                { text: "of", className: "text-[#b400ff]" },
-                { text: "my", className: "text-[#ffaa00]" },
-                { text: "best", className: "text-[#ffaa00]" },
-                { text: "projects", className: "text-[#ffaa00]" },
+                { text: "A", className: "text-purple" },
+                { text: "small", className: "text-purple" },
+                { text: "selection", className: "text-purple" },
+                { text: "of", className: "text-purple" },
+                { text: "my", className: "text-orange" },
+                { text: "best", className: "text-orange" },
+                { text: "projects", className: "text-orange" },
               ]}
-              className="text-lg sm:text-xl md:text-2xl font-bold"
-              cursorClassName="bg-[#b400ff]"
+              className="text-xl sm:text-2xl md:text-3xl font-bold"
+              cursorClassName="bg-purple"
             />
           </div>
-          {/* Grille 2x2 pour les 4 cards avec conteneur élargi */}
-          <div className="w-full max-w-full mx-auto px-4 h-[70vh]">
-            <div className="grid grid-cols-2 grid-rows-2 gap-12 h-full">
+          {/* Conteneur modifié pour les cards */}
+          <div className="w-full max-w-7xl mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className="relative group w-full h-full rounded-lg overflow-hidden cursor-pointer transition-transform hover:scale-[1.02] duration-300"
+                  className="relative group w-full rounded-lg overflow-hidden cursor-pointer transition-transform hover:scale-[1.02] duration-300"
                 >
-                  <Image
-                    src={project.img}
-                    alt={project.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                  {/* Titre centré sur la card */}
+                  <div className="relative w-full aspect-video">
+                    <Image
+                      src={project.img}
+                      alt={project.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                  {/* Titre centré sur la card avec marge */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-black/70 px-6 py-3 rounded-lg">
-                      <p className="text-white text-3xl font-bold">{project.title}</p>
+                    <div className="mx-4 bg-black/70 px-6 py-3 rounded-lg text-center">
+                      <p className="text-white text-xl md:text-3xl font-bold">{project.title}</p>
                     </div>
                   </div>
                   <Link href={project.sourceCode} className="absolute inset-0" passHref />

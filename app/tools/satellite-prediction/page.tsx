@@ -231,13 +231,13 @@ export default function SatelliteTracker() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6">
-      <div className="w-full max-w-[1400px]">
+      <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-6">
         <div className="w-full flex justify-center mb-6">
           <TypewriterEffectSmooth
             words={[
               { text: "Satellite", className: "text-purple" },
-              { text: "Pass", className: "text-orange" },
-              { text: "Prediction", className: "text-orange" },
+              { text: "Pass", className: "text-white" },
+              { text: "Prediction", className: "text-white" },
             ]}
             className="text-2xl font-bold text-center text-white"
             cursorClassName="bg-purple"
@@ -466,18 +466,18 @@ export default function SatelliteTracker() {
         </div>
 
         <div className="mt-6 w-full flex justify-center">
-            <SatelliteTimeline
-              passes={allPredictions.flatMap((pred) =>
-                pred.passes.map((pass) => ({
-                  satelliteName: pred.satelliteName,
-                  startTime: pass.startTime,
-                  endTime: pass.endTime,
-                  maxElevation: pass.maxElevation,
-                }))
-              )}
-              useLocalTime={useLocalTime}
-              utcOffset={utcOffset}
-            />
+          <SatelliteTimeline
+            passes={allPredictions.flatMap((pred) =>
+              pred.passes.map((pass) => ({
+                satelliteName: pred.satelliteName,
+                startTime: pass.startTime,
+                endTime: pass.endTime,
+                maxElevation: pass.maxElevation,
+              }))
+            )}
+            useLocalTime={useLocalTime}
+            utcOffset={utcOffset}
+          />
         </div>
       </div>
       {/* Bannière de cookies */}

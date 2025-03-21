@@ -63,41 +63,47 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
       {/* ✅ Grid responsive avec hauteur uniforme */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {displayedArticles.map(({ slug, metadata }) => (
-          <CardContainer key={slug} className="inter-var bg-grid-white/[0.1] dark:bg-grid-gray-800/[0.2] h-full">
+          <CardContainer key={slug} className="inter-var h-full">
             <Link href={`/blog/${slug}`} className="w-full h-full">
-              <CardBody className="bg-[#1d1c1c] relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
-                
-                {/* ✅ Titre */}
-                <CardItem translateZ="60" className="text-2xl font-bold text-white">
-                  {metadata.title}
-                </CardItem>
+              {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
+              <div
+                className="w-full h-full bg-black bg-grid"
+                style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
+              >
+                <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
+                  
+                  {/* ✅ Titre */}
+                  <CardItem translateZ="60" className="text-2xl font-bold text-white">
+                    {metadata.title}
+                  </CardItem>
 
-                {/* ✅ Date */}
-                <CardItem as="p" translateZ="50" className="text-gray-400 text-sm mt-2">
-                  {new Date(metadata.date).toLocaleDateString('fr-FR')}
-                </CardItem>
+                  {/* ✅ Date */}
+                  <CardItem as="p" translateZ="50" className="text-gray-400 text-sm mt-2">
+                    {new Date(metadata.date).toLocaleDateString('fr-FR')}
+                  </CardItem>
 
-                {/* ✅ Image avec aspect-ratio pour uniformiser la hauteur */}
-                <CardItem translateZ="120" className="w-full mt-3">
-                  <Image
-                    src={metadata.thumbnail}
-                    alt={metadata.title}
-                    width={800}
-                    height={200}
-                    className="w-full h-auto aspect-video object-cover rounded-lg"
-                  />
-                </CardItem>
+                  {/* ✅ Image avec aspect-ratio pour uniformiser la hauteur */}
+                  <CardItem translateZ="120" className="w-full mt-3">
+                    <Image
+                      src={metadata.thumbnail}
+                      alt={metadata.title}
+                      width={800}
+                      height={200}
+                      className="w-full h-auto aspect-video object-cover rounded-lg"
+                    />
+                  </CardItem>
 
-                {/* ✅ Tags */}
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {metadata.tags.map((tag: string) => (
-                    <CardItem key={tag} translateZ="30" as="span" className="bg-purple text-white px-4 py-2 text-sm font-medium rounded-md">
-                      #{tag}
-                    </CardItem>
-                  ))}
-                </div>
+                  {/* ✅ Tags */}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {metadata.tags.map((tag: string) => (
+                      <CardItem key={tag} translateZ="30" as="span" className="bg-purple text-white px-4 py-2 text-sm font-medium rounded-md">
+                        #{tag}
+                      </CardItem>
+                    ))}
+                  </div>
 
-              </CardBody>
+                </CardBody>
+              </div>
             </Link>
           </CardContainer>
         ))}
