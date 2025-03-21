@@ -1,7 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { cn } from "@/src/lib/utils"; // Import de la fonction cn si nécessaire
 
-export const BlackHole = () => {
+interface BlackHoleProps {
+  className?: string;
+}
+
+export const BlackHole: React.FC<BlackHoleProps> = ({ className }) => {
   const [viewportHeight, setViewportHeight] = useState(
     typeof window !== "undefined" ? window.innerHeight : 800
   );
@@ -12,7 +17,7 @@ export const BlackHole = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const scale = viewportHeight / 720;
+  const scale = viewportHeight / 690;
   const containerOffset = 150 * scale; 
   const videoOffset = 250 * scale;     
   
@@ -25,7 +30,10 @@ export const BlackHole = () => {
   };
 
   return (
-    <div className="fixed left-0 w-full -z-20" style={containerStyle}>
+    <div
+      className={cn("fixed left-0 w-full -z-20", className)}
+      style={containerStyle}
+    >
       <video
         autoPlay
         muted

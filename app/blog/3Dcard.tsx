@@ -27,15 +27,20 @@ export const CardContainer = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
+  const animationFrame = useRef<number | null>(null); // Remplacé useRef<number>() par useRef<number | null>(null)
 
+  // --- CHANGÉ : optimisation avec requestAnimationFrame ---
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
-    const { left, top, width, height } =
-      containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 15;
-    const y = (e.clientY - top - height / 2) / 15;
-    containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(${isMouseEntered ? 1.05 : 1})`;
+    if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
+    animationFrame.current = requestAnimationFrame(() => {
+      const { left, top, width, height } = containerRef.current!.getBoundingClientRect();
+      const x = (e.clientX - left - width / 2) / 15;
+      const y = (e.clientY - top - height / 2) / 15;
+      containerRef.current!.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(${isMouseEntered ? 1.05 : 1})`;
+    });
   };
+  // --- FIN DES CHANGEMENTS ---
 
   const handleMouseEnter = () => {
     setIsMouseEntered(true);

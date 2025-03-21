@@ -7,31 +7,37 @@ import { CardContainer, CardBody, CardItem } from "./3Dcard";
 
 const POSTS_PER_PAGE = 6;
 
+export const revalidate = 60; // Active ISR toutes les 60 secondes
+
 export default async function Blog({ searchParams }: { searchParams?: { page?: string; tag?: string } }) {
   const currentPage = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
   const activeTag = searchParams?.tag || "";
 
   const contentDir = path.join(process.cwd(), "content");
 
-  const articles = fs
-    .readdirSync(contentDir)
-    .flatMap((year) =>
-      fs
-        .readdirSync(path.join(contentDir, year))
-        .filter((file) => file.endsWith(".mdx"))
-        .map((file) => {
-          const filePath = path.join(contentDir, year, file);
-          const fileContent = fs.readFileSync(filePath, "utf-8");
-          const { data } = matter(fileContent);
-
-          return {
-            slug: file.replace(".mdx", ""),
-            year,
-            metadata: data,
-          };
-        })
-    )
-    .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+  // --- CHANGÉ : utilisation de fs.promises pour le traitement asynchrone ---
+  const years = await fs.promises.readdir(contentDir);
+  const articlesNested = await Promise.all(
+    years.map(async (year) => {
+      const files = await fs.promises.readdir(path.join(contentDir, year));
+      return Promise.all(
+        files
+          .filter((file) => file.endsWith(".mdx"))
+          .map(async (file) => {
+            const filePath = path.join(contentDir, year, file);
+            const fileContent = await fs.promises.readFile(filePath, "utf-8");
+            const { data } = matter(fileContent);
+            return {
+              slug: file.replace(".mdx", ""),
+              year,
+              metadata: data,
+            };
+          })
+      );
+    })
+  );
+  const articles = articlesNested.flat().sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+  // --- FIN DES CHANGEMENTS ---
 
   const allTags = Array.from(new Set(articles.flatMap((article) => article.metadata.tags)));
 
@@ -43,7 +49,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
   const displayedArticles = filteredArticles.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
 
   return (
-    <main className="flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-5">
+    <main className="min-h-screen flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-5">
 
       {/* ✅ Filtres par tag */}
       <div className="flex flex-wrap gap-3 mb-6 justify-center">
@@ -67,7 +73,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
             <Link href={`/blog/${slug}`} className="w-full h-full">
               {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
               <div
-                className="w-full h-full bg-black bg-grid"
+                className="w-full h-full bg-black bg-grid rounded-xl overflow-hidden"
                 style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
               >
                 <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
@@ -111,7 +117,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
 
       {/* ✅ Pagination responsive */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-8 space-x-2 pb-10">
+        <div className="flex justify-center mt-8 space-x-2 mb-2">
           {Array.from({ length: totalPages }).map((_, index) => (
             <Link
               key={index}

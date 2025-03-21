@@ -34,8 +34,8 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   className,
 }) => {
   const [stars, setStars] = useState<StarProps[]>([]);
-  const canvasRef: RefObject<HTMLCanvasElement> =
-    useRef<HTMLCanvasElement>(null!);
+  const canvasRef: RefObject<HTMLCanvasElement | null> =
+    useRef<HTMLCanvasElement | null>(null);
 
   const generateStars = useCallback(
     (width: number, height: number): StarProps[] => {
@@ -75,6 +75,11 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         const { width, height } = canvas.getBoundingClientRect();
         canvas.width = width;
         canvas.height = height;
+
+        // Ajout de la couleur de fond #030014
+        ctx.fillStyle = "#030014";
+        ctx.fillRect(0, 0, width, height);
+
         setStars(generateStars(width, height));
       }
     };
@@ -110,7 +115,11 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     let animationFrameId: number;
 
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Remplit le fond avec la couleur #030014
+      ctx.fillStyle = "#030014";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Supprime l'appel à ctx.clearRect pour ne pas effacer la couleur de fond
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);

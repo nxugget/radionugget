@@ -35,7 +35,7 @@ export const Navbar = () => {
               width={60}
               height={60}
               priority
-              className="rounded-full hover:scale-110 transition-transform duration-300"
+              className="rounded-full"
             />
           </Link>
           <div className="hidden md:flex ml-[10px] text-gray-300 text-2xl font-bold">

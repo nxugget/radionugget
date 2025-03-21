@@ -9,31 +9,43 @@ const Gallery = () => {
 
   useEffect(() => {
     const fetchImages = async () => {
-      const response = await fetch("/api/images");
-      const imagePaths: string[] = await response.json();
+      try {
+        const response = await fetch("/api/images");
+        if (!response.ok) throw new Error("Network response was not ok");
+        const imagePaths: string[] = await response.json();
 
-      const formattedImages = imagePaths.map((image) => ({
-        title: image.split("/").pop()?.split(".")[0] || "Image",
-        src: image,
-      }));
+        const formattedImages = imagePaths.map((image) => ({
+          title: image.split("/").pop()?.split(".")[0] || "Image",
+          src: image,
+        }));
 
-      const shuffledImages = formattedImages.sort(() => Math.random() - 0.5);
+        // --- CHANGÉ : utilisation de l'algorithme Fisher-Yates pour mélanger ---
+        const shuffledImages = [...formattedImages];
+        for (let i = shuffledImages.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledImages[i], shuffledImages[j]] = [shuffledImages[j], shuffledImages[i]];
+        }
+        // --- FIN DES CHANGEMENTS ---
 
-      // Preload images
-      await Promise.all(
-        shuffledImages.map(
-          (image) =>
-            new Promise<void>((resolve) => {
-              const img = new Image();
-              img.src = image.src;
-              img.onload = () => resolve();
-              img.onerror = () => resolve(); // Resolve even if an image fails to load
-            })
-        )
-      );
+        // Preload images
+        await Promise.all(
+          shuffledImages.map(
+            (image) =>
+              new Promise<void>((resolve) => {
+                const img = new Image();
+                img.src = image.src;
+                img.onload = () => resolve();
+                img.onerror = () => resolve(); // Resolve même en cas d'erreur
+              })
+          )
+        );
 
-      setImages(shuffledImages);
-      setLoading(false);
+        setImages(shuffledImages);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+        setLoading(false);
+      }
     };
 
     fetchImages();

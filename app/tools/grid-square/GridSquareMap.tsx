@@ -121,9 +121,11 @@ const MouseTracker = ({
  */
 const GridLayer = () => {
   const map = useMap();
-  const [gridSquares, setGridSquares] = useState<
-    { bounds: LatLngBoundsExpression; label: string; center: [number, number] }[]
-  >([]);
+  const [gridSquares, setGridSquares] = useState<{
+    bounds: LatLngBoundsExpression;
+    label: string;
+    center: [number, number];
+  }[]>([]);
   const [currentDetailLevel, setCurrentDetailLevel] = useState(getDetailLevel(map.getZoom()));
 
   useEffect(() => {
@@ -136,15 +138,12 @@ const GridLayer = () => {
       let latStep: number, lonStep: number;
 
       if (detailLevel === 1) {
-        // Grandes zones => 20° x 10°
         latStep = 10;
         lonStep = 20;
       } else if (detailLevel === 2) {
-        // Zones intermédiaires => 1° x 2°
         latStep = 1;
         lonStep = 2;
       } else {
-        // Zones fines => subdivision de 1° x 2° en 24x24 => ~0.0417° x ~0.0833°
         latStep = 1 / 24;
         lonStep = 2 / 24;
       }
@@ -162,16 +161,12 @@ const GridLayer = () => {
 
       for (let lat = startLat; lat < endLat; lat += latStep) {
         for (let lon = startLon; lon < endLon; lon += lonStep) {
-          const label = getGridSquare(lat, lon, detailLevel);
+          const label = getGridSquare(lat + latStep / 2, lon + lonStep / 2, detailLevel); // Correction ici
           const squareBounds: LatLngBoundsExpression = [
             [lat, lon],
             [lat + latStep, lon + lonStep],
           ];
-          // Centre du rectangle pour positionner le label
-          const center: [number, number] = [
-            lat + latStep / 2,
-            lon + lonStep / 2,
-          ];
+          const center: [number, number] = [lat + latStep / 2, lon + lonStep / 2]; // Centre ajusté
           newGridSquares.push({ bounds: squareBounds, label, center });
         }
       }
@@ -179,7 +174,6 @@ const GridLayer = () => {
       setGridSquares(newGridSquares);
     };
 
-    // Met à jour la grille au chargement et lors des déplacements/zoom
     updateGrid();
     map.on("zoomend", updateGrid);
     map.on("moveend", updateGrid);
@@ -197,11 +191,9 @@ const GridLayer = () => {
           <Rectangle
             bounds={square.bounds}
             pathOptions={{
-              // Rouge légèrement plus visible
               color: "rgba(255, 170, 0, 0.8)",
               weight: 1,
               fillOpacity: 0,
-              // Opacité globale du trait
               opacity: 0.4,
             }}
           />
@@ -216,29 +208,46 @@ const GridLayer = () => {
   );
 };
 
+// Nouveau composant pour recadrer la carte
+function RecenterMap({ center, zoom }: { center: [number, number]; zoom: number }) {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, [center, zoom, map]);
+  return null;
+}
+
 export default function Map({
   center,
+  zoom, // Nouvelle prop
   setMousePosition,
 }: {
   center: [number, number];
+  zoom: number;
   setMousePosition: (pos: any) => void;
 }) {
   return (
     <>
       <MapContainer
+        id="map"
         center={center}
-        zoom={3}
+        zoom={zoom}
         minZoom={2.5}
         maxZoom={15}
         maxBounds={WORLD_BOUNDS}
         scrollWheelZoom={true}
-        className="h-[calc(100vh-200px)] w-full rounded-lg sm:h-[70vh]" // Adjust height dynamically
+        className="h-[calc(100vh-4rem)] w-full rounded-lg sm:h-[calc(70vh-4rem)]" // Ajustement dynamique
       >
-        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
+        />
         <TileLayer
           url="https://tileserver.aurora.openmundi.com/tiles/{z}/{x}/{y}.png"
           opacity={0.5}
+          errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
         />
+        <RecenterMap center={center} zoom={zoom} />
         <MouseTracker setMousePosition={setMousePosition} />
         <GridLayer />
       </MapContainer>

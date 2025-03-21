@@ -249,7 +249,7 @@ export default function SatelliteTracker() {
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-white text-lg">Satellites disponibles</h3>
+                <h3 className="text-white text-lg">Satellites prédictables</h3>
                 <button
                   onClick={handleAddAll}
                   className="text-sm font-bold text-white hover:text-purple transition-colors"
@@ -306,7 +306,7 @@ export default function SatelliteTracker() {
 
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-white text-lg">Satellites sélectionnés</h3>
+                <h3 className="text-white text-lg">Satellites à prédire</h3>
                 <button
                   onClick={() => {
                     setSelectedSatellites([]);

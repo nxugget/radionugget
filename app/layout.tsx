@@ -11,9 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-black relative">
         {/* Background layers */}
-        <StarsBackground className="absolute inset-0 z-[-2]" />
+        <StarsBackground className="absolute inset-0 z-[-3]" />
         <ShootingStars className="absolute inset-0 z-[-2]" />
-        <BlackHole />
+        <BlackHole className="absolute inset-0 z-[-3]" />
         {/* Foreground elements */}
         <Navbar />
         <main className="pt-24 relative z-10">
