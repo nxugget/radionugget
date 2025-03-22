@@ -1,0 +1,49 @@
+---
+title: "Writeup RingZer0 CTF: You Turn Me On And Off"
+summary: "Writeup of the RingZer0 CTF You Turn Me On And Off challenge"
+date: "2024-06-27"
+thumbnail: "/images/blog/thumbnail/onandoff.webp"
+tags: ["writeup", "radio"]
+slug: "onandoff"
+---
+Challenge description: *We captured alien radio data... Can you crack their message?*
+
+The challenge is available at [this address](https://ringzer0ctf.com/challenges/332).
+
+To understand this writeup, it’s important to grasp modulation concepts, so check out <SmartLink slug="am">this lesson</SmartLink> :)
+
+We start with a file named `sdr-challenge1.cfile`; open it with [Universal Radio Hacker](https://github.com/jopohl/urh). 
+
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff1.webp)
+
+Okay, we have several segments. Zooming in on one of them allows us to deduce the modulation type.
+
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff2.webp)
+It uses an [ASK](http://didouqen.ousama.free.fr/Elec/63.pdf) (``Amplitude Shift Keying``) modulation and more specifically an [OOK](http://didouqen.ousama.free.fr/Elec/63.pdf) (``On Off Keying``).  
+In classic ASK, the amplitude of the carrier signal represents the data, with different amplitudes representing different bits.  
+Thus, for OOK, to represent a bit ``1`` we send a signal (``on``) and to represent a ``0``, we send nothing (``off``).
+
+![Schema ASK OOK](/images/blog/2024/onandoff/onandoff3.svg)
+This modulation type is widely used to send digital data such as with garage door openers.
+
+From URH, you can select the modulation type ``ASK``. You can also change the ``Show data as`` setting to ``ASCII`` so the data is displayed in clear text.
+An important parameter to find is the ``Samples/Symbol``, which for digital modulation represents the duration of one ``bit``.
+To find it, click ``Autodetect``; sometimes it works (like here where it finds ``200``) but let’s learn to do it manually :)
+
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.png)
+To do this, zoom in on the smallest segment of signal.  
+Select approximately that segment to see the value shown below. Here, ``210`` is the size of the smallest word possible, hence the size of one symbol. For larger words, their size will be multiples of ``210``.  
+Alright, change the ``Samples/Symbol`` to this value.
+
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff5.png)
+Note that this value is approximate and may differ slightly from what ``Autodetect`` suggests.
+No worries—the decoded output shows that every line (except perhaps the last) is similar. The same signal repeats.
+I switched from Hex to ASCII view to see if a flag appeared, but that would be a minor detail regarding [URH](https://github.com/jopohl/urh).
+
+By clicking the wrench icon next to the modulation type, you can disable the ``Pause Threshold``.
+This parameter determines the pauses (intervals of silence) between the data segments in the signal. Essentially, it’s the minimum number of consecutive silent samples required to register a pause.
+By default, URH sets this value at ``8``, meaning it considers a pause every 8 consecutive samples below a certain threshold.
+Disabling this setting prevents URH from looking for pauses and allows it to successfully decode the signal.
+
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff6.webp)
+And that’s it for this challenge :)

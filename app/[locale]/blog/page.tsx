@@ -7,13 +7,17 @@ import { CardContainer, CardBody, CardItem } from "./3Dcard";
 
 const POSTS_PER_PAGE = 6;
 
-export const revalidate = 60; // Active ISR toutes les 60 secondes
+export const revalidate = 60; 
 
-export default async function Blog({ searchParams }: { searchParams?: { page?: string; tag?: string } }) {
+export default async function Blog({
+  params,
+  searchParams
+}: { params: { locale: string }; searchParams?: { page?: string; tag?: string } }) {
+  const locale = params.locale; // récupération de la locale depuis params
   const currentPage = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
   const activeTag = searchParams?.tag || "";
 
-  const contentDir = path.join(process.cwd(), "content");
+  const contentDir = path.join(process.cwd(), "content", locale);
 
   // --- CHANGÉ : utilisation de fs.promises pour le traitement asynchrone ---
   const years = await fs.promises.readdir(contentDir);
@@ -70,7 +74,7 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {displayedArticles.map(({ slug, metadata }) => (
           <CardContainer key={slug} className="inter-var h-full">
-            <Link href={`/blog/${slug}`} className="w-full h-full">
+            <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
               {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
               <div
                 className="w-full h-full bg-black bg-grid rounded-xl overflow-hidden"
@@ -78,9 +82,9 @@ export default async function Blog({ searchParams }: { searchParams?: { page?: s
               >
                 <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
                   
-                  {/* ✅ Titre */}
+                  {/* ✅ Titre traduit selon la locale */}
                   <CardItem translateZ="60" className="text-2xl font-bold text-white">
-                    {metadata.title}
+                    {locale === "fr" && metadata.title_fr ? metadata.title_fr : metadata.title}
                   </CardItem>
 
                   {/* ✅ Date */}

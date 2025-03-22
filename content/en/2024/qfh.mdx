@@ -1,0 +1,116 @@
+---
+title: "Building a Quadrifilar Helical (QFH) Antenna"
+summary: "Learn how to build your own DIY quadrifilar (QFH) antenna for 137MHz to receive NOAA and METEOR satellite images."
+date: "2024-10-21"
+thumbnail: "/images/blog/thumbnail/qfh.webp"
+tags: ["radio"]
+slug: "qfh"
+---
+In my very first project to <SmartLink href="/blog/space/satellite/noaa">receive satellite images</SmartLink>, I built a **V-dipole** antenna. It’s very easy to make and produces convincing results.  
+The downside? All those gray interference bands on every image, like [this one](https://station.radionugget.com/images/NOAA-19-20240816-201800-MCIR.jpg).  
+I tried countless fixes to remove them but to no avail, so I decided to switch to a **quadrifilar** antenna, or **QFH** (**Q**uadri**F**ilar **H**elicoidal). Let’s see if this solves the problem :)
+
+# How a QFH Antenna Works
+The **QFH** antenna consists of two helical loops, each wrapped around a central axis and offset by **90°**. For more on phase shift, check out <SmartLink slug="phase">this lesson</SmartLink>.  
+Thanks to this phase offset, the helices produce **circular polarization**. Think of it as the "direction" of the electric field in our wave.
+
+![Circular Polarization](/images/blog/2024/qfh/qfh17.gif)
+Unlike the **V-dipole** we previously built that has **horizontal polarization**, which causes losses because satellite signals are circularly polarized, the QFH is designed to match the incoming circular polarization.
+
+# Building the Antenna
+Keep in mind that your antenna will ultimately look like this (in 2D diagrams it might not seem that way):
+
+![DIY QFH](/images/blog/thumbnail/qfh.webp)
+
+## Theory
+To design the antenna, we’ll use [this calculator](http://jcoppens.com/ant/qfh/calc.en.php).  
+- **Design Frequency**: I set it to `137.5MHz` since I want to receive satellite signals between `137` and `138MHz`.  
+- **Conductor Diameter**: I use `9.5mm` because I'll use a 3/8" copper tube (which is about `9.52mm`). Any diameter works—larger ones may broaden the antenna’s bandwidth and slightly reduce losses—but the gains are modest, so use what you have.
+
+After filling in the defaults, click **Calculate**.  
+You’ll get an approximate schematic. Note the `-0.5cm` on the **top 4 wires only**; this ensures there’s enough space between them to join together.
+
+![QFH Antenna Schematic](/images/blog/2024/qfh/qfh1.svg)
+
+## DIY Build
+Let’s start by listing the supplies (excluding tools). For the copper, I used spare copper crowns from air conditioning work. It’s **annealed copper**, so it’s very malleable.
+
+![DIY QFH Parts List](/images/blog/2024/qfh/qfh2.svg)
+
+### Top Section
+To simplify the build, I used a PVC sleeve that we will place on top of the antenna.  
+You’ll need to drill 4 holes perfectly perpendicular around the sleeve. For that, head back to [this site](http://jcoppens.com/ant/qfh/calc.en.php) and scroll down to **Generate a drilling template**.  
+Fill in the outer diameter of the sleeve (`58mm`) and the copper tube diameter (`9.5mm`).
+
+![Generate a Drilling Template](/images/blog/2024/qfh/qfh3.webp)
+Once generated, print the template and keep only the **Top** portion.  
+Wrap it around the PVC tube. It’s crucial that the paper exactly covers the tube’s circumference—an error of even `1mm` can affect the alignment of the **4 copper rods**. If it doesn’t fit perfectly, double-check your measurements.
+
+![DIY QFH](/images/blog/2024/qfh/qfh4.webp)
+
+### Bottom Section
+Return to the **Generate a drilling template** section of the calculator. This time, use the outer diameter of the PVC tube (`52mm`)—be sure not to confuse it with the sleeve’s diameter used for the top. 
+
+![Generate a Drilling Template](/images/blog/2024/qfh/qfh10.webp)
+Then, cut out the **Bottom** part of the template to wrap around the tube.  
+To know where to place it, note the value `695.10mm` on the template; this represents the distance from the top wires to point **A** (essentially, the H2 distance on the antenna diagram).
+
+### Bending the Tubes
+You can loosely position the elbows (without fixing them) at the end of each of the 4 long copper rods, either on the top or bottom of the antenna—the goal is to form a smooth curve. You might need to tighten the elbows slightly to prevent slippage while bending.  
+For bending, several techniques exist; in my case, I did it manually following this principle:
+
+![QFH Bending Diagram](/images/blog/2024/qfh/qfh13.svg)
+⚠️ IMPORTANT: The satellite signals we want to receive are **Right-Hand Circularly Polarized (RHCP)**. This means you must bend the tubes in a **counterclockwise** direction when viewed from above.
+Once satisfied with the bending, fix the elbows permanently. I was fortunate to have access to a strong abrader, which was simpler and faster than soldering with tin.
+
+![DIY QFH Fixing Elbows](/images/blog/2024/qfh/qfh12.webp)
+Using water on the copper helps cool it to prevent the PVC from melting due to heat.  
+Alternatively, you can clamp the elbows tightly with the tube. The contact may not be perfect, but it works in a pinch.
+
+### Balun
+Now, we’ll drill 2 holes at the top of the tube to create a **balun**.  
+The signal converts into current in one branch in one direction and in the other branch in the opposite direction, meaning the current is **balanced** in the antenna.  
+However, in a coaxial cable, the current travels **only in the center**—making it **unbalanced**. The outer braid is tied to ground and serves as a shield to prevent the cable from acting as an antenna (and to protect the signal).  
+If left uncorrected, some of the received signal will go to ground, causing significant losses.  
+A **balun** converts from **balanced** to **unbalanced** (or vice versa), resolving this issue.
+
+![QFH Balun](/images/blog/2024/qfh/qfh15.jpg)
+This is a **1:1 balun**. The first “1” represents the impedance on the balanced side (the antenna, approximately `50Ω`), and the second “1” is for the unbalanced side (the cable, also `50Ω`). In a 1:1 balun, these two impedances are equal.  
+The choice of **4 turns** is not absolute but appears optimal for [VHF waves](https://fr.wikipedia.org/wiki/Très_haute_fréquence).
+
+### Wiring
+There are several ways to connect the rods. Here’s a schematic of the proper wiring:
+
+![QFH Wiring Diagram](/images/blog/2024/qfh/qfh5.svg)
+First, drill small holes at the end of each copper rod and file them smooth.
+
+![DIY QFH Wiring](/images/blog/2024/qfh/qfh6.webp)
+Then, wire the connections as shown in the diagram. I did it without soldering by twisting the wires together and securing them with zip ties.
+
+![DIY QFH Wired](/images/blog/2024/qfh/qfh7.jpg)
+Soldering is ideal, but for signals like NOAA and METEOR, this method works.
+![DIY QFH Wired 2](/images/blog/2024/qfh/qfh8.jpg)
+Here, the red illustrates the current from the cable's center and the blue from the braid.
+Finally, cover the top to protect the wiring from the rain.
+
+### Installation
+I drilled a small hole at the bottom of the tube to let the cable exit; this prevents it from being crushed when laying the antenna flat.
+
+![DIY QFH Cable Exit](/images/blog/2024/qfh/qfh11.jpg)
+To raise the antenna as high as possible, I added an extra piece of PVC tube. Lacking a sleeve to connect them, I used a **T-joint**.
+And there you have it—the antenna proudly installed on my roof.
+
+![QFH on Roof](/images/blog/2024/qfh/qfh14.jpeg)
+
+# Testing
+Now, let’s check its performance using an antenna tester. Although these values are mostly useful for transmission, they help verify if our antenna is well tuned.
+
+![QFH SWR Test](/images/blog/2024/qfh/qfh16.jpg)
+The **VSWR** is `1.487`, which is excellent for a DIY QFH antenna—anything `<1.5` means it’s well calibrated.  
+The **impedance** of `46.21Ω` is also very good, as it’s close to the desired `50Ω`.
+
+Finally, here’s the output the antenna provides:
+
+![QFH METEOR Image](/images/blog/2024/qfh/qfh18.jpg)
+
+Concerning the original interference issue, my images now show (almost) no interference! Check out some examples in my [gallery](https://radionugget.com/gallery).

@@ -1,0 +1,184 @@
+--- 
+title: "Writeup Hack-A-Sat: Linky" 
+summary: "Writeup of the HackASat Linky challenge" 
+date: "2024-12-20" 
+thumbnail: "/images/blog/thumbnail/linky.webp" 
+tags: ["writeup", "radio"] 
+slug: "linky" 
+--- 
+Challenge description: *Years have passed since our satellite was designed, and the Systems Engineers didn’t do a great job with the documentation. Partial information was left behind in the user manual, so we don’t know what power level to set the Telemetry transmitter at to ensure a 10dB Eb/No margin above the minimum required for BER (4.4 dB).* 
+
+The challenge is available at [this address](https://github.com/cromulencellc/hackasat-qualifier-2021/tree/main/linky).
+
+The goal is to complete a [link budget](https://en.wikipedia.org/wiki/Link_budget) to finish the documentation for the engineers.  
+A link budget accounts for all the **gains** and **losses** from the **transmitter** to the **receiver** in a communication system. In practice, one is done for the uplink and another for the downlink to evaluate system performance.
+
+Let’s launch the challenge:
+```bash
+> docker run --rm -i -e FLAG=pouet linky:challenge
+...
+Here's the information we have captured
+
+************** Global Parameters *****************
+Frequency (Hz): 12100000000.0
+Wavelength (m): 0.025
+Data Rate (bps): 10000000.0
+************* Transmit Parameters ****************
+Transmit Line Losses (dB): -1
+Transmit Half-power Beamwidth (deg): 26.30
+Transmit Antenna Gain (dBi): 16.23
+Transmit Pointing Error (deg): 10.00
+Transmit Pointing Loss (dB): -1.74
+*************** Path Parameters ******************
+Path Length (km): 2831
+Polarization Loss (dB): -0.5
+Atmospheric Loss (dB): -2.1
+Ionospheric Loss (dB): -0.1
+************** Receive Parameters ****************
+Receive Antenna Diameter (m): 5.3
+Receive Antenna Efficiency: 0.55
+Receive Pointing Error (deg): 0.2
+Receive System Noise Temperature (K): 522
+Receive Line Loss (antenna to LNA) (dB): -2
+Receive Demodulator Implementation Loss (dB): -2
+Required Eb/No for BER (dB): 4.4
+
+Calculate and provide the receive antenna gain in dBi:
+```
+
+Ok, that’s a lot of information. First, we need to calculate the **receive antenna gain**.
+
+# 1. Calculating the Receive Antenna Gain  
+We use the formula: `G = 10·log10((n · 4π · A) / (λ²))`  
+where:  
+- `n` is the **antenna efficiency** (given as `0.55`),  
+- `λ` is the **wavelength** (`0.025 m`), and  
+- `A` is the physical **aperture area** of the dish, calculated as `A = π·r²` with `r = D/2` (and `D` given as `5.3 m`).  
+
+![Dish schema](/images/blog/2024/linky/linky1.svg)
+
+For example, in Python:
+```py
+import numpy as np
+r = 5.3/2  # m
+A = np.pi * r**2  # m²
+λ = 0.025  # m
+n = 0.55
+gain = 10 * np.log10((n * 4 * np.pi * A)/(λ**2))  # dB
+print(gain)  # ≈53.87 dB
+```
+Rounded, we enter:  
+```bash
+> docker run --rm -i -e FLAG=pouet linky:challenge
+...
+Calculate and provide the receive antenna gain in dBi: 53.9
+Good job.  You get to continue
+Receive Antenna Gain (dBi): 54.00
+Receive Half-power Beamwidth (deg): 0.33
+Receive Pointing Error (deg): 0.2
+Receive Pointing Loss (dB): -4.48
+```
+
+# 2. Calculating the Ground Terminal G/T (dB/K)  
+G/T measures the antenna gain relative to the system noise temperature. Using: `G/T = G + (line loss) – 10·log10(system noise temperature)`  
+With `G = 54 dB`, `Receive Line Loss = -2 dB`, and `system noise temperature = 522 K`:
+```py
+g = 54  
+rx_line_loss = -2  # dB
+temp = 522  # K
+g_t = g + rx_line_loss - 10 * np.log10(temp)
+print(g_t)  # ≈24.7 dB/K
+```
+Entering:
+```bash
+> docker run --rm -i -e FLAG=pouet linky:challenge
+...
+Calculate and provide the ground terminal G/T (dB/K): 24.7
+Nicely done.  Let's keep going.
+Determine the transmit power (in W) to achieve 10dB of Eb/No margin (above minimum for BER):
+```
+
+# 3. Calculating the Transmit Power  
+We now calculate the **transmit (or “transit”) power** in Watts to achieve the desired margin.
+
+## 3.1 Calculating the RSSI  
+RSSI combines measured SNR, pointing losses, Boltzmann’s constant, and the G/T.  
+- First, calculate SNR (dB) using: `SNR = Eb/No + 10·log10(Bit Rate) – Demodulator Loss`  
+where:
+ • `Eb/No` (required for BER) is `4.4 dB`, but we want a `10dB` margin so `Eb/No` becomes `14.4 dB`,  
+ • `Bit Rate` is `10e6 bps`, and  
+ • `Demodulator Loss = -2 dB`.
+```py
+import numpy as np
+eb_no = 14.4  # dB
+bitrate = 10e6  # bps
+demod_loss = -2  # dB
+SNR = eb_no + 10 * np.log10(bitrate) - demod_loss  # dB
+print(SNR)  # ≈86.4 dB
+```
+- Next, account for receive pointing loss. Using the beamwidth formula: `BW = (λ / D) · 70`, with `λ = 0.025 m` and `D = 5.3 m`, and then `Pointing Loss = -12 * (pointing error / BW)²`.
+```py
+beamwidth = (0.025/5.3) * 70  
+rx_pointing_error = 0.2  
+rx_pointing_loss = -12 * (rx_pointing_error/beamwidth)**2  # ~-4.4 dB
+```
+- Finally, compute the RSSI: `RSSI = SNR – (pointing loss) + Boltzmann – G/T`  
+with Boltzmann's constant converted to dBW/K:
+```py
+boltzmann_j_k = 1.38065e-23  
+boltzmann = 10 * np.log10(boltzmann_j_k)  # dBW/K  
+rssi = SNR - rx_pointing_loss + boltzmann - g_t  
+print(rssi)  # ≈ -162.5 dBW
+```
+
+## 3.2 Calculating Propagation Loss  
+Propagation (or path) loss is given by: `Path Loss = 20·log10(λ/(4π·D))`  
+with `D` (distance) = `2831 km` converted to meters.
+```py
+d_m = 2831e3  # m
+path_loss = 20 * np.log10(0.025 / (4 * np.pi * d_m))
+print(path_loss)  # ≈ -183.06 dB
+```
+Additional losses:
+```
+Polarization Loss: -0.5 dB
+Atmospheric Loss: -2.1 dB
+Ionospheric Loss: -0.1 dB
+Transmit Pointing Loss: -1.74 dB
+```
+
+## 3.3 Calculating the EIRP  
+EIRP (or PIRE) is computed by removing all propagation losses from the RSSI:
+```py
+polarization_loss = -0.5
+atmospheric_loss = -2.1
+ionospheric_loss = -0.1
+tx_pointing_loss = -1.74
+tx_eirp = rssi - path_loss - polarization_loss - atmospheric_loss - ionospheric_loss - tx_pointing_loss  
+print(tx_eirp)  # ≈25 dBW
+```
+
+## 3.4 Determining the Transmit Power  
+Finally, the transmit power P (in dBW) is given by: `P = PIRE - (Transmit Line Loss) - (Transmit Antenna Gain)`  
+with `Transmit Line Loss = -1 dB` and `Transmit Antenna Gain = 16.23 dB`.
+```py
+tx_line_loss = -1  # dB
+tx_antenna_gain = 16.23  # dB
+transmit_power_dbW = tx_eirp - tx_line_loss - tx_antenna_gain  
+transmit_power_W = 10**(transmit_power_dbW/10)
+print(transmit_power_W)  # ≈9.5 W (though testing shows 9.7 W works better)
+```
+We then enter the value:
+```bash
+> docker run --rm -i -e FLAG=pouet linky:challenge
+...
+Determine the transmit power (in W) to achieve 10dB of Eb/No margin (above minimum for BER): 9.7
+Winner Winner Chicken Dinner
+...
+You got it! Here's your flag:
+pouet
+```
+
+And it works, we get the flag!  
+If you observe closely, I entered `9.7` instead of `9.5`. The value `9.5` didn’t work, and I couldn’t find the error, so I tried nearby values, and `9.7` worked 😄.  
+In reality, if you look at the [source code of the challenge](https://github.com/cromulencellc/hackasat-qualifier-2021/blob/main/linky/challenge/challenge.py), you’ll see that depending on what value you enter, the responses can differ. For example, the [official solution](https://github.com/cromulencellc/hackasat-qualifier-2021/blob/main/linky/solver/solver.py) uses `54` for the **gain**, `24.8` for **G/T**, and `9.5` for **transmit power**. But anyway, the important thing is to understand how to play with all these values :)

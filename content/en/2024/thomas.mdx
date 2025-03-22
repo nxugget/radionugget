@@ -1,0 +1,54 @@
+---
+title: "Writeup RingZer0 CTF: Don't Flip Out, Thomas!"
+summary: "Writeup of the RingZer0 CTF Don't Flip Out, Thomas! challenge"
+date: "2024-07-12"
+thumbnail: "/images/blog/thumbnail/thomas.webp"
+tags: ["writeup", "radio"]
+slug: "thomas"
+---
+Challenge description: *The aliens' capabilities have advanced and they've decided to improve the reliability of their transmissions. Can you crack their message?*
+
+The challenge is available at [this address](https://ringzer0ctf.com/challenges/334).
+
+To understand this writeup, it's important to grasp modulation concepts—so check out <SmartLink slug="am">this lesson</SmartLink> :)
+
+The challenge starts with a file named `sdr-challenge3.cfile`.  
+Open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas1.webp)
+
+We have several segments; zoom in on one of them.
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas2.webp)
+
+It clearly resembles **ASK**. If you're not familiar with this modulation, I suggest reading the writeup for <SmartLink slug="onandoff">that challenge</SmartLink> which covers ASK in detail.  
+Select `ASK` as the modulation type and manually determine the `Samples/Symbol` by choosing the smallest segment—the value indicated in **red**.
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas3.webp)
+
+Switch the view to `ASCII` to see what the decoded signal yields. Initially, you get three similar lines that don't make much sense.  
+I recall that during the <SmartLink slug="onandoff">first challenge</SmartLink>, I spent time understanding why it didn't decode until I disabled the `Pause Threshold` (set it from `8` to `0`). So, I disable it. Now the decoded signal appears as follows:
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas4.webp)
+
+Alright, not perfect—but remember, this is the final challenge of the series. Given that the aliens have "improved" the reliability of their transmission, it suggests that the encoding method may be the issue.  
+
+Note: Do not confuse **modulation** with the **encoding method**.  
+To send a digital (binary) message, first you encode it—that is, you determine how the bits are organized (like Morse code, for example)—and then you modulate that digital signal (using ASK, for instance) to transform it into a transmittable radio wave.  
+
+In Universal Radio Hacker, the default decoding method is [NRZ](https://fr.wikipedia.org/wiki/Non_Return_to_Zero). You can see this in the **Analysis** tab marked in red:
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas5.webp)
+
+URH comes with presets for known encoding methods like Manchester coding. In Manchester coding, a **0** is represented by a transition from low to high (0 to 1) at the midpoint of the bit interval, while a **1** is represented by the inverse transition.
+
+![Manchester Coding Diagram](/images/blog/2024/thomas/thomas6.svg)
+
+Note: The white lines in the diagram are only connecting lines and not part of the encoding.  
+URH offers two options: `Manchester 1` and `Manchester 2` (Differential Manchester is different). The only difference is that `Manchester 2` inverts the bits (so `0`s become `1`s and vice versa).  
+When I select `Manchester 2`, the flag appears!
+
+![Universal Radio Hacker](/images/blog/2024/thomas/thomas7.webp)
+
+And that's it for this final alien transmission challenge.
+

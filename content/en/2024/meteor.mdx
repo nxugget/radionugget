@@ -1,0 +1,57 @@
+---
+title: "Listening to Russian METEOR-M Satellites"
+date: "2024-09-07"
+summary: "Learn how to listen to Russian METEOR-M satellites and capture their images using the same equipment as for NOAA satellites."
+thumbnail: "/images/blog/thumbnail/meteor.webp"
+tags: ["satellite", "space"]
+slug: "meteor"
+---
+American NOAA satellites that we covered in <SmartLink href="/blog/space/satellite/noaa">my first project</SmartLink> are kind of the starting point for any satellite radio enthusiast. But there are other very similar satellites that deliver better images using roughly the same gear as NOAA—the Russian **METEOR** satellites 🇷🇺.
+
+# Who Are the METEOR?
+The **METEOR** satellites started as Soviet, then Russian weather satellites. Since **1964**, about **70** models have been launched. For this article, we’re focusing only on the latest series, **METEOR-M**, and here’s a brief history:
+
+![METEOR-M](/images/blog/2024/meteor/meteor2.svg)
+
+Like their NOAA counterparts, the METEOR-M series orbits at roughly **800km** altitude and follows a **polar** orbit—more precisely, a **sun-synchronous** orbit. That means they always face the **Sun** 🌞. For more information on orbit types, check out <SmartLink slug="orbits">this lesson</SmartLink>.
+
+![Orbite polaire](/images/blog/2024/type-orbits/type-orbits6.svg)
+A sun-synchronous orbit means the satellite passes over the same locations at the same [solar time](https://fr.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
+The main difference from NOAA is in the transmission mode: METEOR-M uses [LRPT](https://www.sigidwiki.com/wiki/Low_Rate_Picture_Transmission_(LRPT)), whereas NOAA used [APT](https://www.sigidwiki.com/wiki/Automatic_Picture_Transmission_(APT)).  
+For this article, we’re interested in two METEOR-M satellites:
+
+![METEOR-M N2 satellite](/images/blog/2024/meteor/meteor1.svg)
+Note that **METEOR M2-4** is still in a testing phase. Its frequency sometimes fluctuates between `137.1` and `137.9MHz`, and its symbol rate varies between **72** and **80Kbit/s**.  
+To verify its status, you can use [this site](https://usradioguy.com/meteor-satellite/), which shows the current state of the satellite as of **09/02/2024**.
+
+# Time to Listen
+On the antenna side, I use a <SmartLink href="/blog/radio/ground/qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**—ideal for METEOR since they transmit with **right-hand circular polarization**.
+For reception, we use [SatDump](https://www.satdump.org/download/). I won’t go into all the configuration details (I’ve already done a tutorial on **SatDump** [here](https://www.satdump.org/download/)), but here’s the gist:
+- First, using the `Tracking` section in SatDump or via [this website](https://www.n2yo.com/?s=33591), check when the satellite will pass by. This section also shows the satellite's current **elevation**.
+  
+  ![SatDump Tracking](/images/blog/2024/meteor/meteor5.png)
+  
+- In the `Device` section, select your **SDR** receiver—in my case, an [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html)—then hit **Start** to begin recording.
+- I recommend adjusting the `FFT Min` and `FFT Max` values in the `FFT` section: set `FFT Min` low enough that noise is barely visible, and then set `FFT Max` to `FFT Min + 30`.
+
+  ![SatDump METEOR](/images/blog/2024/meteor/meteor4.png)
+  
+- In the `Processing` section, choose **METEOR M2-x LRPT 72k**. Set `Primary` to `137.900MHz` and `Backup` to `137.100MHz`.  
+Click **Start** again to begin the decoding process. If everything is set correctly, you should see the signal from **METEOR M2-4** 🛰️!
+To ensure the decoding is going smoothly, check that:
+  - The SNR (displayed at the bottom) is ideally **10** or above. Even if it’s **>2**, you should still see something.
+  - The `Viterbi` section at the bottom-right is all green, indicating good performance. 😄
+
+  ![SatDump](/images/blog/2024/meteor/meteor6.png)
+
+⚠️ Once the satellite has passed, click **Stop** in the `Processing` section before stopping the recording in the `Device` section. Reversing this order might cause you to lose the recorded data.
+
+After the pass, wait a few moments while **SatDump** finishes decoding everything, then switch over to the `Viewer` tab to see your images and apply post-processing.
+
+![SatDump Viewer](/images/blog/2024/meteor/meteor7.png)
+You can tweak various settings to get false-color or infrared images:
+
+![METEOR M2-4 Images](/images/blog/2024/meteor/meteor8.jpg)
+
+The image quality is really impressive compared to NOAA’s.
+Now it’s your turn—have fun and happy decoding!

@@ -1,0 +1,107 @@
+---
+title: "Writeup Hack-A-Sat: Fiddlin' John Carson"
+summary: "Writeup of the HackASat Fiddlin' John Carson challenge"
+date: "2024-08-20"
+thumbnail: "/images/blog/thumbnail/kepler.webp"
+tags: ["writeup", "space"]
+slug: "kepler"
+---
+Challenge description: *Your spacecraft has provided its Cartesian ICRF position (km) and velocity (km/s). What is its orbit (expressed as Keplerian elements)?*
+
+The challenge is available at [this address](https://github.com/cromulencellc/hackasat-qualifier-2021/tree/main/kepler).
+
+Let's connect to the challenge instance:
+```bash
+> docker run --rm -i -e FLAG=pouet kepler:challenge
+         KEPLER
+        CHALLANGE
+       a e i Ω ω υ
+            .  .
+        ,'   ,=,  .
+      ,    /     \  .
+     .    |       | .
+    .      \     / .
+    +        '='  .
+     .          .'
+      .     . '
+         '
+Your spacecraft reports that its Cartesian ICRF position (km) and velocity (km/s) are:
+Pos (km):   [8449.401305, 9125.794363, -17.461357]
+Vel (km/s): [-1.419072, 6.780149, 0.002865]
+Time:       2021-06-26-19:20:00.000-UTC
+
+What is its orbit (expressed as Keplerian elements a, e, i, Ω, ω, and υ)?
+Semimajor axis, a (km):
+```
+
+We need to determine the orbital parameters from the given Cartesian position and velocity. It’s important to understand what these orbital elements represent. For a refresher on orbital data, check out this lesson on [TLE basics](<SmartLink slug="tle">just here</SmartLink>) :)
+
+Below is a diagram illustrating the various parameters (note: the spacecraft’s placement is arbitrary for illustration):
+![Kepler Diagram](/images/blog/2024/kepler/kepler1.svg)
+
+The calculations to extract the orbital elements can be pretty involved. So instead, we’ll use the Python library [poliastro](https://github.com/poliastro/poliastro) to do the heavy lifting.
+
+First, convert our lists for position and velocity into quantities with proper physical units:
+```py
+from poliastro.twobody.orbit import u
+
+pos = [8449.401305, 9125.794363, -17.461357]
+vel = [-1.419072, 6.780149, 0.002865]
+
+pos_km = [*pos] * u.km
+vel_kms = [*vel] * u.km / u.s
+```
+Here, multiplying by `u.km` and `u.km/u.s` (from [astropy](https://github.com/astropy/astropy)) converts each coordinate into a `Quantity` with the appropriate units.
+
+Next, we call the method `Orbit.from_vectors` to calculate the orbital elements:
+```py
+from poliastro.bodies import Earth
+from poliastro.twobody import Orbit
+
+time = "2021-06-26 19:20:00.000"
+orb = Orbit.from_vectors(Earth, pos_km, vel_kms, time)
+```
+Here, `Earth` provides the necessary gravitational parameters. And specifying the exact time is crucial since orbital parameters can change over time.
+
+Once the orbit has been computed, we can extract the six Keplerian elements:
+```py
+a = orb.a              # Semimajor axis in km
+e = orb.ecc            # Eccentricity
+i = orb.inc.to_value(u.deg)    # Inclination (converted to degrees)
+Omega = orb.raan.to_value(u.deg)   # Right ascension of the ascending node (deg)
+omega = orb.argp.to_value(u.deg)   # Argument of perigee (deg)
+nu = orb.nu.to_value(u.deg)    # True anomaly (deg)
+```
+Using `to_value(u.deg)` (from astropy) converts the angles from radians to degrees.
+
+Finally, print all the orbital parameters and verify:
+```bash
+> docker run --rm -i -e FLAG=pouet kepler:challenge
+         KEPLER
+        CHALLANGE
+       a e i Ω ω υ
+            .  .
+        ,'   ,=,  .
+      ,    /     \  .
+     .    |       | .
+    .      \     / .
+    +        '='  .
+     .          .'
+      .     . '
+         '
+Your spacecraft reports that its Cartesian ICRF position (km) and velocity (km/s) are:
+Pos (km):   [8449.401305, 9125.794363, -17.461357]
+Vel (km/s): [-1.419072, 6.780149, 0.002865]
+Time:       2021-06-26-19:20:00.000-UTC
+
+What is its orbit (expressed as Keplerian elements a, e, i, Ω, ω, and υ)?
+Semimajor axis, a (km): 24732.885760723184  
+Eccentricity, e: 0.7068070220620631  
+Inclination, i (deg): 0.11790360842507447  
+Right ascension of the ascending node, Ω (deg): 90.22650379956278  
+Argument of perigee, ω (deg): 226.58745900876278  
+True anomaly, υ (deg): 90.389955034578
+
+You got it! Here's your flag:
+pouet
+```	

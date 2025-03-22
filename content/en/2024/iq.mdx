@@ -1,0 +1,84 @@
+---
+title: "Writeup Hack-A-Sat: IQ"
+summary: "Writeup of the HackASat IQ challenge"
+date: "2024-09-18"
+thumbnail: "/images/blog/thumbnail/iq.webp"
+tags: ["writeup", "radio"]
+slug: "iq"
+---
+Challenge description: *Convert the provided series of transmit bits into in-phase quadrature (I/Q) samples.*
+
+The challenge is available at [this address](https://github.com/cromulencellc/hackasat-qualifier-2021/tree/main/iq).
+
+Let's connect to the challenge instance:
+
+![HackASat IQ challenge](/images/blog/2024/iq/iq1.png)
+
+We are asked to convert a series of **bits** into an I/Q sample using [QPSK](https://fr.wikipedia.org/wiki/Phase-shift_keying) (Quadrature Phase Shift Keying) modulation.
+
+# QPSK Modulation
+QPSK modulation is a digital phase modulation technique where the **phase** of the **carrier** is altered to transmit data. You can review a lesson on modulation [here](<SmartLink slug="am">just here</SmartLink>) and on phase [here](<SmartLink slug="phase">right here</SmartLink>).
+
+Specifically, with this modulation, bits are grouped in **pairs** giving 4 possible combinations: `00`, `01`, `10`, and `11`—resulting in 4 distinct phases. Typically, each phase is separated by **90°**. For example, one might assign `00` to **0°**, `01` to **90°**, `11` to **180°**, and `10` to **270°**.  
+This can also be seen in the following diagram with alternative values, but still separated by **90°**:
+
+![QPSK Schema](/images/blog/2024/iq/iq3.png)
+
+# I/Q Sample
+**I** (In-phase) and **Q** (Quadrature) are the two orthogonal components of the modulated signal. They represent the cosine and sine parts of the modulated carrier wave, respectively.  
+An I/Q sample represents the numerical values of these two components, allowing us to depict the phase modulation used in QPSK on a two-dimensional plane (the constellation diagram).
+
+# Solution
+To solve the challenge, we’ll write a script in `Python`. Since in QPSK the bits are encoded in pairs, we begin with the following step:
+```py
+bits = "01000011 01110010 01101111 01101101 01110101 01101100 01100101 01101110 01110100 00001010"
+
+bits_pair = []
+i = 0
+while i < len(bits):
+    if bits[i] == " ": # Skip spaces (they could have been removed manually, but this keeps it neat)
+        i += 1
+    pair = bits[i:i+2]
+    bits_pair.append(pair)
+    i += 2
+
+print(bits_pair) # ['01', '00', '00', '11', '01', '11', '00', '10', '01', '10', '11', '11', '01', '10', '11', '01', '01', '11', '01', '01', '01', '10', '11', '00', '01', '10', '01', '01', '01', '10', '11', '10', '01', '11', '01', '00', '00', '00', '10', '10']
+```
+
+Each bit pair is mapped to a specific point in the I/Q plane where **I** (In-phase) is the horizontal axis and **Q** (Quadrature) is the vertical axis.
+Based on the provided diagram, we can deduce our bit mapping scheme:
+```py
+bits_map = {
+    "00": "-1.0 -1.0",
+    "01": "-1.0 1.0",
+    "10": "1.0 -1.0",
+    "11": "1.0 1.0"
+}
+
+iq_samples = []
+for pair in bits_pair:
+    iq_value = bits_map.get(pair)
+    iq_samples.append(iq_value)
+
+print(iq_samples) # ['-1.0 1.0', '-1.0 -1.0', '-1.0 -1.0', '1.0 1.0', '-1.0 1.0', '1.0 1.0', '-1.0 -1.0', '1.0 -1.0', '-1.0 1.0', '1.0 -1.0', '1.0 1.0', '1.0 1.0', '-1.0 1.0', '1.0 -1.0', '1.0 1.0', '-1.0 1.0', '-1.0 1.0', '1.0 1.0', '-1.0 1.0', '-1.0 1.0', '-1.0 1.0', '1.0 -1.0', '1.0 1.0', '-1.0 -1.0', '-1.0 1.0', '1.0 -1.0', '-1.0 1.0', '-1.0 1.0', '-1.0 1.0', '1.0 -1.0', '1.0 1.0', '1.0 -1.0', '-1.0 1.0', '1.0 1.0', '-1.0 1.0', '-1.0 -1.0', '-1.0 -1.0', '-1.0 -1.0', '1.0 -1.0', '1.0 -1.0']
+```
+
+Finally, we construct our QPSK sample:
+```py
+qpsk = ' '.join(iq_samples)
+print(qpsk)
+```
+
+Just run the entire script and you'll see output like:
+```bash
+python .\iq.py
+-1.0 1.0 -1.0 -1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 -1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0 -1.0 -1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 -1.0 1.0 1.0 1.0 -1.0 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 1.0 -1.0 1.0 -1.0
+```
+
+Copy and paste the output and you’ll receive the flag :)
+```bash
+> docker run --rm -i -e FLAG=pouet iq:challenge
+[...]
+Input samples: -1.0 1.0 -1.0 -1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 -1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 -1.0 -1.0 -1.0 1.0 1.0 -1.0 -1.0 1.0 -1.0 1.0 -1.0 1.0 1.0 -1.0 1.0 1.0 1.0 -1.0 -1.0 1.0 1.0 1.0 -1.0 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 1.0 -1.0 1.0 -1.0
+You got it! Here's your flag:
+pouet

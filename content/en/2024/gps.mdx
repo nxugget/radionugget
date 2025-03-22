@@ -1,0 +1,51 @@
+---
+title: "Satellite Positioning Systems (GNSS)"
+date: "2024-07-03"
+summary: "Explore the fundamental principles behind satellite positioning systems (GNSS) like GPS, and learn how they pinpoint precise geographic locations."
+thumbnail: "/images/blog/thumbnail/gps.webp"
+tags: ["space", "satellite"]
+slug: "gps"
+---
+The satellite positioning system, commonly known as **GNSS** (Global Navigation Satellite System), lets us determine precise geographic positions anywhere on **Earth** 🌍. Today, we’re breaking down how it works in broad strokes—even though it can get pretty complex!
+
+# Introduction
+What we call **GPS** (Global Positioning System) is just one type of **GNSS** operated by the **United States** since the 1970s. There are others, like [Galileo](https://fr.wikipedia.org/wiki/Galileo_(syst%C3%A8me_de_positionnement)) in **Europe**, [GLONASS](https://fr.wikipedia.org/wiki/GLONASS) in **Russia**, or [BeiDou](https://fr.wikipedia.org/wiki/Beidou) in **China**.  
+So when people say “GPS,” they’re really referring to the generic term **GNSS** regardless of which system is in play.  
+To form a GNSS constellation, about twenty satellites orbit **Earth** at roughly `20000km` in the <SmartLink slug="orbits">medium Earth orbit</SmartLink>.
+
+![Schema GPS](/images/blog/2024/gps/gps4.svg)
+These satellites continuously broadcast **radio waves**, and since their positions are known, you can use **triangulation** to figure out the distance between each satellite and your receiver on **Earth**.  
+In theory, **3 satellites** could provide your **latitude** and **longitude**, but in practice, at least 4 are needed. The fourth one helps correct the **clock offset**—more on that later.
+
+# Geocentric Reference Frame
+A reference frame is simply a point of view—an origin from which we measure things. For GNSS calculations, we use the **geocentric** reference frame (or **ECEF** in English), which takes the **center of the Earth** as its origin.  
+![Schema Référentiel géocentrique](/images/blog/2024/gps/gps1.svg)
+This system uses a **Cartesian** framework with three mutually perpendicular axes (designated **X**, **Y**, and **Z**) to pinpoint positions. These coordinates (**x, y, z**) let you precisely locate points relative to Earth’s center.
+Since raw **(x,y,z)**’s aren’t very user-friendly, we convert them into the much simpler **latitude** and **longitude** format.
+
+# Triangulation
+All the satellites’ clocks are synchronized to a source known as [GPS Time](https://fr.wikipedia.org/wiki/Synchronisation_GPS). When your **GNSS** receiver (for example, your smartphone) picks up signals from at least **4 satellites**, it can calculate your position by measuring **4 pseudo-ranges**.
+
+## Pseudo-ranges
+We call them “pseudo” distances because they include not just the true distance, but also various errors such as:
+- **Clock offsets**: Unlike the super-accurate clocks on satellites, your phone’s clock isn’t as precise.
+- **Atmospheric effects**: The signal slows down as it passes through different layers of the atmosphere.
+- **Multipaths**: The signal can bounce off obstacles like buildings before reaching your device.
+
+![Schema décalage d'horloge](/images/blog/2024/gps/gps3.svg)
+To correct these issues, each satellite transmits a unique random code. Your receiver generates an identical code in sync with the satellite’s transmission and compares the time shift between sending and receiving. This time offset is then used in the formula:  
+`P = c * Δt`  
+where `P` is the **pseudo-range** in meters, `c` is the **speed of light** in m/s, and `Δt` is the time **offset** in seconds.
+
+## Coordinates (x, y, z)
+By solving an equation with **4 unknowns**, your device can determine its **(x,y,z)** coordinates on **Earth** as well as the clock offset relative to the satellites.  
+![Schema triangulation formules](/images/blog/2024/gps/gps2.svg)
+These equations essentially calculate the real distance between each satellite and your receiver using the 3D version of the Pythagorean theorem, with `X`, `Y`, and `Z` being the satellite’s coordinates and `U` representing your unknown location. Then, the clock error (expressed as `c` times the time difference) is added to account for the time discrepancy.
+We won’t dive into the nitty-gritty of solving these equations—it gets pretty involved—but there are two primary methods: ([Least Squares Method](https://fr.wikipedia.org/wiki/M%C3%A9thode_des_moindres_carr%C3%A9s)) and ([Kalman Filter](https://fr.wikipedia.org/wiki/Filtre_de_Kalman)). If you’re curious, check them out!  
+Once solved, you obtain the **(x,y,z)** coordinates of `U`.
+
+## Latitude and Longitude
+Ultimately, we want to know exactly where we are on **Earth**—and the raw **x,y,z** coordinates aren’t very intuitive. Luckily, we can convert them into **latitude** and **longitude**.
+Keep in mind that latitude and longitude are based on an **ellipsoidal approximation** of **Earth**. It makes sense: you’re converting 3D data into a 2D map. The best way to represent our blue planet (which is roughly spherical) is by using a **reference ellipsoid** defined by the [WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System#WGS_84) model.
+We won’t get into all the details here—the Wikipedia page is there for the curious—but with a bit of **trigonometry**, the conversion happens.  
+And there you have it—now you know exactly where you are on the map 🗺️! You could even go further and compute your **altitude**, but that’s a whole other level of complexity.

@@ -1,0 +1,49 @@
+---
+title: "Listening to Air Traffic Communications with SDR"
+date: "2024-12-22"
+summary: "Learn how to listen in on air traffic communications using an SDR receiver and an antenna."
+thumbnail: "/images/blog/thumbnail/pilots.webp"
+tags: ["radio"]
+slug: "pilots"
+---
+If you check out [FlightRadar](https://www.flightradar24.com), chances are an airplane is flying close to you. You might even be less than a **ten-kilometer** radius from an airport. In these cases, a simple <SmartLink slug="sdr">SDR</SmartLink> receiver paired with an <SmartLink slug="antenna">antenna</SmartLink> can let you tap into all those communications 🥷🏽.
+
+# How Do Pilots Communicate?
+## Modulation
+Air traffic communications use <SmartLink slug="am">amplitude modulation</SmartLink> even though most radio communications today use [frequency modulation](https://fr.wikipedia.org/wiki/Modulation_de_fr%C3%A9quence#:~:text=En%20modulation%20de%20fr%C3%A9quence%2C%20l,(atténuation%20et%20bruit%20importants).).  
+While FM generally delivers better signal quality, it's more complex and requires hardware that’s more power-hungry and heavier—a real concern in aviation 🛩️.  
+Plus, **AM** is way more robust than FM, meaning the signal holds up better against obstacles like bad weather, mountains, and large buildings. This lets the transmission reach farther distances.
+
+## Polarization
+Air traffic communications use **vertical polarization**. This refers to the direction of the electric field in an electromagnetic wave. [This site](https://culturesciencesphysique.ens-lyon.fr/ressource/simu-polarisation.xml) explains the various types of polarization nicely.  
+Simply put, a vertically polarized wave should be picked up by an antenna oriented **vertically**. Otherwise, you risk losing a large portion of the signal.
+
+![Polarization](/images/blog/2024/pilots/pilots5.svg)
+## Which Frequencies?
+Have you ever seen the [frequency allocation spectrum](https://www.anfr.fr) from the ANFR?
+
+![Spectre répartition fréquences ANFR](/images/blog/2024/pilots/pilots1.webp)
+It can be hard to tell on a small screen, but zoom in on the region allocated to aeronautical communications within the [VHF](https://fr.wikipedia.org/wiki/Très_haute_fréquence) band.
+
+![Bande VHF ANFR](/images/blog/2024/pilots/pilots2.webp)
+These frequencies fall between `108` and `137MHz`. Now you need to know which frequencies within that range are used near you so you can tune in.
+
+# Getting the Right Information
+A great site that shows the frequencies used in aviation—complete with a map—is [Openaip](https://www.openaip.net). You can view the map by clicking [here](https://www.openaip.net/map).  
+For example, let’s look at Bordeaux-Mérignac **BOD** airport.
+
+![Openaip BOD](/images/blog/2024/pilots/pilots3.png)
+On the side, you can see a bunch of frequencies used by the airport, including the control tower (labeled **TWR**).
+
+# Time to Listen
+In my case, I use [SDR++](https://www.sdrpp.org) because I like the software, but any SDR software works similarly.  
+- First, plug in your **SDR** receiver connected to your antenna.  
+- Set an appropriate gain and choose **AM** as the modulation mode.  
+- Also, adjust the **bandwidth** to around `15000` Hz.  
+Once that’s done, you can either manually select a frequency you found on [Openaip](https://www.openaip.net) or simply monitor the spectrogram for any visible peaks.
+
+![SDR++ aero](/images/blog/2024/pilots/pilots4.png)
+Here’s a snippet of what I managed to pick up:  
+
+Communications aren’t continuous, so be patient. Wait until you see a peak, tune in, and enjoy the listen.  
+Also note that you can use a [squelch](https://en.wikipedia.org/wiki/Squelch) setting to mute background noise and listen only when a transmission occurs.

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SatelliteSearch from "./SatelliteSearch";
-import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
+import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
 import SatelliteTimeline from "./SatelliteTimeline";
 

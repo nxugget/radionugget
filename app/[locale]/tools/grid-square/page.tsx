@@ -2,14 +2,17 @@
 
 import { useState, useEffect, useRef } from "react";
 import { getGridSquare, getGridSquareCoords } from "@/src/lib/gridSquare";
-import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
+import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
+import { useI18n } from "@/locales/client"; // useScopedI18n retiré
 
 // Import dynamique du composant Map
 const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });
 
 export default function GridSquareCalculator() {
+  const t = useI18n(); // traduction globale
+
   const [query, setQuery] = useState("");
   const [gridSquare, setGridSquare] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -94,7 +97,7 @@ export default function GridSquareCalculator() {
       const data = await response.json();
 
       if (data.length === 0) {
-        throw new Error("Adresse non trouvée.");
+        throw new Error("Not found");
       }
 
       const { lat, lon } = data[0];
@@ -104,7 +107,7 @@ export default function GridSquareCalculator() {
       setMapCenter([parseFloat(lat), parseFloat(lon)]);
       setMapZoom(13);
     } catch (err) {
-      setError("Je connais pas");
+      setError(t("notFound")); // fallback retiré
     } finally {
       setLoading(false);
     }
@@ -127,7 +130,7 @@ export default function GridSquareCalculator() {
   const handleDirectSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^[A-Za-z]{2}(\d{2}([A-Za-z]{2})?)?$/.test(directSearch)) {
-      setDirectSearchError("Je connais pas");
+      setDirectSearchError(t("notFound")); // fallback retiré
       return;
     }
     try {
@@ -135,7 +138,7 @@ export default function GridSquareCalculator() {
       setMapCenter([coords.lat, coords.lon]);
       setMapZoom(13);
     } catch (error) {
-      setDirectSearchError("Je connais pas");
+      setDirectSearchError(t("notFound")); // fallback retiré
     }
   };
 
@@ -149,7 +152,7 @@ export default function GridSquareCalculator() {
                 words={[
                   { text: "Grid", className: "text-[#b400ff]" },
                   { text: "Square", className: "text-[#b400ff]" },
-                  { text: "Calculator", className: "text-white" },
+                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
                 ]}
                 className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2"
                 cursorClassName="bg-[#b400ff]"
@@ -174,7 +177,7 @@ export default function GridSquareCalculator() {
               <input
                 className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md w-full pr-12"
                 autoComplete="off"
-                placeholder="Entrez une ville ou une adresse..."
+                placeholder={t("address.placeholder")} // fallback retiré
                 name="text"
                 type="text"
                 value={query}
@@ -207,7 +210,7 @@ export default function GridSquareCalculator() {
           </form>
 
           <p className="text-zinc-400 text-xs md:text-sm text-center">
-            Ex: Reykjavik ou Zone 51
+            {t("address.example")} {/* traduction de l'exemple */}
           </p>
 
           {gridSquare && (
@@ -232,7 +235,7 @@ export default function GridSquareCalculator() {
             <form onSubmit={handleDirectSearchSubmit} className="relative flex items-center">
               <input
                 type="text"
-                placeholder="Recherche direct une GridSquare..."
+                placeholder={t("gridSquare.directSearchPlaceholder")} // fallback retiré
                 value={directSearch}
                 onChange={(e) => setDirectSearch(e.target.value)}
                 className="bg-gray-700 text-white rounded-full pl-4 pr-8 py-2 w-full focus:outline-none"  // Reduction du padding droite
@@ -241,7 +244,7 @@ export default function GridSquareCalculator() {
                 type="submit"
                 className="absolute right-1 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
               >
-                Go
+                {"Go"}
               </button>
             </form>
           </div>

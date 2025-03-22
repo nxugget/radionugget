@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useScroll } from "@/src/hooks/useScroll";
 import Image from "next/image";
 import Link from "next/link";
-import { TypewriterEffectSmooth } from "@/app/components/Typewritter";
+import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 
 const projects = [
   {

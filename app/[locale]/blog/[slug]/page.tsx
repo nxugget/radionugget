@@ -7,12 +7,12 @@ import SmartLink from "../SmartLink";
 import ScrollToTopButton from "../ScrollToTopButton"; 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { TypewriterEffectSmooth } from "@/app/components/Typewritter"; 
+import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter"; 
 
-export default async function Article({ params }: { params: { slug?: string } }) {
+export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
 
-  const contentDir = path.join(process.cwd(), "content");
+  const contentDir = path.join(process.cwd(), "content", params.locale);
   const years = fs.readdirSync(contentDir).filter((year) => fs.statSync(path.join(contentDir, year)).isDirectory());
 
   let filePath = "";
