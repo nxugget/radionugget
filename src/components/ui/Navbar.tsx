@@ -54,7 +54,7 @@ export const Navbar = () => {
               alt="Logo"
               width={60}
               height={60}
-              priority
+              priority // Ensures the image is loaded as soon as possible
               className="rounded-full"
             />
           </Link>
@@ -115,12 +115,12 @@ export const Navbar = () => {
                   >
                     {t("navbar.gridSquare")}
                   </Link>
-                  <Link
+                  {/*<Link
                     href="/tools/satellite-prediction"
                     className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:translate-x-2 whitespace-nowrap"
                   >
                     {t("navbar.satellitePrediction")}
-                  </Link>
+                  </Link>*/}
                 </div>
               )}
             </div>
@@ -154,6 +154,7 @@ export const Navbar = () => {
               width={40}
               height={30}
               className="rounded-sm"
+              style={{ width: "auto", height: "auto" }} // Maintain aspect ratio
             />
             {langDropdownOpen && (
               <div className="absolute right-0 mt-2 bg-black/50 rounded-sm shadow-lg p-2 min-w-[120px]">
@@ -166,6 +167,7 @@ export const Navbar = () => {
                         width={40}
                         height={30}
                         className="rounded-sm"
+                        style={{ width: "auto", height: "auto" }} // Maintain aspect ratio
                       />
                       <span className="text-white text-sm">{t("navbar.english")}</span>
                     </div>
@@ -180,6 +182,7 @@ export const Navbar = () => {
                         width={40}
                         height={30}
                         className="rounded-sm"
+                        style={{ width: "auto", height: "auto" }} // Maintain aspect ratio
                       />
                       <span className="text-white text-sm">{t("navbar.french")}</span>
                     </div>

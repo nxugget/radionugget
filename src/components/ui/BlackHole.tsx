@@ -17,7 +17,7 @@ export const BlackHole: React.FC<BlackHoleProps> = ({ className }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const scale = viewportHeight / 690;
+  const scale = viewportHeight / 700;
   const containerOffset = 150 * scale; 
   const videoOffset = 250 * scale;     
   

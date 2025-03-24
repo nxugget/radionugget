@@ -77,7 +77,7 @@ export default async function Blog({
             <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
               {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
               <div
-                className="w-full h-full bg-black bg-grid rounded-xl overflow-hidden"
+                className="w-full h-full  bg-grid rounded-xl overflow-hidden"
                 style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
               >
                 <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">

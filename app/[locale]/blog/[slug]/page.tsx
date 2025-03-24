@@ -1,3 +1,4 @@
+import React from "react";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -7,7 +8,9 @@ import SmartLink from "../SmartLink";
 import ScrollToTopButton from "../ScrollToTopButton"; 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter"; 
+import dynamic from "next/dynamic";
+
+const DynamicTypewriterEffectSmooth = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
 
 export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
@@ -50,7 +53,7 @@ export default async function Article({ params }: { params: { locale: string; sl
           </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
-            <TypewriterEffectSmooth
+            <DynamicTypewriterEffectSmooth
               words={metadata.title.split(" ").map((word: string, index: number) => ({
                 text: word,
                 className: "text-white" 
@@ -75,15 +78,52 @@ export default async function Article({ params }: { params: { locale: string; sl
               ),
               strong: (props) => <strong className="text-orange font-semibold" {...props} />,
               a: (props) => <a className="text-purple transition-colors duration-300 hover:text-[#8000bf]" {...props} />,
-              p: (props) => <p className="mb-4 leading-relaxed" {...props} />,
+              p: (props) => {
+                const children = React.Children.toArray(props.children);
+
+                // Séparez les enfants valides pour <p> et les enfants non valides
+                const validChildren: React.ReactNode[] = [];
+                const invalidChildren: React.ReactNode[] = [];
+
+                children.forEach((child) => {
+                  if (
+                    React.isValidElement(child) &&
+                    (child.type === "figure" || child.type === "img")
+                  ) {
+                    invalidChildren.push(child);
+                  } else {
+                    validChildren.push(child);
+                  }
+                });
+
+                // Si des enfants non valides existent, les rendre séparément
+                return (
+                  <>
+                    {validChildren.length > 0 && (
+                      <p className="mb-4 leading-relaxed">{validChildren}</p>
+                    )}
+                    {invalidChildren.length > 0 &&
+                      invalidChildren.map((child, index) => (
+                        <React.Fragment key={index}>{child}</React.Fragment>
+                      ))}
+                  </>
+                );
+              },
               h1: (props) => <h1 className="text-4xl font-bold mt-8 mb-4 text-white border-b-4 border-gray-500 pb-2" {...props} />,
               h2: (props) => <h2 className="text-3xl font-bold mt-6 mb-3 text-white" {...props} />,
               h3: (props) => <h3 className="text-2xl font-semibold mt-5 mb-2 text-white" {...props} />,
               img: (props) => {
                 return (
-                  <div className="flex justify-center my-6 w-full">
-                    <Image {...props} className="rounded-lg shadow-lg max-w-full" alt={props.alt || "Image"} width={900} height={500} />
-                  </div>
+                  <figure className="flex justify-center my-6 w-full">
+                    <Image 
+                      {...props} 
+                      className="rounded-lg shadow-lg max-w-full" 
+                      alt={props.alt || "Image"} 
+                      width={900} 
+                      height={500} 
+                      style={{ width: "auto", height: "auto" }}
+                    />
+                  </figure>
                 );
               },
               div: (props) => <div {...props} />, 
