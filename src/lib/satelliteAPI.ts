@@ -1,4 +1,3 @@
-
 "use server";
 
 import fs from "fs";
@@ -99,7 +98,7 @@ export async function getSatellitePasses(
     const lookAngles = ecfToLookAngles(observerGd, positionEcf);
     const elevationDeg = rad2deg(lookAngles.elevation);
 
-    if (elevationDeg > 0) {
+    if (elevationDeg > elevation) { // Utilise l'élévation minimale spécifiée
       if (!currentPass) {
         // Début d'un passage
         currentPass = {

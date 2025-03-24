@@ -5,6 +5,7 @@ import SatelliteSearch from "./SatelliteSearch";
 import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
 import SatelliteTimeline from "./SatelliteTimeline";
+import { getGridSquareCoords } from "@/src/lib/gridSquare";
 
 interface Satellite {
   name: string;
@@ -63,6 +64,9 @@ export default function SatelliteTracker() {
   const [longitude, setLongitude] = useState(2.3522);
   const [city, setCity] = useState("");
   const [gridSquare, setGridSquare] = useState("");
+  const [cityQuery, setCityQuery] = useState("");
+  const [citySuggestions, setCitySuggestions] = useState<any[]>([]);
+  const [gridSquareInput, setGridSquareInput] = useState("");
 
   // États pour l'affichage / erreurs
   const [loading, setLoading] = useState(false);
@@ -191,6 +195,8 @@ export default function SatelliteTracker() {
     }
     setLoading(true);
     setError(null);
+
+    // Réinitialise les prédictions pour forcer la mise à jour
     setAllPredictions([]);
 
     try {
@@ -200,7 +206,7 @@ export default function SatelliteTracker() {
             sat.id,
             latitude,
             longitude,
-            elevation,
+            elevation, // Utilise l'élévation actuelle
             utcOffset
           );
           return {
@@ -210,7 +216,7 @@ export default function SatelliteTracker() {
           };
         })
       );
-      setAllPredictions(results);
+      setAllPredictions(results); // Met à jour les prédictions avec les nouvelles données
     } catch (err) {
       console.error("Error fetching predictions:", err);
       setError("Erreur lors de la récupération des prédictions.");
@@ -226,6 +232,38 @@ export default function SatelliteTracker() {
       setUtcOffset(offset);
     } else {
       setUtcOffset(0);
+    }
+  };
+
+  // Autocomplétion pour les villes
+  useEffect(() => {
+    if (cityQuery.length > 2) {
+      const timeout = setTimeout(() => {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${encodeURIComponent(cityQuery)}`)
+          .then((response) => response.json())
+          .then((data) => setCitySuggestions(data))
+          .catch(() => setCitySuggestions([]));
+      }, 300);
+      return () => clearTimeout(timeout);
+    } else {
+      setCitySuggestions([]);
+    }
+  }, [cityQuery]);
+
+  const handleCitySelect = (city: any) => {
+    setCityQuery(city.display_name);
+    setLatitude(parseFloat(city.lat));
+    setLongitude(parseFloat(city.lon));
+    setCitySuggestions([]);
+  };
+
+  const handleGridSquareSubmit = () => {
+    try {
+      const coords = getGridSquareCoords(gridSquareInput);
+      setLatitude(coords.lat);
+      setLongitude(coords.lon);
+    } catch {
+      alert("Gridsquare invalide.");
     }
   };
 
@@ -367,6 +405,127 @@ export default function SatelliteTracker() {
 
           {/* PARTIE DROITE : configuration */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg">
+            {/* Section de choix de position */}
+            <div className="mb-6">
+              <h3 className="text-white mb-4">Choisir votre position</h3>
+              <div className="flex flex-col gap-4">
+                {/* Ligne avec Ville, GridSquare et Position Actuelle */}
+                <div className="flex items-center gap-4">
+                  {/* Champ Ville */}
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      value={cityQuery}
+                      onChange={(e) => setCityQuery(e.target.value)}
+                      placeholder="Ville (ex: Paris)"
+                      className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full"
+                      onFocus={() => setCitySuggestions([])} // Empêche les suggestions de réapparaître après sélection
+                    />
+                    {citySuggestions.length > 0 && (
+                      <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
+                        {citySuggestions.map((city, idx) => (
+                          <li
+                            key={idx}
+                            className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
+                            onClick={() => handleCitySelect(city)}
+                          >
+                            {city.display_name}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <span className="text-white font-bold">OU</span>
+
+                  {/* Champ GridSquare */}
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      value={gridSquareInput}
+                      onChange={(e) => setGridSquareInput(e.target.value)}
+                      onBlur={() => {
+                        if (gridSquareInput.trim() !== "") {
+                          try {
+                            const coords = getGridSquareCoords(gridSquareInput);
+                            setLatitude(coords.lat);
+                            setLongitude(coords.lon);
+                          } catch {
+                            alert("Gridsquare invalide.");
+                          }
+                        }
+                      }}
+                      placeholder="Gridsquare (ex: JN18du)"
+                      className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full"
+                    />
+                  </div>
+                  <span className="text-white font-bold">OU</span>
+
+                  {/* Bouton Position Actuelle */}
+                  <button
+                    onClick={() => {
+                      navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                          setLatitude(parseFloat(pos.coords.latitude.toFixed(5)));
+                          setLongitude(parseFloat(pos.coords.longitude.toFixed(5)));
+                        },
+                        (err) => {
+                          console.error("Erreur de géolocalisation :", err);
+                          alert("Impossible de récupérer votre position.");
+                        }
+                      );
+                    }}
+                    className="bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-600"
+                    title="Utiliser ma position actuelle"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414-1.414m12.728 0l1.414 1.414M6.05 6.05l1.414 1.414"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Latitude et Longitude */}
+                <div className="flex flex-col gap-2 mt-4">
+                  <div className="flex gap-2">
+                    <div className="flex flex-col items-center w-1/2">
+                      <label className="text-white font-bold mb-1">Latitude</label>
+                      <input
+                        type="number"
+                        value={latitude.toFixed(5)}
+                        onChange={(e) => setLatitude(Number(e.target.value))}
+                        placeholder="Latitude"
+                        className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full text-center font-bold text-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col items-center w-1/2">
+                      <label className="text-white font-bold mb-1">Longitude</label>
+                      <input
+                        type="number"
+                        value={longitude.toFixed(5)}
+                        onChange={(e) => setLongitude(Number(e.target.value))}
+                        placeholder="Longitude"
+                        className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full text-center font-bold text-lg"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-white text-sm text-center mt-2">
+                    Les valeurs négatives indiquent le <strong>Sud</strong> pour la latitude et l'<strong>Ouest</strong> pour la longitude.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section Local Time */}
             <div className="flex items-center gap-6">
               <label
                 htmlFor="localTime"
@@ -383,6 +542,7 @@ export default function SatelliteTracker() {
               </label>
             </div>
 
+            {/* Section Élévation minimale */}
             <div className="mt-4">
               <p className="text-white mb-1">Élévation minimale (°)</p>
               <input
@@ -396,62 +556,6 @@ export default function SatelliteTracker() {
               <p className="text-center text-white mt-1">{elevation}°</p>
             </div>
 
-            <div className="mt-4">
-              <h3 className="text-white mb-1">Choisir votre position</h3>
-              <select
-                className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full mb-2"
-                onChange={(e) => setLocationType(e.target.value)}
-                value={locationType}
-              >
-                <option value="latlon">Latitude / Longitude</option>
-                <option value="city">Ville</option>
-                <option value="gridsquare">Gridsquare</option>
-              </select>
-
-              {locationType === "latlon" && (
-                <div className="flex space-x-2">
-                  <input
-                    type="number"
-                    value={latitude}
-                    onChange={(e) => setLatitude(Number(e.target.value))}
-                    placeholder="Latitude"
-                    autoComplete="off"
-                    className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
-                  />
-                  <input
-                    type="number"
-                    value={longitude}
-                    onChange={(e) => setLongitude(Number(e.target.value))}
-                    placeholder="Longitude"
-                    autoComplete="off"
-                    className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
-                  />
-                </div>
-              )}
-
-              {locationType === "city" && (
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="Ville"
-                  autoComplete="off"
-                  className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
-                />
-              )}
-
-              {locationType === "gridsquare" && (
-                <input
-                  type="text"
-                  value={gridSquare}
-                  onChange={(e) => setGridSquare(e.target.value)}
-                  placeholder="Gridsquare"
-                  autoComplete="off"
-                  className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
-                />
-              )}
-            </div>
-
             <div className="mt-10 flex flex-col items-center">
               <button
                 onClick={getPredictions}
@@ -459,25 +563,27 @@ export default function SatelliteTracker() {
               >
                 PREDICT
               </button>
-            
             </div>
             {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
           </div>
         </div>
 
         <div className="mt-6 w-full flex justify-center">
-          <SatelliteTimeline
-            passes={allPredictions.flatMap((pred) =>
-              pred.passes.map((pass) => ({
-                satelliteName: pred.satelliteName,
-                startTime: pass.startTime,
-                endTime: pass.endTime,
-                maxElevation: pass.maxElevation,
-              }))
-            )}
-            useLocalTime={useLocalTime}
-            utcOffset={utcOffset}
-          />
+          <div className="w-full max-w-[1400px] overflow-x-auto">
+            <SatelliteTimeline
+              key={JSON.stringify(allPredictions)} // Force le re-rendu lorsque les prédictions changent
+              passes={allPredictions.flatMap((pred) =>
+                pred.passes.map((pass) => ({
+                  satelliteName: pred.satelliteName,
+                  startTime: pass.startTime,
+                  endTime: pass.endTime,
+                  maxElevation: pass.maxElevation,
+                }))
+              )}
+              useLocalTime={useLocalTime}
+              utcOffset={utcOffset}
+            />
+          </div>
         </div>
       </div>
       {/* Bannière de cookies */}

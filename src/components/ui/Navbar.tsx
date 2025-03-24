@@ -115,12 +115,12 @@ export const Navbar = () => {
                   >
                     {t("navbar.gridSquare")}
                   </Link>
-                  {/*<Link
+                  <Link
                     href="/tools/satellite-prediction"
                     className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:translate-x-2 whitespace-nowrap"
                   >
                     {t("navbar.satellitePrediction")}
-                  </Link>*/}
+                  </Link>
                 </div>
               )}
             </div>

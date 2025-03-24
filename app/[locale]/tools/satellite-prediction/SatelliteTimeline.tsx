@@ -40,7 +40,23 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    if (!svgRef.current || passes.length === 0) return;
+    if (!svgRef.current) return;
+
+    const parentDiv = d3.select(svgRef.current.parentElement);
+
+    // Nettoyage du conteneur parent
+    parentDiv.selectAll(".no-passes-message").remove();
+
+    if (passes.length === 0) {
+      parentDiv
+        .append("div")
+        .attr("class", "no-passes-message")
+        .style("color", "white")
+        .style("text-align", "center")
+        .style("margin-top", "20px")
+        .text("Aucun passage avec cette configuration.");
+      return;
+    }
 
     // Marges pour ajuster l'espace (à gauche pour les noms, à droite pour la frise)
     const margin = { top: 60, right: 20, bottom: 50, left: 200 };
@@ -98,9 +114,9 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     // Axe X (en haut)
     const xAxis = d3
       .axisTop(xScale)
-      // Retire la taille des "ticks" (petits traits) pour éviter des traits noirs
       .tickSize(0)
-      .ticks(10)
+      // Force une heure sur trois
+      .ticks(d3.timeHour.every(3))
       .tickFormat((d) => {
         const date = new Date(d as Date);
         if (useLocalTime) {
@@ -177,8 +193,7 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .style("stroke-width", 2);
 
     // Tooltip
-    const tooltip = d3
-      .select("body")
+    const tooltip = parentDiv
       .append("div")
       .style("position", "absolute")
       .style("background", "rgba(0, 0, 0, 0.8)")
@@ -244,8 +259,8 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       })
       .on("mousemove", (event) => {
         tooltip
-          .style("top", `${event.pageY - 40}px`)
-          .style("left", `${event.pageX + 10}px`);
+          .style("top", `${event.offsetY - 40}px`)
+          .style("left", `${event.offsetX + 10}px`);
       })
       .on("mouseout", () => {
         tooltip.style("display", "none");
@@ -259,6 +274,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
         .style("padding", "20px")
         .style("box-shadow", "0px 4px 10px rgba(0, 0, 0, 0.3)");
     }
+
+    // Nettoyage du tooltip lors du démontage
+    return () => {
+      tooltip.remove();
+    };
   }, [passes, useLocalTime, utcOffset]);
 
   return (

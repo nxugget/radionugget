@@ -5,6 +5,7 @@ import { ShootingStars } from "@/src/components/ui/ShootingStars";
 import { BlackHole } from "@/src/components/ui/BlackHole"; 
 import { ReactElement } from 'react';
 import { I18nProviderClient } from '@/locales/client';
+import { Footer } from "@/src/components/ui/Footer";
 
 export default async function RootLayout({ params, children }: { params: Promise<{ locale: string }>, children: ReactElement }) {
   const { locale } = await params;
@@ -22,6 +23,7 @@ export default async function RootLayout({ params, children }: { params: Promise
             {children}
           </main>
         </I18nProviderClient>
+        <Footer />
       </body>
     </html>
   );
