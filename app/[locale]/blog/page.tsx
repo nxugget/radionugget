@@ -79,12 +79,10 @@ export default async function Blog({
             <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
               {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
               <div
-                className={`w-full min-h-screen bg-grid rounded-xl overflow-hidden sm:h-auto`} // Ensure full height on mobile
+                className="w-full h-full  bg-grid rounded-xl overflow-hidden"
                 style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
               >
-                <CardBody
-                  className={`bg-transparent relative group/card border-0 h-full flex flex-col justify-between rounded-none p-6`} // Remove borders and gaps on mobile
-                >
+                <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
                   
                   {/* ✅ Titre traduit selon la locale */}
                   <CardItem translateZ="60" className="text-2xl font-bold text-white">
