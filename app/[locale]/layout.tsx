@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import { I18nProviderClient } from '@/locales/client';
 import { Footer } from "@/src/components/ui/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default async function RootLayout({ params, children }: { params: Promise<{ locale: string }>, children: ReactElement }) {
   const { locale } = await params;
@@ -31,6 +32,7 @@ export default async function RootLayout({ params, children }: { params: Promise
           <Footer />
         </div>
         <Analytics/>
+        <SpeedInsights/>
       </body>
     </html>
   );
