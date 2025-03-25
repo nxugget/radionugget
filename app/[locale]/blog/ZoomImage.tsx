@@ -10,7 +10,8 @@ export default function ZoomImage(props: ZoomImageProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalAnimation, setModalAnimation] = useState(false);
   const [scale, setScale] = useState(1);
-  const [transformOrigin, setTransformOrigin] = useState("50% 50%");
+  // Removed transformOrigin state
+
   const { src, alt, ...rest } = props;
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ZoomImage(props: ZoomImageProps) {
   const handleOpen = () => {
     setModalVisible(true);
     setScale(1);
-    setTransformOrigin("50% 50%");
+    // Removed dynamic transform origin update
     setTimeout(() => setModalAnimation(true), 10);
   };
 
@@ -43,12 +44,7 @@ export default function ZoomImage(props: ZoomImageProps) {
     });
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setTransformOrigin(`${x.toFixed(0)}% ${y.toFixed(0)}%`);
-  };
+  // Removed handleMouseMove function
 
   return (
     <>
@@ -59,12 +55,12 @@ export default function ZoomImage(props: ZoomImageProps) {
         <div
           onClick={handleClose}
           onWheel={handleWheel}
-          onMouseMove={handleMouseMove}
+          // Removed onMouseMove prop to prevent dynamic transform origin adjustments
           className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 transition-all duration-300 ${modalAnimation ? "opacity-100" : "opacity-0"}`}
         >
           <div
             className={`transform transition-all duration-300 ${modalAnimation ? "scale-100" : "scale-90"}`}
-            style={{ transform: `scale(${scale})`, transformOrigin }}
+            style={{ transform: `scale(${scale})` }} // Fixed transform origin by default
           >
             <Image 
               src={src} 
