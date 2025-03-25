@@ -37,7 +37,7 @@ export const TypewriterEffectSmooth = ({
           transition={{ duration: 0.8, ease: "linear", delay: 0.5 }}
         >
           <div
-            className="text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold normal-case"
             style={{ whiteSpace: "nowrap" }}
           >
             {wordsArray.map((word, idx) => (

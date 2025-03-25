@@ -27,5 +27,19 @@ export default {
   },
   gridSquareCalculator: {
     calculator: "Calculateur"
+  },
+  projects: {
+    "1": { title: "Monter une station ADS-B reliée à FlightRadar" },
+    "2": { title: "Réception automatique d'images satellites NOAA" },
+    "3": { title: "Recevoir des images en provenance de l'ISS" },
+    "4": { title: "Fabrication d'une antenne quadrifilaire (QFH)" },
+  },
+  footer: {  // new footer translations
+    thanks: "Merci",
+    solhey: "Sol'hey",
+    illustration: "pour l'illustration de la page d'accueil",
+    madeWith: "Fait avec",
+    by: "par",
+    myself: "moi-même"
   }
 } as const;

@@ -47,21 +47,23 @@ export default async function Article({ params }: { params: { locale: string; sl
               src={metadata.thumbnail} 
               alt={metadata.title} 
               fill 
-              className="object-cover blur-md brightness-50"
+              className="object-cover"
               priority
             />
           </div>
 
-          <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
-            <DynamicTypewriterEffectSmooth
-              words={metadata.title.split(" ").map((word: string, index: number) => ({
-                text: word,
-                className: "text-white" 
-              }))}
-              className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2"
-              cursorClassName="bg-[#b400ff]"
-            />
-            <p className="text-lg md:text-xl opacity-80">{metadata.date}</p>
+          <div className="relative z-10 flex items-center justify-center h-full">
+            <div className="bg-black/50 rounded-lg p-4 text-center">
+              <DynamicTypewriterEffectSmooth
+                words={metadata.title.split(" ").map((word: string, index: number) => ({
+                  text: word,
+                  className: "text-white"
+                }))}
+                className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2"
+                cursorClassName="bg-[#b400ff]"
+              />
+              <p className="text-lg md:text-xl opacity-80 text-white">{metadata.date}</p>
+            </div>
           </div>
         </div>
 
@@ -79,35 +81,7 @@ export default async function Article({ params }: { params: { locale: string; sl
               strong: (props) => <strong className="text-orange font-semibold" {...props} />,
               a: (props) => <a className="text-purple transition-colors duration-300 hover:text-[#8000bf]" {...props} />,
               p: (props) => {
-                const children = React.Children.toArray(props.children);
-
-                // Séparez les enfants valides pour <p> et les enfants non valides
-                const validChildren: React.ReactNode[] = [];
-                const invalidChildren: React.ReactNode[] = [];
-
-                children.forEach((child) => {
-                  if (
-                    React.isValidElement(child) &&
-                    (child.type === "figure" || child.type === "img")
-                  ) {
-                    invalidChildren.push(child);
-                  } else {
-                    validChildren.push(child);
-                  }
-                });
-
-                // Si des enfants non valides existent, les rendre séparément
-                return (
-                  <>
-                    {validChildren.length > 0 && (
-                      <p className="mb-4 leading-relaxed">{validChildren}</p>
-                    )}
-                    {invalidChildren.length > 0 &&
-                      invalidChildren.map((child, index) => (
-                        <React.Fragment key={index}>{child}</React.Fragment>
-                      ))}
-                  </>
-                );
+                return <div className="mb-4 leading-relaxed">{props.children}</div>;
               },
               h1: (props) => <h1 className="text-4xl font-bold mt-8 mb-4 text-white border-b-4 border-gray-500 pb-2" {...props} />,
               h2: (props) => <h2 className="text-3xl font-bold mt-6 mb-3 text-white" {...props} />,

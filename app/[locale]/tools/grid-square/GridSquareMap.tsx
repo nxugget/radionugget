@@ -221,10 +221,12 @@ export default function Map({
   center,
   zoom, // Nouvelle prop
   setMousePosition,
+  className, // new optional prop
 }: {
   center: [number, number];
   zoom: number;
   setMousePosition: (pos: any) => void;
+  className?: string;
 }) {
   return (
     <>
@@ -236,17 +238,19 @@ export default function Map({
         maxZoom={15}
         maxBounds={WORLD_BOUNDS}
         scrollWheelZoom={true}
-        className="h-[calc(100vh-4rem)] w-full rounded-lg sm:h-[calc(70vh-4rem)]" // Ajustement dynamique
+        className={className || "h-[calc(100vh-4rem)] w-full rounded-lg sm:h-[calc(70vh-4rem)]"} // use provided or default className
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
         />
+        {/* Comment out or remove the problematic tile layer with certificate issues
         <TileLayer
           url="https://tileserver.aurora.openmundi.com/tiles/{z}/{x}/{y}.png"
           opacity={0.5}
           errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
         />
+        */}
         <RecenterMap center={center} zoom={zoom} />
         <MouseTracker setMousePosition={setMousePosition} />
         <GridLayer />

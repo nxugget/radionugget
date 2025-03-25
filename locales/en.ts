@@ -27,5 +27,19 @@ export default {
   },
   gridSquareCalculator: {
     calculator: "Calculator"
+  },
+  projects: {
+    "1": { title: "Build an ADS-B station connected to FlightRadar" },
+    "2": { title: "Automatic reception of NOAA satellite images" },
+    "3": { title: "Receive images from the ISS" },
+    "4": { title: "Build a Quadrifilar Antenna (QFH)" },
+  },
+  footer: {  // new footer translations
+    thanks: "Thanks",
+    solhey: "Sol'hey",
+    illustration: "for the homepage illustration",
+    madeWith: "Made with",
+    by: "by",
+    myself: "myself"
   }
 } as const;

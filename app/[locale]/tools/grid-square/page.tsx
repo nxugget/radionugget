@@ -143,8 +143,8 @@ export default function GridSquareCalculator() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-3">
-      <div className="w-full max-w-[60%] lg:max-w-[800px] mx-auto"> {/* Largeur réduite */}
+    <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:px-4">
+      <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[800px] mx-auto mb-4">
         <div className="bg-black/50 rounded-lg p-6 shadow-lg">
           <div className="w-full flex justify-center">
             {hasLoaded && (
@@ -154,7 +154,7 @@ export default function GridSquareCalculator() {
                   { text: "Square", className: "text-[#b400ff]" },
                   { text: t("gridSquareCalculator.calculator"), className: "text-white" }
                 ]}
-                className="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2" // increased text size for mobile
                 cursorClassName="bg-[#b400ff]"
               />
             )}
@@ -229,44 +229,95 @@ export default function GridSquareCalculator() {
         </div>
       </div>
 
-      <div className="flex flex-col flex-grow w-full max-w-[98%] lg:max-w-[1600px] mt-5">
-        <div className="w-full bg-gray-900 text-white py-2 px-4 rounded-t-md shadow-md flex items-center">
-          <div className="flex-1 relative">
+      <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
+        {/* Header Banner */}
+        {/* Mobile Header */}
+        <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-t-md shadow-md mb-2">
+          {/* Row 1: Search Form */}
+          <div className="w-full mb-2">
             <form onSubmit={handleDirectSearchSubmit} className="relative flex items-center">
               <input
                 type="text"
-                placeholder={t("gridSquare.directSearchPlaceholder")} // fallback retiré
+                placeholder={t("gridSquare.directSearchPlaceholder")}
                 value={directSearch}
                 onChange={(e) => setDirectSearch(e.target.value)}
-                className="bg-gray-700 text-white rounded-full pl-4 pr-8 py-2 w-full focus:outline-none"  // Reduction du padding droite
+                className="bg-gray-700 text-white rounded-full pl-4 pr-12 py-2 w-full focus:outline-none"
               />
               <button
                 type="submit"
-                className="absolute right-1 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
               >
-                {"Go"}
+                Go
               </button>
             </form>
           </div>
-          <div className="flex-1 flex justify-center">
-            <div className="flex items-center space-x-2">
-              <span className="text-white font-bold">Latitude:</span>
-              <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
-              <span className="text-white font-bold">|</span>
-              <span className="text-white font-bold">Longitude:</span>
-              <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
-              <span className="text-white font-bold">|</span>
-              <span className="text-white font-bold">Grid Square:</span>
-              <span className="font-bold text-orange">{mousePosition.grid}</span>
+          {/* Row 2: Coordinates */}
+          <div className="w-full text-center mb-2">
+            <span className="font-bold">Latitude: </span>
+            <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+            <span className="mx-2 font-bold">Longitude: </span>
+            <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+          </div>
+          {/* Row 3: Grid Square */}
+          <div className="w-full text-center mb-2">
+            <span className="font-bold">Grid Square: </span>
+            <span className="text-orange">{mousePosition.grid}</span>
+          </div>
+          {/* Row 4: UTC Time aligned right and lowered */}
+          <div className="w-full text-right mt-1">
+            <span className="text-gray-400 text-xs">
+              UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+            </span>
+          </div>
+        </div>
+
+        {/* Desktop Header */}
+        <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-t-md shadow-md mb-2 items-center justify-between">
+          {/* Search Form */}
+          <div className="w-1/3 relative">
+            <form onSubmit={handleDirectSearchSubmit} className="relative flex items-center">
+              <input
+                type="text"
+                placeholder={t("gridSquare.directSearchPlaceholder")}
+                value={directSearch}
+                onChange={(e) => setDirectSearch(e.target.value)}
+                className="bg-gray-700 text-white rounded-full pl-4 pr-12 py-2 w-full focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
+              >
+                Go
+              </button>
+            </form>
+          </div>
+          {/* Coordinates & Grid Square */}
+          <div className="w-1/3 flex items-center justify-center space-x-4">
+            <div className="flex items-center">
+              <span className="font-bold">Latitude:</span>
+              <span className="text-purple ml-1">{mousePosition.lat.toFixed(4)}</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-bold">Longitude:</span>
+              <span className="text-purple ml-1">{mousePosition.lon.toFixed(4)}</span>
+            </div>
+            <div className="flex items-center">
+              <span className="font-bold">Grid Square:</span>
+              <span className="text-orange ml-1">{mousePosition.grid}</span>
             </div>
           </div>
-          <div className="flex-1 flex justify-end">
-            <div className="text-gray-400 font-bold">
-              UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+          {/* UTC Time aligned right and lowered */}
+          <div className="w-1/3 text-right flex flex-col items-end">
+            <div className="mt-auto">
+              <span className="text-gray-400 text-base">
+                UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+              </span>
             </div>
           </div>
         </div>
-        <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} />
+
+        {/* Map placed immediately after with increased mobile height */}
+        <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
       </div>
     </div>
   );

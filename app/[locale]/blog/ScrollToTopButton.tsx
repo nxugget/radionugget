@@ -20,7 +20,7 @@ const ScrollToTopButton = () => {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`fixed bottom-14 right-20 w-20 h-20 flex items-center justify-center 
+      className={`fixed bottom-14 right-8 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center 
       rounded-full bg-purple shadow-2xl transition-all duration-300 transform 
       ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-75"} 
       hover:bg-orange active:scale-90`}

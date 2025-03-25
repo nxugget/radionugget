@@ -4,23 +4,10 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="w-full h-[60px] bottom-0 bg-[#110514] shadow-lg z-50 px-10">
-      <div className="w-full h-full flex items-center justify-between m-auto px-[10px] text-gray-300 text-sm">
-        {/* Left: Thanks */}
-        <div>
-          Merci{" "}
-          <Link
-            href="https://solhey.com/"
-            target="_blank"
-            className="text-purple transition duration-300 hover:text-purple-400"
-          >
-            Sol'hey
-          </Link>{" "}
-          pour l'illustration de la page d'accueil
-        </div>
-
+    <footer className="w-full bg-[#080808] shadow-lg z-50 px-4 py-4 sm:px-10">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-y-4">
         {/* Center: Made by */}
-        <div className="absolute left-1/2 -translate-x-1/2">
+        <div className="text-gray-300 text-sm text-center">
           Made with <span className="text-red-500">♥</span> by <span className="font-bold">myself</span>
         </div>
 
