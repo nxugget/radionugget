@@ -99,7 +99,7 @@ export default async function Blog({
                       alt={metadata.title}
                       width={800}
                       height={200}
-                      className="w-full h-auto aspect-video object-cover rounded-lg"
+                      className="w-full h-auto aspect-video object-cover rounded-lg filter brightness-100" // modified to enforce constant brightness
                     />
                   </CardItem>
 

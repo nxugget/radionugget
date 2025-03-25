@@ -9,6 +9,7 @@ import ScrollToTopButton from "../ScrollToTopButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import dynamic from "next/dynamic";
+import ZoomImage from "../ZoomImage";
 
 const DynamicTypewriterEffectSmooth = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
 
@@ -89,7 +90,7 @@ export default async function Article({ params }: { params: { locale: string; sl
               img: (props) => {
                 return (
                   <figure className="flex justify-center my-6 w-full">
-                    <Image 
+                    <ZoomImage 
                       {...props} 
                       className="rounded-lg shadow-lg max-w-full" 
                       alt={props.alt || "Image"} 

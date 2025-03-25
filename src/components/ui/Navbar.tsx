@@ -144,7 +144,7 @@ export const Navbar = () => {
                 alt="Current Language"
                 width={40}
                 height={30}
-                className="rounded-sm"
+                className="rounded-sm transition-transform duration-300 hover:scale-110" // ajout de l'effet hover
                 style={{ width: "auto", height: "auto" }}
               />
               {langDropdownOpen && (
@@ -242,7 +242,7 @@ export const Navbar = () => {
                   alt="Current Language"
                   width={40}
                   height={30}
-                  className="rounded-sm"
+                  className="rounded-sm transition-transform duration-300 hover:scale-110" // ajout de l'effet hover
                   style={{ width: "auto", height: "auto" }}
                 />
               </div>
