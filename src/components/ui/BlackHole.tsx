@@ -38,6 +38,7 @@ export const BlackHole: React.FC<BlackHoleProps> = ({ className }) => {
         autoPlay
         muted
         loop
+        playsInline
         className="rotate-180 absolute left-0 w-full h-full object-cover"
         style={videoStyle}
       >
