@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useI18n } from "@/locales/client"; 
+import { useI18n } from "@/locales/client";
 
 export const Navbar = () => {
   const t = useI18n(); // extraction de la fonction de traduction
@@ -44,10 +44,45 @@ export const Navbar = () => {
     }, 500);
   };
 
+  const langDropdownDesktopRef = useRef<HTMLDivElement | null>(null); // Desktop language dropdown ref
+  const langDropdownMobileRef = useRef<HTMLDivElement | null>(null); // Mobile language dropdown ref
+
+  // Close the language dropdown when clicking outside or toggling the mobile menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langDropdownOpen) {
+        const dropdownRef = isMobileMenuOpen ? langDropdownMobileRef : langDropdownDesktopRef;
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          setLangDropdownOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [langDropdownOpen, isMobileMenuOpen]);
+
+  // Close the language dropdown when the mobile menu is toggled
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setLangDropdownOpen(false);
+    }
+  }, [isMobileMenuOpen]);
+
+  // Prevent click propagation inside dropdown
+  const preventClickPropagation = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   return (
     <>
-      <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-10">
-        <div className="w-full h-full flex items-center justify-between m-auto px-[10px]">
+      <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-4 md:px-10">
+        <div className="w-full h-full flex items-center justify-between m-auto px-[5px]">
           {/* Left: Logo + Name */}
           <div className="flex items-center gap-3">
             <Link href="/">
@@ -136,21 +171,24 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop: Language Switcher */}
-          <div className="hidden md:flex items-center gap-2 ml-auto">
-            <div className="relative cursor-pointer" onClick={() => setLangDropdownOpen(prev => !prev)}>
-              {/* Active language flag only */}
+          <div className="hidden md:flex items-center gap-2" ref={langDropdownDesktopRef}>
+            <div className="relative cursor-pointer">
               <Image
                 src={`/images/flags/${currentLocale}.png`}
                 alt="Current Language"
                 width={40}
                 height={30}
-                className="rounded-sm transition-transform duration-300 hover:scale-110" // ajout de l'effet hover
+                className="rounded-sm transition-transform duration-300 hover:scale-110"
+                onClick={() => setLangDropdownOpen(prev => !prev)}
                 style={{ width: "auto", height: "auto" }}
               />
               {langDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[120px]">
+                <div
+                  className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[120px]"
+                  onClick={preventClickPropagation} // Prevent closing when clicking inside
+                >
                   {currentLocale !== "en" && (
-                    <Link href={getNewLocalePath("en")}>
+                    <Link href={getNewLocalePath("en")} onClick={() => setLangDropdownOpen(false)}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
                           src="/images/flags/en.png"
@@ -160,11 +198,12 @@ export const Navbar = () => {
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
                         />
+                        <span className="ml-2 text-white text-sm font-medium">English</span>
                       </div>
                     </Link>
                   )}
                   {currentLocale !== "fr" && (
-                    <Link href={getNewLocalePath("fr")}>
+                    <Link href={getNewLocalePath("fr")} onClick={() => setLangDropdownOpen(false)}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
                           src="/images/flags/fr.png"
@@ -174,6 +213,7 @@ export const Navbar = () => {
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
                         />
+                        <span className="ml-2 text-white text-sm font-medium">Français</span>
                       </div>
                     </Link>
                   )}
@@ -183,8 +223,14 @@ export const Navbar = () => {
           </div>
 
           {/* Mobile: Hamburger Button */}
-          <div className="flex md:hidden">
-            <button onClick={() => setIsMobileMenuOpen(prev => !prev)} className="text-white focus:outline-none">
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen((prev) => !prev);
+                setLangDropdownOpen(false); // Close language dropdown when toggling mobile menu
+              }}
+              className="text-white focus:outline-none"
+            >
               {isMobileMenuOpen ? (
                 // Close icon
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -234,28 +280,50 @@ export const Navbar = () => {
             <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium hover:text-[rgb(136,66,248)] transition">
               {t("navbar.gallery")}
             </Link>
-            {/* Mobile Language Switcher */}
-            <div className="flex items-center gap-2 pt-2 border-t border-gray-700">
-              <div className="cursor-pointer" onClick={() => setLangDropdownOpen(prev => !prev)}>
-                <Image
-                  src={`/images/flags/${currentLocale}.png`}
-                  alt="Current Language"
-                  width={40}
-                  height={30}
-                  className="rounded-sm transition-transform duration-300 hover:scale-110" // ajout de l'effet hover
-                  style={{ width: "auto", height: "auto" }}
-                />
-              </div>
+            {/* Language Switcher */}
+            <div className="relative cursor-pointer">
+              <Image
+                src={`/images/flags/${currentLocale}.png`}
+                alt="Current Language"
+                width={30}
+                height={20}
+                className="rounded-sm transition-transform duration-300 hover:scale-110"
+                onClick={() => setLangDropdownOpen((prev) => !prev)}
+                style={{ width: "auto", height: "auto" }}
+              />
               {langDropdownOpen && (
-                <div className="flex gap-2">
+                <div
+                  className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[100px]"
+                  onClick={preventClickPropagation} // Prevent closing when clicking inside
+                >
                   {currentLocale !== "en" && (
-                    <Link href={getNewLocalePath("en")} onClick={() => setIsMobileMenuOpen(false)}>
-                      <Image src="/images/flags/en.png" alt="English" width={40} height={30} className="rounded-sm" style={{ width: "auto", height: "auto" }} />
+                    <Link href={getNewLocalePath("en")} onClick={() => setLangDropdownOpen(false)}>
+                      <div className="flex items-center justify-center p-1 rounded-sm">
+                        <Image
+                          src="/images/flags/en.png"
+                          alt="English"
+                          width={30}
+                          height={20}
+                          className="rounded-sm"
+                          style={{ width: "auto", height: "auto" }}
+                        />
+                        <span className="ml-2 text-white text-sm font-medium">English</span>
+                      </div>
                     </Link>
                   )}
                   {currentLocale !== "fr" && (
-                    <Link href={getNewLocalePath("fr")} onClick={() => setIsMobileMenuOpen(false)}>
-                      <Image src="/images/flags/fr.png" alt="Français" width={40} height={30} className="rounded-sm" style={{ width: "auto", height: "auto" }} />
+                    <Link href={getNewLocalePath("fr")} onClick={() => setLangDropdownOpen(false)}>
+                      <div className="flex items-center justify-center p-1 rounded-sm">
+                        <Image
+                          src="/images/flags/fr.png"
+                          alt="Français"
+                          width={30}
+                          height={20}
+                          className="rounded-sm"
+                          style={{ width: "auto", height: "auto" }}
+                        />
+                        <span className="ml-2 text-white text-sm font-medium">Français</span>
+                      </div>
                     </Link>
                   )}
                 </div>

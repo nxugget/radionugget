@@ -24,7 +24,7 @@ export default function GridSquareInfo() {
             {/* Backdrop to close modal on outside click */}
             <div
               onClick={() => setShowInfo(false)}
-              className="fixed inset-0 z-40 bg-black/50"
+              className="fixed inset-0 z-[999] bg-black/50"
             ></div>
             <motion.div
               onClick={(e) => e.stopPropagation()}
@@ -32,7 +32,7 @@ export default function GridSquareInfo() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="bg-black text-white p-6 rounded-lg shadow-xl w-full max-w-lg fixed top-32 left-1/2 transform -translate-x-1/2 z-50"
+              className="bg-black text-white p-6 rounded-lg shadow-xl w-[90vw] max-w-lg sm:w-[80vw] sm:max-w-md md:w-[60vw] md:max-w-lg absolute top-full mt-4 left-[10%] sm:left-1/2 transform sm:-translate-x-1/2 z-[1000] h-auto sm:h-[70vh] md:h-auto overflow-y-auto"
             >
               {/* Close button */}
               <button

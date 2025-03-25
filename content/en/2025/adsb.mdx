@@ -11,7 +11,7 @@ Air travel is one of the most popular ways to get around these days. With the dr
 That’s where an international standard called **ADS‑B** comes in. It’s the very same system that lets anyone follow air traffic using apps and websites like [FlightRadar](https://www.flightradar24.com/).
 
 # How ADS‑B Works
-ADS‑B (Automatic Dependent Surveillance‑Broadcast) allows an aircraft to transmit its position—obtained via <SmartLink slug="gps">GNSS</SmartLink>—along with other essential data to any receiver capable of decoding the signal. This means airports, other planes, and soon even regular enthusiasts can monitor air traffic. All this information is broadcast over the 1090MHz frequency.
+ADS‑B (Automatic Dependent Surveillance‑Broadcast) allows an aircraft to transmit its position, obtained via <SmartLink slug="gps">GNSS</SmartLink>, along with other essential data to any receiver capable of decoding the signal. This means airports, other planes, and soon even regular enthusiasts can monitor air traffic. All this information is broadcast over the 1090MHz frequency.
 
 ![ADSB Schema](/images/blog/2025/adsb/adsb1.svg)
 
@@ -27,7 +27,7 @@ To set up your ADS‑B station, you’ll need three main components:
 - An antenna tuned for 1090MHz
 
 On the Raspberry Pi side, check out [this list](https://rpilocator.com/) to see which models are compatible with [Pi24](https://www.flightradar24.com/build-your-own). I opted for a [Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/) for its compact size.  
-For the receiver, a simple <SmartLink slug="sdr">SDR dongle</SmartLink> will do the job—in my case, I used the [RTL‑SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html).  
+For the receiver, a simple <SmartLink slug="sdr">SDR dongle</SmartLink> will do the job, in my case, I used the [RTL‑SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html).  
 Finally, when it comes to the antenna, you can buy a ready‑made one like [this](https://www.passion-radio.fr/adsb/ant-1090-1042.html), but here we’re building our very own **ground plane** quarter‑wave antenna, just like we discussed in <SmartLink slug="antenna">this lesson</SmartLink>.
 
 To figure out the exact dimensions, use [this calculator](https://m0ukd.com/calculators/quarter-wave-ground-plane-antenna-calculator/), which tells you you'll need one rod of 6.5cm along with four others measuring 7.3cm each.
@@ -81,6 +81,6 @@ And finally, the moment we’ve all been waiting for: see the aircraft detected 
 
 ![Flight Radar Map](/images/blog/2025/adsb/adsb5.png)
 
-As you can see, the DIY antenna provides surprisingly solid coverage, even though its placement wasn’t perfect (I live roughly near where it says **Gujan-Mestras**). You can boost its performance with an LNA filter for the 1090MHz frequency or consider buying a commercial antenna—but for now, this setup works just fine.
+As you can see, the DIY antenna provides surprisingly solid coverage, even though its placement wasn’t perfect (I live roughly near where it says **Gujan-Mestras**). You can boost its performance with an LNA filter for the 1090MHz frequency or consider buying a commercial antenna, but for now, this setup works just fine.
 
 

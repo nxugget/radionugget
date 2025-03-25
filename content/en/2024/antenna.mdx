@@ -6,11 +6,11 @@ thumbnail: "/images/blog/thumbnail/antennes.webp"
 tags: ["radio", "basics"]
 slug: "antenna"
 ---
-An antenna is nothing more than a piece of metal. Its job is to convert **electrical energy** into an **electromagnetic wave** for transmitting a **radio signal**—and vice versa for receiving. In this lesson, we’ll cover the key concepts you need to choose the right antenna, whether it’s for an <SmartLink slug="sdr">SDR</SmartLink> project or anything else.
+An antenna is nothing more than a piece of metal. Its job is to convert **electrical energy** into an **electromagnetic wave** for transmitting a **radio signal**, and vice versa for receiving. In this lesson, we’ll cover the key concepts you need to choose the right antenna, whether it’s for an <SmartLink slug="sdr">SDR</SmartLink> project or anything else.
 
 # Frequency
 To choose an antenna, you first need to decide on the **frequency** you’re working with. But what exactly is **frequency**?  
-When you plug into a wall outlet, the current is **alternating**—meaning it regularly switches direction (it goes from + to – and back). This change happens smoothly, forming a neat **sine wave**.  
+When you plug into a wall outlet, the current is **alternating**, meaning it regularly switches direction (it goes from + to – and back). This change happens smoothly, forming a neat **sine wave**.  
 ![Schema courant alternatif sinusoïdal](/images/blog/2024/antennes/antenne1.svg)
 For example, in **France**, the current oscillates at **50Hz**, meaning it changes direction **100 times per second**. That’s what we call **frequency**, measured in [Hertz](https://fr.wikipedia.org/wiki/Hertz).  
 A radio is also an oscillator; we refer to a [VFO](https://fr.wikipedia.org/wiki/Oscillateur_%C3%A0_fr%C3%A9quence_variable) (Variable Frequency Oscillator) – a fancy way of saying you can change the frequency.  
@@ -22,12 +22,12 @@ For an antenna to be in **resonance** with a frequency, its length must correspo
 ![Schema longueur d'onde](/images/blog/2024/antennes/antenne2.svg)
 The wavelength is calculated with a simplified formula, knowing that we work mostly with frequencies in `MHz` and the **speed of light**:
 ![Formule longueur d'onde](/images/blog/2024/antennes/antenne3.svg)
-Once you’ve calculated the **wavelength** of the signal you want to use, you can choose a **fraction** of that value to size your antenna—typically a **half-wave** (`λ/2`) or a **quarter-wave** (`λ/4`).  
+Once you’ve calculated the **wavelength** of the signal you want to use, you can choose a **fraction** of that value to size your antenna, typically a **half-wave** (`λ/2`) or a **quarter-wave** (`λ/4`).  
 For example, suppose you want an antenna for the `433MHz` band. First, calculate the wavelength: `300/433≈0.70cm`. If you decide on a **half-wave** antenna, its length should be half the wavelength, so about `34.5cm`.
 
 # Impedance
 Let’s keep it simple. For effective signal transfer between the antenna and your transceiver, they must be well matched. This matching is determined by a property called **impedance**.  
-Think of it as the **resistance** in an electrical circuit—but for alternating currents. In **RF**, you want the antenna’s **impedance** to match that of your device. A common standard is `50Ω`—for example, SDR receivers typically use this value. In short, you’ll always aim for an antenna close to `50Ω`.
+Think of it as the **resistance** in an electrical circuit, but for alternating currents. In **RF**, you want the antenna’s **impedance** to match that of your device. A common standard is `50Ω`, for example, SDR receivers typically use this value. In short, you’ll always aim for an antenna close to `50Ω`.
 
 # Types of Antennas
 There are tons of antenna types, so we won’t cover them all, but here are three important ones.
@@ -41,9 +41,9 @@ Also, a **dipole** can be mounted **horizontally** or **vertically**, depending 
 Lastly, this type of antenna focuses its energy in two directions, making it very effective when you know the precise direction of your signal.
 
 ## Ground Plane
-A **ground plane** antenna features a vertical conductor of **quarter-wave** length (`λ/4`) mounted above a conductive surface, known as the **ground plane**—hence the name. This ground plane acts like a **mirror**, “completing” the antenna by reflecting waves, effectively creating an equivalent to a **dipole**.  
+A **ground plane** antenna features a vertical conductor of **quarter-wave** length (`λ/4`) mounted above a conductive surface, known as the **ground plane**, hence the name. This ground plane acts like a **mirror**, “completing” the antenna by reflecting waves, effectively creating an equivalent to a **dipole**.  
 To form this ground plane, you can use metallic rods called **radiators** arranged evenly around the base, giving the antenna a spider-like look 🕷️. Similar to the **dipole**, if you want a `50Ω` system, the radials should be spaced at about `120°`.  
-Otherwise, you can use the ground, the sea, a car roof—anything conductive.
+Otherwise, you can use the ground, the sea, a car roof, anything conductive.
 
 ## Yagi
 Yagi antennas, which work from [HF](https://fr.wikipedia.org/wiki/Haute_fr%C3%A9quence) to [UHF](https://fr.wikipedia.org/wiki/Ultra_haute_fr%C3%A9quence), are **directional**. Also known as “rake” antennas, they’re the ones usually seen on rooftops for terrestrial TV.  

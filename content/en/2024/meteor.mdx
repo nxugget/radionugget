@@ -6,14 +6,14 @@ thumbnail: "/images/blog/thumbnail/meteor.webp"
 tags: ["satellite", "space"]
 slug: "meteor"
 ---
-American NOAA satellites that we covered in <SmartLink href="/blog/space/satellite/noaa">my first project</SmartLink> are kind of the starting point for any satellite radio enthusiast. But there are other very similar satellites that deliver better images using roughly the same gear as NOAA—the Russian **METEOR** satellites 🇷🇺.
+American NOAA satellites that we covered in <SmartLink href="/blog/space/satellite/noaa">my first project</SmartLink> are kind of the starting point for any satellite radio enthusiast. But there are other very similar satellites that deliver better images using roughly the same gear as NOAA, the Russian **METEOR** satellites 🇷🇺.
 
 # Who Are the METEOR?
 The **METEOR** satellites started as Soviet, then Russian weather satellites. Since **1964**, about **70** models have been launched. For this article, we’re focusing only on the latest series, **METEOR-M**, and here’s a brief history:
 
 ![METEOR-M](/images/blog/2024/meteor/meteor2.svg)
 
-Like their NOAA counterparts, the METEOR-M series orbits at roughly **800km** altitude and follows a **polar** orbit—more precisely, a **sun-synchronous** orbit. That means they always face the **Sun** 🌞. For more information on orbit types, check out <SmartLink slug="orbits">this lesson</SmartLink>.
+Like their NOAA counterparts, the METEOR-M series orbits at roughly **800km** altitude and follows a **polar** orbit, more precisely, a **sun-synchronous** orbit. That means they always face the **Sun** 🌞. For more information on orbit types, check out <SmartLink slug="orbits">this lesson</SmartLink>.
 
 ![Orbite polaire](/images/blog/2024/type-orbits/type-orbits6.svg)
 A sun-synchronous orbit means the satellite passes over the same locations at the same [solar time](https://fr.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
@@ -25,13 +25,13 @@ Note that **METEOR M2-4** is still in a testing phase. Its frequency sometimes f
 To verify its status, you can use [this site](https://usradioguy.com/meteor-satellite/), which shows the current state of the satellite as of **09/02/2024**.
 
 # Time to Listen
-On the antenna side, I use a <SmartLink href="/blog/radio/ground/qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**—ideal for METEOR since they transmit with **right-hand circular polarization**.
+On the antenna side, I use a <SmartLink href="/blog/radio/ground/qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**, ideal for METEOR since they transmit with **right-hand circular polarization**.
 For reception, we use [SatDump](https://www.satdump.org/download/). I won’t go into all the configuration details (I’ve already done a tutorial on **SatDump** [here](https://www.satdump.org/download/)), but here’s the gist:
 - First, using the `Tracking` section in SatDump or via [this website](https://www.n2yo.com/?s=33591), check when the satellite will pass by. This section also shows the satellite's current **elevation**.
   
   ![SatDump Tracking](/images/blog/2024/meteor/meteor5.png)
   
-- In the `Device` section, select your **SDR** receiver—in my case, an [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html)—then hit **Start** to begin recording.
+- In the `Device` section, select your **SDR** receiver, in my case, an [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html), then hit **Start** to begin recording.
 - I recommend adjusting the `FFT Min` and `FFT Max` values in the `FFT` section: set `FFT Min` low enough that noise is barely visible, and then set `FFT Max` to `FFT Min + 30`.
 
   ![SatDump METEOR](/images/blog/2024/meteor/meteor4.png)
@@ -54,4 +54,4 @@ You can tweak various settings to get false-color or infrared images:
 ![METEOR M2-4 Images](/images/blog/2024/meteor/meteor8.jpg)
 
 The image quality is really impressive compared to NOAA’s.
-Now it’s your turn—have fun and happy decoding!
+Now it’s your turn, have fun and happy decoding!

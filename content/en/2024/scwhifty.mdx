@@ -10,13 +10,13 @@ Challenge description: *The aliens are onto us... They've started wearing tin fo
 
 The challenge is available at [this address](https://ringzer0ctf.com/challenges/333).
 
-To understand this writeup, it's important to grasp modulation concepts—so check out <SmartLink slug="am">this lesson</SmartLink> :)
+To understand this writeup, it's important to grasp modulation concepts, so check out <SmartLink slug="am">this lesson</SmartLink> :)
 
 The challenge begins with a file named `sdr-challenge2.cfile`; open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty1.png)
 
-We notice several similar segments—likely the same signal repeated. Zoom in on one segment to "crop" it so we can work on a single instance.
+We notice several similar segments, likely the same signal repeated. Zoom in on one segment to "crop" it so we can work on a single instance.
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty2.png)
 
@@ -30,7 +30,7 @@ This digital modulation technique uses one frequency to represent a **0** and an
 
 ![FSK Diagram](/images/blog/2024/scwhifty/scwhifty4.svg)
 
-Switch to [URH](https://github.com/jopohl/urh) and select `FSK` as the modulation type. Next, find the `Samples/Symbol` value—which for digital modulation represents the duration of one **bit**. To do this, select the smallest segment possible; in my case, it shows around `203µs`.
+Switch to [URH](https://github.com/jopohl/urh) and select `FSK` as the modulation type. Next, find the `Samples/Symbol` value, which for digital modulation represents the duration of one **bit**. To do this, select the smallest segment possible; in my case, it shows around `203µs`.
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty5.png)
 
@@ -43,7 +43,7 @@ Switch to the `Demodulated` view to continue your inspection, which should displ
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty6.png)
 
 Now, you need to tell URH which frequency corresponds to a `1` and which to a `0`. In the `Demodulated` view, notice that the **pink** color represents `1` and **green** represents `0`. This is why, initially, with the entire signal in **green**, URH decodes only `0`s.  
-But if you move the cursor so it lies exactly in the middle of the transition—where URH detects the difference between the two frequencies—you’ll see both `0`s and `1`s appearing.  
+But if you move the cursor so it lies exactly in the middle of the transition, where URH detects the difference between the two frequencies, you’ll see both `0`s and `1`s appearing.  
 Also, by switching the display from `Bits` to `ASCII` under `Show data as`, your flag should become visible!
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty7.png)

@@ -9,7 +9,7 @@ slug: "sstv"
 Have you heard about the [ARISS](https://fr.wikipedia.org/wiki/ARISS) (Amateur Radio on the International Space Station) program? It lets radio amateurs worldwide communicate with astronauts aboard the [ISS](https://fr.wikipedia.org/wiki/Station_spatiale_internationale). As part of ARISS, images are sometimes transmitted using **SSTV** (Slow Scan Television), allowing enthusiasts like us to receive photos directly from space.
 
 # SSTV
-**SSTV** is a method of transmitting images using radio waves. It’s been around since the 1950s and isn’t used as much today because sending images is much easier over the Internet. The signal is easily recognized by its distinctive tone—check out [this example](https://www.youtube.com/watch?v=XALkHpdii2A). That audio tone is then decoded with specialized software to convert it into an image like this:
+**SSTV** is a method of transmitting images using radio waves. It’s been around since the 1950s and isn’t used as much today because sending images is much easier over the Internet. The signal is easily recognized by its distinctive tone, check out [this example](https://www.youtube.com/watch?v=XALkHpdii2A). That audio tone is then decoded with specialized software to convert it into an image like this:
 
 ![SSTV image](/images/blog/2024/sstv/sstv1.webp)
 
@@ -21,7 +21,7 @@ Wanting to receive images from the ISS is great, but the ISS only transmits SSTV
 
 ## ISS Pass Prediction
 If an SSTV transmission is scheduled, you’ll need to predict when the ISS will be overhead. In my case, I use the [AMSAT](https://www.amsat.org/track/) website.  
-Enter your geographic coordinates in the red rectangle and click **Predict**. Focus on passes with high **elevation** (green rectangle)—at least **20°**—unless you have an unobstructed horizon.
+Enter your geographic coordinates in the red rectangle and click **Predict**. Focus on passes with high **elevation** (green rectangle), at least **20°**, unless you have an unobstructed horizon.
 
 ![ISS prediction](/images/blog/2024/sstv/sstv2.png)
 
@@ -44,7 +44,7 @@ Any SDR receiver works; I had good results with the [RTL-SDR V4](https://www.pas
 Since these SSTV transmissions are rare, I record the signal first and decode it offline as illustrated in the *Offline Processing* diagram above. My setup is as follows:
 
 ![SSTV antenna](/images/blog/2024/sstv/sstv7.jpg)
-Using [SDR++](https://www.sdrpp.org), set the frequency during the ARISS contact—in my case, `145.800MHz`—and choose [NFM](https://fr.wikipedia.org/wiki/Bande_étroite) as the modulation mode.  
+Using [SDR++](https://www.sdrpp.org), set the frequency during the ARISS contact, in my case, `145.800MHz`, and choose [NFM](https://fr.wikipedia.org/wiki/Bande_étroite) as the modulation mode.  
 Under the `Record` section, click **Record**. Be patient if no signal appears immediately; a distinct tone marks the beginning of the transmission. Adjust the `Max` and `Min` settings on the waterfall display to clearly highlight the signal.
 
 ![SDR++ SSTV](/images/blog/2024/sstv/sstv4.png)
@@ -57,7 +57,7 @@ Then, in your SSTV decoding software, select `VB-Cable` as the input source. Set
 Play the audio in Audacity and watch as the SSTV software begins to reassemble the image.
 
 ![Black Cat SSTV](/images/blog/2024/sstv/sstv5.png)
-Here are some examples of images I received—left from the QFH antenna and right from the Yagi:
+Here are some examples of images I received, left from the QFH antenna and right from the Yagi:
 
 ![ARISS SSTV](/images/blog/2024/sstv/sstv6.jpg)
 

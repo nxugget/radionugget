@@ -8,7 +8,7 @@ export const Footer = () => {
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-y-4">
         {/* Center: Made by */}
         <div className="text-gray-300 text-sm text-center">
-          Made with <span className="text-red-500">♥</span> by <span className="font-bold">myself</span>
+          Made with <span className="text-purple">♥</span> by <span className="font-bold">myself</span>
         </div>
 
         {/* Right: Social Icons */}

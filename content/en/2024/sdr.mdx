@@ -7,17 +7,17 @@ tags: ["radio", "basics"]
 slug: "sdr"
 ---
 In the world of radio waves, traditional systems rely on components like resistors, capacitors, and coils to build circuits that process signals.  
-For those of us who just want to **explore** radio without dealing with bulky, expensive components—and the technical know-how to modify them—digital technology comes to the rescue, letting us dive into the realm of radio frequencies for almost nothing 🎉.
+For those of us who just want to **explore** radio without dealing with bulky, expensive components, and the technical know-how to modify them, digital technology comes to the rescue, letting us dive into the realm of radio frequencies for almost nothing 🎉.
 
 # Digital Receiver  
-The idea is to digitize the radio signal as early as possible so it can be processed by a **CPU**. This lets you apply more complex algorithms—especially using **complex numbers**, which can be a headache to implement with just analog components.  
+The idea is to digitize the radio signal as early as possible so it can be processed by a **CPU**. This lets you apply more complex algorithms, especially using **complex numbers**, which can be a headache to implement with just analog components.  
 Yes, those famous complex numbers you thought were useless in high school turn out to be very useful for digitizing signals.  
 - The **real** part represents the signal's <SmartLink slug="am">amplitude</SmartLink> (its "height").  
 - The **imaginary** part represents its <SmartLink slug="phase">phase</SmartLink> (its position in time).
 
 This simplifies many mathematical operations.  
 Not convinced? Consider multiplying two signals (you don't need to know all the details).  
-Without complex numbers, you’d have to perform some pretty twisted **trigonometric** calculations. With complex numbers, you simply multiply the <SmartLink slug="am">amplitudes</SmartLink> and add the <SmartLink slug="phase">phases</SmartLink>—done easily with basic algebra.
+Without complex numbers, you’d have to perform some pretty twisted **trigonometric** calculations. With complex numbers, you simply multiply the <SmartLink slug="am">amplitudes</SmartLink> and add the <SmartLink slug="phase">phases</SmartLink>, done easily with basic algebra.
 
 Plus, digital systems update in real time, which is great for software and algorithms.  
 Another major advantage of digital is the ability to visualize the **frequency spectrum** and produce a **spectrogram** (often called a **waterfall**), which is very useful for understanding what's happening.  
@@ -25,10 +25,10 @@ Another major advantage of digital is the ability to visualize the **frequency s
 It's like using [Wireshark](https://www.wireshark.org/) to analyze network packets 🦈.
 
 # Sampling Rate  
-Radio signals are **analog** and contain an infinite range of values—something our **CPUs** don’t like. So we sample the signal at regular intervals, converting it into a finite series of numbers.  
+Radio signals are **analog** and contain an infinite range of values, something our **CPUs** don’t like. So we sample the signal at regular intervals, converting it into a finite series of numbers.  
 Essentially, we measure the signal's amplitude at regular points and record those values. This is called the **sampling rate**!  
 This process is enabled by an [Analog-to-Digital Converter (ADC)](https://fr.wikipedia.org/wiki/Convertisseur_analogique-num%C3%A9rique).  
-The more samples you take, the more accurately the digital signal represents the real one—but the data becomes larger and takes longer to process.
+The more samples you take, the more accurately the digital signal represents the real one, but the data becomes larger and takes longer to process.
 ![Sampling rate diagram](/images/blog/2024/sdr/sdr1.svg)
 There's also the [Nyquist–Shannon theorem](https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage) which states that to faithfully reconstruct an analog signal, you must sample at least twice its maximum frequency.
 
@@ -37,11 +37,11 @@ Digitizing and processing signals via software is known as **SDR** (**S**oftware
 This is made possible by receivers like the one shown below:  
 ![RTL SDR-V4](/images/blog/2024/sdr/sdr2.png)
 These affordable receivers (check out [this great starter kit](https://fr.aliexpress.com/item/1005005952566458.html?spm=a2g0o.productlist.main.5.73d9dbXPdbXPEG&algo_pvid=525e2d1d-0980-4b25-9e4f-38905fefd577&algo_exp_id=525e2d1d-0980-4b25-9e4f-38905fefd577-2&pdp_npi=4%40dis%21EUR%2148.30%2148.30%21%21%2151.30%2151.30%21%4021059dbe17169245427093658e3802%2112000035000699472%21sea%21FR%214844539949%21&curPageLogUid=JaGxsn71xaP6&utparam-url=scene%3Asearch%7Cquery_from%3A)) connect to a computer via **USB** and run SDR software (there are several options available).  
-They usually incorporate an **MCX** (Micro Coaxial eXtended) connector—a smaller coaxial plug—to connect your antenna.  
+They usually incorporate an **MCX** (Micro Coaxial eXtended) connector, a smaller coaxial plug, to connect your antenna.  
 Note that these receivers only support signal reception; for transmission, devices like the [HackRF](https://www.passion-radio.fr/emetteur-sdr/hackrf-sdr-75.html) are required.
 
 # SDR Software  
 Once you have an **SDR** receiver, you just need SDR software. My personal favorite is [SDR++](https://www.sdrpp.org/) for general listening.  
-Other notable options include [SatDump](https://www.satdump.org/download/), which is essentially SDR++ but specialized for receiving and decoding **satellite** signals, and [SDRAngel](https://www.sdrangel.org/), which comes with plugins for displaying interactive maps—ideal for applications like <SmartLink slug="adsb">ADS-B</SmartLink> reception.
+Other notable options include [SatDump](https://www.satdump.org/download/), which is essentially SDR++ but specialized for receiving and decoding **satellite** signals, and [SDRAngel](https://www.sdrangel.org/), which comes with plugins for displaying interactive maps, ideal for applications like <SmartLink slug="adsb">ADS-B</SmartLink> reception.
 
 Also, there’s the DragonOS Linux distribution (<SmartLink slug="dragonos">DragonOS</SmartLink>), which comes pre-installed and configured with all these SDR tools.

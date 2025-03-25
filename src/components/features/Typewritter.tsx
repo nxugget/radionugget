@@ -38,7 +38,7 @@ export const TypewriterEffectSmooth = ({
         >
           <div
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold normal-case"
-            style={{ whiteSpace: "nowrap" }}
+            style={{ whiteSpace: "nowrap", maxWidth: "100%" }}
           >
             {wordsArray.map((word, idx) => (
               <div key={`word-${idx}`} className="inline-block">

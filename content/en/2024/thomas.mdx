@@ -10,7 +10,7 @@ Challenge description: *The aliens' capabilities have advanced and they've decid
 
 The challenge is available at [this address](https://ringzer0ctf.com/challenges/334).
 
-To understand this writeup, it's important to grasp modulation concepts—so check out <SmartLink slug="am">this lesson</SmartLink> :)
+To understand this writeup, it's important to grasp modulation concepts, so check out <SmartLink slug="am">this lesson</SmartLink> :)
 
 The challenge starts with a file named `sdr-challenge3.cfile`.  
 Open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
@@ -22,7 +22,7 @@ We have several segments; zoom in on one of them.
 ![Universal Radio Hacker](/images/blog/2024/thomas/thomas2.webp)
 
 It clearly resembles **ASK**. If you're not familiar with this modulation, I suggest reading the writeup for <SmartLink slug="onandoff">that challenge</SmartLink> which covers ASK in detail.  
-Select `ASK` as the modulation type and manually determine the `Samples/Symbol` by choosing the smallest segment—the value indicated in **red**.
+Select `ASK` as the modulation type and manually determine the `Samples/Symbol` by choosing the smallest segment, the value indicated in **red**.
 
 ![Universal Radio Hacker](/images/blog/2024/thomas/thomas3.webp)
 
@@ -31,10 +31,10 @@ I recall that during the <SmartLink slug="onandoff">first challenge</SmartLink>,
 
 ![Universal Radio Hacker](/images/blog/2024/thomas/thomas4.webp)
 
-Alright, not perfect—but remember, this is the final challenge of the series. Given that the aliens have "improved" the reliability of their transmission, it suggests that the encoding method may be the issue.  
+Alright, not perfect, but remember, this is the final challenge of the series. Given that the aliens have "improved" the reliability of their transmission, it suggests that the encoding method may be the issue.  
 
 Note: Do not confuse **modulation** with the **encoding method**.  
-To send a digital (binary) message, first you encode it—that is, you determine how the bits are organized (like Morse code, for example)—and then you modulate that digital signal (using ASK, for instance) to transform it into a transmittable radio wave.  
+To send a digital (binary) message, first you encode it, that is, you determine how the bits are organized (like Morse code, for example), and then you modulate that digital signal (using ASK, for instance) to transform it into a transmittable radio wave.  
 
 In Universal Radio Hacker, the default decoding method is [NRZ](https://fr.wikipedia.org/wiki/Non_Return_to_Zero). You can see this in the **Analysis** tab marked in red:
 

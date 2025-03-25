@@ -41,7 +41,6 @@ export default async function Blog({
     })
   );
   const articles = articlesNested.flat().sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
-  // --- FIN DES CHANGEMENTS ---
 
   const allTags = Array.from(new Set(articles.flatMap((article) => article.metadata.tags)));
 
@@ -73,14 +72,19 @@ export default async function Blog({
       {/* ✅ Grid responsive avec hauteur uniforme */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {displayedArticles.map(({ slug, metadata }) => (
-          <CardContainer key={slug} className="inter-var h-full">
+          <CardContainer
+            key={slug}
+            className={`inter-var h-full ${"sm:perspective-1000"}`} // Disable 3D effect on mobile
+          >
             <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
               {/* Nouveau wrapper qui assure un fond noir opaque avec grille */}
               <div
-                className="w-full h-full  bg-grid rounded-xl overflow-hidden"
+                className={`w-full min-h-screen bg-grid rounded-xl overflow-hidden sm:h-auto`} // Ensure full height on mobile
                 style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
               >
-                <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
+                <CardBody
+                  className={`bg-transparent relative group/card border-0 h-full flex flex-col justify-between rounded-none p-6`} // Remove borders and gaps on mobile
+                >
                   
                   {/* ✅ Titre traduit selon la locale */}
                   <CardItem translateZ="60" className="text-2xl font-bold text-white">

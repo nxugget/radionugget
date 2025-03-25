@@ -11,7 +11,7 @@ import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import dynamic from "next/dynamic";
 import ZoomImage from "../ZoomImage";
 
-const DynamicTypewriterEffectSmooth = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
+const DynamicTypewriterEffect = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
 
 export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
@@ -53,23 +53,22 @@ export default async function Article({ params }: { params: { locale: string; sl
             />
           </div>
 
-          <div className="relative z-10 flex items-center justify-center h-full">
-            <div className="bg-black/50 rounded-lg p-4 text-center">
-              <DynamicTypewriterEffectSmooth
-                words={metadata.title.split(" ").map((word: string, index: number) => ({
-                  text: word,
-                  className: "text-white"
-                }))}
-                className="text-4xl md:text-6xl font-bold border-b-4 border-gray-500 pb-2"
-                cursorClassName="bg-[#b400ff]"
-              />
-              <p className="text-lg md:text-xl opacity-80 text-white">{metadata.date}</p>
+          <div className="relative z-10 flex items-center justify-center h-full px-4">
+            <div
+              className="bg-black/50 rounded-lg p-4 text-center w-full break-words whitespace-normal max-w-full"
+              style={{ overflowWrap: "break-word", wordBreak: "break-word" }}
+            >
+              <h1 className="text-3xl md:text-6xl font-bold text-white break-words max-w-full overflow-hidden text-ellipsis leading-tight pb-2">
+                {metadata.title}
+              </h1>
+              <div className="border-b-4 border-gray-500 w-1/2 mx-auto mt-2"></div>
+              <p className="text-sm md:text-xl opacity-80 text-white mt-2">{metadata.date}</p>
             </div>
           </div>
         </div>
 
         {/* ARTICLE CONTAINER */}
-        <article className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-8 mt-10 prose prose-invert max-w-none relative">
+        <article className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-2">
           <MDXRemote
             source={content}
             components={{

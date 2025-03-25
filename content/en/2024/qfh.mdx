@@ -25,7 +25,7 @@ Keep in mind that your antenna will ultimately look like this (in 2D diagrams it
 ## Theory
 To design the antenna, we’ll use [this calculator](http://jcoppens.com/ant/qfh/calc.en.php).  
 - **Design Frequency**: I set it to `137.5MHz` since I want to receive satellite signals between `137` and `138MHz`.  
-- **Conductor Diameter**: I use `9.5mm` because I'll use a 3/8" copper tube (which is about `9.52mm`). Any diameter works—larger ones may broaden the antenna’s bandwidth and slightly reduce losses—but the gains are modest, so use what you have.
+- **Conductor Diameter**: I use `9.5mm` because I'll use a 3/8" copper tube (which is about `9.52mm`). Any diameter works, larger ones may broaden the antenna’s bandwidth and slightly reduce losses, but the gains are modest, so use what you have.
 
 After filling in the defaults, click **Calculate**.  
 You’ll get an approximate schematic. Note the `-0.5cm` on the **top 4 wires only**; this ensures there’s enough space between them to join together.
@@ -44,19 +44,19 @@ Fill in the outer diameter of the sleeve (`58mm`) and the copper tube diameter (
 
 ![Generate a Drilling Template](/images/blog/2024/qfh/qfh3.webp)
 Once generated, print the template and keep only the **Top** portion.  
-Wrap it around the PVC tube. It’s crucial that the paper exactly covers the tube’s circumference—an error of even `1mm` can affect the alignment of the **4 copper rods**. If it doesn’t fit perfectly, double-check your measurements.
+Wrap it around the PVC tube. It’s crucial that the paper exactly covers the tube’s circumference, an error of even `1mm` can affect the alignment of the **4 copper rods**. If it doesn’t fit perfectly, double-check your measurements.
 
 ![DIY QFH](/images/blog/2024/qfh/qfh4.webp)
 
 ### Bottom Section
-Return to the **Generate a drilling template** section of the calculator. This time, use the outer diameter of the PVC tube (`52mm`)—be sure not to confuse it with the sleeve’s diameter used for the top. 
+Return to the **Generate a drilling template** section of the calculator. This time, use the outer diameter of the PVC tube (`52mm`), be sure not to confuse it with the sleeve’s diameter used for the top. 
 
 ![Generate a Drilling Template](/images/blog/2024/qfh/qfh10.webp)
 Then, cut out the **Bottom** part of the template to wrap around the tube.  
 To know where to place it, note the value `695.10mm` on the template; this represents the distance from the top wires to point **A** (essentially, the H2 distance on the antenna diagram).
 
 ### Bending the Tubes
-You can loosely position the elbows (without fixing them) at the end of each of the 4 long copper rods, either on the top or bottom of the antenna—the goal is to form a smooth curve. You might need to tighten the elbows slightly to prevent slippage while bending.  
+You can loosely position the elbows (without fixing them) at the end of each of the 4 long copper rods, either on the top or bottom of the antenna, the goal is to form a smooth curve. You might need to tighten the elbows slightly to prevent slippage while bending.  
 For bending, several techniques exist; in my case, I did it manually following this principle:
 
 ![QFH Bending Diagram](/images/blog/2024/qfh/qfh13.svg)
@@ -70,7 +70,7 @@ Alternatively, you can clamp the elbows tightly with the tube. The contact may n
 ### Balun
 Now, we’ll drill 2 holes at the top of the tube to create a **balun**.  
 The signal converts into current in one branch in one direction and in the other branch in the opposite direction, meaning the current is **balanced** in the antenna.  
-However, in a coaxial cable, the current travels **only in the center**—making it **unbalanced**. The outer braid is tied to ground and serves as a shield to prevent the cable from acting as an antenna (and to protect the signal).  
+However, in a coaxial cable, the current travels **only in the center**, making it **unbalanced**. The outer braid is tied to ground and serves as a shield to prevent the cable from acting as an antenna (and to protect the signal).  
 If left uncorrected, some of the received signal will go to ground, causing significant losses.  
 A **balun** converts from **balanced** to **unbalanced** (or vice versa), resolving this issue.
 
@@ -98,7 +98,7 @@ I drilled a small hole at the bottom of the tube to let the cable exit; this pre
 
 ![DIY QFH Cable Exit](/images/blog/2024/qfh/qfh11.jpg)
 To raise the antenna as high as possible, I added an extra piece of PVC tube. Lacking a sleeve to connect them, I used a **T-joint**.
-And there you have it—the antenna proudly installed on my roof.
+And there you have it, the antenna proudly installed on my roof.
 
 ![QFH on Roof](/images/blog/2024/qfh/qfh14.jpeg)
 
@@ -106,7 +106,7 @@ And there you have it—the antenna proudly installed on my roof.
 Now, let’s check its performance using an antenna tester. Although these values are mostly useful for transmission, they help verify if our antenna is well tuned.
 
 ![QFH SWR Test](/images/blog/2024/qfh/qfh16.jpg)
-The **VSWR** is `1.487`, which is excellent for a DIY QFH antenna—anything `<1.5` means it’s well calibrated.  
+The **VSWR** is `1.487`, which is excellent for a DIY QFH antenna, anything `<1.5` means it’s well calibrated.  
 The **impedance** of `46.21Ω` is also very good, as it’s close to the desired `50Ω`.
 
 Finally, here’s the output the antenna provides:
