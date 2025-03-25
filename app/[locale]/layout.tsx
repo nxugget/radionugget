@@ -6,6 +6,7 @@ import { BlackHole } from "@/src/components/ui/BlackHole";
 import { ReactElement } from 'react';
 import { I18nProviderClient } from '@/locales/client';
 import { Footer } from "@/src/components/ui/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export default async function RootLayout({ params, children }: { params: Promise<{ locale: string }>, children: ReactElement }) {
   const { locale } = await params;
@@ -29,6 +30,7 @@ export default async function RootLayout({ params, children }: { params: Promise
         <div className="bottom-0 w-full z-20">
           <Footer />
         </div>
+        <Analytics/>
       </body>
     </html>
   );
