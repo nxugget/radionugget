@@ -7,7 +7,7 @@ export default {
     example: "Example: Reykjavik or Area 51"
   },
   gridSquare: {
-    directSearchPlaceholder: "Direct grid square search...",
+    directSearchPlaceholder: "Grid square search...",
   },
   navbar: {
     home: "Home",

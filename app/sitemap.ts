@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
 
   const staticPaths = ['', '/blog', '/gallery', '/tools/grid-square'];
-
   const staticPages: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
@@ -21,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   const postPages: MetadataRoute.Sitemap = [];
-
   for (const locale of locales) {
     for (const post of posts) {
       postPages.push({

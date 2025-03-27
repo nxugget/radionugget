@@ -9,13 +9,10 @@ import { Footer } from "@/src/components/ui/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-export default async function RootLayout({ params, children }: { params: Promise<{ locale: string }>, children: ReactElement }) {
-  const { locale } = await params;
+export default async function RootLayout({ params, children }: { params: { locale: string }, children: ReactElement }) {
+  const { locale } = params;
   return (
-    <html lang="en" className="min-h-screen">
-      <head>
-        {/* head content géré par /[locale]/head.tsx */}
-      </head>
+    <html lang={locale} className="min-h-screen">
       <body className="bg-black relative min-h-screen">
         {/* Background layers */}
         <StarsBackground className="absolute inset-0 z-[-3]" />
@@ -23,6 +20,7 @@ export default async function RootLayout({ params, children }: { params: Promise
         <BlackHole className="absolute inset-0 z-[-3]" />
         {/* Foreground elements */}
         <I18nProviderClient locale={locale}>
+          {/* Tous les composants qui utilisent useI18n doivent être ici */}
           <Navbar />
           <main className="pt-24 pb-[60px] relative z-10">
             {children}

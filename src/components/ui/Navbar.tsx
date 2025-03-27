@@ -105,13 +105,13 @@ export const Navbar = () => {
             <div className="flex items-center justify-between gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200">
               <Link
                 href="/"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-105"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
               >
                 {t("navbar.home")}
               </Link>
               <Link
                 href="/blog"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-105"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
               >
                 {t("navbar.blog")}
               </Link>
@@ -128,7 +128,7 @@ export const Navbar = () => {
                   }, 300);
                 }}
               >
-                <button className="text-xl font-medium flex items-center gap-1 transition hover:text-[rgb(136,66,248)] hover:scale-105">
+                <button className="text-xl font-medium flex items-center gap-1 transition hover:text-[rgb(136,66,248)] hover:scale-[1.02]">
                   {t("navbar.tools")}
                   <svg
                     className={`w-4 h-4 transition-transform duration-300 ${isToolsOpen ? "rotate-180" : ""}`}
@@ -148,13 +148,13 @@ export const Navbar = () => {
                   >
                     <Link
                       href="/tools/grid-square"
-                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:translate-x-2 whitespace-nowrap"
+                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:scale-[1.02] whitespace-nowrap"
                     >
                       {t("navbar.gridSquare")}
                     </Link>
                     {/*<Link
                       href="/tools/satellite-prediction"
-                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:translate-x-2 whitespace-nowrap"
+                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:scale-105 whitespace-nowrap"
                     >
                       {t("navbar.satellitePrediction")}
                     </Link>*/}
@@ -163,7 +163,7 @@ export const Navbar = () => {
               </div>
               <Link
                 href="/gallery"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-105"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
               >
                 {t("navbar.gallery")}
               </Link>

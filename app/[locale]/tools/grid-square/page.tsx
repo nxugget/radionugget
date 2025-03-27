@@ -5,7 +5,9 @@ import { getGridSquare, getGridSquareCoords } from "@/src/lib/gridSquare";
 import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
-import { useI18n } from "@/locales/client"; // useScopedI18n retiré
+import { useI18n } from "@/locales/client";
+import { NextSeo } from "next-seo";
+import InputSearch from "@/src/components/ui/InputSearch";
 
 // Import dynamique du composant Map
 const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });
@@ -29,7 +31,7 @@ export default function GridSquareCalculator() {
   const [directSearchError, setDirectSearchError] = useState<string | null>(null);
 
   // Ajout d'un ref pour le conteneur de recherche
-  const searchRef = useRef<HTMLFormElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!hasLoaded) {
@@ -58,6 +60,8 @@ export default function GridSquareCalculator() {
       setSuggestions([]);
     }
   }, [query, suppressSuggestions]);
+
+  
 
   // Ajout d'un event listener pour masquer les suggestions lorsqu'on clique en dehors du conteneur
   useEffect(() => {
@@ -143,48 +147,43 @@ export default function GridSquareCalculator() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:px-4">
-      <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[800px] mx-auto mb-4">
-        <div className="bg-black/50 rounded-lg p-6 shadow-lg">
-          <div className="w-full flex justify-center">
-            {hasLoaded && (
-              <TypewriterEffectSmooth
-                words={[
-                  { text: "Grid", className: "text-[#b400ff]" },
-                  { text: "Square", className: "text-[#b400ff]" },
-                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
-                ]}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2" // increased text size for mobile
-                cursorClassName="bg-[#b400ff]"
-              />
-            )}
-          </div>
+    <>
+      <NextSeo
+        title="Grid Square Calculator | RadioNugget"
+        description="Calculate grid square coordinates easily and accurately."
+      />
+      <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:px-4">
+        <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[800px] mx-auto mb-4">
+          <div className="bg-black/50 rounded-lg p-6 shadow-lg">
+            <div className="w-full flex justify-center">
+              {hasLoaded && (
+                <TypewriterEffectSmooth
+                  words={[
+                    { text: "Grid", className: "text-[#b400ff]" },
+                    { text: "Square", className: "text-[#b400ff]" },
+                    { text: t("gridSquareCalculator.calculator"), className: "text-white" }
+                  ]}
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2" // increased text size for mobile
+                  cursorClassName="bg-[#b400ff]"
+                />
+              )}
+            </div>
 
-          <GridSquareInfo />
-
-          <form
-            ref={searchRef} // Ajout du ref pour surveiller les clics externes
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (query.trim() !== "") {
-                fetchCoordinates(query);
-                setSuggestions([]);
-              }
-            }}
-            className="flex items-center my-2 w-full max-w-sm mx-auto relative" // Ajout de relative
-          >
-            <div className="w-full relative">
-              <input
-                className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 focus:ring-2 focus:ring-purple outline-none duration-300 placeholder:text-zinc-600 placeholder:opacity-50 rounded-full px-4 py-2 shadow-md w-full pr-12"
-                autoComplete="off"
-                placeholder={t("address.placeholder")} // fallback retiré
-                name="text"
-                type="text"
+            <GridSquareInfo />
+            <div ref={searchRef} className="relative w-full max-w-sm mx-auto my-2">
+              <InputSearch
+                placeholder={t("address.placeholder")}
                 value={query}
-                onFocus={() => setSuppressSuggestions(false)} // Affiche les suggestions quand l'input est focus
                 onChange={(e) => {
                   setSuppressSuggestions(false);
                   setQuery(e.target.value);
+                }}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (query.trim() !== "") {
+                    fetchCoordinates(query);
+                    setSuggestions([]);
+                  }
                 }}
               />
               {suggestions.length > 0 && (
@@ -200,125 +199,87 @@ export default function GridSquareCalculator() {
                   ))}
                 </ul>
               )}
-              <button
-                type="submit"
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 rounded-full bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400 px-3 py-1 shadow-md duration-150 active:scale-95"
-              >
-                🔍
-              </button>
             </div>
-          </form>
 
-          <p className="text-zinc-400 text-xs md:text-sm text-center">
-            {t("address.example")} {/* traduction de l'exemple */}
-          </p>
+            <p className="text-zinc-400 text-xs md:text-sm text-center">
+              {t("address.example")} {/* traduction de l'exemple */}
+            </p>
 
-          {gridSquare && (
-            <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
-              <span className="font-bold text-white">
-                Grid Square: <span className="text-orange">{gridSquare}</span>
-              </span>
-              <button
-                onClick={handleCopy}
-                className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
-              >
-                {copied ? "✅" : "📋"}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
-        {/* Header Banner */}
-        {/* Mobile Header */}
-        <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-t-md shadow-md mb-2">
-          {/* Row 1: Search Form */}
-          <div className="w-full mb-2">
-            <form onSubmit={handleDirectSearchSubmit} className="relative flex items-center">
-              <input
-                type="text"
-                placeholder={t("gridSquare.directSearchPlaceholder")}
-                value={directSearch}
-                onChange={(e) => setDirectSearch(e.target.value)}
-                className="bg-gray-700 text-white rounded-full pl-4 pr-12 py-2 w-full focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
-              >
-                Go
-              </button>
-            </form>
-          </div>
-          {/* Row 2: Coordinates */}
-          <div className="w-full text-center mb-2">
-            <span className="font-bold">Latitude: </span>
-            <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
-            <span className="mx-2 font-bold">Longitude: </span>
-            <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
-          </div>
-          {/* Row 3: Grid Square */}
-          <div className="w-full text-center mb-2">
-            <span className="font-bold">Grid Square: </span>
-            <span className="text-orange">{mousePosition.grid}</span>
-          </div>
-          {/* Row 4: UTC Time aligned right and lowered */}
-          <div className="w-full text-right mt-1">
-            <span className="text-gray-400 text-xs">
-              UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
-            </span>
+            {gridSquare && (
+              <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
+                <span className="font-bold text-white">
+                  Grid Square: <span className="text-orange">{gridSquare}</span>
+                </span>
+                <button
+                  onClick={handleCopy}
+                  className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
+                >
+                  {copied ? "✅" : "📋"}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Desktop Header */}
-        <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-t-md shadow-md mb-2 items-center justify-between">
-          {/* Search Form */}
-          <div className="w-1/3 relative">
-            <form onSubmit={handleDirectSearchSubmit} className="relative flex items-center">
-              <input
-                type="text"
+        <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
+          {/* Map placed immediately after with increased mobile height */}
+          <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
+          {/* Nouvelle bannière pour la vue desktop sur une seule ligne */}
+          <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0 items-center justify-between">
+            <div className="flex-shrink-0 mr-4">
+              <InputSearch
                 placeholder={t("gridSquare.directSearchPlaceholder")}
                 value={directSearch}
                 onChange={(e) => setDirectSearch(e.target.value)}
-                className="bg-gray-700 text-white rounded-full pl-4 pr-12 py-2 w-full focus:outline-none"
+                onSubmit={handleDirectSearchSubmit}
+                className="w-auto min-w-[200px]"  // largeur minimale augmentée
               />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple hover:bg-orange text-white rounded-full px-3 py-1 transition-colors duration-200"
-              >
-                Go
-              </button>
-            </form>
-          </div>
-          {/* Coordinates & Grid Square */}
-          <div className="w-1/3 flex items-center justify-center space-x-4">
-            <div className="flex items-center">
-              <span className="font-bold">Latitude:</span>
-              <span className="text-purple ml-1">{mousePosition.lat.toFixed(4)}</span>
             </div>
-            <div className="flex items-center">
-              <span className="font-bold">Longitude:</span>
-              <span className="text-purple ml-1">{mousePosition.lon.toFixed(4)}</span>
+            <div className="flex space-x-4 items-center">
+              <div>
+                <span className="font-bold">Latitude:</span> <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+              </div>
+              <div>
+                <span className="font-bold">Longitude:</span> <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+              </div>
+              <div>
+                <span className="font-bold">Grid Square:</span> <span className="text-orange">{mousePosition.grid}</span>
+              </div>
             </div>
-            <div className="flex items-center">
-              <span className="font-bold">Grid Square:</span>
-              <span className="text-orange ml-1">{mousePosition.grid}</span>
-            </div>
-          </div>
-          {/* UTC Time aligned right and lowered */}
-          <div className="w-1/3 text-right flex flex-col items-end">
-            <div className="mt-auto">
+            <div>
               <span className="text-gray-400 text-base">
                 UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
               </span>
             </div>
           </div>
+          {/* Pour la vue mobile, garder l'ancienne bannière si nécessaire */}
+          <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0">
+            <div className="w-full mb-2">
+              <InputSearch
+                placeholder={t("gridSquare.directSearchPlaceholder")}
+                value={directSearch}
+                onChange={(e) => setDirectSearch(e.target.value)}
+                onSubmit={handleDirectSearchSubmit}
+              />
+            </div>
+            <div className="w-full text-center mb-2">
+              <span className="font-bold">Latitude: </span>
+              <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+              <span className="mx-2 font-bold">Longitude: </span>
+              <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+            </div>
+            <div className="w-full text-center mb-2">
+              <span className="font-bold">Grid Square: </span>
+              <span className="text-orange">{mousePosition.grid}</span>
+            </div>
+            <div className="w-full text-center">
+              <span className="text-gray-400 text-xs">
+                UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+              </span>
+            </div>
+          </div>
         </div>
-
-        {/* Map placed immediately after with increased mobile height */}
-        <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
       </div>
-    </div>
+    </>
   );
 }

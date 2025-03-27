@@ -15,30 +15,57 @@ interface Post {
   metadata: PostMetadata;
 }
 
+// Option 1 : Utiliser process.cwd() si le dossier "content" se trouve à la racine de votre projet
 const POSTS_DIR = path.join(process.cwd(), "content");
 
+// Vérification que le dossier existe
+if (!fs.existsSync(POSTS_DIR)) {
+  console.error("Le dossier posts n'existe pas:", POSTS_DIR);
+}
+
+// Vérifiez le contenu complet du dossier "content"
+fs.readdirSync(POSTS_DIR);
+
 export function getAllPosts(): Post[] {
-  const years = fs.readdirSync(POSTS_DIR).filter((year) => /^\d{4}$/.test(year));
+  // Itère sur tous les dossiers de langue (ex: 'en', 'fr')
+  const languageFolders = fs.readdirSync(POSTS_DIR).filter((folder) =>
+    fs.statSync(path.join(POSTS_DIR, folder)).isDirectory()
+  );
 
   let posts: Post[] = [];
   
-  for (const year of years) {
-    const yearPath = path.join(POSTS_DIR, year);
-    const files = fs.readdirSync(yearPath).filter((file) => file.endsWith(".mdx"));
+  for (const lang of languageFolders) {
+    const langPath = path.join(POSTS_DIR, lang);
+    // Itère sur les dossiers année dans chaque dossier de langue
+    const yearFolders = fs.readdirSync(langPath).filter((folder) =>
+      fs.statSync(path.join(langPath, folder)).isDirectory() && /^\d{4}$/.test(folder)
+    );
 
-    for (const file of files) {
-      const filePath = path.join(yearPath, file);
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const { data } = matter(fileContent);
+    for (const year of yearFolders) {
+      const yearPath = path.join(langPath, year);
+      const files = fs.readdirSync(yearPath).filter((file) => file.endsWith(".mdx"));
 
-      posts.push({
-        slug: `/blog/${file.replace(".mdx", "")}`,
-        metadata: data as PostMetadata,
-      });
+      for (const file of files) {
+        const filePath = path.join(yearPath, file);
+        const fileContent = fs.readFileSync(filePath, "utf-8");
+        const { data } = matter(fileContent);
+
+        posts.push({
+          // Inclut le dossier d'année dans le slug
+          slug: `/blog/${year}/${file.replace(".mdx", "")}`,
+          metadata: data as PostMetadata,
+        });
+      }
     }
   }
 
-  return posts.sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+  // Filtrer les doublons par slug
+  posts = posts.filter((post, index, self) =>
+    index === self.findIndex(p => p.slug === post.slug)
+  );
+
+  posts.sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+  return posts;
 }
 
 export function getPaginatedPosts(page: number, postsPerPage: number) {
