@@ -95,14 +95,14 @@ export const Navbar = () => {
                 className="rounded-full"
               />
             </Link>
-            <div className="hidden md:flex ml-[10px] text-gray-300 text-2xl font-bold">
+            <div className="flex items-center text-gray-300 text-lg sm:text-xl md:text-2xl font-bold">
               RADIONUGGET
             </div>
           </div>
 
           {/* Desktop Navigation: Center */}
           <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex">
-            <div className="flex items-center justify-between gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200">
+            <div className="flex items-center justify-between gap-6 md:gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200">
               <Link
                 href="/"
                 className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"

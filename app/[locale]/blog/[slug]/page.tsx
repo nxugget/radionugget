@@ -39,8 +39,7 @@ export default async function Article({ params }: { params: { locale: string; sl
 
   return (
     <main className="flex justify-center py-8 min-h-screen relative">
-      <div className="w-full max-w-7xl px-8">
-
+      <div className="w-full max-w-7xl px-0 sm:px-8">
         {/* 🔥 HEADER AVEC IMAGE BLURRED */}
         <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden rounded-lg shadow-lg">
           <div className="absolute inset-0">
@@ -61,14 +60,17 @@ export default async function Article({ params }: { params: { locale: string; sl
               <h1 className="text-3xl md:text-6xl font-bold text-white break-words max-w-full overflow-hidden text-ellipsis leading-tight pb-2">
                 {metadata.title}
               </h1>
-              <div className="border-b-4 border-gray-500 w-1/2 mx-auto mt-2"></div>
-              <p className="text-sm md:text-xl opacity-80 text-white mt-2">{metadata.date}</p>
+              <div className="border-b-4 border-purple w-1/2 mx-auto mt-2"></div>
+              <p className="text-base md:text-2xl opacity-80 text-white mt-2">{metadata.date}</p>
             </div>
           </div>
         </div>
 
         {/* ARTICLE CONTAINER */}
-        <article className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-2">
+        <article
+          style={{ fontSize: "calc(0.8rem + 0.5vw)" }}
+          className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-0 sm:mx-2"
+        >
           <MDXRemote
             source={content}
             components={{
@@ -116,6 +118,8 @@ export default async function Article({ params }: { params: { locale: string; sl
                   </SyntaxHighlighter>
                 );
               },
+              ul: (props) => <ul className="list-disc list-outside pl-16 mb-2" {...props} />,
+              li: (props) => <li className="mb-1" {...props} />,
             }}
           />
         </article>

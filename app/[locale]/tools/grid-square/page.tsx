@@ -6,7 +6,6 @@ import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
 import { useI18n } from "@/locales/client";
-import { NextSeo } from "next-seo";
 import InputSearch from "@/src/components/ui/InputSearch";
 
 // Import dynamique du composant Map
@@ -148,10 +147,6 @@ export default function GridSquareCalculator() {
 
   return (
     <>
-      <NextSeo
-        title="Grid Square Calculator | RadioNugget"
-        description="Calculate grid square coordinates easily and accurately."
-      />
       <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:px-4">
         <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[800px] mx-auto mb-4">
           <div className="bg-black/50 rounded-lg p-6 shadow-lg">

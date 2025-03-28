@@ -85,7 +85,7 @@ export default async function Blog({
                 <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
                   
                   {/* ✅ Titre traduit selon la locale */}
-                  <CardItem translateZ="60" className="text-2xl font-bold text-white">
+                  <CardItem as="h2" translateZ="60" className="text-2xl font-bold text-white">
                     {locale === "fr" && metadata.title_fr ? metadata.title_fr : metadata.title}
                   </CardItem>
 
