@@ -69,7 +69,7 @@ export default async function Article({ params }: { params: { locale: string; sl
         {/* ARTICLE CONTAINER */}
         <article
           style={{ fontSize: "calc(0.8rem + 0.5vw)" }}
-          className="bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-0 sm:mx-2"
+          className="font-roboto bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-0 sm:mx-2"
         >
           <MDXRemote
             source={content}
@@ -105,7 +105,7 @@ export default async function Article({ params }: { params: { locale: string; sl
               },
               div: (props) => <div {...props} />, 
               code: (props) => (
-                <code className="bg-[#2e2c2c] px-2 py-0.5 rounded text-base align-middle">
+                <code className="font-fira bg-[#2e2c2c] px-2 py-0.5 rounded text-base align-middle">
                   {props.children}
                 </code>
               ),

@@ -261,6 +261,9 @@ export default function SatelliteInfoPage() {
   const handleSatelliteSelect = (id: string) => {
     const sat = satellites.find((s) => s.id === id) || null;
 
+    // Reset image error state on every selection to force image reload.
+    setImageError(false);
+
     // Only reset details if a different satellite is selected
     if (selectedSatellite?.id !== id) {
       setSelectedSatellite(sat);
@@ -268,7 +271,9 @@ export default function SatelliteInfoPage() {
       setPolarInfo({ azimuth: 0, elevation: 0, nextAOSCountdown: -1 }); // Reset polar info
       setTrajectoryPoints([]); // Clear trajectory points
     }
-
+    // Clear search input and suggestions after selecting
+    setSearchQuery("");
+    setFilteredSatellites([]);
     setShowSuggestions(false); // Hide suggestions after selection
   };
 
@@ -326,7 +331,7 @@ export default function SatelliteInfoPage() {
         </div>
 
         {selectedSatellite && (
-          <div className="mt-6 p-4 rounded-lg flex flex-col md:flex-row gap-4"> {/* Removed bg-zinc-800 */}
+          <div className="mt-6 p-4 rounded-lg flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col gap-2">
               <div className="flex items-center gap-6"> {/* Increased gap */}
                 <h2 className="text-3xl font-bold text-white"> {/* Larger title */}
@@ -396,14 +401,6 @@ export default function SatelliteInfoPage() {
                     )}
                   </div>
                 </div>
-                <div className="mt-6 w-full"> {/* Full width */}
-                  <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full flex justify-center items-center"> {/* Center TLE content */}
-                    <TLEDisplay
-                      tle1={details?.tle1 || ""}
-                      tle2={details?.tle2 || ""}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
             <div className="md:w-1/3 flex-shrink-0 relative">
@@ -425,6 +422,16 @@ export default function SatelliteInfoPage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+        {selectedSatellite && (
+          <div className="mt-6 w-full text-center">
+            <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full inline-block">
+              <TLEDisplay
+                tle1={details?.tle1 || ""}
+                tle2={details?.tle2 || ""}
+              />
             </div>
           </div>
         )}

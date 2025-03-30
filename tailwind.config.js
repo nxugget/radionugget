@@ -2,9 +2,7 @@
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}" // added to scan files in src folder
+    "./src/**/*.{js,ts,jsx,tsx}" 
   ],
   theme: {
     extend: {
@@ -14,7 +12,10 @@ module.exports = {
         nottooblack: "#1a1a1a"
       },
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"], // Default
+        roboto: ["Roboto", "sans-serif"], // Pour le contenu des articles
+        alien: ["Alien", "sans-serif"], // Pour les titres using alien.ttf
+        fira: ["Fira Code", "monospace"], // Pour le code
       },
       backgroundImage: {
         grid: "linear-gradient(-90deg, transparent calc(var(--gap) - var(--line)), var(--color) calc(var(--gap) - var(--line) + 1px), var(--color) var(--gap)), linear-gradient(0deg, transparent calc(var(--gap) - var(--line)), var(--color) calc(var(--gap) - var(--line) + 1px), var(--color) var(--gap))"

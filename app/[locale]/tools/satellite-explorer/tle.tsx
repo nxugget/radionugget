@@ -73,7 +73,7 @@ function RenderTLELine({ line, lineType, setPopup }: RenderTLELineProps) {
 export default function TLEDisplay({ tle1, tle2 }: TLEDisplayProps) {
   const [popup, setPopup] = useState<PopupData | null>(null);
   return (
-    <div className="relative p-4 rounded w-full max-w-[1000px] text-left">
+    <div className="relative p-4 rounded w-full max-w-[1000px] text-center text-2xl tracking-normal text-white">
       {tle1 && <RenderTLELine line={tle1} lineType="line1" setPopup={setPopup} />}
       {tle2 && <RenderTLELine line={tle2} lineType="line2" setPopup={setPopup} />}
       {popup && (

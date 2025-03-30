@@ -95,9 +95,6 @@ export const Navbar = () => {
                 className="rounded-full"
               />
             </Link>
-            <div className="flex items-center text-gray-300 text-lg sm:text-xl md:text-2xl font-bold">
-              RADIONUGGET
-            </div>
           </div>
 
           {/* Desktop Navigation: Center */}
