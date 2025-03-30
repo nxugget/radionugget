@@ -13,7 +13,7 @@ Although transmitters generally agree on using different frequencies, modulation
 Imagine you have a signal to transmit, say, audio. We'll call it the **modulating signal**. This type of signal is low-frequency and very **weak**.  
 To carry it, we need another signal, the **carrier wave**, which has a high, **powerful** frequency. This is what actually carries our weak signal.
 
-By superimposing these two signals ([maths behind it](https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)), we obtain our modulated signal. There are several ways to do this, and as an example, we’re going to look at the simplest type: **amplitude modulation**.
+By superimposing these two signals ([maths behind it](https://en.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)), we obtain our modulated signal. There are several ways to do this, and as an example, we’re going to look at the simplest type: **amplitude modulation**.
 
 # Amplitude
 The **amplitude** of a signal represents its maximum height relative to its rest position. It’s essentially the "power" of the radio signal.  
@@ -34,7 +34,7 @@ Here’s what you get when you run the program:
 You can see our two neat sinusoids: the red one is the **carrier**, and the blue one is the **modulating signal**.
 
 # Amplitude Modulation
-Next, we superimpose our two signals by multiplying them ([check out the math behind it](https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)).  
+Next, we superimpose our two signals by multiplying them ([check out the math behind it](https://en.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)).  
 ![GNURadio Software](/images/blog/2024/am/modulation4.png)
 Here, we simply added a `Multiply` block and route the modulated signal to our `QT GUI Time Sink`. I also left the other two signals connected to the sink for a clearer understanding. Similarly, you can ignore the `Throttle` block.
 
@@ -46,6 +46,6 @@ And now, let’s display all three signals (modulating, carrier, and modulated):
 ![GNURadio Software](/images/blog/2024/am/modulation6.png)
 It becomes clear that as the **amplitude** of our modulating signal decreases, the **amplitude** of the carrier drops accordingly.
 
-That’s it for this simplified lesson on **amplitude modulation**. There are many other modulation types ([FM](https://fr.wikipedia.org/wiki/Modulation_de_fr%C3%A9quence#:~:text=En%20modulation%20de%20fr%C3%A9quence%2C%20l,(att%C3%A9nuation%20et%20bruit%20importants).), [PM](https://fr.wikipedia.org/wiki/Modulation_de_phase#:~:text=La%20modulation%20de%20phase%20ou,Cette%20modulation%20est%20non%20lin%C3%A9aire.), ...) chosen based on what you’re transmitting, your available bandwidth, the ambient noise, etc., but we’ll save that for another time :)
+That’s it for this simplified lesson on **amplitude modulation**. There are many other modulation types ([FM](https://en.wikipedia.org/wiki/Modulation_de_fr%C3%A9quence#:~:text=En%20modulation%20de%20fr%C3%A9quence%2C%20l,(att%C3%A9nuation%20et%20bruit%20importants).), [PM](https://en.wikipedia.org/wiki/Modulation_de_phase#:~:text=La%20modulation%20de%20phase%20ou,Cette%20modulation%20est%20non%20lin%C3%A9aire.), ...) chosen based on what you’re transmitting, your available bandwidth, the ambient noise, etc., but we’ll save that for another time :)
 
 

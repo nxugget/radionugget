@@ -27,10 +27,10 @@ It's like using [Wireshark](https://www.wireshark.org/) to analyze network packe
 # Sampling Rate  
 Radio signals are **analog** and contain an infinite range of values, something our **CPUs** don’t like. So we sample the signal at regular intervals, converting it into a finite series of numbers.  
 Essentially, we measure the signal's amplitude at regular points and record those values. This is called the **sampling rate**!  
-This process is enabled by an [Analog-to-Digital Converter (ADC)](https://fr.wikipedia.org/wiki/Convertisseur_analogique-num%C3%A9rique).  
+This process is enabled by an [Analog-to-Digital Converter (ADC)](https://en.wikipedia.org/wiki/Convertisseur_analogique-num%C3%A9rique).  
 The more samples you take, the more accurately the digital signal represents the real one, but the data becomes larger and takes longer to process.
 ![Sampling rate diagram](/images/blog/2024/sdr/sdr1.svg)
-There's also the [Nyquist–Shannon theorem](https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage) which states that to faithfully reconstruct an analog signal, you must sample at least twice its maximum frequency.
+There's also the [Nyquist–Shannon theorem](https://en.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage) which states that to faithfully reconstruct an analog signal, you must sample at least twice its maximum frequency.
 
 # SDR Receivers  
 Digitizing and processing signals via software is known as **SDR** (**S**oftware **D**efined **R**adio).  

@@ -1,14 +1,8 @@
 "use server";
 
-import fs from "fs";
-import path from "path";
-import {
-  twoline2satrec,
-  propagate,
-  gstime,
-  eciToEcf,
-  ecfToLookAngles,
-} from "satellite.js";
+import { twoline2satrec, propagate, gstime, eciToEcf, ecfToLookAngles } from "satellite.js";
+import amateurData from "@/data/satellites/amateur.json";
+import weatherData from "@/data/satellites/weather.json";
 
 function deg2rad(deg: number): number {
   return (deg * Math.PI) / 180;
@@ -19,41 +13,31 @@ function rad2deg(rad: number): number {
 }
 
 export interface Satellite {
-  name: string;
   id: string;
-  category?: string;
+  name: string;
+  tle1: string;
+  tle2: string;
+  description: string;
+  frequency: string[];
+  modulation: string;
+  image: string;
+  category: string;
 }
 
 export interface SatellitePassData {
   startTime: string;
   endTime: string;
   maxElevation: number;
+  aosAzimuth: number; // Obligatoire
+  losAzimuth: number; // Obligatoire
 }
 
-export interface TleSatellite extends Satellite {
-  tle1: string;
-  tle2: string;
-}
-
-const TLE_FILE_PATH = path.join(process.cwd(), "src", "data", "tle.json");
-
-/**
- * Récupère la liste des satellites disponibles avec filtre optionnel.
- */
-export async function getSatellites(category?: string): Promise<Satellite[]> {
-  if (!fs.existsSync(TLE_FILE_PATH)) {
-    throw new Error("TLE data file not found. Please run the TLE update script.");
-  }
-  const data = fs.readFileSync(TLE_FILE_PATH, "utf8");
-  const tleSatellites: TleSatellite[] = JSON.parse(data);
-
-  let satellites = tleSatellites.map(({ name, id, category }) => ({ name, id, category }));
-
-  if (category) {
-    satellites = satellites.filter((sat) => sat.category === category);
-  }
-
-  return satellites;
+export async function getSatellites(): Promise<Satellite[]> {
+  // Combine satellites from all subfolder JSON files
+  return [
+    ...(amateurData as Satellite[]),
+    ...(weatherData as Satellite[])
+  ];
 }
 
 /**
@@ -68,9 +52,8 @@ export async function getSatellitePasses(
   startTime: number = Math.floor(Date.now() / 1000),
   endTime: number = startTime + 86400 // 24h de prévisions
 ): Promise<SatellitePassData[]> {
-  const data = fs.readFileSync(TLE_FILE_PATH, "utf8");
-  const tleSatellites = JSON.parse(data);
-  const tle = tleSatellites.find((s: any) => s.id === satelliteId);
+  const satellites = await getSatellites();
+  const tle = satellites.find((s) => s.id === satelliteId);
   if (!tle) throw new Error("Satellite TLE not found");
 
   const satrec = twoline2satrec(tle.tle1, tle.tle2);
@@ -81,7 +64,7 @@ export async function getSatellitePasses(
   };
 
   const passes: SatellitePassData[] = [];
-  let step = 60; // Vérification toutes les 60 secondes
+  const step = 60; // Vérification toutes les 60 secondes
   let currentPass: SatellitePassData | null = null;
 
   for (let t = startTime; t <= endTime; t += step) {
@@ -97,19 +80,21 @@ export async function getSatellitePasses(
     const positionEcf = eciToEcf(positionEci, gmst);
     const lookAngles = ecfToLookAngles(observerGd, positionEcf);
     const elevationDeg = rad2deg(lookAngles.elevation);
+    const azimuthDeg = rad2deg(lookAngles.azimuth); // Calcul de l'azimuth
 
-    if (elevationDeg > elevation) { // Utilise l'élévation minimale spécifiée
+    if (elevationDeg > elevation) {
       if (!currentPass) {
-        // Début d'un passage
         currentPass = {
           startTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
           endTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
           maxElevation: elevationDeg,
+          aosAzimuth: azimuthDeg, // Toujours défini
+          losAzimuth: azimuthDeg, // Toujours défini
         };
       } else {
-        // Mise à jour de la fin du passage et de l'élévation max
         currentPass.endTime = new Date((t + utcOffset * 3600) * 1000).toISOString();
         currentPass.maxElevation = Math.max(currentPass.maxElevation, elevationDeg);
+        currentPass.losAzimuth = azimuthDeg; // Toujours défini
       }
     } else if (currentPass) {
       // Fin d'un passage, on l'ajoute

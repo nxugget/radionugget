@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         purple: "#b400ff",
         orange: "#ffaa00",
+        nottooblack: "#1a1a1a"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

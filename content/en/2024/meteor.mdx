@@ -6,7 +6,7 @@ thumbnail: "/images/blog/thumbnail/meteor.webp"
 tags: ["satellite", "space"]
 slug: "meteor"
 ---
-American NOAA satellites that we covered in <SmartLink href="/blog/space/satellite/noaa">my first project</SmartLink> are kind of the starting point for any satellite radio enthusiast. But there are other very similar satellites that deliver better images using roughly the same gear as NOAA, the Russian **METEOR** satellites 🇷🇺.
+American NOAA satellites that we covered in <SmartLink slug="noaa">my first project</SmartLink> are kind of the starting point for any satellite radio enthusiast. But there are other very similar satellites that deliver better images using roughly the same gear as NOAA, the Russian **METEOR** satellites 🇷🇺.
 
 # Who Are the METEOR?
 The **METEOR** satellites started as Soviet, then Russian weather satellites. Since **1964**, about **70** models have been launched. For this article, we’re focusing only on the latest series, **METEOR-M**, and here’s a brief history:
@@ -16,7 +16,7 @@ The **METEOR** satellites started as Soviet, then Russian weather satellites. Si
 Like their NOAA counterparts, the METEOR-M series orbits at roughly **800km** altitude and follows a **polar** orbit, more precisely, a **sun-synchronous** orbit. That means they always face the **Sun** 🌞. For more information on orbit types, check out <SmartLink slug="orbits">this lesson</SmartLink>.
 
 ![Orbite polaire](/images/blog/2024/type-orbits/type-orbits6.svg)
-A sun-synchronous orbit means the satellite passes over the same locations at the same [solar time](https://fr.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
+A sun-synchronous orbit means the satellite passes over the same locations at the same [solar time](https://en.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
 The main difference from NOAA is in the transmission mode: METEOR-M uses [LRPT](https://www.sigidwiki.com/wiki/Low_Rate_Picture_Transmission_(LRPT)), whereas NOAA used [APT](https://www.sigidwiki.com/wiki/Automatic_Picture_Transmission_(APT)).  
 For this article, we’re interested in two METEOR-M satellites:
 
@@ -25,7 +25,7 @@ Note that **METEOR M2-4** is still in a testing phase. Its frequency sometimes f
 To verify its status, you can use [this site](https://usradioguy.com/meteor-satellite/), which shows the current state of the satellite as of **09/02/2024**.
 
 # Time to Listen
-On the antenna side, I use a <SmartLink href="/blog/radio/ground/qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**, ideal for METEOR since they transmit with **right-hand circular polarization**.
+On the antenna side, I use a <SmartLink slug="qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**, ideal for METEOR since they transmit with **right-hand circular polarization**.
 For reception, we use [SatDump](https://www.satdump.org/download/). I won’t go into all the configuration details (I’ve already done a tutorial on **SatDump** [here](https://www.satdump.org/download/)), but here’s the gist:
 - First, using the `Tracking` section in SatDump or via [this website](https://www.n2yo.com/?s=33591), check when the satellite will pass by. This section also shows the satellite's current **elevation**.
   

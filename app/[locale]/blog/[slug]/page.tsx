@@ -54,7 +54,7 @@ export default async function Article({ params }: { params: { locale: string; sl
 
           <div className="relative z-10 flex items-center justify-center h-full px-4">
             <div
-              className="bg-black/50 rounded-lg p-4 text-center w-full break-words whitespace-normal max-w-full"
+              className="bg-black/50 rounded-lg py-2 px-4 text-center w-full break-words whitespace-normal max-w-full"
               style={{ overflowWrap: "break-word", wordBreak: "break-word" }}
             >
               <h1 className="text-3xl md:text-6xl font-bold text-white break-words max-w-full overflow-hidden text-ellipsis leading-tight pb-2">
@@ -81,6 +81,7 @@ export default async function Article({ params }: { params: { locale: string; sl
                 />
               ),
               strong: (props) => <strong className="text-orange font-semibold" {...props} />,
+              em: (props) => <em className="italic" {...props} />,
               a: (props) => <a className="text-purple transition-colors duration-300 hover:text-[#8000bf]" {...props} />,
               p: (props) => {
                 return <div className="mb-4 leading-relaxed">{props.children}</div>;
@@ -103,10 +104,14 @@ export default async function Article({ params }: { params: { locale: string; sl
                 );
               },
               div: (props) => <div {...props} />, 
-              code: (props) => <code className="bg-[#2e2c2c] px-2 py-1 rounded text-sm">{props.children}</code>,
+              code: (props) => (
+                <code className="bg-[#2e2c2c] px-2 py-0.5 rounded text-base align-middle">
+                  {props.children}
+                </code>
+              ),
               pre: ({ children }) => {
                 const match = children?.props?.className?.match(/language-(\w+)/);
-                const language = match ? match[1] : "plaintext"; // Détecte la langue ou fallback à "plaintext"
+                const language = match ? match[1] : "plaintext"; 
                 return (
                   <SyntaxHighlighter
                     style={synthwave84}
@@ -120,6 +125,7 @@ export default async function Article({ params }: { params: { locale: string; sl
               },
               ul: (props) => <ul className="list-disc list-outside pl-16 mb-2" {...props} />,
               li: (props) => <li className="mb-1" {...props} />,
+              head: (props) => null, // ignore any <head> contenu dans l'article MDX
             }}
           />
         </article>

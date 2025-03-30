@@ -8,6 +8,7 @@ export default {
   },
   gridSquare: {
     directSearchPlaceholder: "Recherche Grid Square...",
+    invalid: "Gridsquare invalide"
   },
   navbar: {
     home: "Accueil",
@@ -15,6 +16,7 @@ export default {
     tools: "Outils",
     gridSquare: "Grid Square", 
     satellitePrediction: "Prédiction Satellite", 
+    satelliteInfo: "Info Satellite",
     gallery: "Galerie",
     english: "English", 
     french: "Français"
@@ -34,12 +36,12 @@ export default {
     "3": { title: "Recevoir des images en provenance de l'ISS" },
     "4": { title: "Fabrication d'une antenne quadrifilaire (QFH)" },
   },
-  footer: {  // new footer translations
+  footer: { 
     thanks: "Merci",
-    solhey: "Sol'hey",
     illustration: "pour l'illustration de la page d'accueil",
     madeWith: "Fait avec",
     by: "par",
     myself: "moi-même"
-  }
+  },
+  betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com"
 } as const;

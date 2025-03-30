@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-tle": "node scripts/updateTLE.js"
+    "update-tle": "node scripts/updateTLE.js",
+    "tle-update": "node scripts/updateTLE.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

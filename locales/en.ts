@@ -8,6 +8,7 @@ export default {
   },
   gridSquare: {
     directSearchPlaceholder: "Grid square search...",
+    invalid: "Invalid grid square"
   },
   navbar: {
     home: "Home",
@@ -15,6 +16,7 @@ export default {
     tools: "Tools",
     gridSquare: "Grid Square",
     satellitePrediction: "Satellite Prediction",
+    satelliteInfo: "Satellite Info",
     gallery: "Gallery",
     english: "English",
     french: "Français"
@@ -36,10 +38,10 @@ export default {
   },
   footer: {  // new footer translations
     thanks: "Thanks",
-    solhey: "Sol'hey",
     illustration: "for the homepage illustration",
     madeWith: "Made with",
     by: "by",
     myself: "myself"
-  }
+  },
+  betaDescription: "This tool is in beta version. If you notice any bugs or have improvement ideas, I am extremely open and responsive :) You can send me an email at this address: contact@radionugget.com"
 } as const;

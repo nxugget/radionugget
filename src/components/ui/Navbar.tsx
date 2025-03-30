@@ -128,7 +128,7 @@ export const Navbar = () => {
                   }, 300);
                 }}
               >
-                <button className="text-xl font-medium flex items-center gap-1 transition hover:text-[rgb(136,66,248)] hover:scale-[1.02]">
+                <button className="text-xl font-medium flex items-center gap-1 transition-colors duration-300 hover:text-purple-400">
                   {t("navbar.tools")}
                   <svg
                     className={`w-4 h-4 transition-transform duration-300 ${isToolsOpen ? "rotate-180" : ""}`}
@@ -144,19 +144,25 @@ export const Navbar = () => {
 
                 {isToolsOpen && (
                   <div
-                    className="absolute left-0 top-full mt-1 bg-black/50 backdrop-blur-xl rounded-sm shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-1 px-2 py-0.5 min-w-max"
+                    className="absolute left-0 top-full mt-1 bg-black/80 backdrop-blur-xl rounded-sm shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-1 px-2 py-0.5 min-w-max"
                   >
                     <Link
                       href="/tools/grid-square"
-                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:scale-[1.02] whitespace-nowrap"
+                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
                     >
                       {t("navbar.gridSquare")}
                     </Link>
                     {/*<Link
                       href="/tools/satellite-prediction"
-                      className="block px-2 py-0.5 text-xl transition-all duration-300 hover:text-[rgb(136,66,248)] hover:scale-105 whitespace-nowrap"
+                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
                     >
                       {t("navbar.satellitePrediction")}
+                    </Link>*/}
+                    {/*<Link
+                      href="/tools/satellite-explorer"
+                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
+                    >
+                      {t("navbar.satelliteInfo")}
                     </Link>*/}
                   </div>
                 )}

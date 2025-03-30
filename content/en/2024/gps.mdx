@@ -9,7 +9,7 @@ slug: "gps"
 The satellite positioning system, commonly known as **GNSS** (Global Navigation Satellite System), lets us determine precise geographic positions anywhere on **Earth** 🌍. Today, we’re breaking down how it works in broad strokes, even though it can get pretty complex!
 
 # Introduction
-What we call **GPS** (Global Positioning System) is just one type of **GNSS** operated by the **United States** since the 1970s. There are others, like [Galileo](https://fr.wikipedia.org/wiki/Galileo_(syst%C3%A8me_de_positionnement)) in **Europe**, [GLONASS](https://fr.wikipedia.org/wiki/GLONASS) in **Russia**, or [BeiDou](https://fr.wikipedia.org/wiki/Beidou) in **China**.  
+What we call **GPS** (Global Positioning System) is just one type of **GNSS** operated by the **United States** since the 1970s. There are others, like [Galileo](https://en.wikipedia.org/wiki/Galileo_(syst%C3%A8me_de_positionnement)) in **Europe**, [GLONASS](https://en.wikipedia.org/wiki/GLONASS) in **Russia**, or [BeiDou](https://en.wikipedia.org/wiki/Beidou) in **China**.  
 So when people say “GPS,” they’re really referring to the generic term **GNSS** regardless of which system is in play.  
 To form a GNSS constellation, about twenty satellites orbit **Earth** at roughly `20000km` in the <SmartLink slug="orbits">medium Earth orbit</SmartLink>.
 
@@ -24,7 +24,7 @@ This system uses a **Cartesian** framework with three mutually perpendicular axe
 Since raw **(x,y,z)**’s aren’t very user-friendly, we convert them into the much simpler **latitude** and **longitude** format.
 
 # Triangulation
-All the satellites’ clocks are synchronized to a source known as [GPS Time](https://fr.wikipedia.org/wiki/Synchronisation_GPS). When your **GNSS** receiver (for example, your smartphone) picks up signals from at least **4 satellites**, it can calculate your position by measuring **4 pseudo-ranges**.
+All the satellites’ clocks are synchronized to a source known as [GPS Time](https://en.wikipedia.org/wiki/Synchronisation_GPS). When your **GNSS** receiver (for example, your smartphone) picks up signals from at least **4 satellites**, it can calculate your position by measuring **4 pseudo-ranges**.
 
 ## Pseudo-ranges
 We call them “pseudo” distances because they include not just the true distance, but also various errors such as:
@@ -41,7 +41,7 @@ where `P` is the **pseudo-range** in meters, `c` is the **speed of light** in m/
 By solving an equation with **4 unknowns**, your device can determine its **(x,y,z)** coordinates on **Earth** as well as the clock offset relative to the satellites.  
 ![Schema triangulation formules](/images/blog/2024/gps/gps2.svg)
 These equations essentially calculate the real distance between each satellite and your receiver using the 3D version of the Pythagorean theorem, with `X`, `Y`, and `Z` being the satellite’s coordinates and `U` representing your unknown location. Then, the clock error (expressed as `c` times the time difference) is added to account for the time discrepancy.
-We won’t dive into the nitty-gritty of solving these equations, it gets pretty involved, but there are two primary methods: ([Least Squares Method](https://fr.wikipedia.org/wiki/M%C3%A9thode_des_moindres_carr%C3%A9s)) and ([Kalman Filter](https://fr.wikipedia.org/wiki/Filtre_de_Kalman)). If you’re curious, check them out!  
+We won’t dive into the nitty-gritty of solving these equations, it gets pretty involved, but there are two primary methods: ([Least Squares Method](https://en.wikipedia.org/wiki/M%C3%A9thode_des_moindres_carr%C3%A9s)) and ([Kalman Filter](https://en.wikipedia.org/wiki/Filtre_de_Kalman)). If you’re curious, check them out!  
 Once solved, you obtain the **(x,y,z)** coordinates of `U`.
 
 ## Latitude and Longitude

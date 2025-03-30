@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
 import { useI18n } from "@/locales/client";
 import InputSearch from "@/src/components/ui/InputSearch";
+import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import isValidGridSquare
 
 // Import dynamique du composant Map
 const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });
@@ -60,8 +61,6 @@ export default function GridSquareCalculator() {
     }
   }, [query, suppressSuggestions]);
 
-  
-
   // Ajout d'un event listener pour masquer les suggestions lorsqu'on clique en dehors du conteneur
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -91,7 +90,7 @@ export default function GridSquareCalculator() {
   const fetchCoordinates = async (address: string) => {
     setLoading(true);
     setError(null);
-    setGridSquare(null);
+    setGridSquare(null); // Réinitialiser le grid square avant la recherche
 
     try {
       const response = await fetch(
@@ -105,7 +104,7 @@ export default function GridSquareCalculator() {
 
       const { lat, lon } = data[0];
       const square = getGridSquare(parseFloat(lat), parseFloat(lon));
-      setGridSquare(square);
+      handleGridSquareChange(square); // Mettre à jour le grid square
 
       setMapCenter([parseFloat(lat), parseFloat(lon)]);
       setMapZoom(13);
@@ -132,16 +131,28 @@ export default function GridSquareCalculator() {
 
   const handleDirectSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!/^[A-Za-z]{2}(\d{2}([A-Za-z]{2})?)?$/.test(directSearch)) {
-      setDirectSearchError(t("notFound")); // fallback retiré
+    if (!isValidGridSquare(directSearch)) { // Use isValidGridSquare instead of regex
+      setDirectSearchError(t("gridSquare.invalid"));
       return;
     }
     try {
       const coords = getGridSquareCoords(directSearch);
       setMapCenter([coords.lat, coords.lon]);
       setMapZoom(13);
+      handleGridSquareChange(directSearch); // Mettre à jour le grid square
     } catch (error) {
-      setDirectSearchError(t("notFound")); // fallback retiré
+      setDirectSearchError(t("gridSquare.invalid"));
+    }
+  };
+
+  const handleGridSquareChange = (newGridSquare: string) => {
+    setGridSquare(newGridSquare);
+    try {
+      const coords = getGridSquareCoords(newGridSquare);
+      setMapCenter([coords.lat, coords.lon]);
+      setMapZoom(13);
+    } catch {
+      console.error("Gridsquare invalide.");
     }
   };
 
@@ -153,16 +164,18 @@ export default function GridSquareCalculator() {
             <div className="w-full flex justify-center">
               {hasLoaded && (
                 <TypewriterEffectSmooth
+                  as="h1"
                   words={[
                     { text: "Grid", className: "text-[#b400ff]" },
                     { text: "Square", className: "text-[#b400ff]" },
                     { text: t("gridSquareCalculator.calculator"), className: "text-white" }
                   ]}
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2" // increased text size for mobile
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2"
                   cursorClassName="bg-[#b400ff]"
                 />
               )}
             </div>
+            <p className="text-center text-gray-400 mb-6">{t("betaDescription")}</p>
 
             <GridSquareInfo />
             <div ref={searchRef} className="relative w-full max-w-sm mx-auto my-2">
@@ -227,8 +240,15 @@ export default function GridSquareCalculator() {
                 value={directSearch}
                 onChange={(e) => setDirectSearch(e.target.value)}
                 onSubmit={handleDirectSearchSubmit}
-                className="w-auto min-w-[200px]"  // largeur minimale augmentée
+                className="w-auto min-w-[200px]" // largeur minimale augmentée
               />
+              <div className="text-center">
+                {directSearchError && (
+                  <span className="text-red-500 text-sm mt-1 block animate-pulse">
+                    {directSearchError}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="flex space-x-4 items-center">
               <div>
@@ -256,6 +276,13 @@ export default function GridSquareCalculator() {
                 onChange={(e) => setDirectSearch(e.target.value)}
                 onSubmit={handleDirectSearchSubmit}
               />
+              <div className="text-center">
+                {directSearchError && (
+                  <span className="text-red-500 text-sm mt-1 block animate-pulse">
+                    {directSearchError}
+                  </span>
+                )}
+              </div>
             </div>
             <div className="w-full text-center mb-2">
               <span className="font-bold">Latitude: </span>

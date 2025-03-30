@@ -68,27 +68,21 @@ const getDetailLevel = (zoom: number) => {
 const GridLabel = ({
   position,
   label,
-  detailLevel,
+  zoomLevel,
 }: {
   position: [number, number];
   label: string;
-  detailLevel: number;
+  zoomLevel: number;
 }) => {
-  // Ajustement de la taille de police et de l'icône selon le niveau de détail
-  const sizeMapping: Record<number, { iconSize: [number, number]; fontSize: string }> = {
-    1: { iconSize: [50, 20], fontSize: "14px" },
-    2: { iconSize: [40, 16], fontSize: "12px" },
-    3: { iconSize: [30, 14], fontSize: "10px" },
-  };
-
-  const { iconSize, fontSize } = sizeMapping[detailLevel] || sizeMapping[2];
+  // Augmenter la taille de la police en ajustant les limites
+  const baseFontSize = zoomLevel * 3; // Augmenter le facteur de base
+  const fontSize = Math.max(18, Math.min(32, baseFontSize - label.length * 1.2)); // Ajuster les limites min/max
 
   const icon = L.divIcon({
-    html: `<div class="grid-label" style="font-size:${fontSize};">${label}</div>`,
+    html: `<div class="grid-label grid-square-label">${label}</div>`,
     className: "",
-    iconSize: iconSize,
-    // On ancre le label au milieu pour qu'il soit centré
-    iconAnchor: [iconSize[0] / 2, iconSize[1] / 2],
+    iconSize: [fontSize * label.length, fontSize], // Ajuster la taille de l'icône
+    iconAnchor: [fontSize * label.length / 2, fontSize / 2], // Centrer dynamiquement
   });
 
   return <Marker position={position} icon={icon} interactive={false} />;
@@ -127,6 +121,7 @@ const GridLayer = () => {
     center: [number, number];
   }[]>([]);
   const [currentDetailLevel, setCurrentDetailLevel] = useState(getDetailLevel(map.getZoom()));
+  const [currentZoomLevel, setCurrentZoomLevel] = useState(map.getZoom());
 
   useEffect(() => {
     const updateGrid = () => {
@@ -134,6 +129,7 @@ const GridLayer = () => {
       const zoom = map.getZoom();
       const detailLevel = getDetailLevel(zoom);
       setCurrentDetailLevel(detailLevel);
+      setCurrentZoomLevel(zoom);
 
       let latStep: number, lonStep: number;
 
@@ -161,12 +157,16 @@ const GridLayer = () => {
 
       for (let lat = startLat; lat < endLat; lat += latStep) {
         for (let lon = startLon; lon < endLon; lon += lonStep) {
-          const label = getGridSquare(lat + latStep / 2, lon + lonStep / 2, detailLevel); // Correction ici
+          const label = getGridSquare(lat + latStep / 2, lon + lonStep / 2, detailLevel);
           const squareBounds: LatLngBoundsExpression = [
             [lat, lon],
             [lat + latStep, lon + lonStep],
           ];
-          const center: [number, number] = [lat + latStep / 2, lon + lonStep / 2]; // Centre ajusté
+          // Correction : calcul précis des coordonnées centrales
+          const center: [number, number] = [
+            (lat + (lat + latStep)) / 2, // Moyenne des limites sud et nord
+            (lon + (lon + lonStep)) / 2, // Moyenne des limites ouest et est
+          ];
           newGridSquares.push({ bounds: squareBounds, label, center });
         }
       }
@@ -200,7 +200,7 @@ const GridLayer = () => {
           <GridLabel
             position={square.center}
             label={square.label}
-            detailLevel={currentDetailLevel}
+            zoomLevel={currentZoomLevel} // Pass zoom level to GridLabel
           />
         </React.Fragment>
       ))}
@@ -244,13 +244,6 @@ export default function Map({
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
         />
-        {/* Comment out or remove the problematic tile layer with certificate issues
-        <TileLayer
-          url="https://tileserver.aurora.openmundi.com/tiles/{z}/{x}/{y}.png"
-          opacity={0.5}
-          errorTileUrl="https://via.placeholder.com/256?text=Tile+Error" // Gestion des erreurs de tuiles
-        />
-        */}
         <RecenterMap center={center} zoom={zoom} />
         <MouseTracker setMousePosition={setMousePosition} />
         <GridLayer />
@@ -258,6 +251,9 @@ export default function Map({
 
       <style jsx global>{`
         .grid-label {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           color: rgba(255, 170, 0, 0.8);
           text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
           background: transparent;

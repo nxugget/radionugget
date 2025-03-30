@@ -6,7 +6,7 @@ thumbnail: "/images/blog/thumbnail/sstv.webp"
 tags: ["radio", "space"]
 slug: "sstv"
 ---
-Have you heard about the [ARISS](https://fr.wikipedia.org/wiki/ARISS) (Amateur Radio on the International Space Station) program? It lets radio amateurs worldwide communicate with astronauts aboard the [ISS](https://fr.wikipedia.org/wiki/Station_spatiale_internationale). As part of ARISS, images are sometimes transmitted using **SSTV** (Slow Scan Television), allowing enthusiasts like us to receive photos directly from space.
+Have you heard about the [ARISS](https://en.wikipedia.org/wiki/ARISS) (Amateur Radio on the International Space Station) program? It lets radio amateurs worldwide communicate with astronauts aboard the [ISS](https://en.wikipedia.org/wiki/Station_spatiale_internationale). As part of ARISS, images are sometimes transmitted using **SSTV** (Slow Scan Television), allowing enthusiasts like us to receive photos directly from space.
 
 # SSTV
 **SSTV** is a method of transmitting images using radio waves. It’s been around since the 1950s and isn’t used as much today because sending images is much easier over the Internet. The signal is easily recognized by its distinctive tone, check out [this example](https://www.youtube.com/watch?v=XALkHpdii2A). That audio tone is then decoded with specialized software to convert it into an image like this:
@@ -44,7 +44,7 @@ Any SDR receiver works; I had good results with the [RTL-SDR V4](https://www.pas
 Since these SSTV transmissions are rare, I record the signal first and decode it offline as illustrated in the *Offline Processing* diagram above. My setup is as follows:
 
 ![SSTV antenna](/images/blog/2024/sstv/sstv7.jpg)
-Using [SDR++](https://www.sdrpp.org), set the frequency during the ARISS contact, in my case, `145.800MHz`, and choose [NFM](https://fr.wikipedia.org/wiki/Bande_étroite) as the modulation mode.  
+Using [SDR++](https://www.sdrpp.org), set the frequency during the ARISS contact, in my case, `145.800MHz`, and choose [NFM](https://en.wikipedia.org/wiki/Bande_étroite) as the modulation mode.  
 Under the `Record` section, click **Record**. Be patient if no signal appears immediately; a distinct tone marks the beginning of the transmission. Adjust the `Max` and `Min` settings on the waterfall display to clearly highlight the signal.
 
 ![SDR++ SSTV](/images/blog/2024/sstv/sstv4.png)

@@ -5,7 +5,10 @@ import SatelliteSearch from "./SatelliteSearch";
 import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
 import SatelliteTimeline from "./SatelliteTimeline";
+import SatelliteTab from "./SatelliteTab"; // new import
 import { getGridSquareCoords } from "@/src/lib/gridSquare";
+import { useI18n } from "@/locales/client"; // Add i18n import
+import { getCookieValue, setCookie } from "@/src/lib/cookies"; // Restore cookie functions for favorites
 
 interface Satellite {
   name: string;
@@ -17,6 +20,8 @@ interface SatellitePassData {
   startTime: string;
   endTime: string;
   maxElevation: number;
+  aosAzimuth?: number; // Added aosAzimuth
+  losAzimuth?: number; // Added losAzimuth
 }
 
 interface SatellitePrediction {
@@ -48,10 +53,12 @@ function CookieBanner() {
 }
 
 export default function SatelliteTracker() {
+  const t = useI18n(); // Initialize i18n
   const [satellites, setSatellites] = useState<Satellite[]>([]);
   const [selectedSatellites, setSelectedSatellites] = useState<Satellite[]>([]);
   const [allPredictions, setAllPredictions] = useState<SatellitePrediction[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<"timeline" | "table">("timeline"); // New view mode state
 
   // Configuration
   const [elevation, setElevation] = useState(10);
@@ -76,25 +83,7 @@ export default function SatelliteTracker() {
   const [selectedAvailableId, setSelectedAvailableId] = useState<string | null>(null);
   const [selectedChosenId, setSelectedChosenId] = useState<string | null>(null);
 
-  // Fonctions d'aide pour les cookies
-  const getCookieValue = (name: string) => {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i].trim();
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-    }
-    return null;
-  };
-
-  const updateCookie = (name: string, value: string, days: number = 365) => {
-    const d = new Date();
-    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = "expires=" + d.toUTCString();
-    document.cookie = `${name}=${value};${expires};path=/`;
-  };
-
-  // Charger les favoris et la position depuis les cookies au chargement
+  // Charger les favoris depuis les cookies au chargement
   useEffect(() => {
     const favCookie = getCookieValue("favorites");
     if (favCookie) {
@@ -104,32 +93,31 @@ export default function SatelliteTracker() {
         setFavorites([]);
       }
     }
-    const latCookie = getCookieValue("latitude");
-    if (latCookie) setLatitude(parseFloat(latCookie));
-    const lonCookie = getCookieValue("longitude");
-    if (lonCookie) setLongitude(parseFloat(lonCookie));
-    const cityCookie = getCookieValue("city");
-    if (cityCookie) setCity(cityCookie);
-    const gridCookie = getCookieValue("gridSquare");
-    if (gridCookie) setGridSquare(gridCookie);
   }, []);
 
   // Mettre à jour les cookies lors du changement de position
   useEffect(() => {
-    updateCookie("latitude", latitude.toString());
+    setCookie("latitude", latitude.toString());
   }, [latitude]);
 
   useEffect(() => {
-    updateCookie("longitude", longitude.toString());
+    setCookie("longitude", longitude.toString());
   }, [longitude]);
 
   useEffect(() => {
-    updateCookie("city", city);
+    setCookie("city", city);
   }, [city]);
 
-  useEffect(() => {
-    updateCookie("gridSquare", gridSquare);
-  }, [gridSquare]);
+  const handleGridSquareChange = (newGridSquare: string) => {
+    setGridSquareInput(newGridSquare);
+    try {
+      const coords = getGridSquareCoords(newGridSquare);
+      setLatitude(coords.lat);
+      setLongitude(coords.lon);
+    } catch {
+      console.error("Gridsquare invalide.");
+    }
+  };
 
   // Fonction pour basculer l'état "favoris" et mettre à jour le cookie
   const toggleFavorite = (id: string) => {
@@ -140,7 +128,7 @@ export default function SatelliteTracker() {
       } else {
         newFavorites = [...prev, id];
       }
-      updateCookie("favorites", JSON.stringify(newFavorites));
+      setCookie("favorites", JSON.stringify(newFavorites)); // Update cookie for favorites
       return newFavorites;
     });
   };
@@ -272,6 +260,7 @@ export default function SatelliteTracker() {
       <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-6">
         <div className="w-full flex justify-center mb-6">
           <TypewriterEffectSmooth
+            as="h1"
             words={[
               { text: "Satellite", className: "text-purple" },
               { text: "Pass", className: "text-white" },
@@ -281,7 +270,7 @@ export default function SatelliteTracker() {
             cursorClassName="bg-purple"
           />
         </div>
-
+        <p className="text-center text-gray-400 mb-6">{t("betaDescription")}</p>
         <div className="flex flex-col md:flex-row gap-6">
           {/* PARTIE GAUCHE : sélection des satellites */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
@@ -442,18 +431,7 @@ export default function SatelliteTracker() {
                     <input
                       type="text"
                       value={gridSquareInput}
-                      onChange={(e) => setGridSquareInput(e.target.value)}
-                      onBlur={() => {
-                        if (gridSquareInput.trim() !== "") {
-                          try {
-                            const coords = getGridSquareCoords(gridSquareInput);
-                            setLatitude(coords.lat);
-                            setLongitude(coords.lon);
-                          } catch {
-                            alert("Gridsquare invalide.");
-                          }
-                        }
-                      }}
+                      onChange={(e) => handleGridSquareChange(e.target.value)}
                       placeholder="Gridsquare (ex: JN18du)"
                       className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full"
                     />
@@ -525,23 +503,6 @@ export default function SatelliteTracker() {
               </div>
             </div>
 
-            {/* Section Local Time */}
-            <div className="flex items-center gap-6">
-              <label
-                htmlFor="localTime"
-                className="flex items-center gap-2 text-white cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id="localTime"
-                  checked={useLocalTime}
-                  onChange={(e) => handleLocalTimeChange(e.target.checked)}
-                  className="h-8 w-8 appearance-none border-2 border-orange rounded-md cursor-pointer transition-colors duration-300 hover:border-purple checked:bg-purple checked:border-purple"
-                />
-                <span className="text-lg font-semibold select-none">Local Time</span>
-              </label>
-            </div>
-
             {/* Section Élévation minimale */}
             <div className="mt-4">
               <p className="text-white mb-1">Élévation minimale (°)</p>
@@ -568,23 +529,97 @@ export default function SatelliteTracker() {
           </div>
         </div>
 
-        <div className="mt-6 w-full flex justify-center">
-          <div className="w-full max-w-[1400px] overflow-x-auto">
-            <SatelliteTimeline
-              key={JSON.stringify(allPredictions)} // Force le re-rendu lorsque les prédictions changent
-              passes={allPredictions.flatMap((pred) =>
-                pred.passes.map((pass) => ({
-                  satelliteName: pred.satelliteName,
-                  startTime: pass.startTime,
-                  endTime: pass.endTime,
-                  maxElevation: pass.maxElevation,
-                }))
-              )}
-              useLocalTime={useLocalTime}
-              utcOffset={utcOffset}
-            />
+        {/* New Small Toggle Section (positioned above predictions) */}
+        {allPredictions.length > 0 && (
+          <div className="mt-4 flex justify-start gap-4">
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-gray-800 rounded-md overflow-hidden">
+              <button
+                onClick={() => setViewMode("timeline")}
+                className={`px-3 py-1 text-sm text-white ${
+                  viewMode === "timeline" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                }`}
+              >
+                Timeline
+              </button>
+              <button
+                onClick={() => setViewMode("table")}
+                className={`px-3 py-1 text-sm text-white ${
+                  viewMode === "table" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                }`}
+              >
+                Table
+              </button>
+            </div>
+            {/* Time Mode Toggle */}
+            <div className="flex items-center bg-gray-800 rounded-md overflow-hidden">
+              <button
+                onClick={() => {
+                  setUseLocalTime(false);
+                  setUtcOffset(0);
+                }}
+                className={`px-3 py-1 text-sm text-white ${
+                  !useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                }`}
+              >
+                UTC Time
+              </button>
+              <button
+                onClick={() => {
+                  setUseLocalTime(true);
+                  const offset = -new Date().getTimezoneOffset() / 60;
+                  setUtcOffset(offset);
+                }}
+                className={`px-3 py-1 text-sm text-white ${
+                  useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                }`}
+              >
+                Local Time
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
+        {allPredictions.length > 0 && (
+          <div className="mt-6 w-full flex justify-center">
+            <div className="w-full max-w-[1400px] overflow-x-auto">
+              {viewMode === "timeline" ? (
+                <SatelliteTimeline
+                  key={JSON.stringify(allPredictions)} // Force re-render when predictions change
+                  passes={allPredictions.flatMap((pred) =>
+                    pred.passes.map((pass) => ({
+                      satelliteName: pred.satelliteName,
+                      satelliteId: pred.satelliteId,
+                      startTime: pass.startTime,
+                      endTime: pass.endTime,
+                      maxElevation: pass.maxElevation,
+                      aosAzimuth: pass.aosAzimuth ?? 0,
+                      losAzimuth: pass.losAzimuth ?? 0,
+                    }))
+                  )}
+                  useLocalTime={useLocalTime}
+                  utcOffset={utcOffset}
+                />
+              ) : (
+                <SatelliteTab
+                  passes={allPredictions.flatMap((pred) =>
+                    pred.passes.map((pass) => ({
+                      satelliteName: pred.satelliteName,
+                      satelliteId: pred.satelliteId,
+                      startTime: pass.startTime,
+                      endTime: pass.endTime,
+                      maxElevation: pass.maxElevation,
+                      aosAzimuth: pass.aosAzimuth ?? 0,
+                      losAzimuth: pass.losAzimuth ?? 0,
+                    }))
+                  )}
+                  useLocalTime={useLocalTime}
+                  utcOffset={utcOffset}
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
       {/* Bannière de cookies */}
       <CookieBanner />

@@ -11,7 +11,7 @@ For anyone curious about starting out in SDR, receiving satellite images by buil
 # Project Overview
 
 ## Who are the NOAA?
-The [NOAA](https://fr.wikipedia.org/wiki/NOAA_POES) satellites are American weather satellites orbiting at approximately `850km`. For comparison, the **ISS** flies at about `400km`.  
+The [NOAA](https://en.wikipedia.org/wiki/NOAA_POES) satellites are American weather satellites orbiting at approximately `850km`. For comparison, the **ISS** flies at about `400km`.  
 Currently, there are 3 that will interest us:
 
 ![Satellite NOAA](/images/blog/2024/noaa/noaa.svg)
@@ -21,13 +21,13 @@ Their frequencies are public, so anyone with the right gear can capture their im
 These satellites have a circular orbit that takes them over Earth’s poles. They follow a **polar**, more precisely, a **sun-synchronous**, orbit. This ensures they always present the same angle relative to the Sun:
 
 ![Orbite polaire](/images/blog/2024/type-orbits/type-orbits6.svg)
-A sun-synchronous orbit means the satellite passes over the same spot at the same [solar time](https://fr.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
+A sun-synchronous orbit means the satellite passes over the same spot at the same [solar time](https://en.wikipedia.org/wiki/Temps_solaire) **twice a day**.  
 For example, using satellite tracking software or websites (like the ones listed below), you can predict their passes based on geographic coordinates.
 
 ![Prédictions satellite](/images/blog/2024/noaa/prediction_pass.svg)
 
 ## APT Transmission
-NOAA satellites don’t directly capture photographs of Earth. They use a [scanning radiometer](https://fr.wikipedia.org/wiki/Radiom%C3%A8tre_Avanc%C3%A9_%C3%A0_Tr%C3%A8s_Haute_R%C3%A9solution) that performs a slow scan, about 2 lines per second.  
+NOAA satellites don’t directly capture photographs of Earth. They use a [scanning radiometer](https://en.wikipedia.org/wiki/Radiom%C3%A8tre_Avanc%C3%A9_%C3%A0_Tr%C3%A8s_Haute_R%C3%A9solution) that performs a slow scan, about 2 lines per second.  
 This data is transmitted using the [APT](https://en.wikipedia.org/wiki/Automatic_picture_transmission) (Automatic Picture Transmission) mode, dating back to 1960. Only these 3 satellites still use it. The image resolution is around `4km` per pixel.  
 Here’s an example of an image I received using APT:
 

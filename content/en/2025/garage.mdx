@@ -31,7 +31,7 @@ Then you **modulate** the digital signal (with ASK, for instance) to turn it int
 ![URH](/images/blog/2025/garage/garage3.png)
 
 The first long burst (`12ms`) corresponds to the **preamble**. A pulse, often made up of `1`s, used to “wake up” the receiver and get it ready for what follows.
-The rest corresponds to the data sent to open the garage door, and you’ll notice something peculiar: the lengths of the **bursts** and **pauses** differ. More precisely, a long burst (`2400μs`) is **always** followed by a short pause (`1200μs`), and a short burst (`1200μs`) is **always** paired with a long burst (`2400μs`). This resembles pulse modulations like [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion) or [PDM](https://en.wikipedia.org/wiki/Pulse-density_modulation) except that those use either a fixed pause duration or a fixed burst duration – here, we’ve got both. The encoding method might look something like this:
+The rest corresponds to the data sent to open the garage door, and you’ll notice something peculiar: the lengths of the **bursts** and **pauses** differ. More precisely, a long burst (`2400μs`) is **always** followed by a short pause (`1200μs`), and a short burst (`1200μs`) is **always** paired with a long burst (`2400μs`). This resembles pulse modulations like [PWM](https://en.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion) or [PDM](https://en.wikipedia.org/wiki/Pulse-density_modulation) except that those use either a fixed pause duration or a fixed burst duration – here, we’ve got both. The encoding method might look something like this:
 
 ![URH](/images/blog/2025/garage/garage4.svg)
 I couldn’t pin down the exact modulation type, so feel free to drop a comment if you know it :)

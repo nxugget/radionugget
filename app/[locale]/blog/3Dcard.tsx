@@ -35,9 +35,11 @@ export const CardContainer = ({
     if (animationFrame.current) cancelAnimationFrame(animationFrame.current);
     animationFrame.current = requestAnimationFrame(() => {
       const { left, top, width, height } = containerRef.current!.getBoundingClientRect();
-      const x = (e.clientX - left - width / 2) / 15;
-      const y = (e.clientY - top - height / 2) / 15;
-      containerRef.current!.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(${isMouseEntered ? 1.05 : 1})`;
+      // Modifié : further reduction of rotation intensity by increasing the divisor
+      const x = (e.clientX - left - width / 2) / 40;
+      const y = (e.clientY - top - height / 2) / 40;
+      // Modifié : even lighter scaling effect
+      containerRef.current!.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(${isMouseEntered ? 1.01 : 1})`;
     });
   };
   // --- FIN DES CHANGEMENTS ---

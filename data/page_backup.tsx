@@ -1,4 +1,3 @@
-// ...existing code copied from /app/[locale]/page.tsx...
 "use client";
 
 import { useEffect, useState } from "react";
@@ -90,6 +89,7 @@ export default function Home() {
       <section id="solar-system" className="w-full relative z-10 min-h-screen pt-16 pb-12">
         <header className="w-full flex flex-col items-center justify-center text-center">
           <TypewriterEffectSmooth
+            as="h1" // new: semantic element is h1
             words={[{ text: "A random selection of my projects", className: "text-3xl font-bold text-white" }]}
             cursorClassName="text-purple"
             className="mb-2"

@@ -8,7 +8,10 @@ const SOURCES = [
   { url: "https://celestrak.org/NORAD/elements/weather.txt", category: "weather" }
 ];
 
-const TLE_FILE_PATH = path.join(__dirname, "../data/tle.json");
+const FILE_PATHS = [
+  path.join(__dirname, "..", "data", "satellites", "amateur.json"),
+  path.join(__dirname, "..", "data", "satellites", "weather.json")
+];
 
 function fetchTLE(url, category) {
   return new Promise((resolve, reject) => {
@@ -60,21 +63,37 @@ function fetchTLE(url, category) {
   });
 }
 
+function simplifyName(name) {
+  return name.replace(/[^a-z0-9]/gi, "").toLowerCase();
+}
+
 async function updateTLE() {
   console.log("🔄 Updating TLE data...");
 
   try {
-    const allSatellites = [];
-
     for (const source of SOURCES) {
       console.log(`📡 Fetching TLE for ${source.category}...`);
       const sats = await fetchTLE(source.url, source.category);
-      allSatellites.push(...sats);
+
+      const filePath = FILE_PATHS.find(fp => fp.includes(source.category));
+      if (!filePath) {
+        console.error(`❌ No file path found for category: ${source.category}`);
+        continue;
+      }
+
+      const updatedSatellites = sats.map((sat) => ({
+        ...sat,
+        description: sat.description || "",
+        frequency: Array.isArray(sat.frequency) ? sat.frequency : [],
+        modulation: sat.modulation || "",
+        image: sat.image || `/images/satellites/${simplifyName(sat.name)}.png`
+      }));
+
+      fs.writeFileSync(filePath, JSON.stringify(updatedSatellites, null, 2), "utf8");
+      console.log(`✅ Updated ${filePath}`);
     }
 
-    fs.writeFileSync(TLE_FILE_PATH, JSON.stringify(allSatellites, null, 2));
-
-    console.log(`✅ Update completed! ${allSatellites.length} satellites saved.`);
+    console.log("✅ Update completed!");
   } catch (error) {
     console.error("❌ Error updating TLE:", error);
   }
