@@ -22,8 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const postPages: MetadataRoute.Sitemap = [];
   for (const locale of locales) {
     for (const post of posts) {
+
+      const formattedSlug = post.slug.replace(/\/\d{4}(?=\/)/, '');
       postPages.push({
-        url: `${baseUrl}/${locale}${post.slug}`,
+        url: `${baseUrl}/${locale}${formattedSlug}`,
         lastModified: new Date(post.metadata.date),
         changeFrequency: 'weekly',
         priority: 0.8,
