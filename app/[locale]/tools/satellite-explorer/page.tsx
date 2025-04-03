@@ -373,18 +373,20 @@ export default function SatelliteInfoPage() {
             {/* Top row: details text on left, small image on top right */}
             <div className="flex flex-row gap-4 items-start">
               <div className="flex-1 flex flex-col gap-2">
-                <h2 className="text-3xl font-bold text-white">
-                  {details?.name || selectedSatellite.name}
-                </h2>
-                {details?.country_image && (
-                  <div className="w-20 h-12 rounded-md shadow-md overflow-hidden">
-                    <img
-                      src={details.country_image}
-                      alt="Country flag"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
+                <div className="flex items-center gap-2">
+                  <h2 className="text-3xl font-bold text-white">
+                    {details?.name || selectedSatellite.name}
+                  </h2>
+                  {details?.country_image && (
+                    <div className="w-10 h-6 rounded-md shadow-md overflow-hidden">
+                      <img
+                        src={details.country_image}
+                        alt="Country flag"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
                 <p className="text-gray-300 text-lg">
                   {details?.description ||
                     "Aucune description n'est disponible pour le moment."}
@@ -412,7 +414,7 @@ export default function SatelliteInfoPage() {
                       className="w-full h-full object-contain rounded-lg"
                       onError={() => setImageError(true)}
                     />
-                    <div className="absolute bottom-1 left-1 bg-black/70 text-white text-xs px-1 py-0.5 rounded">
+                    <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1 py-0.5 rounded">
                       {details?.image_source || "Source"}
                     </div>
                   </div>

@@ -8,17 +8,17 @@ slug: "adsb"
 ---
 Air travel is one of the most popular ways to get around these days. With the dramatic rise in flights, ensuring safety and avoiding collisions in the skies has become absolutely critical.
 
-That’s where an international standard called **ADS‑B** comes in. It’s the very same system that lets anyone follow air traffic using apps and websites like [FlightRadar](https://www.flightradar24.com/).
+That’s where an international standard called **ADS‑B** comes in. It’s the same system that lets anyone follow air traffic using apps and websites like [FlightRadar](https://www.flightradar24.com/).
 
 # How ADS‑B Works
-ADS‑B (Automatic Dependent Surveillance‑Broadcast) allows an aircraft to transmit its position, obtained via <SmartLink slug="gps">GNSS</SmartLink>, along with other essential data to any receiver capable of decoding the signal. This means airports, other planes, and soon even regular enthusiasts can monitor air traffic. All this information is broadcast over the 1090MHz frequency.
+**ADS‑B** (**A**utomatic **D**ependent **S**urveillance‑**B**roadcast) allows an aircraft to transmit its position, obtained via <SmartLink slug="gps">GNSS</SmartLink>, along with other essential data to any receiver capable of decoding the signal. This means airports, other planes, and soon even us can monitor air traffic. All this information is broadcast over the 1090MHz frequency.
 
 ![ADSB Schema](/images/blog/2025/adsb/adsb1.svg)
 
-Don’t confuse ADS‑B with its predecessor, [primary radar](https://en.wikipedia.org/wiki/Pulse-Doppler_radar). Primary radar sends out a signal that bounces off an aircraft, revealing its location but nothing more. It works even when the aircraft lacks a transponder. In contrast, ADS‑B is more cost‑effective and covers a wider area while providing a wealth of additional data about the aircraft. Primary radar is still used as a backup and for tracking non-cooperative targets 🏴‍☠️.
+Don’t confuse **ADS‑B** with its predecessor, [primary radar](https://en.wikipedia.org/wiki/Pulse-Doppler_radar). Primary radar sends out a signal that bounces off an aircraft, revealing its location but nothing more. It works even when the aircraft lacks a transponder. In contrast, ADS‑B is more cost‑effective and covers a wider area while providing a wealth of additional data about the aircraft. Primary radar is still used as a backup and for tracking non-cooperative targets 🏴‍☠️.
 
 # Building Your ADS‑B Station
-The plan is to install [Pi24](https://www.flightradar24.com/build-your-own), a Linux‑based system built on Raspberry Pi OS Lite, which automates the reception of ADS‑B data, processes it, and sends it off to FlightRadar’s servers. This setup lets you view detected aircraft either directly on your Raspberry Pi or right on FlightRadar. By sharing your data, you contribute to global flight tracking, and in return, FlightRadar24 will hook you up with a Business subscription worth $500 a year!
+The plan is to install [Pi24](https://www.flightradar24.com/build-your-own), a Linux‑based system built on Raspberry Pi OS Lite, which automates the reception of **ADS‑B** data, processes it, and sends it off to **FlightRadar**’s servers. This setup lets you view detected aircraft either directly on your Raspberry Pi or right on **FlightRadar**. By sharing your data, you contribute to global flight tracking, and in return, **FlightRadar** will hook you up with a Business subscription worth $500 a year!
 
 ## Hardware Components
 To set up your ADS‑B station, you’ll need three main components: 
@@ -71,13 +71,13 @@ network={
 
 Now, eject the SD card and insert it into your Raspberry Pi. Once you’ve hooked up your antenna to the SDR receiver (which in turn is connected to your Pi), power it on.
 
-After booting up, create a FlightRadar account and visit [this link](https://www.flightradar24.com/build-your-own) which will automatically detect your Pi24 and prompt you to register it. If all goes well, you should see a page like this:
+After booting up, create a **FlightRadar** account and visit [this link](https://www.flightradar24.com/build-your-own) which will automatically detect your Pi24 and prompt you to register it. If all goes well, you should see a page like this:
 
 ![Pi24 activation](/images/blog/2025/adsb/adsb4.png)
 
-Click on `Activate`, fill in your station’s latitude and longitude, verify the information, and you’ll get a confirmation message along with an email containing your sharing key and radar code. Your account, initially set to a free `Basic` tier, will automatically upgrade to a `Business` subscription once your station starts sending data to FlightRadar’s servers.
+Click on `Activate`, fill in your station’s latitude and longitude, verify the information, and you’ll get a confirmation message along with an email containing your sharing key and radar code. Your account, initially set to a free `Basic` tier, will automatically upgrade to a `Business` subscription once your station starts sending data to **FlightRadar’s** servers.
 
-And finally, the moment we’ve all been waiting for: see the aircraft detected by **YOUR** station. On FlightRadar, navigate to `Filters` → `Custom` and select your receiver (in my case, it’s listed as `T-LFBD111`):
+And finally, the moment we’ve all been waiting for: see the aircraft detected by **YOUR** station. On **FlightRadar**, navigate to `Filters` → `Custom` and select your receiver (in my case, it’s listed as `T-LFBD111`):
 
 ![Flight Radar Map](/images/blog/2025/adsb/adsb5.png)
 
