@@ -53,10 +53,39 @@ async function downloadNewTLE() {
   return overallTLE;
 }
 
+// Function to load a JSON file and check for duplicate ids
+function loadAndValidateJSON(filePath) {
+  const fileData = fs.readFileSync(filePath, 'utf8');
+  let data;
+  try {
+    data = JSON.parse(fileData);
+  } catch (error) {
+    console.error(`Error parsing ${filePath}:`, error);
+    return null;
+  }
+  
+  const seenIds = new Set();
+  const duplicates = [];
+  data.forEach(item => {
+    if (seenIds.has(item.id)) {
+      duplicates.push(item.id);
+    } else {
+      seenIds.add(item.id);
+    }
+  });
+  
+  if (duplicates.length) {
+    console.error(`Duplicate id(s) found in ${filePath}:`, duplicates);
+    // Optionally, you may choose to exit or remove duplicates here.
+  }
+  return data;
+}
+
 // Met à jour les fichiers en remplaçant uniquement tle1 et tle2 si une nouvelle TLE existe
 function updateFileTLE(filePath, newTLEData) {
   console.log(`⏳ Updating file: ${filePath}`);
-  const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  const jsonData = loadAndValidateJSON(filePath);
+  if (!jsonData) return;
   let updatedCount = 0;
   jsonData.forEach(satellite => {
     if (newTLEData[satellite.id]) {
