@@ -51,7 +51,8 @@ export default async function Article({ params }: { params: { locale: string; sl
                 alt={metadata.title} 
                 fill 
                 className="object-cover"
-                priority
+                priority={false} // Disable priority loading for lazy loading
+                loading="lazy" // Enable lazy loading
               />
             </div>
 
@@ -107,6 +108,7 @@ export default async function Article({ params }: { params: { locale: string; sl
                         width={900} 
                         height={500} 
                         style={{ width: "auto", height: "auto" }}
+                        loading="lazy" // Enable lazy loading for MDX images
                       />
                     </figure>
                   );
@@ -133,7 +135,7 @@ export default async function Article({ params }: { params: { locale: string; sl
                 },
                 ul: (props) => <ul className="list-disc list-outside pl-16 mb-2" {...props} />,
                 li: (props) => <li className="mb-1" {...props} />,
-                head: (props) => null, // ignore any <head> contenu dans l'article MDX
+                head: (props) => null, 
               }}
             />
           </article>
