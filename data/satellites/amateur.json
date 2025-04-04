@@ -150,7 +150,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/pcsat.jpg",
-    "image_source": "db.satnogs.org",
+    "image_source": "aprs.org",
     "country_image": "/images/flags/usa.png"
   },
   {
@@ -163,8 +163,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/saudisat1c.jpg",
-    "image_source": "db.satnogs.org",
+    "image": "/images/satellites/amateur/saudisat1c.webp",
+    "image_source": "amsat.org",
     "country_image": "/images/flags/saudi_arabia.png"
   },
   {
@@ -178,7 +178,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/cute1.jpg",
-    "image_source": "https://amsat.jp",
+    "image_source": "dk3wn.info",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -192,7 +192,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/cubesatxiiv.jpg",
-    "image_source": "https://amsat.jp",
+    "image_source": "pe0sat.vgnet.nl",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -205,8 +205,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/mozhayets4.jpg",
-    "image_source": "db.satnogs.org",
+    "image": "/images/satellites/amateur/mozhayets4.jpeg",
+    "image_source": "isstracker.pl",
     "country_image": "/images/flags/russia.png"
   },
   {
@@ -219,8 +219,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/cubesatxiv.jpg",
-    "image_source": "https://amsat.jp",
+    "image": "/images/satellites/amateur/cubesatxiv.jpeg",
+    "image_source": "isstracker.pl",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -234,7 +234,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/cute17apdii.jpg",
-    "image_source": "https://amsat.jp",
+    "image_source": "space.skyrocket.de",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -248,7 +248,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/seedsii.jpg",
-    "image_source": "https://amsat.jp",
+    "image_source": "space.skyrocket.de",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -261,8 +261,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/yubileiny.jpg",
-    "image_source": "db.satnogs.org",
+    "image": "/images/satellites/amateur/yubileiny.jpeg",
+    "image_source": "pe0sat.vgnet.nlg",
     "country_image": "/images/flags/russia.png"
   },
   {
@@ -275,8 +275,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/kks1.jpg",
-    "image_source": "https://amsat.jp",
+    "image": "/images/satellites/amateur/kks1.jpeg",
+    "image_source": "nanosats.eu",
     "country_image": "/images/flags/japan.png"
   },
   {
@@ -290,7 +290,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/swisscube.jpg",
-    "image_source": "db.satnogs.org",
+    "image_source": "espace.epfl.ch",
     "country_image": "/images/flags/switzerland.png"
   },
   {
@@ -303,8 +303,8 @@
     "status": "alive",
     "frequency": [],
     "modulation": "",
-    "image": "/images/satellites/amateur/beesat1.jpg",
-    "image_source": "https://amsat-dl.org",
+    "image": "/images/satellites/amateur/beesat1.JPG",
+    "image_source": "wikipedia.org",
     "country_image": "/images/flags/germany.png"
   },
   {
