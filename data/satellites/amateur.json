@@ -94,7 +94,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/radiorosto.jpg",
-    "image_source": "db.satnogs.org",
+    "image_source": "space.skyrocket.de",
     "country_image": "/images/flags/russia.png"
   },
   {
@@ -136,7 +136,7 @@
     "frequency": [],
     "modulation": "",
     "image": "/images/satellites/amateur/iss.jpg",
-    "image_source": "https://nasa.gov",
+    "image_source": "wikipedia.org",
     "country_image": "/images/flags/international.png"
   },
   {
