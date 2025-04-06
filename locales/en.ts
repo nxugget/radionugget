@@ -36,12 +36,15 @@ export default {
     "3": { title: "Receive images from the ISS" },
     "4": { title: "Build a Quadrifilar Antenna (QFH)" },
   },
-  footer: {  // new footer translations
+  footer: {
     thanks: "Thanks",
     illustration: "for the homepage illustration",
     madeWith: "Made with",
     by: "by",
     myself: "myself"
   },
+  locationError: "Could not access your location",
+  useMyLocation: "Use my current location",
+  or: "OR", // Ajout de la traduction pour "OU" en anglais
   betaDescription: "This tool is in beta version. If you notice any bugs or have improvement ideas, I am extremely open and responsive :) You can send me an email at this address: contact@radionugget.com"
 } as const;

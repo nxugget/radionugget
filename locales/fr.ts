@@ -43,5 +43,8 @@ export default {
     by: "par",
     myself: "moi-même"
   },
+  locationError: "Impossible d'accéder à votre localisation",
+  useMyLocation: "Utiliser ma position actuelle",
+  or: "OU", // Ajout de la traduction pour "OU" en français
   betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com"
 } as const;

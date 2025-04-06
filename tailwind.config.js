@@ -23,6 +23,9 @@ module.exports = {
       backgroundSize: {
         grid: "var(--gap) var(--gap)"
       },
+      screens: {
+        'xs': '480px',
+      },
     },
   },
   plugins: [],

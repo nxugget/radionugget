@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
 import { useI18n } from "@/locales/client";
 import InputSearch from "@/src/components/ui/InputSearch";
+import LocationButton from "@/src/components/features/LocationButton";
 import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import isValidGridSquare
 
 // Import dynamique du composant Map
@@ -29,6 +30,7 @@ export default function GridSquareCalculator() {
   const [mapZoom, setMapZoom] = useState(3); // ajout de l'état pour le zoom
   const [directSearch, setDirectSearch] = useState(""); // nouvel état pour la recherche directe
   const [directSearchError, setDirectSearchError] = useState<string | null>(null);
+  const [locationLoading, setLocationLoading] = useState(false); // État pour le chargement de la localisation
 
   // Ajout d'un ref pour le conteneur de recherche
   const searchRef = useRef<HTMLDivElement>(null);
@@ -115,6 +117,55 @@ export default function GridSquareCalculator() {
     }
   };
 
+  // Nouvelle fonction pour obtenir l'adresse à partir des coordonnées
+  const fetchAddressFromCoordinates = async (lat: number, lon: number) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+      );
+      const data = await response.json();
+      
+      if (data && data.display_name) {
+        setQuery(data.display_name);
+        setSuppressSuggestions(true);
+        return data.display_name;
+      }
+      return null;
+    } catch (err) {
+      console.error("Error fetching address:", err);
+      return null;
+    }
+  };
+
+  // Fonction pour utiliser la position actuelle
+  const useCurrentLocation = () => {
+    setLocationLoading(true);
+    setError(null);
+    
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        // Mettre à jour le grid square
+        const square = getGridSquare(latitude, longitude);
+        handleGridSquareChange(square);
+        
+        // Mettre à jour la carte
+        setMapCenter([latitude, longitude]);
+        setMapZoom(13);
+        
+        // Récupérer l'adresse correspondante
+        await fetchAddressFromCoordinates(latitude, longitude);
+        setLocationLoading(false);
+      },
+      (err) => {
+        console.error("Geolocation error:", err);
+        setError(t("locationError"));
+        setLocationLoading(false);
+      }
+    );
+  };
+
   const handleSuggestionClick = (suggestion: any) => {
     setQuery(suggestion.display_name);
     setSuggestions([]);
@@ -170,48 +221,68 @@ export default function GridSquareCalculator() {
                     { text: "Square", className: "text-[#b400ff]" },
                     { text: t("gridSquareCalculator.calculator"), className: "text-white" }
                   ]}
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-2"
+                  // Container class to ensure proper width constraints
+                  className="text-center mb-2 w-full"
                   cursorClassName="bg-[#b400ff]"
                 />
               )}
             </div>
-            <p className="text-center text-gray-400 mb-6">{t("betaDescription")}</p>
+            <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
 
             <GridSquareInfo />
-            <div ref={searchRef} className="relative w-full max-w-sm mx-auto my-2">
-              <InputSearch
-                placeholder={t("address.placeholder")}
-                value={query}
-                onChange={(e) => {
-                  setSuppressSuggestions(false);
-                  setQuery(e.target.value);
-                }}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (query.trim() !== "") {
-                    fetchCoordinates(query);
-                    setSuggestions([]);
-                  }
-                }}
-              />
-              {suggestions.length > 0 && (
-                <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
-                  {suggestions.map((sugg, idx) => (
-                    <li
-                      key={idx}
-                      className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
-                      onClick={() => handleSuggestionClick(sugg)}
-                    >
-                      {sugg.display_name}
-                    </li>
-                  ))}
-                </ul>
-              )}
+            <div ref={searchRef} className="relative flex justify-center w-full my-2">
+              <div className="flex items-center gap-2 w-full max-w-sm mx-auto">
+                <div className="relative flex-1">
+                  <InputSearch
+                    placeholder={t("address.placeholder")}
+                    value={query}
+                    onChange={(e) => {
+                      setSuppressSuggestions(false);
+                      setQuery(e.target.value);
+                    }}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (query.trim() !== "") {
+                        fetchCoordinates(query);
+                        setSuggestions([]);
+                      }
+                    }}
+                  />
+                  {suggestions.length > 0 && (
+                    <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
+                      {suggestions.map((sugg, idx) => (
+                        <li
+                          key={idx}
+                          className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
+                          onClick={() => handleSuggestionClick(sugg)}
+                        >
+                          {sugg.display_name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                
+                <span className="text-white font-bold">{t("or")}</span>
+                
+                <LocationButton 
+                  onClick={useCurrentLocation}
+                  loading={locationLoading}
+                  title={t("useMyLocation")}
+                  size={40}
+                />
+              </div>
             </div>
 
             <p className="text-zinc-400 text-xs md:text-sm text-center">
               {t("address.example")} {/* traduction de l'exemple */}
             </p>
+
+            {error && (
+              <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-md mt-2 text-center animate-pulse">
+                {error}
+              </div>
+            )}
 
             {gridSquare && (
               <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
@@ -284,15 +355,19 @@ export default function GridSquareCalculator() {
                 )}
               </div>
             </div>
-            <div className="w-full text-center mb-2">
-              <span className="font-bold">Latitude: </span>
-              <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
-              <span className="mx-2 font-bold">Longitude: </span>
-              <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+            <div className="w-full text-center mb-2 flex flex-wrap justify-center gap-2">
+              <div>
+                <span className="font-bold">Latitude: </span>
+                <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+              </div>
+              <div>
+                <span className="font-bold">Longitude: </span>
+                <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+              </div>
             </div>
             <div className="w-full text-center mb-2">
               <span className="font-bold">Grid Square: </span>
-              <span className="text-orange">{mousePosition.grid}</span>
+              <span className="text-orange break-all">{mousePosition.grid}</span>
             </div>
             <div className="w-full text-center">
               <span className="text-gray-400 text-xs">

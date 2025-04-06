@@ -85,20 +85,22 @@ const PolarChart: React.FC<PolarChartProps> = ({ satelliteId, trajectoryPoints, 
      .attr("fill", "#b400ff")
      .raise();
 
+    // Define the arrow marker
     const defs = svg.append("defs");
     defs.append("marker")
       .attr("id", "arrow")
-      .attr("markerWidth", 5)
-      .attr("markerHeight", 5)
-      .attr("refX", 0)
-      .attr("refY", 2.5)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 8)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)  // Reduced from 8 to 6
+      .attr("markerHeight", 6) // Reduced from 8 to 6
       .attr("orient", "auto")
       .append("path")
-      .attr("d", "M0,0 L0,5 L4,2.5 z")
+      .attr("d", "M0,-5L10,0L0,5")
       .attr("fill", "#228B22");
 
     // Use an azimuth offset (-90°) so 0° maps to the top.
-    if (trajectoryPoints && trajectoryPoints.length) {
+    if (trajectoryPoints && trajectoryPoints.length > 1) {
       const scale = radius / 90;
       // Use: angle = (p.az - 180) converted to radians.
       const lineData = trajectoryPoints.map(p => {
@@ -110,11 +112,52 @@ const PolarChart: React.FC<PolarChartProps> = ({ satelliteId, trajectoryPoints, 
                               .radius((d: any) => d[0])
                               .curve(d3.curveCardinal);
       const pathData = lineGenerator(lineData);
+      
+      // Draw the path with an arrow marker at the end
       g.append("path")
        .attr("d", pathData || "")
        .attr("fill", "none")
        .attr("stroke", "#228B22")
-       .attr("stroke-width", 3);
+       .attr("stroke-width", 3)
+       .attr("marker-end", "url(#arrow)"); // Add arrow marker to the end of the path
+      
+      // Add a direction arrow at approximately 1/3 of the path if it's long enough
+      if (trajectoryPoints.length > 5) {
+        // Find a point at approximately 1/3 of the path for the direction arrow
+        const directionIndex = Math.floor(trajectoryPoints.length / 3);
+        const p1 = trajectoryPoints[directionIndex - 1];
+        const p2 = trajectoryPoints[directionIndex + 1];
+        
+        // Calculate direction vector
+        const angleRad1 = (p1.az - 180) * (Math.PI / 180);
+        const angleRad2 = (p2.az - 180) * (Math.PI / 180);
+        const r1 = (90 - p1.el) * scale;
+        const r2 = (90 - p2.el) * scale;
+        const x1 = r1 * Math.cos(angleRad1);
+        const y1 = r1 * Math.sin(angleRad1);
+        const x2 = r2 * Math.cos(angleRad2);
+        const y2 = r2 * Math.sin(angleRad2);
+        
+        // Draw a small arrow in the middle of the path to show direction
+        const midPoint = trajectoryPoints[directionIndex];
+        const midAngleRad = (midPoint.az - 180) * (Math.PI / 180);
+        const midR = (90 - midPoint.el) * scale;
+        const midX = midR * Math.cos(midAngleRad);
+        const midY = midR * Math.sin(midAngleRad);
+        
+        // Calculate the angle for the arrow
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        
+        // Add a small arrow to indicate direction
+        g.append("path")
+          .attr("d", "M-4,-2L0,0L-4,2")  // Reduced from M-6,-3L0,0L-6,3
+          .attr("transform", `translate(${midX},${midY}) rotate(${angle})`)
+          .attr("fill", "#228B22")
+          .attr("stroke", "#228B22")
+          .attr("stroke-width", 1);
+      }
     }
 
     // Adjust current position similarly:

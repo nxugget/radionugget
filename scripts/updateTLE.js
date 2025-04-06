@@ -9,6 +9,12 @@ const SOURCES = [
   { url: "https://celestrak.org/NORAD/elements/weather.txt", category: "weather" }
 ];
 
+// Écrire directement dans le dossier public à la racine
+const publicVersionPath = path.join(__dirname, '..', 'public', 'tle-last-update.json');
+
+const versionData = JSON.stringify({ updated_at: new Date().toISOString() }, null, 2);
+fs.writeFileSync(publicVersionPath, versionData); // Écrire directement dans le dossier public racine
+
 // Télécharge le contenu brut depuis une URL
 function fetchTLE(url) {
   return new Promise((resolve, reject) => {
@@ -109,3 +115,19 @@ async function main() {
 }
 
 main();
+
+async function run() {
+  const newTLEData = await downloadNewTLE();
+  const amateurFile = path.join(__dirname, '..', 'data', 'satellites', 'amateur.json');
+  const weatherFile = path.join(__dirname, '..', 'data', 'satellites', 'weather.json');
+  updateFileTLE(amateurFile, newTLEData);
+  updateFileTLE(weatherFile, newTLEData);
+}
+
+// Si ce script est lancé en CLI, on exécute
+if (require.main === module) {
+  run();
+}
+
+// Pour que d'autres puissent l'importer (optionnel)
+module.exports = run;

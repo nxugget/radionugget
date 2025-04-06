@@ -2,13 +2,13 @@
 
 import { cn } from "@/src/lib/utils";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const TypewriterEffectSmooth = ({
   words,
   className,
   cursorClassName,
-  as = "h1", // changed default from "div" to "h1"
+  as = "h1",
 }: {
   words: {
     text: string;
@@ -25,53 +25,126 @@ export const TypewriterEffectSmooth = ({
   }));
 
   const [hasPlayed, setHasPlayed] = useState(false);
-  const [cursorWidth, setCursorWidth] = useState("3px");
+  const [cursorWidth, setCursorWidth] = useState("2px");
+  const [textScale, setTextScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
+  // Set initial state and observe container size
   useEffect(() => {
-    setHasPlayed(true);
+    // Detect mobile devices
     if (typeof window !== "undefined") {
-      if (window.innerWidth >= 768) {
-        setCursorWidth("4px"); // Thicker on desktop
-      } else {
-        setCursorWidth("3px");
-      }
+      const checkIfMobile = window.innerWidth < 768;
+      setIsMobile(checkIfMobile);
+      
+      setCursorWidth(checkIfMobile ? "2px" : "3px");
     }
+    
+    const timer = setTimeout(() => {
+      setHasPlayed(true);
+    }, 150);
+    
+    return () => clearTimeout(timer);
   }, []);
 
+  // Scale text+cursor block to fit container width
+  useEffect(() => {
+    if (!containerRef.current || !contentRef.current) return;
+    
+    const calculateScale = () => {
+      if (containerRef.current && contentRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const contentWidth = contentRef.current.scrollWidth;
+        
+        if (contentWidth > containerWidth - 10) {
+          let scale = (containerWidth - 10) / contentWidth;
+          const minScale = isMobile ? 0.3 : 0.5;
+          setTextScale(Math.max(minScale, scale));
+        } else {
+          setTextScale(1);
+        }
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(calculateScale);
+    resizeObserver.observe(containerRef.current);
+    calculateScale(); // Calculate initial scale
+    
+    return () => resizeObserver.disconnect();
+  }, [hasPlayed, isMobile]);
+
   return (
-    <Wrapper className={cn("flex items-center space-x-1 my-6", className)} role="heading">
-      {hasPlayed && (
-        <motion.div
-          className="overflow-hidden pb-2"
-          initial={{ width: "0%" }}
-          animate={{ width: "fit-content" }}
-          transition={{ duration: 0.8, ease: "linear", delay: 0.5 }}
-        >
-          <div
-            // Updated: fixed text size for mobile instead of responsive classes
-            className="text-4xl font-bold normal-case"
-            style={{ whiteSpace: "nowrap", maxWidth: "100%" }}
-          >
-            {wordsArray.map((word, idx) => (
-              <div key={`word-${idx}`} className="inline-block">
-                {word.text.map((char, index) => (
-                  <span key={`char-${index}`} className={cn("", word.className)}>
-                    {char}
-                  </span>
-                ))}
-                &nbsp;
-              </div>
-            ))}
+    <Wrapper 
+      ref={containerRef}
+      className={cn("flex flex-col items-center my-6 w-full", className)} 
+      role="heading"
+    >
+      <div className="flex justify-center w-full">
+        {hasPlayed && (
+          <div className="relative">
+            {/* Container extérieur centré */}
+            <div className="flex justify-center">
+              {/* Container d'animation avec effet de typewriter de gauche à droite */}
+              <motion.div
+                className="overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: "auto" }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
+                style={{ 
+                  display: "inline-block",
+                }}
+              >
+                {/* Bloc de contenu mis à l'échelle */}
+                <div 
+                  ref={contentRef}
+                  style={{
+                    transform: `scale(${textScale})`,
+                    transformOrigin: "left center", // Important pour l'effet de gauche à droite
+                    display: "flex",
+                    alignItems: "center",
+                    whiteSpace: "nowrap"
+                  }}
+                >
+                  <div
+                    className="font-bold"
+                    style={{ 
+                      display: "inline-block",
+                      fontSize: isMobile ? "1.75rem" : "2rem",
+                      lineHeight: "1.2",
+                    }}
+                  >
+                    {wordsArray.map((word, idx) => (
+                      <div key={`word-${idx}`} className="inline-block">
+                        {word.text.map((char, index) => (
+                          <span key={`char-${index}`} className={cn("", word.className)}>
+                            {char}
+                          </span>
+                        ))}
+                        &nbsp;
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Le curseur attaché au texte */}
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+                    className={cn("bg-blue-500", cursorClassName)}
+                    style={{ 
+                      width: cursorWidth,
+                      height: "1.8rem",
+                      marginLeft: "2px",
+                      display: "inline-block",
+                    }}
+                  />
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </motion.div>
-      )}
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-        className={cn("block h-[1em] bg-blue-500", cursorClassName)}
-        style={{ position: "relative", width: cursorWidth }}
-      />
+        )}
+      </div>
     </Wrapper>
   );
 };

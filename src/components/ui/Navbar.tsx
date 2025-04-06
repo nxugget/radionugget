@@ -16,8 +16,16 @@ export const Navbar = () => {
   // New state for language dropdown
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const langTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const pathname = usePathname();
+  const pathname = usePathname() || ""; // Default to empty string if null
   const currentLocale = pathname.startsWith("/fr") ? "fr" : "en";
+
+  // Indicator states for the smooth navigation effect
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    left: 0,
+    width: 0,
+    display: "none"
+  });
+  const navLinksRef = useRef<HTMLDivElement>(null);
 
   // Function to generate the new path by replacing the language prefix
   const getNewLocalePath = (targetLocale: string) => {
@@ -79,6 +87,36 @@ export const Navbar = () => {
     event.stopPropagation();
   };
 
+  // Function to update indicator position with better positioning
+  const handleLinkHover = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    const target = e.currentTarget;
+    const rect = target.getBoundingClientRect();
+    
+    if (navLinksRef.current) {
+      const containerRect = navLinksRef.current.getBoundingClientRect();
+      
+      // Add padding to make the indicator slightly larger than the text
+      const padding = 24; // Padding in pixels (12px on each side)
+      
+      // Calculate position relative to container
+      const offsetLeft = rect.left - containerRect.left;
+      
+      setIndicatorStyle({
+        left: offsetLeft - padding / 2, // Position with padding adjustment
+        width: rect.width + padding,
+        display: "block"
+      });
+    }
+  };
+
+  // Hide the indicator when leaving the navbar
+  const handleNavMouseLeave = () => {
+    setIndicatorStyle(prev => ({
+      ...prev,
+      display: "none"
+    }));
+  };
+
   return (
     <>
       <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-4 md:px-10">
@@ -99,16 +137,34 @@ export const Navbar = () => {
 
           {/* Desktop Navigation: Center */}
           <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex">
-            <div className="flex items-center justify-between gap-6 md:gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200">
+            <div 
+              ref={navLinksRef}
+              className="flex items-center justify-between gap-6 md:gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200 relative"
+              onMouseLeave={handleNavMouseLeave}
+            >
+              {/* Smooth moving indicator - fixed positioning */}
+              <div 
+                className="absolute h-[85%] bg-purple-900/30 backdrop-blur-sm rounded-full transition-all duration-300 ease-out"
+                style={{
+                  left: `${indicatorStyle.left}px`, // Use direct left positioning instead of transform
+                  width: `${indicatorStyle.width}px`,
+                  display: indicatorStyle.display,
+                  top: '50%',
+                  transform: 'translateY(-50%)' // Only transform for vertical centering
+                }}
+              />
+              
               <Link
                 href="/"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                onMouseEnter={handleLinkHover}
               >
                 {t("navbar.home")}
               </Link>
               <Link
                 href="/blog"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                onMouseEnter={handleLinkHover}
               >
                 {t("navbar.blog")}
               </Link>
@@ -125,7 +181,10 @@ export const Navbar = () => {
                   }, 300);
                 }}
               >
-                <button className="text-xl font-medium flex items-center gap-1 transition-colors duration-300 hover:text-purple-400">
+                <button 
+                  className="text-xl font-medium flex items-center gap-1 transition-colors duration-300 hover:text-purple-400 z-10"
+                  onMouseEnter={handleLinkHover}
+                >
                   {t("navbar.tools")}
                   <svg
                     className={`w-4 h-4 transition-transform duration-300 ${isToolsOpen ? "rotate-180" : ""}`}
@@ -166,7 +225,8 @@ export const Navbar = () => {
               </div>
               <Link
                 href="/gallery"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02]"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                onMouseEnter={handleLinkHover}
               >
                 {t("navbar.gallery")}
               </Link>
@@ -276,15 +336,21 @@ export const Navbar = () => {
                   <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.gridSquare")}
                   </Link>
-                  {/* ...add additional mobile tools links as needed... */}
+                  <Link href="/tools/satellite-prediction" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                    {t("navbar.satellitePrediction")}
+                  </Link>
+                  <Link href="/tools/satellite-explorer" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                    {t("navbar.satelliteInfo")}
+                  </Link>
                 </div>
               )}
             </div>
             <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium hover:text-[rgb(136,66,248)] transition">
               {t("navbar.gallery")}
             </Link>
-            {/* Language Switcher */}
-            <div className="relative cursor-pointer">
+            
+            {/* Language Switcher - FIXED SYNTAX */}
+            <div className="relative cursor-pointer" ref={langDropdownMobileRef}>
               <Image
                 src={`/images/flags/${currentLocale}.png`}
                 alt="Current Language"
@@ -297,10 +363,13 @@ export const Navbar = () => {
               {langDropdownOpen && (
                 <div
                   className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[100px]"
-                  onClick={preventClickPropagation} // Prevent closing when clicking inside
+                  onClick={preventClickPropagation}
                 >
                   {currentLocale !== "en" && (
-                    <Link href={getNewLocalePath("en")} onClick={() => setLangDropdownOpen(false)}>
+                    <Link href={getNewLocalePath("en")} onClick={() => {
+                      setLangDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
                           src="/images/flags/en.png"
@@ -315,7 +384,10 @@ export const Navbar = () => {
                     </Link>
                   )}
                   {currentLocale !== "fr" && (
-                    <Link href={getNewLocalePath("fr")} onClick={() => setLangDropdownOpen(false)}>
+                    <Link href={getNewLocalePath("fr")} onClick={() => {
+                      setLangDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
                           src="/images/flags/fr.png"

@@ -63,7 +63,7 @@ export default function SatelliteInfoPage() {
   const t = useI18n(); // Initialize i18n
   const searchParams = useSearchParams();
   const router = useRouter(); // Initialize router
-  const satelliteId = searchParams.get("satelliteId"); // Get satelliteId from query params
+  const satelliteId = searchParams ? searchParams.get("satelliteId") : null; // Add null check for searchParams
 
   const [satellites, setSatellites] = useState<Satellite[]>([]);
   const [selectedSatellite, setSelectedSatellite] = useState<Satellite | null>(null);
@@ -88,6 +88,37 @@ export default function SatelliteInfoPage() {
   const suggestionsRef = useRef<HTMLDivElement | null>(null); // Référence pour détecter les clics en dehors
   const [gridSquareError, setGridSquareError] = useState<boolean>(false); // State for error handling
   const [currentPosition, setCurrentPosition] = useState<Point | undefined>(undefined); // State for accurate real-time position
+  const [lastTleUpdate, setLastTleUpdate] = useState<string | null>(null); // State to store TLE update time
+  const [tleUpdateError, setTleUpdateError] = useState<string | null>(null); // Add error state for debugging
+
+  useEffect(() => {
+    // Fetch the TLE last update data
+    console.log('Fetching TLE update information...');
+    fetch('/api/tle-last-update')
+      .then(response => {
+        console.log('TLE update response status:', response.status);
+        if (!response.ok) {
+          throw new Error(`API error ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('TLE update data received:', data);
+        if (data && data.lastUpdate) {
+          // Format the date to show date and time (without seconds) and specify UTC
+          const date = new Date(data.lastUpdate);
+          const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0, -3);
+          console.log('Formatted TLE update date:', formattedDate);
+          setLastTleUpdate(formattedDate);
+        } else {
+          setTleUpdateError('No lastUpdate field in response');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching TLE update information:', error);
+        setTleUpdateError(error.message);
+      });
+  }, []);
 
   useEffect(() => {
     getSatellites()
@@ -329,7 +360,7 @@ export default function SatelliteInfoPage() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6">
       <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-6">
-        <div className="w-full flex justify-center mb-4"> {/* Réduction de la marge */}
+        <div className="w-full flex justify-center mb-2"> {/* Reduced margin between title and beta description */}
           <TypewriterEffectSmooth
             as="h1"
             words={[
@@ -340,15 +371,23 @@ export default function SatelliteInfoPage() {
             cursorClassName="bg-purple"
           />
         </div>
-        <p className="text-center text-gray-400 mb-4">{t("betaDescription")}</p> {/* Réduction de la marge */}
+        <p className="text-center text-gray-400 mb-5">{t("betaDescription")}</p> {/* Increased margin after beta description */}
+        
         <div className="relative mx-auto w-full max-w-2xl mb-6">
+          {/* TLE Update as small text right above the search input */}
+          {lastTleUpdate && (
+            <p className="text-center text-xs text-gray-400 mb-1">
+              Dernière mis à jour : {lastTleUpdate} UTC
+            </p>
+          )}
+          
           <InputSearch
             placeholder="Rechercher un satellite..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={handleInputFocus} // Afficher les suggestions au focus
-            className="w-80 mx-auto" // Centrer l'input
-            showButton={false} // Désactive le bouton "loupe" pour cette page
+            onFocus={handleInputFocus}
+            className="w-80 mx-auto"
+            showButton={false}
           />
           {showSuggestions && filteredSatellites.length > 0 && (
             <div
@@ -427,10 +466,10 @@ export default function SatelliteInfoPage() {
                 <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-4">
                   PolarChart
                 </h2>
-                <div className="absolute top-20 left-2 p-2 text-purple text-xl">
+                <div className="absolute top-20 left-16 p-2 text-purple text-xl">
                   Élévation: {polarInfo.elevation}°
                 </div>
-                <div className="absolute top-20 right-2 p-2 text-orange text-xl">
+                <div className="absolute top-20 right-16 p-2 text-orange text-xl">
                   Azimuth: {polarInfo.azimuth}°
                 </div>
                 <div className="flex justify-center mt-8">
@@ -486,9 +525,15 @@ export default function SatelliteInfoPage() {
         {selectedSatellite && (
           <div className="mt-6 w-full text-center">
             <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full inline-block">
-              <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-4">
+              <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-1">
                 TLE
               </h2>
+              {/* Add the TLE update information below the TLE title */}
+              {lastTleUpdate && (
+                <p className="text-center text-xs text-gray-400 mb-3">
+                  Dernière TLE update : {lastTleUpdate} UTC
+                </p>
+              )}
               <TLEDisplay
                 tle1={details?.tle1 || ""}
                 tle2={details?.tle2 || ""}

@@ -9,6 +9,7 @@ import SatelliteTab from "./SatelliteTab"; // new import
 import { getGridSquareCoords } from "@/src/lib/gridSquare";
 import { useI18n } from "@/locales/client"; // Add i18n import
 import { getCookieValue, setCookie } from "@/src/lib/cookies"; // Restore cookie functions for favorites
+import LocationButton from "@/src/components/features/LocationButton"; 
 
 interface Satellite {
   name: string;
@@ -74,6 +75,7 @@ export default function SatelliteTracker() {
   const [cityQuery, setCityQuery] = useState("");
   const [citySuggestions, setCitySuggestions] = useState<any[]>([]);
   const [gridSquareInput, setGridSquareInput] = useState("");
+  const [locationLoading, setLocationLoading] = useState(false); // État pour gérer le chargement de la localisation
 
   // États pour l'affichage / erreurs
   const [loading, setLoading] = useState(false);
@@ -223,6 +225,23 @@ export default function SatelliteTracker() {
     }
   };
 
+  const useCurrentLocation = () => {
+    setLocationLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLatitude(parseFloat(pos.coords.latitude.toFixed(5)));
+        setLongitude(parseFloat(pos.coords.longitude.toFixed(5)));
+        setLocationLoading(false);
+      },
+      (err) => {
+        console.error("Erreur de géolocalisation :", err);
+        alert("Impossible de récupérer votre position.");
+        setLocationLoading(false);
+      }
+    );
+  };
+
   // Autocomplétion pour les villes
   useEffect(() => {
     if (cityQuery.length > 2) {
@@ -266,11 +285,13 @@ export default function SatelliteTracker() {
               { text: "Pass", className: "text-white" },
               { text: "Prediction", className: "text-white" },
             ]}
-            className="text-2xl font-bold text-center text-white"
+            // Réduire la taille du texte sur mobile et l'augmenter progressivement
+            className="text-xl xs:text-2xl md:text-3xl font-bold text-center text-white overflow-hidden"
             cursorClassName="bg-purple"
           />
         </div>
-        <p className="text-center text-gray-400 mb-6">{t("betaDescription")}</p>
+        {/* Réduire la taille du texte de la description beta */}
+        <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
         <div className="flex flex-col md:flex-row gap-6">
           {/* PARTIE GAUCHE : sélection des satellites */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
@@ -398,8 +419,8 @@ export default function SatelliteTracker() {
             <div className="mb-6">
               <h3 className="text-white mb-4">Choisir votre position</h3>
               <div className="flex flex-col gap-4">
-                {/* Ligne avec Ville, GridSquare et Position Actuelle */}
-                <div className="flex items-center gap-4">
+                {/* Centrer la ligne d'input et le bouton de localisation */}
+                <div className="flex items-center justify-center gap-4 w-full mx-auto">
                   {/* Champ Ville */}
                   <div className="relative flex-1">
                     <input
@@ -408,7 +429,7 @@ export default function SatelliteTracker() {
                       onChange={(e) => setCityQuery(e.target.value)}
                       placeholder="Ville (ex: Paris)"
                       className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full"
-                      onFocus={() => setCitySuggestions([])} // Empêche les suggestions de réapparaître après sélection
+                      onFocus={() => setCitySuggestions([])}
                     />
                     {citySuggestions.length > 0 && (
                       <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
@@ -424,7 +445,7 @@ export default function SatelliteTracker() {
                       </ul>
                     )}
                   </div>
-                  <span className="text-white font-bold">OU</span>
+                  <span className="text-white font-bold">{t("or")}</span>
 
                   {/* Champ GridSquare */}
                   <div className="relative flex-1">
@@ -436,40 +457,14 @@ export default function SatelliteTracker() {
                       className="bg-zinc-200 text-zinc-600 px-4 py-2 rounded-md w-full"
                     />
                   </div>
-                  <span className="text-white font-bold">OU</span>
+                  <span className="text-white font-bold">{t("or")}</span>
 
-                  {/* Bouton Position Actuelle */}
-                  <button
-                    onClick={() => {
-                      navigator.geolocation.getCurrentPosition(
-                        (pos) => {
-                          setLatitude(parseFloat(pos.coords.latitude.toFixed(5)));
-                          setLongitude(parseFloat(pos.coords.longitude.toFixed(5)));
-                        },
-                        (err) => {
-                          console.error("Erreur de géolocalisation :", err);
-                          alert("Impossible de récupérer votre position.");
-                        }
-                      );
-                    }}
-                    className="bg-gray-700 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-600"
-                    title="Utiliser ma position actuelle"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414-1.414m12.728 0l1.414 1.414M6.05 6.05l1.414 1.414"
-                      />
-                    </svg>
-                  </button>
+                  <LocationButton
+                    onClick={useCurrentLocation}
+                    loading={locationLoading}
+                    title={t("useMyLocation")}
+                    size={40}
+                  />
                 </div>
 
                 {/* Latitude et Longitude */}
@@ -626,3 +621,4 @@ export default function SatelliteTracker() {
     </div>
   );
 }
+
