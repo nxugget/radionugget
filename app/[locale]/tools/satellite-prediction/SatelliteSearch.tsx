@@ -14,6 +14,7 @@ interface SatelliteSearchProps {
   onSelect: (id: string) => void;
   favorites: string[];
   onToggleFavorite: (id: string) => void;
+  onAddAll?: (satellites: Satellite[]) => void; // Nouvelle prop pour ajouter tous les satellites filtrés
 }
 
 export default function SatelliteSearch({
@@ -22,6 +23,7 @@ export default function SatelliteSearch({
   onSelect,
   favorites,
   onToggleFavorite,
+  onAddAll,
 }: SatelliteSearchProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
@@ -37,10 +39,17 @@ export default function SatelliteSearch({
     });
   }, [satellites, query, activeFilter, favorites]);
 
+  // Fonction pour ajouter tous les satellites filtrés
+  const handleAddAll = () => {
+    if (onAddAll) {
+      onAddAll(filteredSatellites);
+    }
+  };
+
   return (
     <div className="flex flex-col">
-      {/* Barre de recherche */}
-      <div className="flex flex-wrap gap-2 items-center mb-3">
+      {/* Barre de recherche avec bouton Add All */}
+      <div className="flex mb-3 items-center">
         <input
           type="text"
           placeholder="Rechercher..."
@@ -49,49 +58,59 @@ export default function SatelliteSearch({
           className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400
                      focus:ring-2 focus:ring-purple outline-none duration-300
                      placeholder:text-zinc-600 placeholder:opacity-50
-                     rounded-full px-4 py-2 shadow-md focus:shadow-lg w-full"
+                     rounded-full px-4 py-2 shadow-md focus:shadow-lg flex-grow"
         />
       </div>
-
-      {/* Boutons de filtre */}
-      <div className="mt-1 flex flex-wrap gap-2">
+      
+      <div className="flex justify-between items-center mb-3">
+        {/* Boutons de filtre */}
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveFilter("all")}
+            className={`px-4 py-2 rounded-md text-white font-bold ${
+              activeFilter === "all" ? "bg-purple" : "bg-gray-900 hover:bg-purple"
+            }`}
+          >
+            Tous
+          </button>
+          <button
+            onClick={() => setActiveFilter("weather")}
+            className={`px-4 py-2 rounded-md text-white font-bold ${
+              activeFilter === "weather"
+                ? "bg-purple"
+                : "bg-gray-900 hover:bg-purple"
+            }`}
+          >
+            Weather
+          </button>
+          <button
+            onClick={() => setActiveFilter("amateur")}
+            className={`px-4 py-2 rounded-md text-white font-bold ${
+              activeFilter === "amateur"
+                ? "bg-purple"
+                : "bg-gray-900 hover:bg-purple"
+            }`}
+          >
+            Amateur
+          </button>
+          <button
+            onClick={() => setActiveFilter("favorite")}
+            className={`px-4 py-2 rounded-md text-white font-bold ${
+              activeFilter === "favorite"
+                ? "bg-purple"
+                : "bg-gray-900 hover:bg-purple"
+            }`}
+          >
+            Favoris
+          </button>
+        </div>
+        
+        {/* Bouton Add All déplacé ici */}
         <button
-          onClick={() => setActiveFilter("all")}
-          className={`px-4 py-2 rounded-md text-white font-bold ${
-            activeFilter === "all" ? "bg-purple" : "bg-gray-900 hover:bg-purple"
-          }`}
+          onClick={handleAddAll}
+          className="text-sm font-bold text-white hover:text-purple transition-colors"
         >
-          Tous
-        </button>
-        <button
-          onClick={() => setActiveFilter("weather")}
-          className={`px-4 py-2 rounded-md text-white font-bold ${
-            activeFilter === "weather"
-              ? "bg-purple"
-              : "bg-gray-900 hover:bg-purple"
-          }`}
-        >
-          Weather
-        </button>
-        <button
-          onClick={() => setActiveFilter("amateur")}
-          className={`px-4 py-2 rounded-md text-white font-bold ${
-            activeFilter === "amateur"
-              ? "bg-purple"
-              : "bg-gray-900 hover:bg-purple"
-          }`}
-        >
-          Amateur
-        </button>
-        <button
-          onClick={() => setActiveFilter("favorite")}
-          className={`px-4 py-2 rounded-md text-white font-bold ${
-            activeFilter === "favorite"
-              ? "bg-purple"
-              : "bg-gray-900 hover:bg-purple"
-          }`}
-        >
-          Favoris
+          Add All {activeFilter !== "all" && activeFilter}
         </button>
       </div>
 
@@ -106,8 +125,8 @@ export default function SatelliteSearch({
               className={`group relative cursor-pointer rounded-md p-3 text-sm font-medium
                 ${
                   isSelected
-                    ? "bg-orange text-black"
-                    : "bg-zinc-700 text-white hover:bg-orange hover:text-black"
+                    ? "bg-purple text-white"
+                    : "bg-zinc-700 text-white hover:bg-purple hover:text-white"
                 }`}
             >
               <p>{sat.name}</p>
@@ -115,8 +134,8 @@ export default function SatelliteSearch({
                 <p
                   className={`text-xs ${
                     isSelected
-                      ? "text-black"
-                      : "text-gray-300 group-hover:text-black"
+                      ? "text-white"
+                      : "text-gray-300 group-hover:text-white"
                   }`}
                 >
                   {sat.category}
@@ -128,8 +147,8 @@ export default function SatelliteSearch({
                   onToggleFavorite(sat.id);
                 }}
                 className={`absolute top-2 right-2 text-xl transition-colors duration-300 ${
-                  favorites.includes(sat.id) ? "text-purple" : "text-gray-300"
-                } hover:text-black`}
+                  favorites.includes(sat.id) ? "text-orange" : "text-gray-300"
+                } hover:text-orange`}
                 title="Ajouter aux favoris"
               >
                 {favorites.includes(sat.id) ? "★" : "☆"}
