@@ -7,27 +7,43 @@ interface PolarChartProps {
   satelliteId: string;
   trajectoryPoints?: Point[]; // Points de trajectoire pour le tracé
   currentPosition?: Point; // New prop for real-time position
+  currentTime?: Date; // New prop to determine past vs future trajectory
+  isFocusMode?: boolean; // New prop to detect focus mode
 }
 
 interface Point {
   az: number;
   el: number;
+  time?: Date; // Add optional timestamp to track when position occurs
 }
 
-const PolarChart: React.FC<PolarChartProps> = ({ satelliteId, trajectoryPoints, currentPosition }) => {
+const PolarChart: React.FC<PolarChartProps> = ({ 
+  satelliteId, 
+  trajectoryPoints, 
+  currentPosition,
+  currentTime = new Date(), // Use current time by default
+  isFocusMode = false // Default to non-focus mode
+}) => {
   const chartRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     console.log("Trajectory points:", trajectoryPoints);
     if (!chartRef.current) return;
-    const width = 400, height = 400;
-    const radius = Math.min(width, height) / 2 - 30;
+    
+    const svgContainer = chartRef.current.parentElement;
+    const containerWidth = svgContainer ? svgContainer.clientWidth : 1800; // Larger default width for focus mode
+    const width = isFocusMode ? Math.min(containerWidth, 1800) : Math.min(containerWidth, 500); // Maximized width in focus mode
+    const height = width;
+    const radius = Math.min(width, height) / 2 - (isFocusMode ? 0 : 40); // Maximize radius for focus mode
+    
     const svg = d3.select(chartRef.current);
     svg.selectAll("*").remove();
     svg.attr("width", width).attr("height", height);
     const g = svg.append("g").attr("transform", `translate(${width / 2},${height / 2})`);
 
-    // Draw reference circles (without labels yet)
+    const baseFontSize = isFocusMode ? 100 : (width < 300 ? 10 : (width < 400 ? 11 : 12)); // Extremely large font size in focus mode
+
+    // Draw reference circles
     const refElevations = [90, 60, 30, 0];
     refElevations.forEach(elev => {
       const r = (90 - elev) * (radius / 90);
@@ -36,7 +52,7 @@ const PolarChart: React.FC<PolarChartProps> = ({ satelliteId, trajectoryPoints, 
          .attr("r", r)
          .attr("fill", "none")
          .attr("stroke", "#b400ff")
-         .attr("stroke-width", 1.5);
+         .attr("stroke-width", isFocusMode ? 12 : 1.5); // Much thicker lines in focus mode
       }
     });
 
@@ -52,131 +68,201 @@ const PolarChart: React.FC<PolarChartProps> = ({ satelliteId, trajectoryPoints, 
       g.append("line")
         .attr("x1", 0)
         .attr("y1", 0)
-        .attr("x2", (radius + 15) * Math.cos(rad))
-        .attr("y2", (radius + 15) * Math.sin(rad))
+        .attr("x2", (radius + (isFocusMode ? 100 : 15)) * Math.cos(rad)) // Much longer lines in focus mode
+        .attr("y2", (radius + (isFocusMode ? 100 : 15)) * Math.sin(rad))
         .attr("stroke", "#ffaa00")
-        .attr("stroke-width", 1.5);
+        .attr("stroke-width", isFocusMode ? 12 : 1.5); // Much thicker lines in focus mode
       g.append("text")
-        .attr("x", (radius + 25) * Math.cos(rad))
-        .attr("y", (radius + 25) * Math.sin(rad))
+        .attr("x", (radius + (isFocusMode ? 150 : 25)) * Math.cos(rad)) // Adjusted for extremely large text
+        .attr("y", (radius + (isFocusMode ? 150 : 25)) * Math.sin(rad))
         .attr("text-anchor", "middle")
         .attr("alignment-baseline", "middle")
         .attr("fill", "#ffaa00")
-        .attr("font-size", "14px")
+        .attr("font-size", `${baseFontSize}px`) // Extremely large font size in focus mode
         .text(d.label);
     });
 
-    // Then add elevation labels on top (to be in foreground)
+    // Add elevation labels
     refElevations.forEach(elev => {
       const r = (90 - elev) * (radius / 90);
       g.append("text")
-       .attr("x", r * Math.cos(Math.PI/4) + 5)
-       .attr("y", r * Math.sin(Math.PI/4) + 5)
+       .attr("x", r * Math.cos(Math.PI/4) + (isFocusMode ? 40 : 5))
+       .attr("y", r * Math.sin(Math.PI/4) + (isFocusMode ? 80 : 12)) 
        .attr("fill", "purple")
        .attr("opacity", 0.9)
-       .attr("font-size", "12px")
+       .attr("font-size", `${baseFontSize}px`) // Extremely large font size in focus mode
        .text(`${elev}°`);
     });
 
     g.append("circle")
      .attr("cx", 0)
      .attr("cy", 0)
-     .attr("r", 4)
+     .attr("r", isFocusMode ? 20 : 4) // Much larger center point in focus mode
      .attr("fill", "#b400ff")
      .raise();
 
-    // Define the arrow marker
+    // Remove the marker definitions entirely, we'll draw the arrow manually
     const defs = svg.append("defs");
-    defs.append("marker")
-      .attr("id", "arrow")
-      .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 8)
-      .attr("refY", 0)
-      .attr("markerWidth", 6)  // Reduced from 8 to 6
-      .attr("markerHeight", 6) // Reduced from 8 to 6
-      .attr("orient", "auto")
-      .append("path")
-      .attr("d", "M0,-5L10,0L0,5")
-      .attr("fill", "#228B22");
 
-    // Use an azimuth offset (-90°) so 0° maps to the top.
+    // Only keep the satellite pattern definition
+    defs.append("pattern")
+      .attr("id", "satellite-pattern")
+      .attr("width", 1)
+      .attr("height", 1)
+      .attr("patternUnits", "objectBoundingBox")
+      .append("image")
+      .attr("href", "/images/icon/satellite-icon.svg")
+      .attr("width", 24)
+      .attr("height", 24)
+      .attr("x", 0)
+      .attr("y", 0);
+
+    // Split trajectory into past and future
     if (trajectoryPoints && trajectoryPoints.length > 1) {
       const scale = radius / 90;
-      // Use: angle = (p.az - 180) converted to radians.
-      const lineData = trajectoryPoints.map(p => {
-        const angleRad = (p.az - 180) * (Math.PI / 180);
-        return [(90 - p.el) * scale, angleRad] as [number, number];
-      });
-      const lineGenerator = d3.lineRadial()
-                              .angle((d: any) => d[1])
-                              .radius((d: any) => d[0])
-                              .curve(d3.curveCardinal);
-      const pathData = lineGenerator(lineData);
+      const now = new Date(currentTime.getTime());
       
-      // Draw the path with an arrow marker at the end
-      g.append("path")
-       .attr("d", pathData || "")
-       .attr("fill", "none")
-       .attr("stroke", "#228B22")
-       .attr("stroke-width", 3)
-       .attr("marker-end", "url(#arrow)"); // Add arrow marker to the end of the path
+      let pastPoints: Point[] = [];
+      let futurePoints: Point[] = [];
       
-      // Add a direction arrow at approximately 1/3 of the path if it's long enough
-      if (trajectoryPoints.length > 5) {
-        // Find a point at approximately 1/3 of the path for the direction arrow
-        const directionIndex = Math.floor(trajectoryPoints.length / 3);
-        const p1 = trajectoryPoints[directionIndex - 1];
-        const p2 = trajectoryPoints[directionIndex + 1];
+      // Handle differently based on if the satellite is visible
+      if (currentPosition && currentPosition.el > 0) {
+        // CASE 1: Satellite is currently visible - split into past/future
+        if (trajectoryPoints.some(p => p.time !== undefined)) {
+          pastPoints = trajectoryPoints
+            .filter(p => p.time && p.time.getTime() <= now.getTime())
+            .sort((a, b) => (a.time && b.time) ? a.time.getTime() - b.time.getTime() : 0);
+            
+          futurePoints = trajectoryPoints
+            .filter(p => p.time && p.time.getTime() > now.getTime())
+            .sort((a, b) => (a.time && b.time) ? a.time.getTime() - b.time.getTime() : 0);
+        } else {
+          // Fallback if no timestamps
+          const midPoint = Math.floor(trajectoryPoints.length / 2);
+          pastPoints = trajectoryPoints.slice(0, midPoint);
+          futurePoints = trajectoryPoints.slice(midPoint);
+        }
+      } else {
+        // CASE 2: Satellite is not visible - show all points as future trajectory
+        futurePoints = [...trajectoryPoints];
+        pastPoints = []; // Empty past points - don't show red line
+      }
+
+      // Draw past trajectory (red dotted line) - only if there are past points
+      if (pastPoints.length > 1) {
+        const pastLineData = pastPoints.map(p => {
+          const angleRad = (p.az) * (Math.PI / 180);
+          const el = Math.max(p.el, 0);
+          const r = (90 - el) * scale;
+          return [r, angleRad] as [number, number];
+        });
         
-        // Calculate direction vector
-        const angleRad1 = (p1.az - 180) * (Math.PI / 180);
-        const angleRad2 = (p2.az - 180) * (Math.PI / 180);
-        const r1 = (90 - p1.el) * scale;
-        const r2 = (90 - p2.el) * scale;
-        const x1 = r1 * Math.cos(angleRad1);
-        const y1 = r1 * Math.sin(angleRad1);
-        const x2 = r2 * Math.cos(angleRad2);
-        const y2 = r2 * Math.sin(angleRad2);
+        const lineGenerator = d3.lineRadial()
+          .angle((d: any) => d[1])
+          .radius((d: any) => d[0])
+          .curve(d3.curveCardinal);
         
-        // Draw a small arrow in the middle of the path to show direction
-        const midPoint = trajectoryPoints[directionIndex];
-        const midAngleRad = (midPoint.az - 180) * (Math.PI / 180);
-        const midR = (90 - midPoint.el) * scale;
-        const midX = midR * Math.cos(midAngleRad);
-        const midY = midR * Math.sin(midAngleRad);
+        const pastPathData = lineGenerator(pastLineData);
         
-        // Calculate the angle for the arrow
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-        
-        // Add a small arrow to indicate direction
         g.append("path")
-          .attr("d", "M-4,-2L0,0L-4,2")  // Reduced from M-6,-3L0,0L-6,3
-          .attr("transform", `translate(${midX},${midY}) rotate(${angle})`)
-          .attr("fill", "#228B22")
-          .attr("stroke", "#228B22")
-          .attr("stroke-width", 1);
+          .attr("d", pastPathData || "")
+          .attr("fill", "none")
+          .attr("stroke", "#dc2626") // Red for past
+          .attr("stroke-width", isFocusMode ? 6 : 2.5) // Thicker line in focus mode
+          .attr("stroke-dasharray", isFocusMode ? "10,10" : "5,5"); // Larger dashes in focus mode
+      }
+
+      // Draw future trajectory (green solid line)
+      if (futurePoints.length > 1) {
+        const futureLineData = futurePoints.map(p => {
+          const angleRad = (p.az) * (Math.PI / 180);
+          const el = Math.max(p.el, 0);
+          const r = (90 - el) * scale;
+          return [r, angleRad] as [number, number];
+        });
+        
+        const lineGenerator = d3.lineRadial()
+          .angle((d: any) => d[1])
+          .radius((d: any) => d[0])
+          .curve(d3.curveCardinal);
+        
+        const futurePathData = lineGenerator(futureLineData);
+        
+        // Create and append the path for future trajectory
+        const futurePath = g.append("path")
+          .attr("d", futurePathData || "")
+          .attr("fill", "none")
+          .attr("stroke", "#228B22") // Green for future
+          .attr("stroke-width", isFocusMode ? 7 : 3); // Thicker line in focus mode
+          
+        // Now draw the arrow at the end of the path using the actual path endpoint
+        if (futurePoints.length >= 2) {
+          // Get the exact end point from the path element
+          const pathNode = futurePath.node();
+          if (pathNode) {
+            const pathLength = pathNode.getTotalLength();
+            
+            // Get the last point and a point slightly before it to determine direction
+            const endPoint = pathNode.getPointAtLength(pathLength);
+            const beforeEndPoint = pathNode.getPointAtLength(pathLength - 15);
+            
+            // Calculate direction vector
+            const dx = endPoint.x - beforeEndPoint.x;
+            const dy = endPoint.y - beforeEndPoint.y;
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+            
+            // Draw arrow lines
+            const arrowSize = isFocusMode ? 16 : 12; // Slightly larger arrow in focus mode
+            
+            // Arrow wing 1
+            g.append("line")
+              .attr("x1", endPoint.x)
+              .attr("y1", endPoint.y)
+              .attr("x2", endPoint.x - arrowSize * Math.cos((angle - 25) * (Math.PI / 180)))
+              .attr("y2", endPoint.y - arrowSize * Math.sin((angle - 25) * (Math.PI / 180)))
+              .attr("stroke", "#228B22")
+              .attr("stroke-width", isFocusMode ? 4 : 3); // Thicker arrow in focus mode
+              
+            // Arrow wing 2
+            g.append("line")
+              .attr("x1", endPoint.x)
+              .attr("y1", endPoint.y)
+              .attr("x2", endPoint.x - arrowSize * Math.cos((angle + 25) * (Math.PI / 180)))
+              .attr("y2", endPoint.y - arrowSize * Math.sin((angle + 25) * (Math.PI / 180)))
+              .attr("stroke", "#228B22")
+              .attr("stroke-width", isFocusMode ? 4 : 3); // Thicker arrow in focus mode
+          }
+        }
       }
     }
 
-    // Adjust current position similarly:
-    if (currentPosition && currentPosition.el > 0) {
+    // Draw current position - but only if the satellite is above horizon
+    if (currentPosition) {
       const scale = radius / 90;
-      const rPos = (90 - currentPosition.el) * scale;
-      const angle = (currentPosition.az - 180) * (Math.PI / 180);
-      const x = rPos * Math.cos(angle);
-      const y = rPos * Math.sin(angle);
-      g.append("circle")
-       .attr("cx", x)
-       .attr("cy", y)
-       .attr("r", 5)
-       .attr("fill", "red")
-       .raise();
+      const angle = (currentPosition.az) * (Math.PI / 180);
+      
+      if (currentPosition.el > 0) {
+        const posRadius = (90 - currentPosition.el) * scale;
+        const x = posRadius * Math.cos(angle);
+        const y = posRadius * Math.sin(angle);
+        
+        g.append("image")
+          .attr("x", x - (isFocusMode ? 60 : 25)) // Much larger icon in focus mode
+          .attr("y", y - (isFocusMode ? 60 : 25))
+          .attr("width", isFocusMode ? 120 : 50) // Much larger icon in focus mode
+          .attr("height", isFocusMode ? 120 : 50)
+          .attr("href", "/images/icon/satellite-icon.svg")
+          .attr("filter", "brightness(0) invert(1) drop-shadow(0 0 5px rgba(0, 0, 0, 0.7))")
+          .raise();
+      }
     }
-  }, [trajectoryPoints, currentPosition]);
+  }, [trajectoryPoints, currentPosition, currentTime, isFocusMode]);
 
-  return <svg ref={chartRef} />;
+  return (
+    <div className="w-full flex justify-center items-center">
+      <svg ref={chartRef} className="max-w-full h-auto" preserveAspectRatio="xMidYMid meet" />
+    </div>
+  );
 };
 
 export default PolarChart;

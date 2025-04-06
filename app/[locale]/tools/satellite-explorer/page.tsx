@@ -14,6 +14,7 @@ import { twoline2satrec, propagate, gstime, eciToEcf, ecfToLookAngles, EciVec3 }
 import { useI18n } from "@/locales/client"; // Add i18n import
 import InputSearch from "@/src/components/ui/InputSearch"; // Import du composant InputSearch
 import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import the validation function
+import SatMap from "./SatMap"; // Import the SatMap component
 
 interface Satellite {
   id: string;
@@ -39,6 +40,7 @@ interface SatelliteDetails {
 interface Point {
   az: number;
   el: number;
+  time?: Date; // Add time property
 }
 
 const deg2rad = (deg: number) => deg * (Math.PI / 180);
@@ -59,6 +61,9 @@ function isValidEciVec3(value: any): value is EciVec3<number> {
   return value && typeof value === "object" && "x" in value && "y" in value && "z" in value;
 }
 
+// Constantes pour le localStorage
+const GRIDSQUARE_STORAGE_KEY = "satellite-explorer-gridsquare";
+
 export default function SatelliteInfoPage() {
   const t = useI18n(); // Initialize i18n
   const searchParams = useSearchParams();
@@ -75,9 +80,10 @@ export default function SatelliteInfoPage() {
     nextAOSCountdown: number; 
     nextLOSCountdown: number;
   }>({ azimuth: 0, elevation: 0, nextAOSCountdown: -1, nextLOSCountdown: -1 });
-  const [latitude, setLatitude] = useState<number>(48.8566); // Default latitude set to Paris
-  const [longitude, setLongitude] = useState<number>(2.3522); // Default longitude set to Paris
-  const [gridSquare, setGridSquare] = useState<string>("DM27bf"); // Default Grid Square
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const [gridSquare, setGridSquare] = useState<string | null>(null);
+  const [gridSquareLoaded, setGridSquareLoaded] = useState(false);
   const [isEditingGridSquare, setIsEditingGridSquare] = useState<boolean>(false); // Editing state
   const [countdown, setCountdown] = useState<string>("");
   const [imageError, setImageError] = useState(false); // Nouvel état pour gérer l'erreur d'image
@@ -90,6 +96,59 @@ export default function SatelliteInfoPage() {
   const [currentPosition, setCurrentPosition] = useState<Point | undefined>(undefined); // State for accurate real-time position
   const [lastTleUpdate, setLastTleUpdate] = useState<string | null>(null); // State to store TLE update time
   const [tleUpdateError, setTleUpdateError] = useState<string | null>(null); // Add error state for debugging
+
+  // New states for focus mode
+  const [focusMode, setFocusMode] = useState<boolean>(false);
+  const focusContainerRef = useRef<HTMLDivElement>(null);
+
+  // Effet UNIQUEMENT pour charger la gridsquare du localStorage - séparé des autres effets
+  useEffect(() => {
+    try {
+      // Récupération de la gridsquare stockée ou utilisation de la valeur par défaut
+      const storedGridSquare = localStorage.getItem(GRIDSQUARE_STORAGE_KEY);
+      
+      if (storedGridSquare && isValidGridSquare(storedGridSquare)) {
+        console.log("Loaded GridSquare from localStorage:", storedGridSquare);
+        setGridSquare(storedGridSquare);
+      } else {
+        console.log("Using default GridSquare: DM27bf");
+        setGridSquare("DM27bf");
+      }
+      
+      // Marquer comme chargée pour éviter les problèmes de rendu
+      setGridSquareLoaded(true);
+    } catch (error) {
+      console.error("Error loading GridSquare from localStorage:", error);
+      setGridSquare("DM27bf");
+      setGridSquareLoaded(true);
+    }
+  }, []); // S'exécute uniquement au montage du composant
+  
+  // Effet SÉPARÉ pour mettre à jour latitude/longitude quand gridSquare change
+  useEffect(() => {
+    // Ne rien faire si la gridsquare n'est pas encore chargée
+    if (!gridSquareLoaded || !gridSquare) return;
+    
+    try {
+      console.log("Updating coordinates from GridSquare:", gridSquare);
+      const coords = getGridSquareCoords(gridSquare);
+      setLatitude(coords.lat);
+      setLongitude(coords.lon);
+    } catch (error) {
+      console.error("Error converting grid square to coordinates:", error);
+      
+      // Fallback à la valeur par défaut en cas d'erreur
+      try {
+        const defaultCoords = getGridSquareCoords("DM27bf");
+        setLatitude(defaultCoords.lat);
+        setLongitude(defaultCoords.lon);
+      } catch {
+        // Fallback vraiment de secours
+        setLatitude(48.8566);
+        setLongitude(2.3522);
+      }
+    }
+  }, [gridSquare, gridSquareLoaded]);
 
   useEffect(() => {
     // Fetch the TLE last update data
@@ -157,7 +216,7 @@ export default function SatelliteInfoPage() {
   }, [selectedSatellite, details]);
 
   useEffect(() => {
-    if (!selectedSatellite) return;
+    if (!selectedSatellite || latitude === null || longitude === null) return;
     const interval = setInterval(async () => {
       try {
         const res = await fetch(`/api/getRealtimePolar?satId=${selectedSatellite.id}&lat=${latitude}&lon=${longitude}&height=0`);
@@ -185,9 +244,7 @@ export default function SatelliteInfoPage() {
   }, [selectedSatellite, latitude, longitude]);
 
   useEffect(() => {
-    if (!details?.tle1 || !details?.tle2) return;
-    // Freeze trajectoryPoints if satellite is already in AOS
-    if (polarInfo.elevation > 0 && trajectoryPoints.length > 0) return;
+    if (!details?.tle1 || !details?.tle2 || latitude === null || longitude === null) return;
 
     const satrec = twoline2satrec(details.tle1.trim(), details.tle2.trim());
     const observerCoords = {
@@ -196,40 +253,127 @@ export default function SatelliteInfoPage() {
       height: 0,
     };
     const now = new Date();
-    // Start at now if satellite is up; otherwise, wait for next AOS.
-    const startTime = polarInfo.elevation > 0 ? now : new Date(now.getTime() + polarInfo.nextAOSCountdown * 1000);
-    const maxSeconds = 90 * 60; // fallback maximum duration: 90 minutes
     const points: Point[] = [];
-    let t = 0;
-    while (t <= maxSeconds) {
-      const sampleTime = new Date(startTime.getTime() + t * 1000);
-      const prop = propagate(satrec, sampleTime);
-      if (prop.position && isValidEciVec3(prop.position)) {
-        const gmst = gstime(sampleTime);
-        const posEcf = eciToEcf(prop.position, gmst);
-        const look = ecfToLookAngles(observerCoords, posEcf);
-        const el = Math.max(Math.min(rad2deg(look.elevation), 90), 0);
-        points.push({
-          az: rad2deg(look.azimuth),
-          el
-        });
-        if (el <= 0) {
-          // ensure the trajectory ends exactly at horizon (elevation 0)
-          break;
+    
+    // Different calculation logic based on whether satellite is visible or not
+    if (polarInfo.elevation > 0) {
+      // CASE 1: Satellite is currently visible - show both past and future
+      // Look back to show the trajectory from the start of pass
+      const lookBackSeconds = 30 * 60; // 30 minutes
+      
+      // Add past trajectory points
+      for (let t = -lookBackSeconds; t < 0; t += 10) {
+        const sampleTime = new Date(now.getTime() + t * 1000);
+        const prop = propagate(satrec, sampleTime);
+        if (prop.position && isValidEciVec3(prop.position)) {
+          const gmst = gstime(sampleTime);
+          const posEcf = eciToEcf(prop.position, gmst);
+          const look = ecfToLookAngles(observerCoords, posEcf);
+          const el = rad2deg(look.elevation);
+          points.push({
+            az: rad2deg(look.azimuth),
+            el: Math.min(el, 90),
+            time: new Date(sampleTime)
+          });
         }
       }
-      t += 10;
+      
+      // Add future points until end of current pass
+      const maxSeconds = 90 * 60; // 90 minutes max
+      let foundEndOfPass = false;
+      
+      for (let t = 0; t <= maxSeconds && !foundEndOfPass; t += 10) {
+        const sampleTime = new Date(now.getTime() + t * 1000);
+        const prop = propagate(satrec, sampleTime);
+        if (prop.position && isValidEciVec3(prop.position)) {
+          const gmst = gstime(sampleTime);
+          const posEcf = eciToEcf(prop.position, gmst);
+          const look = ecfToLookAngles(observerCoords, posEcf);
+          const el = rad2deg(look.elevation);
+          
+          // Add the point
+          points.push({
+            az: rad2deg(look.azimuth),
+            el: Math.min(el, 90),
+            time: new Date(sampleTime)
+          });
+          
+          // Stop when satellite goes below horizon
+          if (el <= 0 && t > 0) {
+            foundEndOfPass = true;
+          }
+        }
+      }
+    } else {
+      // CASE 2: Satellite not visible - show ONLY future trajectory of next pass
+      // If we know the next AOS time, start from there
+      const startTime = polarInfo.nextAOSCountdown > 0 
+        ? new Date(now.getTime() + polarInfo.nextAOSCountdown * 1000)
+        : now;
+        
+      const maxSeconds = 180 * 60; // 3 hours max to find next pass
+      let foundAOS = false;
+      let foundLOS = false;
+      
+      // Collect all points from the prediction
+      const tempPoints: Point[] = []; 
+      
+      for (let t = 0; t <= maxSeconds && !foundLOS; t += 10) {
+        const sampleTime = new Date(startTime.getTime() + t * 1000);
+        const prop = propagate(satrec, sampleTime);
+        if (prop.position && isValidEciVec3(prop.position)) {
+          const gmst = gstime(sampleTime);
+          const posEcf = eciToEcf(prop.position, gmst);
+          const look = ecfToLookAngles(observerCoords, posEcf);
+          const el = rad2deg(look.elevation);
+          const az = rad2deg(look.azimuth);
+          
+          // Only start collecting points once we find AOS (satellite rising above horizon)
+          if (el > 0) {
+            foundAOS = true;
+          }
+          
+          // Once we've found AOS, collect all points until LOS
+          if (foundAOS) {
+            tempPoints.push({
+              az,
+              el: Math.min(el, 90),
+              time: new Date(sampleTime)
+            });
+            
+            // Stop when the satellite goes below horizon again (we've found LOS)
+            if (el <= 0 && tempPoints.length > 0) {
+              foundLOS = true;
+            }
+          }
+        }
+      }
+      
+      // If we found a pass, use the points; otherwise show nothing
+      if (tempPoints.length > 0) {
+        // Ensure points are in chronological order
+        points.push(...tempPoints.sort((a, b) => 
+          (a.time && b.time) ? a.time.getTime() - b.time.getTime() : 0
+        ));
+        
+        // Log AOS and LOS points to debug direction
+        if (points.length > 1) {
+          console.log("AOS point: ", points[0].az.toFixed(1), points[0].el.toFixed(1));
+          console.log("LOS point: ", points[points.length-1].az.toFixed(1), points[points.length-1].el.toFixed(1));
+        }
+      }
     }
-    console.log("Computed trajectory points:", points);
+
+    console.log("Computed trajectory points:", points.length, polarInfo.elevation > 0 ? "current pass" : "next pass");
     setTrajectoryPoints(points);
-  }, [details, latitude, longitude, polarInfo.nextAOSCountdown, polarInfo.nextLOSCountdown, polarInfo.elevation]);
+  }, [details, latitude, longitude, polarInfo.elevation, polarInfo.nextAOSCountdown]);
 
   useEffect(() => {
     if (!details) return;
     const satrec = twoline2satrec(details.tle1.trim(), details.tle2.trim());
     const observerCoords = {
-      latitude: deg2rad(latitude),
-      longitude: deg2rad(longitude),
+      latitude: deg2rad(latitude!),
+      longitude: deg2rad(longitude!),
       height: 0,
     };
     const interval = setInterval(() => {
@@ -271,6 +415,39 @@ export default function SatelliteInfoPage() {
     };
   }, []);
 
+  // Function to toggle focus mode
+  const toggleFocusMode = () => {
+    const newFocusMode = !focusMode;
+    setFocusMode(newFocusMode);
+    
+    // Handle fullscreen
+    if (newFocusMode) {
+      if (focusContainerRef.current && focusContainerRef.current.requestFullscreen) {
+        focusContainerRef.current.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+        });
+      }
+    } else if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(err => {
+        console.error(`Error attempting to exit fullscreen mode: ${err.message}`);
+      });
+    }
+  };
+
+  // Event listener for fullscreen change
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && focusMode) {
+        setFocusMode(false);
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, [focusMode]);
+
   const handleGridSquareChange = (newGridSquare: string) => {
     if (isValidGridSquare(newGridSquare)) {
       try {
@@ -279,6 +456,11 @@ export default function SatelliteInfoPage() {
         setLongitude(coords.lon);
         setGridSquare(newGridSquare);
         setGridSquareError(false); // Clear error if valid
+        
+        // Sauvegarder dans le localStorage
+        localStorage.setItem(GRIDSQUARE_STORAGE_KEY, newGridSquare);
+        
+        console.log(`Grid square ${newGridSquare} saved to localStorage`);
       } catch {
         setGridSquareError(true); // Set error if invalid
         setGridSquare(""); // Reset Grid Square if invalid
@@ -358,190 +540,306 @@ export default function SatelliteInfoPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-6">
-      <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-6">
-        <div className="w-full flex justify-center mb-2"> {/* Reduced margin between title and beta description */}
-          <TypewriterEffectSmooth
-            as="h1"
-            words={[
-              { text: "Satellite", className: "text-purple" },
-              { text: "Explorer", className: "text-white" },
-            ]}
-            className="text-2xl font-bold text-center text-white"
-            cursorClassName="bg-purple"
-          />
-        </div>
-        <p className="text-center text-gray-400 mb-5">{t("betaDescription")}</p> {/* Increased margin after beta description */}
-        
-        <div className="relative mx-auto w-full max-w-2xl mb-6">
-          {/* TLE Update as small text right above the search input */}
-          {lastTleUpdate && (
-            <p className="text-center text-xs text-gray-400 mb-1">
-              Dernière mis à jour : {lastTleUpdate} UTC
-            </p>
-          )}
-          
-          <InputSearch
-            placeholder="Rechercher un satellite..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={handleInputFocus}
-            className="w-80 mx-auto"
-            showButton={false}
-          />
-          {showSuggestions && filteredSatellites.length > 0 && (
-            <div
-              ref={suggestionsRef}
-              className="absolute top-full left-1/2 transform -translate-x-1/2 w-80 bg-black/70 rounded-lg mt-2 max-h-[150px] overflow-y-auto z-50 shadow-lg" // Centré avec l'input
-            >
-              {filteredSatellites.map((sat) => (
-                <div
-                  key={sat.id}
-                  className="p-2 text-white hover:bg-zinc-700 cursor-pointer"
-                  onClick={() => handleSatelliteSelect(sat.id)}
-                >
-                  {sat.name}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {selectedSatellite && (
-          <div className="mt-6 p-4 rounded-lg flex flex-col gap-4">
-            {/* Top row: details text on left, small image on top right */}
-            <div className="flex flex-row gap-4 items-start">
-              <div className="flex-1 flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-3xl font-bold text-white">
-                    {details?.name || selectedSatellite.name}
-                  </h2>
-                  {details?.country_image && (
-                    <div className="w-10 h-6 rounded-md shadow-md overflow-hidden">
-                      <img
-                        src={details.country_image}
-                        alt="Country flag"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
-                <p className="text-gray-300 text-lg">
-                  {details?.description ||
-                    "Aucune description n'est disponible pour le moment."}
-                </p>
-                <div className="flex flex-col gap-1 mt-2">
-                  <p className="text-gray-300 text-lg">
-                    Status: {details?.status || "N/A"}
-                  </p>
-                  <p className="text-gray-300 text-lg">
-                    Frequency: {details?.frequency || "N/A"}
-                  </p>
-                </div>
+    <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:p-6">
+      {gridSquareLoaded ? (
+        // Afficher le contenu normal une fois la gridsquare chargée
+        <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-3 sm:p-6">
+          {!focusMode && (
+            <>
+              <div className="w-full flex justify-center mb-2"> {/* Reduced margin between title and beta description */}
+                <TypewriterEffectSmooth
+                  as="h1"
+                  words={[
+                    { text: "Satellite", className: "text-purple" },
+                    { text: "Explorer", className: "text-white" },
+                  ]}
+                  className="text-2xl font-bold text-center text-white"
+                  cursorClassName="bg-purple"
+                />
               </div>
-              <div className="w-56 flex-shrink-0 mb-2">
-                {imageError || !(details?.photoUrl || selectedSatellite?.image) ? (
-                  <div className="w-full h-32 flex flex-col items-center justify-center bg-gray-900 bg-opacity-30 text-purple text-xl font-bold rounded-lg">
-                    <span>{details?.name || selectedSatellite?.name || "Satellite"}</span>
-                    <span>Photo NA</span>
-                  </div>
-                ) : (
-                  <div className="relative w-full h-32">
-                    <img
-                      src={details?.photoUrl || selectedSatellite?.image}
-                      alt={details?.name || selectedSatellite?.name || "Satellite"}
-                      className="w-full h-full object-contain rounded-lg"
-                      onError={() => setImageError(true)}
-                    />
-                    <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1 py-0.5 rounded">
-                      {details?.image_source || "Source"}
-                    </div>
+              <p className="text-center text-gray-400 mb-5">{t("betaDescription")}</p> {/* Increased margin after beta description */}
+              
+              <div className="relative mx-auto w-full max-w-2xl mb-6">
+                {/* TLE Update as small text right above the search input */}
+                {lastTleUpdate && (
+                  <p className="text-center text-xs text-gray-400 mb-1">
+                    Dernière mis à jour : {lastTleUpdate} UTC
+                  </p>
+                )}
+                
+                <InputSearch
+                  placeholder="Rechercher un satellite..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={handleInputFocus}
+                  className="w-full sm:w-80 mx-auto"
+                  showButton={false}
+                />
+                {showSuggestions && filteredSatellites.length > 0 && (
+                  <div
+                    ref={suggestionsRef}
+                    className="absolute top-full left-1/2 transform -translate-x-1/2 w-full sm:w-80 bg-black/70 rounded-lg mt-2 max-h-[150px] overflow-y-auto z-50 shadow-lg" // Centré avec l'input
+                  >
+                    {filteredSatellites.map((sat) => (
+                      <div
+                        key={sat.id}
+                        className="p-2 text-white hover:bg-zinc-700 cursor-pointer"
+                        onClick={() => handleSatelliteSelect(sat.id)}
+                      >
+                        {sat.name}
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
-            </div>
-            {/* Charts row: remains unchanged */}
-            <div className="flex w-full gap-4 items-stretch">
-              <div className="flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md h-full">
-                <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-4">
-                  PolarChart
-                </h2>
-                <div className="absolute top-20 left-16 p-2 text-purple text-xl">
-                  Élévation: {polarInfo.elevation}°
-                </div>
-                <div className="absolute top-20 right-16 p-2 text-orange text-xl">
-                  Azimuth: {polarInfo.azimuth}°
-                </div>
-                <div className="flex justify-center mt-8">
-                  <div className="w-[500px] h-[500px] flex items-center justify-center rounded-md">
-                    <PolarChart 
-                      satelliteId={selectedSatellite.id} 
-                      trajectoryPoints={trajectoryPoints}
-                      currentPosition={currentPosition}
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-center items-center mt-4 gap-16">
-                  <div className={polarInfo.elevation > 0 ? "text-red-600 text-xl" : "text-[#228B22] text-xl"}>
-                    {gridSquare ? countdown : "Renseignez une Grid Square valide"}
-                  </div>
-                  {isEditingGridSquare ? (
-                    <div className="relative">
-                      <input
-                        type="text"
-                        defaultValue={gridSquare || "DM27bf"}
-                        onBlur={handleGridSquareBlur}
-                        onKeyDown={handleGridSquareKeyDown}
-                        className={`bg-gray-700 text-white rounded-full pl-4 pr-4 py-2 w-32 focus:outline-none focus:ring-1 ${
-                          gridSquareError ? "ring-red-500" : "ring-purple"
-                        } focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
-                        autoFocus
-                      />
-                      {gridSquareError && (
-                        <span className="absolute top-full left-0 text-red-500 text-sm animate-pulse mt-1">
-                          Gridsquare invalide
-                        </span>
+            </>
+          )}
+
+          {selectedSatellite && (
+            <div className={`${focusMode ? 'p-0' : 'mt-6 p-4'} rounded-lg flex flex-col gap-4`}>
+              {/* Top row: details text on left, small image on top right - hide in focus mode */}
+              {!focusMode && (
+                <div className="flex flex-col sm:flex-row gap-4 items-start">
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                        {details?.name || selectedSatellite.name}
+                      </h2>
+                      {details?.country_image && (
+                        <div className="w-10 h-6 rounded-md shadow-md overflow-hidden">
+                          <img
+                            src={details.country_image}
+                            alt="Country flag"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                       )}
                     </div>
-                  ) : (
-                    <span
-                      className="text-white cursor-pointer"
-                      onClick={() => setIsEditingGridSquare(true)}
-                    >
-                      (Grid Square: {gridSquare || "N/A"})
-                    </span>
-                  )}
+                    <p className="text-gray-300 text-lg">
+                      {details?.description ||
+                        "Aucune description n'est disponible pour le moment."}
+                    </p>
+                    <div className="flex flex-col gap-1 mt-2">
+                      <p className="text-gray-300 text-lg">
+                        Status: {details?.status || "N/A"}
+                      </p>
+                      <p className="text-gray-300 text-lg">
+                        Frequency: {details?.frequency || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-full sm:w-56 flex-shrink-0 mb-2">
+                    {imageError || !(details?.photoUrl || selectedSatellite?.image) ? (
+                      <div className="w-full h-32 flex flex-col items-center justify-center bg-gray-900 bg-opacity-30 text-purple text-xl font-bold rounded-lg">
+                        <span>{details?.name || selectedSatellite?.name || "Satellite"}</span>
+                        <span>Photo NA</span>
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-32">
+                        <img
+                          src={details?.photoUrl || selectedSatellite?.image}
+                          alt={details?.name || selectedSatellite?.name || "Satellite"}
+                          className="w-full h-full object-contain rounded-lg"
+                          onError={() => setImageError(true)}
+                        />
+                        <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1 py-0.5 rounded">
+                          {details?.image_source || "Source"}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {/* Focus mode container - used for fullscreen */}
+              <div 
+                ref={focusContainerRef} 
+                className={`
+                  ${focusMode ? 'fixed inset-0 z-50 bg-black p-2' : 'relative'}
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                {/* FOCUS button row */}
+                <div className={`w-full flex justify-center ${focusMode ? 'absolute top-2 left-0 right-0 z-10' : 'mb-2'}`}>
+                  <button
+                    onClick={toggleFocusMode}
+                    className={`
+                      px-4 py-1 rounded-full 
+                      ${focusMode ? 'bg-white text-black opacity-60 hover:opacity-100' : 'bg-purple text-white'} 
+                      font-medium transition-all duration-200
+                      flex items-center gap-1
+                    `}
+                  >
+                    {focusMode ? (
+                      <>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Exit Focus
+                      </>
+                    ) : (
+                      <>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                        </svg>
+                        Focus Mode
+                      </>
+                    )}
+                  </button>
+                </div>
+                
+                {/* Charts row with flexible layout based on focus mode */}
+                <div className={`
+                  flex 
+                  ${focusMode 
+                    ? 'flex-col lg:flex-row w-full h-full gap-2' 
+                    : 'flex-col lg:flex-row w-full gap-4 items-stretch min-h-[650px] lg:min-h-[650px]'
+                  }
+                `}>
+                  {/* PolarChart container */}
+                  <div className={`
+                    flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg 
+                    transition-shadow duration-300 rounded-md flex flex-col
+                    ${focusMode ? 'h-1/2 lg:h-full p-2' : 'p-4'}
+                  `}>
+                    {!focusMode && (
+                      <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold mt-2 mb-2">
+                        PolarChart
+                      </h2>
+                    )}
+                    
+                    <div className={`
+                      absolute ${focusMode ? 'top-8' : 'top-16 sm:top-20'} 
+                      left-4 sm:left-16 p-2 text-purple 
+                      ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
+                    `}>
+                      Élévation: {polarInfo.elevation}°
+                    </div>
+                    
+                    <div className={`
+                      absolute ${focusMode ? 'top-8' : 'top-16 sm:top-20'} 
+                      right-4 sm:right-16 p-2 text-orange 
+                      ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
+                    `}>
+                      Azimuth: {polarInfo.azimuth}°
+                    </div>
+                    
+                    <div className={`flex justify-center ${focusMode ? 'mt-12 sm:mt-16' : 'mt-2'} flex-grow`}>
+                      <div className={`
+                        ${focusMode ? 'w-full h-full' : 'w-full max-w-[550px]'} 
+                        flex items-center justify-center
+                      `}>
+                        <PolarChart 
+                          satelliteId={selectedSatellite.id} 
+                          trajectoryPoints={trajectoryPoints}
+                          currentPosition={currentPosition}
+                          currentTime={new Date()}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className={`
+                      flex flex-col sm:flex-row justify-center items-center 
+                      ${focusMode ? 'mt-4 gap-4 sm:gap-8' : 'mt-4 gap-4 sm:gap-16'}
+                    `}>
+                      <div className={`
+                        ${polarInfo.elevation > 0 ? "text-red-600" : "text-[#228B22]"} 
+                        ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
+                      `}>
+                        {gridSquare ? countdown : "Renseignez une Grid Square valide"}
+                      </div>
+                      
+                      {/* Hide GridSquare input in focus mode if we already have one set */}
+                      {(!focusMode || !gridSquare) && (
+                        <div className="flex items-center">
+                          <label htmlFor="gridSquareInput" className="text-white mr-2">
+                            GridSquare:
+                          </label>
+                          {isEditingGridSquare ? (
+                            <div className="relative">
+                              <input
+                                id="gridSquareInput"
+                                type="text"
+                                defaultValue={gridSquare || ""}
+                                onBlur={handleGridSquareBlur}
+                                onKeyDown={handleGridSquareKeyDown}
+                                className={`bg-gray-700 text-white rounded px-3 py-1 w-24 focus:outline-none focus:ring-1 ${
+                                  gridSquareError ? "ring-red-500" : "ring-purple"
+                                } focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
+                                autoFocus
+                              />
+                              {gridSquareError && (
+                                <span className="absolute top-full left-0 text-red-500 text-sm animate-pulse mt-1">
+                                  Gridsquare invalide
+                                </span>
+                              )}
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setIsEditingGridSquare(true)}
+                              className="bg-gray-700 text-white rounded px-3 py-1 w-24 text-center border border-gray-600 hover:bg-gray-600 transition-colors"
+                            >
+                              {gridSquare || "Set Grid"}
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* SatMap container */}
+                  <div className={`
+                    flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg 
+                    transition-shadow duration-300 rounded-md flex flex-col 
+                    ${focusMode ? 'h-1/2 lg:h-full p-0' : 'p-0 mt-4 lg:mt-0'}
+                  `}>
+                    {!focusMode && (
+                      <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold my-1">
+                        SatMap
+                      </h2>
+                    )}
+                    
+                    <div className={`flex-grow flex ${focusMode ? 'h-full' : 'min-h-[500px]'}`}>
+                      {details?.tle1 && details?.tle2 && (
+                        <SatMap 
+                          satelliteId={selectedSatellite.id}
+                          tle1={details.tle1}
+                          tle2={details.tle2}
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md h-full">
-                <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-4">
-                  SatMap
+            </div>
+          )}
+          
+          {/* Show TLE display only when not in focus mode */}
+          {selectedSatellite && !focusMode && (
+            <div className="mt-6 w-full text-center">
+              <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full inline-block">
+                <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold mt-4 mb-1">
+                  TLE
                 </h2>
-                {/* Blank container for SatMap */}
+                {lastTleUpdate && (
+                  <p className="text-center text-xs text-gray-400 mb-3">
+                    Dernière TLE update : {lastTleUpdate} UTC
+                  </p>
+                )}
+                <TLEDisplay
+                  tle1={details?.tle1 || ""}
+                  tle2={details?.tle2 || ""}
+                />
               </div>
             </div>
-          </div>
-        )}
-        {selectedSatellite && (
-          <div className="mt-6 w-full text-center">
-            <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full inline-block">
-              <h2 className="relative z-10 text-white text-center text-4xl font-bold mt-4 mb-1">
-                TLE
-              </h2>
-              {/* Add the TLE update information below the TLE title */}
-              {lastTleUpdate && (
-                <p className="text-center text-xs text-gray-400 mb-3">
-                  Dernière TLE update : {lastTleUpdate} UTC
-                </p>
-              )}
-              <TLEDisplay
-                tle1={details?.tle1 || ""}
-                tle2={details?.tle2 || ""}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        // Afficher un chargement si la gridsquare n'est pas encore chargée
+        <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-3 sm:p-6 flex justify-center items-center min-h-[300px]">
+          <p className="text-white text-xl">Chargement...</p>
+        </div>
+      )}
     </div>
   );
 }
