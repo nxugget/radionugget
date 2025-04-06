@@ -336,12 +336,12 @@ export const Navbar = () => {
                   <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.gridSquare")}
                   </Link>
-                  <Link href="/tools/satellite-prediction" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  {/*<Link href="/tools/satellite-prediction" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.satellitePrediction")}
-                  </Link>
-                  <Link href="/tools/satellite-explorer" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  </Link>*/}
+                  {/*<Link href="/tools/satellite-explorer" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.satelliteInfo")}
-                  </Link>
+                  </Link>*/}
                 </div>
               )}
             </div>

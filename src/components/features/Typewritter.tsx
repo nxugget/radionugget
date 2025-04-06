@@ -30,6 +30,7 @@ export const TypewriterEffectSmooth = ({
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   // Set initial state and observe container size
   useEffect(() => {
@@ -72,7 +73,7 @@ export const TypewriterEffectSmooth = ({
     calculateScale(); // Calculate initial scale
     
     return () => resizeObserver.disconnect();
-  }, [hasPlayed, isMobile]);
+  }, [hasPlayed, isMobile, animationComplete]);
 
   return (
     <Wrapper 
@@ -82,66 +83,64 @@ export const TypewriterEffectSmooth = ({
     >
       <div className="flex justify-center w-full">
         {hasPlayed && (
-          <div className="relative">
-            {/* Container extérieur centré */}
-            <div className="flex justify-center">
-              {/* Container d'animation avec effet de typewriter de gauche à droite */}
-              <motion.div
-                className="overflow-hidden"
-                initial={{ width: 0 }}
-                animate={{ width: "auto" }}
-                transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
-                style={{ 
-                  display: "inline-block",
+          <div className="relative flex justify-center w-full">
+            {/* Container d'animation avec effet de typewriter de gauche à droite */}
+            <motion.div
+              className="overflow-hidden"
+              initial={{ width: 0 }}
+              animate={{ width: "auto" }}
+              transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
+              style={{ 
+                display: "inline-block",
+              }}
+              onAnimationComplete={() => setAnimationComplete(true)}
+            >
+              {/* Bloc de contenu mis à l'échelle */}
+              <div 
+                ref={contentRef}
+                style={{
+                  transform: `scale(${textScale})`,
+                  transformOrigin: animationComplete ? "center center" : "left center",
+                  display: "flex",
+                  alignItems: "center",
+                  whiteSpace: "nowrap"
                 }}
               >
-                {/* Bloc de contenu mis à l'échelle */}
-                <div 
-                  ref={contentRef}
-                  style={{
-                    transform: `scale(${textScale})`,
-                    transformOrigin: "left center", // Important pour l'effet de gauche à droite
-                    display: "flex",
-                    alignItems: "center",
-                    whiteSpace: "nowrap"
+                <div
+                  className="font-bold"
+                  style={{ 
+                    display: "inline-block",
+                    fontSize: isMobile ? "1.75rem" : "2rem",
+                    lineHeight: "1.2",
                   }}
                 >
-                  <div
-                    className="font-bold"
-                    style={{ 
-                      display: "inline-block",
-                      fontSize: isMobile ? "1.75rem" : "2rem",
-                      lineHeight: "1.2",
-                    }}
-                  >
-                    {wordsArray.map((word, idx) => (
-                      <div key={`word-${idx}`} className="inline-block">
-                        {word.text.map((char, index) => (
-                          <span key={`char-${index}`} className={cn("", word.className)}>
-                            {char}
-                          </span>
-                        ))}
-                        &nbsp;
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Le curseur attaché au texte */}
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-                    className={cn("bg-blue-500", cursorClassName)}
-                    style={{ 
-                      width: cursorWidth,
-                      height: "1.8rem",
-                      marginLeft: "2px",
-                      display: "inline-block",
-                    }}
-                  />
+                  {wordsArray.map((word, idx) => (
+                    <div key={`word-${idx}`} className="inline-block">
+                      {word.text.map((char, index) => (
+                        <span key={`char-${index}`} className={cn("", word.className)}>
+                          {char}
+                        </span>
+                      ))}
+                      &nbsp;
+                    </div>
+                  ))}
                 </div>
-              </motion.div>
-            </div>
+                
+                {/* Le curseur attaché au texte */}
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+                  className={cn("bg-blue-500", cursorClassName)}
+                  style={{ 
+                    width: cursorWidth,
+                    height: "1.8rem",
+                    marginLeft: "2px",
+                    display: "inline-block",
+                  }}
+                />
+              </div>
+            </motion.div>
           </div>
         )}
       </div>
