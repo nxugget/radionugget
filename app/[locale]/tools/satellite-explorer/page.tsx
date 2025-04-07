@@ -46,17 +46,6 @@ interface Point {
 const deg2rad = (deg: number) => deg * (Math.PI / 180);
 const rad2deg = (rad: number) => rad * (180 / Math.PI);
 
-function formatCountdown(seconds: number): string {
-  if (seconds < 0) return "Pas de passage prévu";
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-  if (hours > 0) {
-    return `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
-  }
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-}
-
 function isValidEciVec3(value: any): value is EciVec3<number> {
   return value && typeof value === "object" && "x" in value && "y" in value && "z" in value;
 }
@@ -215,6 +204,17 @@ export default function SatelliteInfoPage() {
     }
   }, [selectedSatellite, details]);
 
+  const formatCountdown = (seconds: number): string => {
+    if (seconds < 0) return t("satellites.countdown.noPassPredicted");
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+    }
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
   useEffect(() => {
     if (!selectedSatellite || latitude === null || longitude === null) return;
     const interval = setInterval(async () => {
@@ -226,22 +226,22 @@ export default function SatelliteInfoPage() {
         const data = await res.json();
         setPolarInfo(data);
 
-        // Déterminez le message à afficher sur la base des prochains passages
+        // Update with translations
         if (data.nextLOSCountdown > 0 || data.nextAOSCountdown > 0) {
           setCountdown(
             data.elevation > 0 
-              ? (data.nextLOSCountdown > 0 ? `LOS in ${formatCountdown(data.nextLOSCountdown)}` : "Pas de passage prévu")
-              : (data.nextAOSCountdown > 0 ? `AOS in ${formatCountdown(data.nextAOSCountdown)}` : "Pas de passage prévu")
+              ? (data.nextLOSCountdown > 0 ? `${t("satellites.countdown.losIn")} ${formatCountdown(data.nextLOSCountdown)}` : t("satellites.countdown.noPassPredicted"))
+              : (data.nextAOSCountdown > 0 ? `${t("satellites.countdown.aosIn")} ${formatCountdown(data.nextAOSCountdown)}` : t("satellites.countdown.noPassPredicted"))
           );
         } else {
-          setCountdown("Pas de passage prévu (prochaine 24h)");
+          setCountdown(t("satellites.countdown.noPassNext24h"));
         }
       } catch (e) {
         console.error("Error fetching realtime polar data", e);
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [selectedSatellite, latitude, longitude]);
+  }, [selectedSatellite, latitude, longitude, t]);
 
   useEffect(() => {
     if (!details?.tle1 || !details?.tle2 || latitude === null || longitude === null) return;
@@ -551,7 +551,7 @@ export default function SatelliteInfoPage() {
                   as="h1"
                   words={[
                     { text: "Satellite", className: "text-purple" },
-                    { text: "Explorer", className: "text-white" },
+                    { text: t("satellites.explorer.title"), className: "text-white" },
                   ]}
                   className="text-2xl font-bold text-center text-white"
                   cursorClassName="bg-purple"
@@ -563,12 +563,12 @@ export default function SatelliteInfoPage() {
                 {/* TLE Update as small text right above the search input */}
                 {lastTleUpdate && (
                   <p className="text-center text-xs text-gray-400 mb-1">
-                    Dernière mis à jour : {lastTleUpdate} UTC
+                    {t("satellites.explorer.lastTleUpdate")} {lastTleUpdate} UTC
                   </p>
                 )}
                 
                 <InputSearch
-                  placeholder="Rechercher un satellite..."
+                  placeholder={t("satellites.explorer.searchPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={handleInputFocus}
@@ -617,14 +617,14 @@ export default function SatelliteInfoPage() {
                     </div>
                     <p className="text-gray-300 text-lg">
                       {details?.description ||
-                        "Aucune description n'est disponible pour le moment."}
+                        t("satellites.explorer.noDescription")}
                     </p>
                     <div className="flex flex-col gap-1 mt-2">
                       <p className="text-gray-300 text-lg">
-                        Status: {details?.status || "N/A"}
+                        {t("satellites.explorer.status")} {details?.status || "N/A"}
                       </p>
                       <p className="text-gray-300 text-lg">
-                        Frequency: {details?.frequency || "N/A"}
+                        {t("satellites.explorer.frequency")} {details?.frequency || "N/A"}
                       </p>
                     </div>
                   </div>
@@ -632,7 +632,7 @@ export default function SatelliteInfoPage() {
                     {imageError || !(details?.photoUrl || selectedSatellite?.image) ? (
                       <div className="w-full h-32 flex flex-col items-center justify-center bg-gray-900 bg-opacity-30 text-purple text-xl font-bold rounded-lg">
                         <span>{details?.name || selectedSatellite?.name || "Satellite"}</span>
-                        <span>Photo NA</span>
+                        <span>{t("satellites.explorer.photoNA")}</span>
                       </div>
                     ) : (
                       <div className="relative w-full h-32">
@@ -643,7 +643,7 @@ export default function SatelliteInfoPage() {
                           onError={() => setImageError(true)}
                         />
                         <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1 py-0.5 rounded">
-                          {details?.image_source || "Source"}
+                          {details?.image_source || t("satellites.explorer.source")}
                         </div>
                       </div>
                     )}
@@ -675,14 +675,14 @@ export default function SatelliteInfoPage() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                        Exit Focus
+                        {t("satellites.explorer.exitFocus")}
                       </>
                     ) : (
                       <>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
                         </svg>
-                        Focus Mode
+                        {t("satellites.explorer.focusMode")}
                       </>
                     )}
                   </button>
@@ -704,25 +704,33 @@ export default function SatelliteInfoPage() {
                   `}>
                     {!focusMode && (
                       <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold mt-2 mb-2">
-                        PolarChart
+                        {t("satellites.explorer.polarChart")}
                       </h2>
                     )}
                     
-                    <div className={`
-                      absolute ${focusMode ? 'top-8' : 'top-16 sm:top-20'} 
-                      left-4 sm:left-16 p-2 text-purple 
-                      ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
-                    `}>
-                      Élévation: {polarInfo.elevation}°
-                    </div>
-                    
-                    <div className={`
-                      absolute ${focusMode ? 'top-8' : 'top-16 sm:top-20'} 
-                      right-4 sm:right-16 p-2 text-orange 
-                      ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
-                    `}>
-                      Azimuth: {polarInfo.azimuth}°
-                    </div>
+                    {/* Information de position - affichage différent selon le mode */}
+                    {focusMode ? (
+                      // Affichage en haut au centre pour le mode FOCUS - taille de texte réduite
+                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20 bg-black/30 px-6 py-3 rounded-xl">
+                        <div className="text-purple text-2xl sm:text-3xl font-bold text-center mb-2">
+                          {t("satellites.explorer.elevation")} {polarInfo.elevation}°
+                        </div>
+                        <div className="text-orange text-2xl sm:text-3xl font-bold text-center">
+                          {t("satellites.explorer.azimuth")} {polarInfo.azimuth}°
+                        </div>
+                      </div>
+                    ) : (
+                      // Affichage original pour le mode normal (gauche/droite)
+                      <>
+                        <div className="absolute top-16 sm:top-20 left-4 sm:left-16 p-2 text-purple text-lg sm:text-xl">
+                          {t("satellites.explorer.elevation")} {polarInfo.elevation}°
+                        </div>
+                        
+                        <div className="absolute top-16 sm:top-20 right-4 sm:right-16 p-2 text-orange text-lg sm:text-xl">
+                          {t("satellites.explorer.azimuth")} {polarInfo.azimuth}°
+                        </div>
+                      </>
+                    )}
                     
                     <div className={`flex justify-center ${focusMode ? 'mt-12 sm:mt-16' : 'mt-2'} flex-grow`}>
                       <div className={`
@@ -746,14 +754,14 @@ export default function SatelliteInfoPage() {
                         ${polarInfo.elevation > 0 ? "text-red-600" : "text-[#228B22]"} 
                         ${focusMode ? 'text-4xl sm:text-6xl font-bold' : 'text-lg sm:text-xl'}
                       `}>
-                        {gridSquare ? countdown : "Renseignez une Grid Square valide"}
+                        {gridSquare ? countdown : t("satellites.explorer.enterValidGridSquare")}
                       </div>
                       
                       {/* Hide GridSquare input in focus mode if we already have one set */}
                       {(!focusMode || !gridSquare) && (
                         <div className="flex items-center">
                           <label htmlFor="gridSquareInput" className="text-white mr-2">
-                            GridSquare:
+                            {t("satellites.explorer.gridSquareLabel")}
                           </label>
                           {isEditingGridSquare ? (
                             <div className="relative">
@@ -770,7 +778,7 @@ export default function SatelliteInfoPage() {
                               />
                               {gridSquareError && (
                                 <span className="absolute top-full left-0 text-red-500 text-sm animate-pulse mt-1">
-                                  Gridsquare invalide
+                                  {t("satellites.explorer.invalidGridSquare")}
                                 </span>
                               )}
                             </div>
@@ -779,7 +787,7 @@ export default function SatelliteInfoPage() {
                               onClick={() => setIsEditingGridSquare(true)}
                               className="bg-gray-700 text-white rounded px-3 py-1 w-24 text-center border border-gray-600 hover:bg-gray-600 transition-colors"
                             >
-                              {gridSquare || "Set Grid"}
+                              {gridSquare || t("satellites.explorer.setGrid")}
                             </button>
                           )}
                         </div>
@@ -795,7 +803,7 @@ export default function SatelliteInfoPage() {
                   `}>
                     {!focusMode && (
                       <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold my-1">
-                        SatMap
+                        {t("satellites.explorer.satMap")}
                       </h2>
                     )}
                     
@@ -819,11 +827,11 @@ export default function SatelliteInfoPage() {
             <div className="mt-6 w-full text-center">
               <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 rounded-md w-full inline-block">
                 <h2 className="relative z-10 text-white text-center text-3xl sm:text-4xl font-bold mt-4 mb-1">
-                  TLE
+                  {t("satellites.explorer.tleTitle")}
                 </h2>
                 {lastTleUpdate && (
                   <p className="text-center text-xs text-gray-400 mb-3">
-                    Dernière TLE update : {lastTleUpdate} UTC
+                    {t("satellites.explorer.lastTleUpdate")} {lastTleUpdate} UTC
                   </p>
                 )}
                 <TLEDisplay
@@ -837,7 +845,7 @@ export default function SatelliteInfoPage() {
       ) : (
         // Afficher un chargement si la gridsquare n'est pas encore chargée
         <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-3 sm:p-6 flex justify-center items-center min-h-[300px]">
-          <p className="text-white text-xl">Chargement...</p>
+          <p className="text-white text-xl">{t("satellites.explorer.loading")}</p>
         </div>
       )}
     </div>

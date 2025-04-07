@@ -1,39 +1,10 @@
 import React, { useState } from "react";
+import { useI18n } from "@/locales/client";
 
 interface TLEDisplayProps {
   tle1: string;
   tle2: string;
 }
-
-// Explications complètes pour la première ligne TLE
-const explanationsLine1: { [index: number]: string } = {
-  0: "Line Number (always 1)",
-  1: "Satellite Catalog Number (NORAD ID)",
-  2: "Classification (U = Unclassified)",
-  3: "International Designator (Launch Year)",
-  4: "International Designator (Launch Number)",
-  5: "International Designator (Piece of the launch)",
-  6: "Epoch Year (Last two digits of the year)",
-  7: "Epoch (Day of year plus fractional portion)",
-  8: "First Time Derivative of Mean Motion (rev/day²)",
-  9: "Second Time Derivative of Mean Motion (decimal point assumed, rev/day³)",
-  10: "BSTAR drag term (decimal point assumed)",
-  11: "Ephemeris Type",
-  12: "Element Set Number"
-};
-
-// Explications complètes pour la deuxième ligne TLE
-const explanationsLine2: { [index: number]: string } = {
-  0: "Line Number (always 2)",
-  1: "Satellite Catalog Number (NORAD ID)",
-  2: "Inclination (degrees)",
-  3: "Right Ascension of the Ascending Node (degrees)",
-  4: "Eccentricity (decimal point assumed)",
-  5: "Argument of Perigee (degrees)",
-  6: "Mean Anomaly (degrees)",
-  7: "Mean Motion (orbits per day)",
-  8: "Revolution Number at Epoch"
-};
 
 interface PopupData {
   text: string;
@@ -48,8 +19,41 @@ interface RenderTLELineProps {
 }
 
 function RenderTLELine({ line, lineType, setPopup }: RenderTLELineProps) {
-  // Sélectionne la correspondance selon le type
-  const explanations = lineType === "line1" ? explanationsLine1 : explanationsLine2;
+  const t = useI18n();
+  
+  // Define the full dictionary of translation keys for line 1
+  const line1Explanations = [
+    "satellites.tle.lineNumber1",
+    "satellites.tle.catalogNumber",
+    "satellites.tle.classification",
+    "satellites.tle.launchYear",
+    "satellites.tle.launchNumber",
+    "satellites.tle.launchPiece",
+    "satellites.tle.epochYear",
+    "satellites.tle.epochDay",
+    "satellites.tle.firstTimeDerivative",
+    "satellites.tle.secondTimeDerivative",
+    "satellites.tle.bstarDrag",
+    "satellites.tle.ephemerisType",
+    "satellites.tle.elementSetNumber"
+  ];
+
+  // Define the full dictionary of translation keys for line 2
+  const line2Explanations = [
+    "satellites.tle.lineNumber2",
+    "satellites.tle.catalogNumber",
+    "satellites.tle.inclination",
+    "satellites.tle.rightAscension",
+    "satellites.tle.eccentricity",
+    "satellites.tle.argumentOfPerigee",
+    "satellites.tle.meanAnomaly",
+    "satellites.tle.meanMotion",
+    "satellites.tle.revolutionNumber"
+  ];
+
+  // Select the correct explanation dictionary based on line type
+  const explanations = lineType === "line1" ? line1Explanations : line2Explanations;
+  
   const parts = line.trim().split(/\s+/);
   return (
     <div className="flex flex-wrap text-white text-left whitespace-nowrap">
@@ -58,8 +62,17 @@ function RenderTLELine({ line, lineType, setPopup }: RenderTLELineProps) {
           key={index}
           className="cursor-pointer p-1 hover:bg-purple hover:rounded text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl"
           onMouseEnter={(e) => {
-            // Utilise e.clientX et e.clientY pour position fixed
-            setPopup({ text: explanations[index] || "No info", x: e.clientX + 10, y: e.clientY + 10 });
+            // Get the translation for this index or use a fallback
+            const translationKey = index < explanations.length 
+              ? explanations[index] 
+              : "satellites.tle.noInfo";
+            
+            setPopup({ 
+              // Add the empty params object as the second argument
+              text: t(translationKey as any, {}), 
+              x: e.clientX + 10, 
+              y: e.clientY + 10 
+            });
           }}
           onMouseLeave={() => setPopup(null)}
         >

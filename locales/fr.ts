@@ -46,5 +46,60 @@ export default {
   locationError: "Impossible d'accéder à votre localisation",
   useMyLocation: "Utiliser ma position actuelle",
   or: "OU", // Ajout de la traduction pour "OU" en français
-  betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com"
+  betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com",
+  satellites: {
+    explorer: {
+      title: "Explorateur de Satellites",
+      loading: "Chargement...",
+      searchPlaceholder: "Rechercher un satellite...",
+      lastUpdate: "Dernière mise à jour:",
+      lastTleUpdate: "Dernière mise à jour TLE:",
+      noDescription: "Aucune description n'est disponible pour le moment.",
+      status: "Statut:",
+      frequency: "Fréquence:",
+      photoNA: "Photo NA",
+      source: "Source",
+      focusMode: "Mode Focus",
+      exitFocus: "Quitter Focus",
+      polarChart: "Graphique Polaire",
+      elevation: "Élévation:",
+      azimuth: "Azimut:",
+      enterValidGridSquare: "Renseignez une Grid Square valide",
+      gridSquareLabel: "GridSquare:",
+      setGrid: "Définir",
+      invalidGridSquare: "Gridsquare invalide",
+      satMap: "Carte Satellite",
+      tleTitle: "TLE"
+    },
+    countdown: {
+      losIn: "LOS dans",
+      aosIn: "AOS dans",
+      noPassPredicted: "Pas de passage prévu",
+      noPassNext24h: "Pas de passage prévu (prochaine 24h)"
+    },
+    tle: {
+      lineNumber1: "Numéro de ligne (toujours 1)",
+      catalogNumber: "Numéro de catalogue satellite (ID NORAD)",
+      classification: "Classification (U = Non classifié)",
+      launchYear: "Désignation internationale (Année de lancement)",
+      launchNumber: "Désignation internationale (Numéro de lancement)",
+      launchPiece: "Désignation internationale (Partie du lancement)",
+      epochYear: "Année d'époque (Deux derniers chiffres de l'année)",
+      epochDay: "Époque (Jour de l'année plus partie fractionnelle)",
+      firstTimeDerivative: "Première dérivée temporelle du mouvement moyen (rev/jour²)",
+      secondTimeDerivative: "Seconde dérivée temporelle du mouvement moyen (point décimal implicite, rev/jour³)",
+      bstarDrag: "Terme de traînée BSTAR (point décimal implicite)",
+      ephemerisType: "Type d'éphéméride",
+      elementSetNumber: "Numéro de jeu d'éléments",
+      lineNumber2: "Numéro de ligne (toujours 2)",
+      inclination: "Inclinaison (degrés)",
+      rightAscension: "Ascension droite du nœud ascendant (degrés)",
+      eccentricity: "Excentricité (point décimal implicite)",
+      argumentOfPerigee: "Argument du périgée (degrés)",
+      meanAnomaly: "Anomalie moyenne (degrés)",
+      meanMotion: "Mouvement moyen (orbites par jour)",
+      revolutionNumber: "Numéro de révolution à l'époque",
+      noInfo: "Pas d'info"
+    }
+  }
 } as const;

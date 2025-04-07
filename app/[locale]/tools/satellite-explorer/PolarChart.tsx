@@ -236,21 +236,21 @@ const PolarChart: React.FC<PolarChartProps> = ({
       }
     }
 
-    // Draw current position - but only if the satellite is above horizon
+    // Draw current position - only if the satellite is above the horizon
     if (currentPosition) {
       const scale = radius / 90;
-      const angle = (currentPosition.az) * (Math.PI / 180);
-      
+      const angle = (currentPosition.az - 90) * (Math.PI / 180); // Adjust azimuth to match polar chart orientation
+
       if (currentPosition.el > 0) {
         const posRadius = (90 - currentPosition.el) * scale;
         const x = posRadius * Math.cos(angle);
         const y = posRadius * Math.sin(angle);
-        
+
         g.append("image")
-          .attr("x", x - (isFocusMode ? 60 : 25)) // Much larger icon in focus mode
-          .attr("y", y - (isFocusMode ? 60 : 25))
-          .attr("width", isFocusMode ? 120 : 50) // Much larger icon in focus mode
-          .attr("height", isFocusMode ? 120 : 50)
+          .attr("x", x - 20) // Reduced size
+          .attr("y", y - 20) // Reduced size
+          .attr("width", 40) // Reduced size
+          .attr("height", 40) // Reduced size
           .attr("href", "/images/icon/satellite-icon.svg")
           .attr("filter", "brightness(0) invert(1) drop-shadow(0 0 5px rgba(0, 0, 0, 0.7))")
           .raise();

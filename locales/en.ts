@@ -46,5 +46,60 @@ export default {
   locationError: "Could not access your location",
   useMyLocation: "Use my current location",
   or: "OR", // Ajout de la traduction pour "OU" en anglais
-  betaDescription: "This tool is in beta version. If you notice any bugs or have improvement ideas, I am extremely open and responsive :) You can send me an email at this address: contact@radionugget.com"
+  betaDescription: "This tool is in beta version. If you notice any bugs or have improvement ideas, I am extremely open and responsive :) You can send me an email at this address: contact@radionugget.com",
+  satellites: {
+    explorer: {
+      title: "Satellite Explorer",
+      loading: "Loading...",
+      searchPlaceholder: "Search for a satellite...",
+      lastUpdate: "Last update:",
+      lastTleUpdate: "Last TLE update:",
+      noDescription: "No description available at the moment.",
+      status: "Status:",
+      frequency: "Frequency:",
+      photoNA: "Photo NA",
+      source: "Source",
+      focusMode: "Focus Mode",
+      exitFocus: "Exit Focus",
+      polarChart: "PolarChart",
+      elevation: "Elevation:",
+      azimuth: "Azimuth:",
+      enterValidGridSquare: "Enter a valid Grid Square",
+      gridSquareLabel: "GridSquare:",
+      setGrid: "Set Grid",
+      invalidGridSquare: "Invalid grid square",
+      satMap: "SatMap",
+      tleTitle: "TLE"
+    },
+    countdown: {
+      losIn: "LOS in",
+      aosIn: "AOS in",
+      noPassPredicted: "No pass predicted",
+      noPassNext24h: "No pass predicted (next 24h)"
+    },
+    tle: {
+      lineNumber1: "Line Number (always 1)",
+      catalogNumber: "Satellite Catalog Number (NORAD ID)",
+      classification: "Classification (U = Unclassified)",
+      launchYear: "International Designator (Launch Year)",
+      launchNumber: "International Designator (Launch Number)",
+      launchPiece: "International Designator (Piece of the launch)",
+      epochYear: "Epoch Year (Last two digits of the year)",
+      epochDay: "Epoch (Day of year plus fractional portion)",
+      firstTimeDerivative: "First Time Derivative of Mean Motion (rev/day²)",
+      secondTimeDerivative: "Second Time Derivative of Mean Motion (decimal point assumed, rev/day³)",
+      bstarDrag: "BSTAR drag term (decimal point assumed)",
+      ephemerisType: "Ephemeris Type",
+      elementSetNumber: "Element Set Number",
+      lineNumber2: "Line Number (always 2)",
+      inclination: "Inclination (degrees)",
+      rightAscension: "Right Ascension of the Ascending Node (degrees)",
+      eccentricity: "Eccentricity (decimal point assumed)",
+      argumentOfPerigee: "Argument of Perigee (degrees)",
+      meanAnomaly: "Mean Anomaly (degrees)",
+      meanMotion: "Mean Motion (orbits per day)",
+      revolutionNumber: "Revolution Number at Epoch",
+      noInfo: "No info"
+    }
+  }
 } as const;
