@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useI18n } from "@/locales/client"; // Ajout de l'import i18n
 
 interface Satellite {
   name: string;
@@ -25,6 +26,7 @@ export default function SatelliteSearch({
   onToggleFavorite,
   onAddAll,
 }: SatelliteSearchProps) {
+  const t = useI18n(); // Initialisation du système de traduction
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
@@ -46,13 +48,22 @@ export default function SatelliteSearch({
     }
   };
 
+  // Helper function to get filter name for display
+  const getFilterDisplayName = (filter: string) => {
+    if (filter === "all") return "";
+    if (filter === "weather") return t("satellite.filterWeather");
+    if (filter === "amateur") return t("satellite.filterAmateur");
+    if (filter === "favorite") return t("satellite.filterFavorites");
+    return "";
+  };
+
   return (
     <div className="flex flex-col">
       {/* Barre de recherche avec bouton Add All */}
       <div className="flex mb-3 items-center">
         <input
           type="text"
-          placeholder="Rechercher..."
+          placeholder={t("satellite.search")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="bg-zinc-200 text-zinc-600 font-mono ring-1 ring-zinc-400
@@ -71,7 +82,7 @@ export default function SatelliteSearch({
               activeFilter === "all" ? "bg-purple" : "bg-gray-900 hover:bg-purple"
             }`}
           >
-            Tous
+            {t("satellite.filterAll")}
           </button>
           <button
             onClick={() => setActiveFilter("weather")}
@@ -81,7 +92,7 @@ export default function SatelliteSearch({
                 : "bg-gray-900 hover:bg-purple"
             }`}
           >
-            Weather
+            {t("satellite.filterWeather")}
           </button>
           <button
             onClick={() => setActiveFilter("amateur")}
@@ -91,7 +102,7 @@ export default function SatelliteSearch({
                 : "bg-gray-900 hover:bg-purple"
             }`}
           >
-            Amateur
+            {t("satellite.filterAmateur")}
           </button>
           <button
             onClick={() => setActiveFilter("favorite")}
@@ -101,16 +112,16 @@ export default function SatelliteSearch({
                 : "bg-gray-900 hover:bg-purple"
             }`}
           >
-            Favoris
+            {t("satellite.filterFavorites")}
           </button>
         </div>
         
-        {/* Bouton Add All déplacé ici */}
+        {/* Fixed Add All button */}
         <button
           onClick={handleAddAll}
           className="text-sm font-bold text-white hover:text-purple transition-colors"
         >
-          Add All {activeFilter !== "all" && activeFilter}
+          {t("satellite.addAll")} {activeFilter !== "all" && getFilterDisplayName(activeFilter)}
         </button>
       </div>
 
@@ -149,7 +160,7 @@ export default function SatelliteSearch({
                 className={`absolute top-2 right-2 text-xl transition-colors duration-300 ${
                   favorites.includes(sat.id) ? "text-orange" : "text-gray-300"
                 } hover:text-orange`}
-                title="Ajouter aux favoris"
+                title={t("satellite.addToFavorites")}
               >
                 {favorites.includes(sat.id) ? "★" : "☆"}
               </button>

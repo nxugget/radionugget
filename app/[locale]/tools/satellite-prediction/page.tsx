@@ -34,6 +34,7 @@ interface SatellitePrediction {
 // Composant pour afficher la bannière de cookies
 function CookieBanner() {
   const [visible, setVisible] = useState(true);
+  const t = useI18n(); // Ajout de la référence i18n
 
   const handleAccept = () => {
     setVisible(false);
@@ -44,10 +45,10 @@ function CookieBanner() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-between items-center">
       <p className="text-sm mb-2 md:mb-0">
-        Pour sauvegarder tes favoris et ta position, cette page utilise des cookies. Ces derniers sont stockés uniquement sur ton appareil et personne d'autres n'y aura accès :)
+        {t("cookies.message")}
       </p>
       <button onClick={handleAccept} className="bg-purple hover:bg-orange hover:text-black text-white px-4 py-2 transition-colors rounded-md">
-        Accepter
+        {t("cookies.accept")}
       </button>
     </div>
   );
@@ -190,7 +191,7 @@ export default function SatelliteTracker() {
 
   const getPredictions = async () => {
     if (selectedSatellites.length === 0) {
-      setError("Veuillez sélectionner au moins un satellite.");
+      setError(t("satellite.errorNoSelection"));
       return;
     }
     setLoading(true);
@@ -219,7 +220,7 @@ export default function SatelliteTracker() {
       setAllPredictions(results); // Met à jour les prédictions avec les nouvelles données
     } catch (err) {
       console.error("Error fetching predictions:", err);
-      setError("Erreur lors de la récupération des prédictions.");
+      setError(t("satellite.errorFetchingPredictions"));
     } finally {
       setLoading(false);
     }
@@ -280,7 +281,7 @@ export default function SatelliteTracker() {
       setLatitude(coords.lat);
       setLongitude(coords.lon);
     } catch {
-      alert("Gridsquare invalide.");
+      alert(t("gridSquare.invalid"));
     }
   };
 
@@ -291,9 +292,9 @@ export default function SatelliteTracker() {
           <TypewriterEffectSmooth
             as="h1"
             words={[
-              { text: "Satellite", className: "text-purple" },
-              { text: "Pass", className: "text-white" },
-              { text: "Prediction", className: "text-white" },
+              { text: t("satellite.name"), className: "text-purple" },
+              { text: t("satellite.pass"), className: "text-white" },
+              { text: t("satellite.prediction"), className: "text-white" },
             ]}
             // Réduire la taille du texte sur mobile et l'augmenter progressivement
             className="text-xl xs:text-2xl md:text-3xl font-bold text-center text-white overflow-hidden"
@@ -306,7 +307,7 @@ export default function SatelliteTracker() {
           {/* PARTIE GAUCHE : sélection des satellites */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
-              <h3 className="text-white text-lg text-center">Satellites prédictables</h3>
+              <h3 className="text-white text-lg text-center">{t("satellite.predictableSatellites")}</h3>
               <SatelliteSearch
                 satellites={unselectedSatellites}
                 selectedSatelliteId={selectedAvailableId}
@@ -324,7 +325,7 @@ export default function SatelliteTracker() {
               <button
                 onClick={moveOneDown}
                 className="bg-purple text-white p-3 rounded-md transition-all duration-300 ease-in-out hover:bg-orange"
-                title="Ajouter le satellite sélectionné vers le bas"
+                title={t("satellite.addSelected")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -340,7 +341,7 @@ export default function SatelliteTracker() {
               <button
                 onClick={moveOneUp}
                 className="bg-purple text-white p-3 rounded-md transition-all duration-300 ease-in-out hover:bg-orange"
-                title="Retirer le satellite sélectionné vers le haut"
+                title={t("satellite.removeSelected")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -357,7 +358,7 @@ export default function SatelliteTracker() {
 
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
               <div className="flex items-center justify-between relative">
-                <h3 className="text-white text-lg text-center w-full">Satellites à prédire</h3>
+                <h3 className="text-white text-lg text-center w-full">{t("satellite.satellitesToPredict")}</h3>
                 <button
                   onClick={() => {
                     setSelectedSatellites([]);
@@ -365,7 +366,7 @@ export default function SatelliteTracker() {
                   }}
                   className="text-sm font-bold text-white hover:text-red-600 transition-colors absolute right-2"
                 >
-                  Clean All
+                  {t("satellite.cleanAll")}
                 </button>
               </div>
               <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto">
@@ -405,7 +406,7 @@ export default function SatelliteTracker() {
                         className={`absolute top-2 right-2 text-xl transition-colors duration-300 ${
                           favorites.includes(sat.id) ? "text-orange" : "text-gray-300"
                         } hover:text-orange`}
-                        title="Ajouter aux favoris"
+                        title={t("satellite.addToFavorites")}
                       >
                         {favorites.includes(sat.id) ? "★" : "☆"}
                       </button>
@@ -420,7 +421,7 @@ export default function SatelliteTracker() {
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg">
             {/* Section de choix de position */}
             <div className="mb-6">
-              <h3 className="text-white mb-4">Choisir votre position</h3>
+              <h3 className="text-white mb-4">{t("satellite.chooseYourPosition")}</h3>
               <div className="flex flex-col gap-4">
                 {/* Centrer la ligne d'input et le bouton de localisation */}
                 <div className="flex items-center justify-center gap-4 w-full mx-auto">
@@ -430,7 +431,7 @@ export default function SatelliteTracker() {
                       type="text"
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
-                      placeholder="Ville (ex: Paris)"
+                      placeholder={t("satellite.cityPlaceholder")}
                       className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple"
                       onFocus={() => setCitySuggestions([])}
                     />
@@ -456,7 +457,7 @@ export default function SatelliteTracker() {
                       type="text"
                       value={gridSquareInput}
                       onChange={(e) => handleGridSquareChange(e.target.value)}
-                      placeholder="Gridsquare (ex: JN18du)"
+                      placeholder={t("satellite.gridSquarePlaceholder")}
                       className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple"
                     />
                   </div>
@@ -474,28 +475,28 @@ export default function SatelliteTracker() {
                 <div className="flex flex-col gap-2 mt-4">
                   <div className="flex gap-2">
                     <div className="flex flex-col items-center w-1/2">
-                      <label className="text-white font-bold mb-1">Latitude</label>
+                      <label className="text-white font-bold mb-1">{t("satellite.latitude")}</label>
                       <input
                         type="number"
                         value={latitude.toFixed(5)}
                         onChange={(e) => setLatitude(Number(e.target.value))}
-                        placeholder="Latitude"
+                        placeholder={t("satellite.latitude")}
                         className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                       />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
-                      <label className="text-white font-bold mb-1">Longitude</label>
+                      <label className="text-white font-bold mb-1">{t("satellite.longitude")}</label>
                       <input
                         type="number"
                         value={longitude.toFixed(5)}
                         onChange={(e) => setLongitude(Number(e.target.value))}
-                        placeholder="Longitude"
+                        placeholder={t("satellite.longitude")}
                         className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                       />
                     </div>
                   </div>
                   <p className="text-white text-sm text-center mt-2">
-                    Les valeurs négatives indiquent le <strong>Sud</strong> pour la latitude et l'<strong>Ouest</strong> pour la longitude.
+                    {t("satellite.coordinatesExplanation")}
                   </p>
                 </div>
               </div>
@@ -503,16 +504,43 @@ export default function SatelliteTracker() {
 
             {/* Section Élévation minimale */}
             <div className="mt-4 flex flex-col items-center w-full">
-              <p className="text-white mb-1 text-center w-full">Élévation minimale (°)</p>
-              <input
-                type="range"
-                min="0"
-                max="90"
-                value={elevation}
-                onChange={(e) => setElevation(Number(e.target.value))}
-                className="bg-purple w-full h-8 hover:cursor-pointer"
-              />
-              <p className="text-center text-white mt-1 w-full">{elevation}°</p>
+              <p className="text-white mb-1 text-center w-full">{t("satellite.minElevation")}</p>
+              <div className="relative w-full h-10 flex items-center">
+                {/* Custom slider track */}
+                <div className="absolute h-2 w-full bg-gray-700 rounded-full">
+                  {/* Progress bar */}
+                  <div 
+                    className="h-full bg-purple rounded-full" 
+                    style={{ width: `${(elevation/90)*100}%` }}
+                  ></div>
+                </div>
+                
+                {/* Input range - invisible but functional */}
+                <input
+                  type="range"
+                  min="0"
+                  max="90"
+                  value={elevation}
+                  onChange={(e) => setElevation(Number(e.target.value))}
+                  className="absolute w-full opacity-0 cursor-pointer z-10 h-10"
+                />
+                
+                {/* Custom thumb with value - ajusté pour un meilleur centrage */}
+                <div 
+                  className="absolute flex items-center justify-center rounded-full bg-purple text-white shadow-lg pointer-events-none z-0 transform -translate-y-1/2"
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    top: '50%',
+                    left: `calc(${(elevation/90)*100}% - 20px)`,
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    lineHeight: '1',
+                  }}
+                >
+                  {elevation}°
+                </div>
+              </div>
             </div>
 
             <div className="mt-10 flex flex-col items-center">
@@ -520,7 +548,7 @@ export default function SatelliteTracker() {
                 onClick={getPredictions}
                 className="px-[40px] py-[17px] rounded-full cursor-pointer border-0 bg-white shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"
               >
-                PREDICT
+                {t("satellite.predict")}
               </button>
             </div>
             {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
@@ -538,7 +566,7 @@ export default function SatelliteTracker() {
                   viewMode === "timeline" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
                 }`}
               >
-                Timeline
+                {t("satellite.timelineView")}
               </button>
               <button
                 onClick={() => setViewMode("table")}
@@ -546,7 +574,7 @@ export default function SatelliteTracker() {
                   viewMode === "table" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
                 }`}
               >
-                Table
+                {t("satellite.tableView")}
               </button>
             </div>
             {/* Time Mode Toggle */}
@@ -560,7 +588,7 @@ export default function SatelliteTracker() {
                   !useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
                 }`}
               >
-                UTC Time
+                {t("satellite.utcTime")}
               </button>
               <button
                 onClick={() => {
@@ -572,7 +600,7 @@ export default function SatelliteTracker() {
                   useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
                 }`}
               >
-                Local Time
+                {t("satellite.localTime")}
               </button>
             </div>
           </div>

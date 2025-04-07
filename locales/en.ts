@@ -101,5 +101,40 @@ export default {
       revolutionNumber: "Revolution Number at Epoch",
       noInfo: "No info"
     }
+  },
+  cookies: {
+    message: "To save your favorites and your position, this page uses cookies. These are stored only on your device and no one else will have access to them :)",
+    accept: "Accept"
+  },
+  satellite: {
+    name: "Satellite",
+    pass: "Pass",
+    prediction: "Prediction",
+    predictableSatellites: "Predictable Satellites",
+    satellitesToPredict: "Satellites to Predict",
+    chooseYourPosition: "Choose Your Position",
+    cityPlaceholder: "City (e.g. Paris)",
+    gridSquarePlaceholder: "Grid Square (e.g. JN18du)",
+    latitude: "Latitude",
+    longitude: "Longitude",
+    coordinatesExplanation: "Negative values indicate South for latitude and West for longitude.",
+    minElevation: "Minimum Elevation (°)",
+    predict: "PREDICT",
+    errorNoSelection: "Please select at least one satellite.",
+    errorFetchingPredictions: "Error retrieving predictions.",
+    addSelected: "Add selected satellite",
+    removeSelected: "Remove selected satellite",
+    cleanAll: "Clean All",
+    addToFavorites: "Add to favorites",
+    search: "Search...",
+    filterAll: "All",
+    filterWeather: "Weather",
+    filterAmateur: "Amateur",
+    filterFavorites: "Favorites",
+    addAll: "Add All",
+    timelineView: "Timeline",
+    tableView: "Table",
+    utcTime: "UTC Time",
+    localTime: "Local Time"
   }
 } as const;

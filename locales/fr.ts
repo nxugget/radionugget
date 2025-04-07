@@ -101,5 +101,40 @@ export default {
       revolutionNumber: "Numéro de révolution à l'époque",
       noInfo: "Pas d'info"
     }
+  },
+  cookies: {
+    message: "Pour sauvegarder tes favoris et ta position, cette page utilise des cookies. Ces derniers sont stockés uniquement sur ton appareil et personne d'autres n'y aura accès :)",
+    accept: "Accepter"
+  },
+  satellite: {
+    name: "Satellite",
+    pass: "Passage",
+    prediction: "Prédiction",
+    predictableSatellites: "Satellites prédictibles",
+    satellitesToPredict: "Satellites à prédire",
+    chooseYourPosition: "Choisir votre position",
+    cityPlaceholder: "Ville (ex: Paris)",
+    gridSquarePlaceholder: "Grid Square (ex: JN18du)",
+    latitude: "Latitude",
+    longitude: "Longitude",
+    coordinatesExplanation: "Les valeurs négatives indiquent le Sud pour la latitude et l'Ouest pour la longitude.",
+    minElevation: "Élévation minimale (°)",
+    predict: "PRÉDIRE",
+    errorNoSelection: "Veuillez sélectionner au moins un satellite.",
+    errorFetchingPredictions: "Erreur lors de la récupération des prédictions.",
+    addSelected: "Ajouter le satellite sélectionné",
+    removeSelected: "Retirer le satellite sélectionné",
+    cleanAll: "Tout effacer",
+    addToFavorites: "Ajouter aux favoris",
+    search: "Rechercher...",
+    filterAll: "Tous",
+    filterWeather: "Météo",
+    filterAmateur: "Amateur",
+    filterFavorites: "Favoris",
+    addAll: "Ajouter tout",
+    timelineView: "Chronologie",
+    tableView: "Tableau",
+    utcTime: "Heure UTC",
+    localTime: "Heure locale"
   }
 } as const;
