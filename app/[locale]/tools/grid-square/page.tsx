@@ -105,13 +105,15 @@ export default function GridSquareCalculator() {
       }
 
       const { lat, lon } = data[0];
-      const square = getGridSquare(parseFloat(lat), parseFloat(lon));
-      handleGridSquareChange(square); // Mettre à jour le grid square
+      const parsedLat = parseFloat(lat);
+      const parsedLon = parseFloat(lon);
+      const square = getGridSquare(parsedLat, parsedLon);
+      setGridSquare(square); // Update the grid square without changing map center yet
 
-      setMapCenter([parseFloat(lat), parseFloat(lon)]);
+      setMapCenter([parsedLat, parsedLon]);
       setMapZoom(13);
     } catch (err) {
-      setError(t("notFound")); // fallback retiré
+      setError(t("notFound"));
     } finally {
       setLoading(false);
     }
@@ -249,11 +251,11 @@ export default function GridSquareCalculator() {
                     }}
                   />
                   {suggestions.length > 0 && (
-                    <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
+                    <ul className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]">
                       {suggestions.map((sugg, idx) => (
                         <li
                           key={idx}
-                          className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
+                          className="px-4 py-3 cursor-pointer border-b border-gray-800 last:border-none transition-colors duration-300 ease-in-out hover:text-purple"
                           onClick={() => handleSuggestionClick(sugg)}
                         >
                           {sugg.display_name}
@@ -279,7 +281,7 @@ export default function GridSquareCalculator() {
             </p>
 
             {error && (
-              <div className="bg-red-500/20 text-red-300 px-4 py-2 rounded-md mt-2 text-center animate-pulse">
+              <div className="text-red-500 py-2 mt-2 text-center">
                 {error}
               </div>
             )}
@@ -315,7 +317,7 @@ export default function GridSquareCalculator() {
               />
               <div className="text-center">
                 {directSearchError && (
-                  <span className="text-red-500 text-sm mt-1 block animate-pulse">
+                  <span className="text-red-500 text-sm mt-1 block">
                     {directSearchError}
                   </span>
                 )}
@@ -349,7 +351,7 @@ export default function GridSquareCalculator() {
               />
               <div className="text-center">
                 {directSearchError && (
-                  <span className="text-red-500 text-sm mt-1 block animate-pulse">
+                  <span className="text-red-500 text-sm mt-1 block">
                     {directSearchError}
                   </span>
                 )}

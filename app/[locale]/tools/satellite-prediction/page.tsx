@@ -356,14 +356,14 @@ export default function SatelliteTracker() {
             </div>
 
             <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between relative">
                 <h3 className="text-white text-lg text-center w-full">Satellites à prédire</h3>
                 <button
                   onClick={() => {
                     setSelectedSatellites([]);
                     setSelectedChosenId(null);
                   }}
-                  className="text-sm font-bold text-white hover:text-red-600 transition-colors absolute right-10"
+                  className="text-sm font-bold text-white hover:text-red-600 transition-colors absolute right-2"
                 >
                   Clean All
                 </button>

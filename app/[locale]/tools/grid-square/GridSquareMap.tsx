@@ -12,6 +12,7 @@ import {
 import { LatLngBoundsExpression } from "leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { getGridSquare as libGetGridSquare } from "@/src/lib/gridSquare";
 
 // Limites du monde
 const WORLD_BOUNDS: LatLngBoundsExpression = [
@@ -26,6 +27,12 @@ const WORLD_BOUNDS: LatLngBoundsExpression = [
  * - Niveau 3 : +2 lettres (zones fines) => ex. "IN94SK"
  */
 const getGridSquare = (lat: number, lon: number, detailLevel: number) => {
+  if (detailLevel === 3) {
+    // For full grid square, use the library function to ensure consistency
+    return libGetGridSquare(lat, lon);
+  }
+
+  // For lower detail levels, continue using the existing implementation
   // 1) Calcule les 2 lettres de base (Field)
   const fieldLon = Math.floor((lon + 180) / 20);
   const fieldLat = Math.floor((lat + 90) / 10);
@@ -36,13 +43,6 @@ const getGridSquare = (lat: number, lon: number, detailLevel: number) => {
     const squareLon = Math.floor(((lon + 180) % 20) / 2);
     const squareLat = Math.floor(((lat + 90) % 10) / 1);
     gridSquare += `${squareLon}${squareLat}`;
-  }
-
-  // 3) Ajoute les 2 lettres suivantes (Subsquare) si on est au niveau 3
-  if (detailLevel === 3) {
-    const subLon = Math.floor((((lon + 180) % 2) / 2) * 24);
-    const subLat = Math.floor((((lat + 90) % 1) / 1) * 24);
-    gridSquare += `${String.fromCharCode(97 + subLon)}${String.fromCharCode(97 + subLat)}`;
   }
 
   return gridSquare;
@@ -102,7 +102,7 @@ const MouseTracker = ({
       setMousePosition({
         lat: e.latlng.lat,
         lon: e.latlng.lng,
-        grid: getGridSquare(e.latlng.lat, e.latlng.lng, 3),
+        grid: libGetGridSquare(e.latlng.lat, e.latlng.lng), // Use library function here for consistency
       });
     },
   });
