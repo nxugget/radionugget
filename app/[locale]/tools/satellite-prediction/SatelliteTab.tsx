@@ -3,6 +3,7 @@
 import React from "react";
 import * as d3 from "d3";
 import Link from "next/link";
+import { satelliteColors } from "@/src/utils/satelliteColors";
 
 interface SatellitePass {
   startTime: string;
@@ -20,7 +21,8 @@ interface SatelliteTabProps {
   utcOffset: number;
 }
 
-const colors = d3.schemeCategory10;
+// Utilisation des couleurs définies dans l'utilitaire
+const colors = satelliteColors;
 
 const SatelliteTab: React.FC<SatelliteTabProps> = ({
   passes,
