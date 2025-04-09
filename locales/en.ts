@@ -16,7 +16,7 @@ export default {
     tools: "Tools",
     gridSquare: "Grid Square",
     satellitePrediction: "Satellite Prediction",
-    satelliteInfo: "Satellite Info",
+    satelliteInfo: "Satellite Explorer",
     gallery: "Gallery",
     english: "English",
     french: "Français"

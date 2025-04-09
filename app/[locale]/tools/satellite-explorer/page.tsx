@@ -28,7 +28,10 @@ interface SatelliteDetails {
   name: string;
   description: string;
   status: string;
-  frequency: string;
+  frequency: {
+    downlink?: string;
+    uplink?: string;
+  };
   modulation: string;
   photoUrl: string;
   tle1: string;
@@ -666,7 +669,18 @@ export default function SatelliteInfoPage() {
                         {t("satellites.explorer.status")} {details?.status || "N/A"}
                       </p>
                       <p className="text-gray-300 text-lg">
-                        {t("satellites.explorer.frequency")} {details?.frequency || "N/A"}
+                        {t("satellites.explorer.frequency")}
+                        {details?.frequency ? (
+                          <span>
+                            {details.frequency.downlink && (
+                              <span className="ml-1">↓ {details.frequency.downlink}</span>
+                            )}
+                            {details.frequency.downlink && details.frequency.uplink && " / "}
+                            {details.frequency.uplink && (
+                              <span>↑ {details.frequency.uplink}</span>
+                            )}
+                          </span>
+                        ) : "N/A"}
                       </p>
                     </div>
                   </div>
