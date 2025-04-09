@@ -46,9 +46,9 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
 
     const parentDiv = d3.select(svgRef.current.parentElement);
 
-    // Always use desktop dimensions
-    const width = Math.min(window.innerWidth - 100, 1400);
-    const margin = { top: 60, right: 20, bottom: 50, left: 120 }; // Reduced left margin
+    // Reduced maximum width to fit better in container
+    const width = Math.min(window.innerWidth - 150, 1200);
+    const margin = { top: 60, right: 20, bottom: 50, left: 90 }; // Reduced left margin
     const rowHeight = 40;
 
     // Unique satellites and inner height calculation
@@ -94,7 +94,7 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     const xAxis = d3
       .axisTop(xScale)
       .tickSize(0)
-      .ticks(d3.timeHour.every(1))
+      .ticks(d3.timeHour.every(2)) // Changed from every(1) to every(2)
       .tickFormat((d) => {
         const date = new Date(d as Date);
         if (useLocalTime) date.setHours(date.getHours() + utcOffset);
@@ -108,10 +108,10 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     xAxisGroup.selectAll(".tick line").remove();
     xAxisGroup.selectAll(".tick text")
       .style("fill", "#fff")
-      .style("font-size", "16px");
+      .style("font-size", "14px"); // Reduced font size
 
     // Vertical grid lines
-    const hourInterval = d3.timeHour.every(1)!;
+    const hourInterval = d3.timeHour.every(2)!; // Changed from every(1) to every(2)
     const hourTicks = xScale.ticks(hourInterval);
     svg
       .append("g")
@@ -139,7 +139,7 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     yAxisGroup.selectAll<SVGTextElement, string>("text")
       .attr("text-anchor", "end")
       .attr("dx", "-0.5em")
-      .style("font-size", "16px")
+      .style("font-size", "14px") // Reduced font size
       .style("font-weight", "bold")
       .style("fill", (d: string) => colorMap[d] || "#fff") // Apply the satellite's color
       .text((d: string) => d) // Set the text content
@@ -247,7 +247,8 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
         .style("padding", "20px")
         .style("box-shadow", "0px 4px 10px rgba(0, 0, 0, 0.3)")
         .style("overflow-x", "auto") // Enable horizontal scrolling
-        .style("white-space", "nowrap"); // Prevent wrapping
+        .style("white-space", "nowrap") // Prevent wrapping
+        .style("max-width", "100%"); // Ensure container doesn't exceed parent width
     }
 
     return () => {
@@ -256,7 +257,7 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
   }, [passes, useLocalTime, utcOffset]);
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <svg ref={svgRef}></svg>
     </div>
   );

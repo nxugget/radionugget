@@ -67,13 +67,15 @@ export async function GET(request) {
     const azimuth = rad2deg(lookAngles.azimuth);
     const elevation = rad2deg(lookAngles.elevation);
     
-    // CALCUL DU NEXT AOS ET LOS : simulation sur 90 min avec pas de 1 sec
+    // CALCUL DU NEXT AOS ET LOS : recherche plus précise pour premier passage
     let nextAOSCountdown = -1;
     let nextLOSCountdown = -1;
-    const maxSeconds = 90 * 60;
+    const maxSeconds = 24 * 60 * 60; // 24 hours pour la recherche
     let isAboveHorizon = elevation > 0;
 
-    for (let t = 0; t < maxSeconds; t += 1) { // Pas de 1 seconde
+    // Première phase : recherche rapide avec pas de 60 secondes
+    let roughAOS = -1;
+    for (let t = 0; t < maxSeconds; t += 60) {
       const futureTime = new Date(now.getTime() + t * 1000);
       const futurePos = propagate(satrec, futureTime);
       if (!futurePos || typeof futurePos === "boolean" || !futurePos.position) continue;
@@ -82,12 +84,65 @@ export async function GET(request) {
       const futureLook = ecfToLookAngles(observerCoords, posEcfF);
       const futureEl = rad2deg(futureLook.elevation);
 
-      if (futureEl > 0 && nextAOSCountdown === -1 && !isAboveHorizon) {
-        nextAOSCountdown = t; // Temps restant en secondes pour AOS
+      if (futureEl > 0 && roughAOS === -1 && !isAboveHorizon) {
+        roughAOS = t;
+        break; // On a trouvé un AOS approximatif
       }
-      if (futureEl <= 0 && nextLOSCountdown === -1 && isAboveHorizon) {
-        nextLOSCountdown = t; // Temps restant en secondes pour LOS
-        break;
+    }
+
+    // Si on a trouvé un AOS approximatif, on raffine la recherche avec un pas de 1 seconde
+    if (roughAOS > 0) {
+      // Commencer 2 minutes avant l'estimation brute
+      const startRefinement = Math.max(0, roughAOS - 120);
+      const endRefinement = roughAOS + 120; // Jusqu'à 2 minutes après
+      
+      for (let t = startRefinement; t <= endRefinement; t += 1) { // Pas de 1 seconde
+        const futureTime = new Date(now.getTime() + t * 1000);
+        const futurePos = propagate(satrec, futureTime);
+        if (!futurePos || typeof futurePos === "boolean" || !futurePos.position) continue;
+        const gmstF = gstime(futureTime);
+        const posEcfF = eciToEcf(futurePos.position, gmstF);
+        const futureLook = ecfToLookAngles(observerCoords, posEcfF);
+        const futureEl = rad2deg(futureLook.elevation);
+
+        if (futureEl > 0 && nextAOSCountdown === -1) {
+          nextAOSCountdown = t; // Temps précis à la seconde près
+          break;
+        }
+      }
+    } else if (isAboveHorizon) {
+      // Si le satellite est déjà visible, on cherche quand il va disparaître
+      for (let t = 1; t < maxSeconds; t += 10) { // Pas de 10 secondes pour LOS
+        const futureTime = new Date(now.getTime() + t * 1000);
+        const futurePos = propagate(satrec, futureTime);
+        if (!futurePos || typeof futurePos === "boolean" || !futurePos.position) continue;
+        const gmstF = gstime(futureTime);
+        const posEcfF = eciToEcf(futurePos.position, gmstF);
+        const futureLook = ecfToLookAngles(observerCoords, posEcfF);
+        const futureEl = rad2deg(futureLook.elevation);
+
+        if (futureEl <= 0) {
+          // On a trouvé un LOS approximatif, maintenant on raffine
+          const startRefinement = Math.max(0, t - 60);
+          const endRefinement = t + 60;
+          
+          for (let r = startRefinement; r <= endRefinement; r += 1) { // Pas de 1 seconde
+            const refineTime = new Date(now.getTime() + r * 1000);
+            const refinePos = propagate(satrec, refineTime);
+            if (!refinePos || typeof refinePos === "boolean" || !refinePos.position) continue;
+            const gmstR = gstime(refineTime);
+            const posEcfR = eciToEcf(refinePos.position, gmstR);
+            const refineLook = ecfToLookAngles(observerCoords, posEcfR);
+            const refineEl = rad2deg(refineLook.elevation);
+
+            if (refineEl <= 0) {
+              nextLOSCountdown = r; // Temps précis à la seconde près
+              break;
+            }
+          }
+          
+          if (nextLOSCountdown > 0) break; // Si on a trouvé un LOS précis, on sort
+        }
       }
     }
     

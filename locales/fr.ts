@@ -61,7 +61,7 @@ export default {
       source: "Source",
       focusMode: "Mode Focus",
       exitFocus: "Quitter Focus",
-      polarChart: "Graphique Polaire",
+      polarChart: "Polar Chart",
       elevation: "Élévation:",
       azimuth: "Azimut:",
       enterValidGridSquare: "Renseignez une Grid Square valide",

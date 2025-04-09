@@ -206,13 +206,13 @@ export default function SatelliteInfoPage() {
 
   const formatCountdown = (seconds: number): string => {
     if (seconds < 0) return t("satellites.countdown.noPassPredicted");
+    
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
-    }
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    const remainingSeconds = Math.floor(seconds % 60); // Ensure seconds are integers
+    
+    // Always show hours, minutes and seconds in format HH:MM:SS
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
   useEffect(() => {
@@ -255,14 +255,13 @@ export default function SatelliteInfoPage() {
     const now = new Date();
     const points: Point[] = [];
     
-    // Different calculation logic based on whether satellite is visible or not
+    // CASE 1: Satellite is currently visible - show current pass only
     if (polarInfo.elevation > 0) {
-      // CASE 1: Satellite is currently visible - show both past and future
       // Look back to show the trajectory from the start of pass
-      const lookBackSeconds = 30 * 60; // 30 minutes
+      const lookBackSeconds = 30 * 60; // 30 minutes (keep this the same)
       
       // Add past trajectory points
-      for (let t = -lookBackSeconds; t < 0; t += 10) {
+      for (let t = -lookBackSeconds; t < 0; t += 30) { // Increased step to 30 seconds for efficiency
         const sampleTime = new Date(now.getTime() + t * 1000);
         const prop = propagate(satrec, sampleTime);
         if (prop.position && isValidEciVec3(prop.position)) {
@@ -278,48 +277,12 @@ export default function SatelliteInfoPage() {
         }
       }
       
-      // Add future points until end of current pass
-      const maxSeconds = 90 * 60; // 90 minutes max
-      let foundEndOfPass = false;
+      // Add future points until the end of THIS pass only
+      let inPass = true;
+      const maxSeconds = 3 * 60 * 60; // 3 hours maximum search time
       
-      for (let t = 0; t <= maxSeconds && !foundEndOfPass; t += 10) {
+      for (let t = 0; t <= maxSeconds && inPass; t += 30) {
         const sampleTime = new Date(now.getTime() + t * 1000);
-        const prop = propagate(satrec, sampleTime);
-        if (prop.position && isValidEciVec3(prop.position)) {
-          const gmst = gstime(sampleTime);
-          const posEcf = eciToEcf(prop.position, gmst);
-          const look = ecfToLookAngles(observerCoords, posEcf);
-          const el = rad2deg(look.elevation);
-          
-          // Add the point
-          points.push({
-            az: rad2deg(look.azimuth),
-            el: Math.min(el, 90),
-            time: new Date(sampleTime)
-          });
-          
-          // Stop when satellite goes below horizon
-          if (el <= 0 && t > 0) {
-            foundEndOfPass = true;
-          }
-        }
-      }
-    } else {
-      // CASE 2: Satellite not visible - show ONLY future trajectory of next pass
-      // If we know the next AOS time, start from there
-      const startTime = polarInfo.nextAOSCountdown > 0 
-        ? new Date(now.getTime() + polarInfo.nextAOSCountdown * 1000)
-        : now;
-        
-      const maxSeconds = 180 * 60; // 3 hours max to find next pass
-      let foundAOS = false;
-      let foundLOS = false;
-      
-      // Collect all points from the prediction
-      const tempPoints: Point[] = []; 
-      
-      for (let t = 0; t <= maxSeconds && !foundLOS; t += 10) {
-        const sampleTime = new Date(startTime.getTime() + t * 1000);
         const prop = propagate(satrec, sampleTime);
         if (prop.position && isValidEciVec3(prop.position)) {
           const gmst = gstime(sampleTime);
@@ -328,45 +291,124 @@ export default function SatelliteInfoPage() {
           const el = rad2deg(look.elevation);
           const az = rad2deg(look.azimuth);
           
-          // Only start collecting points once we find AOS (satellite rising above horizon)
+          // Add point if satellite is still visible
           if (el > 0) {
-            foundAOS = true;
-          }
-          
-          // Once we've found AOS, collect all points until LOS
-          if (foundAOS) {
-            tempPoints.push({
+            points.push({
               az,
               el: Math.min(el, 90),
               time: new Date(sampleTime)
             });
-            
-            // Stop when the satellite goes below horizon again (we've found LOS)
-            if (el <= 0 && tempPoints.length > 0) {
-              foundLOS = true;
-            }
+          } else {
+            // When elevation goes below 0, add a final point and exit
+            inPass = false;
+            points.push({
+              az,
+              el: 0,
+              time: new Date(sampleTime)
+            });
           }
         }
       }
       
-      // If we found a pass, use the points; otherwise show nothing
-      if (tempPoints.length > 0) {
-        // Ensure points are in chronological order
-        points.push(...tempPoints.sort((a, b) => 
-          (a.time && b.time) ? a.time.getTime() - b.time.getTime() : 0
-        ));
+      console.log(`Computed trajectory for current pass only`);
+    } else {
+      // CASE 2: Satellite not visible - show ONLY the NEXT pass
+      // First, find the time of the next AOS if available from polarInfo
+      const maxSecondsSearch = 24 * 60 * 60; // 24 hours search window
+      
+      // If we know when the next AOS is, use that time
+      let nextAosTime: Date | null = null;
+      if (polarInfo.nextAOSCountdown > 0) {
+        nextAosTime = new Date(now.getTime() + polarInfo.nextAOSCountdown * 1000);
+        console.log(`Next AOS in ${polarInfo.nextAOSCountdown} seconds`);
+      } else {
+        // Otherwise search for the next AOS
+        console.log("Searching for next AOS...");
+        let prevEl = -1;
         
-        // Log AOS and LOS points to debug direction
-        if (points.length > 1) {
-          console.log("AOS point: ", points[0].az.toFixed(1), points[0].el.toFixed(1));
-          console.log("LOS point: ", points[points.length-1].az.toFixed(1), points[points.length-1].el.toFixed(1));
+        for (let t = 0; t <= maxSecondsSearch; t += 60) {
+          const sampleTime = new Date(now.getTime() + t * 1000);
+          const prop = propagate(satrec, sampleTime);
+          if (prop.position && isValidEciVec3(prop.position)) {
+            const gmst = gstime(sampleTime);
+            const posEcf = eciToEcf(prop.position, gmst);
+            const look = ecfToLookAngles(observerCoords, posEcf);
+            const el = rad2deg(look.elevation);
+            
+            // Check crossing from below horizon to above horizon (rising)
+            if (prevEl <= 0 && el > 0) {
+              nextAosTime = new Date(sampleTime);
+              console.log(`Found next AOS at ${nextAosTime.toISOString()}`);
+              break;
+            }
+            prevEl = el;
+          }
         }
+      }
+      
+      // If we found a next AOS time, compute the trajectory for just that pass
+      if (nextAosTime) {
+        // Start from 5 minutes before AOS to ensure we catch the rising point
+        const preAosTime = new Date(nextAosTime.getTime() - 5 * 60 * 1000);
+        let inPass = false;
+        
+        // Collect points around the pass (3 hours max)
+        for (let t = 0; t <= 3 * 60 * 60; t += 20) { // Higher resolution near AOS
+          const sampleTime = new Date(preAosTime.getTime() + t * 1000);
+          const prop = propagate(satrec, sampleTime);
+          if (prop.position && isValidEciVec3(prop.position)) {
+            const gmst = gstime(sampleTime);
+            const posEcf = eciToEcf(prop.position, gmst);
+            const look = ecfToLookAngles(observerCoords, posEcf);
+            const el = rad2deg(look.elevation);
+            const az = rad2deg(look.azimuth);
+            
+            // Detect rising above horizon
+            if (!inPass && el > 0) {
+              inPass = true;
+              // Add a point exactly at the horizon
+              points.push({
+                az,
+                el: 0,
+                time: new Date(sampleTime)
+              });
+            }
+            
+            // Add points during the pass
+            if (inPass) {
+              points.push({
+                az,
+                el: Math.min(el, 90),
+                time: new Date(sampleTime)
+              });
+              
+              // Detect setting below horizon
+              if (el <= 0) {
+                // Add a final point at the horizon
+                points.push({
+                  az,
+                  el: 0,
+                  time: new Date(sampleTime)
+                });
+                break; // We've completed the pass
+              }
+            }
+          }
+        }
+        
+        console.log(`Computed trajectory for next pass with ${points.length} points`);
+      } else {
+        console.log("No future passes found within search window");
       }
     }
 
-    console.log("Computed trajectory points:", points.length, polarInfo.elevation > 0 ? "current pass" : "next pass");
+    // Ensure points are in chronological order
+    points.sort((a, b) => 
+      (a.time && b.time) ? a.time.getTime() - b.time.getTime() : 0
+    );
+
     setTrajectoryPoints(points);
-  }, [details, latitude, longitude, polarInfo.elevation, polarInfo.nextAOSCountdown]);
+  }, [details, latitude, longitude, polarInfo]);
 
   useEffect(() => {
     if (!details) return;

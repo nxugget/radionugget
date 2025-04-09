@@ -150,89 +150,226 @@ const PolarChart: React.FC<PolarChartProps> = ({
 
       // Draw past trajectory (red dotted line) - only if there are past points
       if (pastPoints.length > 1) {
-        const pastLineData = pastPoints.map(p => {
-          const angleRad = (p.az) * (Math.PI / 180);
-          const el = Math.max(p.el, 0);
-          const r = (90 - el) * scale;
-          return [r, angleRad] as [number, number];
+        // Séparation des segments visibles (segments de trajectoire réellement au-dessus de l'horizon)
+        // Cette méthode divise les points en groupes qui sont tous au-dessus de l'horizon
+        const visibleSegments: Point[][] = [];
+        let currentSegment: Point[] = [];
+        
+        // Parcourir tous les points et créer des segments distincts
+        pastPoints.forEach((point, index) => {
+          // Si le point est au-dessus de l'horizon, l'ajouter au segment actuel
+          if (point.el > 0) {
+            // Si on démarre un nouveau segment, ajouter un point horizon
+            if (currentSegment.length === 0 && index > 0) {
+              // Calcul d'un point à l'horizon par interpolation
+              const prevPoint = pastPoints[index - 1];
+              if (prevPoint.el <= 0) {
+                // Calculer un point exactement à l'horizon (0° élévation)
+                // par interpolation linéaire entre le point sous l'horizon et celui au-dessus
+                const ratio = Math.abs(prevPoint.el) / (Math.abs(prevPoint.el) + point.el);
+                const azDiff = ((point.az - prevPoint.az + 540) % 360) - 180;  // Gestion du cas où azimut franchit 0°/360°
+                const horizonAz = (prevPoint.az + azDiff * ratio + 360) % 360;
+                
+                // Ajouter ce point comme début du segment
+                currentSegment.push({
+                  az: horizonAz,
+                  el: 0,
+                  time: point.time ? new Date(prevPoint.time!.getTime() + 
+                        (point.time.getTime() - prevPoint.time!.getTime()) * ratio) : undefined
+                });
+              }
+            }
+            
+            // Ajouter le point actuel au segment
+            currentSegment.push(point);
+          } 
+          // Si le point est sous l'horizon et qu'on a un segment en cours
+          else if (currentSegment.length > 0) {
+            // Calculer un point exactement à l'horizon pour terminer le segment
+            const lastValidPoint = currentSegment[currentSegment.length - 1];
+            if (lastValidPoint.el > 0) {
+              // Interpolation pour trouver le point exact à l'horizon
+              const ratio = lastValidPoint.el / (lastValidPoint.el + Math.abs(point.el));
+              const azDiff = ((point.az - lastValidPoint.az + 540) % 360) - 180;
+              const horizonAz = (lastValidPoint.az + azDiff * ratio + 360) % 360;
+              
+              // Ajouter ce point comme fin du segment
+              currentSegment.push({
+                az: horizonAz,
+                el: 0,
+                time: point.time ? new Date(lastValidPoint.time!.getTime() + 
+                      (point.time.getTime() - lastValidPoint.time!.getTime()) * ratio) : undefined
+              });
+            }
+            
+            // Sauvegarder le segment complet s'il contient au moins 2 points
+            if (currentSegment.length > 1) {
+              visibleSegments.push([...currentSegment]);
+            }
+            currentSegment = [];
+          }
         });
         
-        const lineGenerator = d3.lineRadial()
-          .angle((d: any) => d[1])
-          .radius((d: any) => d[0])
-          .curve(d3.curveCardinal);
+        // Ne pas oublier le dernier segment s'il existe
+        if (currentSegment.length > 1) {
+          visibleSegments.push(currentSegment);
+        }
         
-        const pastPathData = lineGenerator(pastLineData);
-        
-        g.append("path")
-          .attr("d", pastPathData || "")
-          .attr("fill", "none")
-          .attr("stroke", "#dc2626") // Red for past
-          .attr("stroke-width", isFocusMode ? 6 : 2.5) // Thicker line in focus mode
-          .attr("stroke-dasharray", isFocusMode ? "10,10" : "5,5"); // Larger dashes in focus mode
+        // Dessiner chaque segment séparément
+        visibleSegments.forEach(segment => {
+          if (segment.length < 2) return; // Ignorer les segments trop courts
+          
+          const lineData = segment.map(p => {
+            const angleRad = (p.az) * (Math.PI / 180);
+            const el = Math.max(p.el, 0); // Plus nécessaire pour les valeurs négatives, mais gardé par sécurité
+            const r = (90 - el) * scale;
+            return [r, angleRad] as [number, number];
+          });
+          
+          const lineGenerator = d3.lineRadial()
+            .angle((d: any) => d[1])
+            .radius((d: any) => d[0])
+            .curve(d3.curveCardinal);
+          
+          const pathData = lineGenerator(lineData);
+          
+          g.append("path")
+            .attr("d", pathData || "")
+            .attr("fill", "none")
+            .attr("stroke", "#dc2626") // Red for past
+            .attr("stroke-width", isFocusMode ? 6 : 2.5)
+            .attr("stroke-dasharray", isFocusMode ? "10,10" : "5,5");
+        });
       }
 
       // Draw future trajectory (green solid line)
       if (futurePoints.length > 1) {
-        const futureLineData = futurePoints.map(p => {
-          const angleRad = (p.az) * (Math.PI / 180);
-          const el = Math.max(p.el, 0);
-          const r = (90 - el) * scale;
-          return [r, angleRad] as [number, number];
+        // Utiliser la même approche que pour les segments passés
+        const visibleSegments: Point[][] = [];
+        let currentSegment: Point[] = [];
+        
+        // Parcourir tous les points et créer des segments distincts
+        futurePoints.forEach((point, index) => {
+          // Si le point est au-dessus de l'horizon, l'ajouter au segment actuel
+          if (point.el > 0) {
+            // Si on démarre un nouveau segment, ajouter un point horizon
+            if (currentSegment.length === 0 && index > 0) {
+              // Calcul d'un point à l'horizon par interpolation
+              const prevPoint = futurePoints[index - 1];
+              if (prevPoint.el <= 0) {
+                // Interpolation linéaire
+                const ratio = Math.abs(prevPoint.el) / (Math.abs(prevPoint.el) + point.el);
+                const azDiff = ((point.az - prevPoint.az + 540) % 360) - 180;
+                const horizonAz = (prevPoint.az + azDiff * ratio + 360) % 360;
+                
+                // Ajouter ce point comme début du segment
+                currentSegment.push({
+                  az: horizonAz,
+                  el: 0,
+                  time: point.time ? new Date(prevPoint.time!.getTime() + 
+                        (point.time.getTime() - prevPoint.time!.getTime()) * ratio) : undefined
+                });
+              }
+            }
+            
+            // Ajouter le point actuel au segment
+            currentSegment.push(point);
+          } 
+          // Si le point est sous l'horizon et qu'on a un segment en cours
+          else if (currentSegment.length > 0) {
+            // Calculer un point exactement à l'horizon pour terminer le segment
+            const lastValidPoint = currentSegment[currentSegment.length - 1];
+            if (lastValidPoint.el > 0) {
+              // Interpolation pour trouver le point exact à l'horizon
+              const ratio = lastValidPoint.el / (lastValidPoint.el + Math.abs(point.el));
+              const azDiff = ((point.az - lastValidPoint.az + 540) % 360) - 180;
+              const horizonAz = (lastValidPoint.az + azDiff * ratio + 360) % 360;
+              
+              // Ajouter ce point comme fin du segment
+              currentSegment.push({
+                az: horizonAz,
+                el: 0,
+                time: point.time ? new Date(lastValidPoint.time!.getTime() + 
+                      (point.time.getTime() - lastValidPoint.time!.getTime()) * ratio) : undefined
+              });
+            }
+            
+            // Sauvegarder le segment complet s'il contient au moins 2 points
+            if (currentSegment.length > 1) {
+              visibleSegments.push([...currentSegment]);
+            }
+            currentSegment = [];
+          }
         });
         
-        const lineGenerator = d3.lineRadial()
-          .angle((d: any) => d[1])
-          .radius((d: any) => d[0])
-          .curve(d3.curveCardinal);
-        
-        const futurePathData = lineGenerator(futureLineData);
-        
-        // Create and append the path for future trajectory
-        const futurePath = g.append("path")
-          .attr("d", futurePathData || "")
-          .attr("fill", "none")
-          .attr("stroke", "#228B22") // Green for future
-          .attr("stroke-width", isFocusMode ? 7 : 3); // Thicker line in focus mode
-          
-        // Now draw the arrow at the end of the path using the actual path endpoint
-        if (futurePoints.length >= 2) {
-          // Get the exact end point from the path element
-          const pathNode = futurePath.node();
-          if (pathNode) {
-            const pathLength = pathNode.getTotalLength();
-            
-            // Get the last point and a point slightly before it to determine direction
-            const endPoint = pathNode.getPointAtLength(pathLength);
-            const beforeEndPoint = pathNode.getPointAtLength(pathLength - 15);
-            
-            // Calculate direction vector
-            const dx = endPoint.x - beforeEndPoint.x;
-            const dy = endPoint.y - beforeEndPoint.y;
-            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-            
-            // Draw arrow lines
-            const arrowSize = isFocusMode ? 16 : 12; // Slightly larger arrow in focus mode
-            
-            // Arrow wing 1
-            g.append("line")
-              .attr("x1", endPoint.x)
-              .attr("y1", endPoint.y)
-              .attr("x2", endPoint.x - arrowSize * Math.cos((angle - 25) * (Math.PI / 180)))
-              .attr("y2", endPoint.y - arrowSize * Math.sin((angle - 25) * (Math.PI / 180)))
-              .attr("stroke", "#228B22")
-              .attr("stroke-width", isFocusMode ? 4 : 3); // Thicker arrow in focus mode
-              
-            // Arrow wing 2
-            g.append("line")
-              .attr("x1", endPoint.x)
-              .attr("y1", endPoint.y)
-              .attr("x2", endPoint.x - arrowSize * Math.cos((angle + 25) * (Math.PI / 180)))
-              .attr("y2", endPoint.y - arrowSize * Math.sin((angle + 25) * (Math.PI / 180)))
-              .attr("stroke", "#228B22")
-              .attr("stroke-width", isFocusMode ? 4 : 3); // Thicker arrow in focus mode
-          }
+        // Ne pas oublier le dernier segment s'il existe
+        if (currentSegment.length > 1) {
+          visibleSegments.push(currentSegment);
         }
+        
+        // Dessiner chaque segment séparément
+        visibleSegments.forEach((segment, segIndex) => {
+          if (segment.length < 2) return; // Ignorer les segments trop courts
+          
+          const lineData = segment.map(p => {
+            const angleRad = (p.az) * (Math.PI / 180);
+            const el = Math.max(p.el, 0);
+            const r = (90 - el) * scale;
+            return [r, angleRad] as [number, number];
+          });
+          
+          const lineGenerator = d3.lineRadial()
+            .angle((d: any) => d[1])
+            .radius((d: any) => d[0])
+            .curve(d3.curveCardinal);
+          
+          const pathData = lineGenerator(lineData);
+          
+          const futurePath = g.append("path")
+            .attr("d", pathData || "")
+            .attr("fill", "none")
+            .attr("stroke", "#228B22") // Green for future
+            .attr("stroke-width", isFocusMode ? 7 : 3);
+          
+          // Ajouter la flèche uniquement au dernier segment
+          if (segIndex === visibleSegments.length - 1) {
+            // Get the exact end point from the path element
+            const pathNode = futurePath.node();
+            if (pathNode) {
+              const pathLength = pathNode.getTotalLength();
+              
+              // Get the last point and a point slightly before it to determine direction
+              const endPoint = pathNode.getPointAtLength(pathLength);
+              const beforeEndPoint = pathNode.getPointAtLength(pathLength - 15);
+              
+              // Calculate direction vector
+              const dx = endPoint.x - beforeEndPoint.x;
+              const dy = endPoint.y - beforeEndPoint.y;
+              const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+              
+              // Draw arrow lines
+              const arrowSize = isFocusMode ? 16 : 12;
+              
+              // Arrow wing 1
+              g.append("line")
+                .attr("x1", endPoint.x)
+                .attr("y1", endPoint.y)
+                .attr("x2", endPoint.x - arrowSize * Math.cos((angle - 25) * (Math.PI / 180)))
+                .attr("y2", endPoint.y - arrowSize * Math.sin((angle - 25) * (Math.PI / 180)))
+                .attr("stroke", "#228B22")
+                .attr("stroke-width", isFocusMode ? 4 : 3);
+                
+              // Arrow wing 2
+              g.append("line")
+                .attr("x1", endPoint.x)
+                .attr("y1", endPoint.y)
+                .attr("x2", endPoint.x - arrowSize * Math.cos((angle + 25) * (Math.PI / 180)))
+                .attr("y2", endPoint.y - arrowSize * Math.sin((angle + 25) * (Math.PI / 180)))
+                .attr("stroke", "#228B22")
+                .attr("stroke-width", isFocusMode ? 4 : 3);
+            }
+          }
+        });
       }
     }
 
