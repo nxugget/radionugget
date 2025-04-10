@@ -6,6 +6,7 @@ import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
 import SatelliteTimeline from "./SatelliteTimeline";
 import SatelliteTab from "./SatelliteTab"; // new import
+import AzimuthSelector from "./AzimuthSelector"; // Import du nouveau composant
 import { getGridSquareCoords } from "@/src/lib/gridSquare";
 import { useI18n } from "@/locales/client"; // Add i18n import
 import { getCookieValue, setCookie } from "@/src/lib/cookies"; // Restore cookie functions for favorites
@@ -62,8 +63,10 @@ export default function SatelliteTracker() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"timeline" | "table">("timeline"); // New view mode state
 
-  // Configuration
-  const [elevation, setElevation] = useState(10);
+  // Configuration avec élévation par défaut à 20° au lieu de 10°
+  const [elevation, setElevation] = useState(20);
+  const [minAzimuth, setMinAzimuth] = useState(0); // Valeur par défaut
+  const [maxAzimuth, setMaxAzimuth] = useState(360); // Modifié de 359 à 360
   const [utcOffset, setUtcOffset] = useState(0);
   const [useLocalTime, setUseLocalTime] = useState(false);
 
@@ -75,7 +78,10 @@ export default function SatelliteTracker() {
   const [gridSquare, setGridSquare] = useState("");
   const [cityQuery, setCityQuery] = useState("");
   const [citySuggestions, setCitySuggestions] = useState<any[]>([]);
+  const [cityError, setCityError] = useState<string | null>(null); // Nouvel état pour les erreurs de ville
   const [gridSquareInput, setGridSquareInput] = useState("");
+  const [gridSquareError, setGridSquareError] = useState<string | null>(null); // Nouvel état pour les erreurs de grid square
+  const [invalidGridSquare, setInvalidGridSquare] = useState(false); // Pour suivre si une grid square invalide a été entrée
   const [locationLoading, setLocationLoading] = useState(false); // État pour gérer le chargement de la localisation
 
   // États pour l'affichage / erreurs
@@ -111,14 +117,52 @@ export default function SatelliteTracker() {
     setCookie("city", city);
   }, [city]);
 
+  // Modifier la gestion des grid squares pour une meilleure validation
   const handleGridSquareChange = (newGridSquare: string) => {
     setGridSquareInput(newGridSquare);
+    
+    // Réinitialiser les erreurs pendant la saisie
+    setGridSquareError(null);
+    
+    // Si le champ est vide, tout réinitialiser
+    if (!newGridSquare) {
+      setInvalidGridSquare(false);
+      return;
+    }
+    
+    // Ne pas essayer de valider les grid squares trop courtes
+    if (newGridSquare.length < 4) {
+      setInvalidGridSquare(false);
+      return;
+    }
+    
     try {
       const coords = getGridSquareCoords(newGridSquare);
       setLatitude(coords.lat);
       setLongitude(coords.lon);
+      setInvalidGridSquare(false);
     } catch {
-      console.error("Gridsquare invalide.");
+      // Marquer comme invalide mais sans afficher d'erreur pendant la saisie
+      setInvalidGridSquare(true);
+    }
+  };
+
+  // Fonction de validation de grid square lorsqu'on quitte le champ
+  const validateGridSquare = () => {
+    // Seulement valider si la grid square a une longueur suffisante
+    if (gridSquareInput && gridSquareInput.length >= 4) {
+      try {
+        const coords = getGridSquareCoords(gridSquareInput);
+        setLatitude(coords.lat);
+        setLongitude(coords.lon);
+        setGridSquareError(null);
+        setInvalidGridSquare(false);
+      } catch {
+        // Forcer l'affichage de l'erreur quand l'utilisateur quitte le champ
+        setGridSquareError(t("gridSquare.invalid"));
+        setInvalidGridSquare(true);
+        console.log("Grid square invalide détectée:", gridSquareInput);
+      }
     }
   };
 
@@ -189,11 +233,50 @@ export default function SatelliteTracker() {
     });
   };
 
+  // Fonction améliorée de validation des coordonnées
+  const validateCoordinates = () => {
+    let isValid = true;
+    let errorMessage = "";
+
+    // Vérifier si les coordonnées sont définies ou si leur format est valide
+    if (isNaN(latitude) || isNaN(longitude) || latitude === 0 && longitude === 0) {
+      isValid = false;
+      errorMessage = t("satellite.missingCoordinates");
+      return { isValid, errorMessage };
+    }
+
+    if (latitude < -90 || latitude > 90) {
+      isValid = false;
+      errorMessage = t("satellite.invalidLatitude");
+    }
+
+    if (longitude < -180 || longitude > 180) {
+      isValid = false;
+      errorMessage = isValid ? t("satellite.invalidLongitude") : t("satellite.invalidCoordinates");
+    }
+
+    return { isValid, errorMessage };
+  };
+
+  // Nouvelle fonction pour gérer le changement d'azimut
+  const handleAzimuthChange = (min: number, max: number) => {
+    setMinAzimuth(Math.round(min));
+    setMaxAzimuth(Math.round(max));
+  };
+
   const getPredictions = async () => {
     if (selectedSatellites.length === 0) {
       setError(t("satellite.errorNoSelection"));
       return;
     }
+
+    // Validate coordinates before making predictions
+    const { isValid, errorMessage } = validateCoordinates();
+    if (!isValid) {
+      setError(errorMessage);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -208,7 +291,11 @@ export default function SatelliteTracker() {
             latitude,
             longitude,
             elevation, // Utilise l'élévation actuelle
-            utcOffset
+            utcOffset,
+            undefined, // utiliser le temps de début par défaut
+            undefined, // utiliser le temps de fin par défaut
+            minAzimuth, // Nouvel argument pour l'azimut minimum
+            maxAzimuth // Nouvel argument pour l'azimut maximum
           );
           return {
             satelliteId: sat.id,
@@ -253,26 +340,40 @@ export default function SatelliteTracker() {
     );
   };
 
-  // Autocomplétion pour les villes
+  // Autocomplétion pour les villes - avec gestion des erreurs améliorée
   useEffect(() => {
     if (cityQuery.length > 2) {
+      setCityError(null); // Réinitialise l'erreur au début de la recherche
       const timeout = setTimeout(() => {
         fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${encodeURIComponent(cityQuery)}`)
           .then((response) => response.json())
-          .then((data) => setCitySuggestions(data))
-          .catch(() => setCitySuggestions([]));
+          .then((data) => {
+            setCitySuggestions(data);
+            // Si la recherche ne donne pas de résultats, afficher un message d'erreur
+            if (data.length === 0 && cityQuery.trim() !== "") {
+              setCityError(t("satellite.cityNotFound"));
+            }
+          })
+          .catch(() => {
+            setCitySuggestions([]);
+            setCityError(t("satellite.citySearchError"));
+          });
       }, 300);
       return () => clearTimeout(timeout);
     } else {
       setCitySuggestions([]);
+      // Ne plus afficher de message d'erreur pour les requêtes trop courtes
+      setCityError(null);
     }
-  }, [cityQuery]);
+  }, [cityQuery, t]);
 
   const handleCitySelect = (city: any) => {
     setCityQuery(city.display_name);
     setLatitude(parseFloat(city.lat));
     setLongitude(parseFloat(city.lon));
+    setCityError(null); // Réinitialise l'erreur sur sélection réussie
     setCitySuggestions([]);
+    document.activeElement instanceof HTMLElement && document.activeElement.blur();
   };
 
   const handleGridSquareSubmit = () => {
@@ -306,8 +407,8 @@ export default function SatelliteTracker() {
         <div className="flex flex-col md:flex-row gap-6">
           {/* PARTIE GAUCHE : sélection des satellites */}
           <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
-            <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
-              <h3 className="text-white text-lg text-center">{t("satellite.predictableSatellites")}</h3>
+            <div className="bg-nottooblack p-4 rounded-md flex flex-col gap-4">
+              <h2 className="text-white text-lg text-center">{t("satellite.predictableSatellites")}</h2>
               <SatelliteSearch
                 satellites={unselectedSatellites}
                 selectedSatelliteId={selectedAvailableId}
@@ -356,9 +457,9 @@ export default function SatelliteTracker() {
               </button>
             </div>
 
-            <div className="bg-zinc-800 p-4 rounded-md flex flex-col gap-4">
+            <div className="bg-nottooblack p-4 rounded-md flex flex-col gap-4">
               <div className="flex items-center justify-between relative">
-                <h3 className="text-white text-lg text-center w-full">{t("satellite.satellitesToPredict")}</h3>
+                <h2 className="text-white text-lg text-center w-full">{t("satellite.satellitesToPredict")}</h2>
                 <button
                   onClick={() => {
                     setSelectedSatellites([]);
@@ -418,23 +519,25 @@ export default function SatelliteTracker() {
           </div>
 
           {/* PARTIE DROITE : configuration */}
-          <div className="md:w-1/2 p-6 rounded-lg shadow-lg">
-            {/* Section de choix de position */}
-            <div className="mb-6">
-              <h3 className="text-white mb-4">{t("satellite.chooseYourPosition")}</h3>
+          <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
+            <div className="bg-nottooblack p-4 rounded-md">
+              <h2 className="text-white text-lg text-center mb-4">{t("satellite.chooseYourPosition")}</h2>
               <div className="flex flex-col gap-4">
-                {/* Centrer la ligne d'input et le bouton de localisation */}
                 <div className="flex items-center justify-center gap-4 w-full mx-auto">
-                  {/* Champ Ville */}
                   <div className="relative flex-1">
                     <input
                       type="text"
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
                       placeholder={t("satellite.cityPlaceholder")}
-                      className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple"
+                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none ${
+                        cityError ? "border-red-500 border" : "focus:ring-2 focus:ring-purple"
+                      }`}
                       onFocus={() => setCitySuggestions([])}
                     />
+                    {cityError && (
+                      <p className="text-red-500 text-sm mt-1 absolute">{cityError}</p>
+                    )}
                     {citySuggestions.length > 0 && (
                       <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
                         {citySuggestions.map((city, idx) => (
@@ -451,15 +554,20 @@ export default function SatelliteTracker() {
                   </div>
                   <span className="text-white font-bold">{t("or")}</span>
 
-                  {/* Champ GridSquare */}
                   <div className="relative flex-1">
                     <input
                       type="text"
                       value={gridSquareInput}
                       onChange={(e) => handleGridSquareChange(e.target.value)}
+                      onBlur={validateGridSquare}
                       placeholder={t("satellite.gridSquarePlaceholder")}
-                      className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple"
+                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none ${
+                        gridSquareError ? "border-red-500 border" : "focus:ring-2 focus:ring-purple"
+                      }`}
                     />
+                    {gridSquareError && (
+                      <p className="text-red-500 text-sm mt-1 absolute">{gridSquareError}</p>
+                    )}
                   </div>
                   <span className="text-white font-bold">{t("or")}</span>
 
@@ -471,27 +579,38 @@ export default function SatelliteTracker() {
                   />
                 </div>
 
-                {/* Latitude et Longitude */}
                 <div className="flex flex-col gap-2 mt-4">
                   <div className="flex gap-2">
                     <div className="flex flex-col items-center w-1/2">
                       <label className="text-white font-bold mb-1">{t("satellite.latitude")}</label>
                       <input
-                        type="number"
-                        value={latitude.toFixed(5)}
-                        onChange={(e) => setLatitude(Number(e.target.value))}
+                        type="text"
+                        value={invalidGridSquare ? "..." : (isNaN(latitude) ? "..." : latitude.toFixed(5))}
+                        onChange={(e) => {
+                          const value = Number(e.target.value);
+                          if (!isNaN(value) && value >= -90 && value <= 90) {
+                            setLatitude(value);
+                            setInvalidGridSquare(false);
+                          }
+                        }}
                         placeholder={t("satellite.latitude")}
-                        className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                       />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
                       <label className="text-white font-bold mb-1">{t("satellite.longitude")}</label>
                       <input
-                        type="number"
-                        value={longitude.toFixed(5)}
-                        onChange={(e) => setLongitude(Number(e.target.value))}
+                        type="text"
+                        value={invalidGridSquare ? "..." : (isNaN(longitude) ? "..." : longitude.toFixed(5))}
+                        onChange={(e) => {
+                          const value = Number(e.target.value);
+                          if (!isNaN(value) && value >= -180 && value <= 180) {
+                            setLongitude(value);
+                            setInvalidGridSquare(false);
+                          }
+                        }}
                         placeholder={t("satellite.longitude")}
-                        className="bg-zinc-800 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                       />
                     </div>
                   </div>
@@ -502,64 +621,73 @@ export default function SatelliteTracker() {
               </div>
             </div>
 
-            {/* Section Élévation minimale */}
-            <div className="mt-4 flex flex-col items-center w-full">
-              <p className="text-white mb-1 text-center w-full">{t("satellite.minElevation")}</p>
-              <div className="relative w-full h-10 flex items-center">
-                {/* Custom slider track */}
-                <div className="absolute h-2 w-full bg-gray-700 rounded-full">
-                  {/* Progress bar */}
-                  <div 
-                    className="h-full bg-purple rounded-full" 
-                    style={{ width: `${(elevation/90)*100}%` }}
-                  ></div>
+            <div className="bg-nottooblack p-4 rounded-md">
+              <h2 className="text-white text-lg text-center mb-4">{t("satellite.trajectorySettings")}</h2>
+              <div className="flex flex-col md:flex-row gap-6 justify-center">
+                <div className="md:w-1/2 flex flex-col items-center justify-center">
+                  <p className="text-white mb-3 text-center">{t("satellite.minElevation")}</p>
+                  <div className="relative h-[250px] w-[60px] flex justify-center mx-auto">
+                    <div className="absolute w-6 h-full bg-gray-700 rounded-full overflow-hidden">
+                      <div 
+                        className="w-full bg-purple rounded-full absolute bottom-0"
+                        style={{ height: `${(elevation/90)*100}%` }}
+                      ></div>
+                    </div>
+                    
+                    <input
+                      type="range"
+                      min="0"
+                      max="90"
+                      value={elevation}
+                      onChange={(e) => setElevation(Number(e.target.value))}
+                      className="absolute h-full opacity-0 cursor-pointer z-10 w-14"
+                      style={{ transform: "rotate(180deg)" }}
+                    />
+                    
+                    <div 
+                      className="absolute flex items-center justify-center rounded-full bg-purple text-white shadow-lg pointer-events-none z-0 transform -translate-x-1/2"
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        left: '50%',
+                        bottom: `calc(${(elevation/90)*100}% - 18px)`,
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        lineHeight: '1',
+                      }}
+                    >
+                      {elevation}°
+                    </div>
+                  </div>
                 </div>
                 
-                {/* Input range - invisible but functional */}
-                <input
-                  type="range"
-                  min="0"
-                  max="90"
-                  value={elevation}
-                  onChange={(e) => setElevation(Number(e.target.value))}
-                  className="absolute w-full opacity-0 cursor-pointer z-10 h-10"
-                />
-                
-                {/* Custom thumb with value - ajusté pour un meilleur centrage */}
-                <div 
-                  className="absolute flex items-center justify-center rounded-full bg-purple text-white shadow-lg pointer-events-none z-0 transform -translate-y-1/2"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    top: '50%',
-                    left: `calc(${(elevation/90)*100}% - 20px)`,
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    lineHeight: '1',
-                  }}
-                >
-                  {elevation}°
+                <div className="md:w-1/2 flex flex-col items-center justify-center">
+                  <p className="text-white mb-3 text-center">{t("satellite.azimuthFilter")}</p>
+                  <AzimuthSelector
+                    minAzimuth={minAzimuth}
+                    maxAzimuth={maxAzimuth}
+                    onChange={handleAzimuthChange}
+                  />
                 </div>
               </div>
             </div>
-
-            <div className="mt-10 flex flex-col items-center">
-              <button
-                onClick={getPredictions}
-                className="px-[40px] py-[17px] rounded-full cursor-pointer border-0 bg-white shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"
-              >
-                {t("satellite.predict")}
-              </button>
-            </div>
-            {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
           </div>
         </div>
 
-        {/* New Small Toggle Section (positioned above predictions) */}
+        {/* Bouton Predict centré sur l'écran au lieu d'être dans la div de droite */}
+        <div className="mt-8 w-full flex justify-center">
+          <button
+            onClick={getPredictions}
+            className="px-[40px] py-[17px] rounded-full cursor-pointer border-0 bg-white shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"
+          >
+            {t("satellite.predict")}
+          </button>
+          {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+        </div>
+
         {allPredictions.length > 0 && (
           <div className="mt-4 flex justify-start gap-4">
-            {/* View Mode Toggle */}
-            <div className="flex items-center bg-gray-800 rounded-md overflow-hidden">
+            <div className="flex items-center bg-nottooblack rounded-md overflow-hidden">
               <button
                 onClick={() => setViewMode("timeline")}
                 className={`px-3 py-1 text-sm text-white ${
@@ -577,8 +705,7 @@ export default function SatelliteTracker() {
                 {t("satellite.tableView")}
               </button>
             </div>
-            {/* Time Mode Toggle */}
-            <div className="flex items-center bg-gray-800 rounded-md overflow-hidden">
+            <div className="flex items-center bg-nottooblack rounded-md overflow-hidden">
               <button
                 onClick={() => {
                   setUseLocalTime(false);
@@ -611,7 +738,7 @@ export default function SatelliteTracker() {
             <div className="w-full max-w-[1400px] overflow-x-auto">
               {viewMode === "timeline" ? (
                 <SatelliteTimeline
-                  key={JSON.stringify(allPredictions)} // Force re-render when predictions change
+                  key={JSON.stringify(allPredictions)}
                   passes={allPredictions.flatMap((pred) =>
                     pred.passes.map((pass) => ({
                       satelliteName: pred.satelliteName,
@@ -647,7 +774,6 @@ export default function SatelliteTracker() {
           </div>
         )}
       </div>
-      {/* Bannière de cookies */}
       <CookieBanner />
     </div>
   );

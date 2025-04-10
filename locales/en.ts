@@ -54,6 +54,7 @@ export default {
       searchPlaceholder: "Search for a satellite...",
       lastUpdate: "Last update:",
       lastTleUpdate: "Last TLE update:",
+      lastTransponderUpdate: "Last transponder update:", // Nouvelle traduction
       noDescription: "No description available at the moment.",
       status: "Status:",
       frequency: "Frequency:",
@@ -69,7 +70,8 @@ export default {
       setGrid: "Set Grid",
       invalidGridSquare: "Invalid grid square",
       satMap: "SatMap",
-      tleTitle: "TLE"
+      tleTitle: "TLE",
+      transponders: "Transponder"
     },
     countdown: {
       losIn: "LOS in",
@@ -100,6 +102,15 @@ export default {
       meanMotion: "Mean Motion (orbits per day)",
       revolutionNumber: "Revolution Number at Epoch",
       noInfo: "No info"
+    },
+    transponder: {
+      title: "Transponders",
+      uplink: "Uplink",
+      downlink: "Downlink", 
+      beacon: "Beacon",
+      mode: "Mode",
+      active: "Active",
+      inactive: "Inactive"
     }
   },
   cookies: {
@@ -135,6 +146,16 @@ export default {
     timelineView: "Timeline",
     tableView: "Table",
     utcTime: "UTC Time",
-    localTime: "Local Time"
+    localTime: "Local Time",
+    invalidLatitude: "Invalid latitude (must be between -90° and 90°)",
+    invalidLongitude: "Invalid longitude (must be between -180° and 180°)",
+    invalidCoordinates: "Invalid coordinates",
+    missingCoordinates: "Please enter valid coordinates",
+    cityNotFound: "City not found",
+    citySearchError: "Error searching for city",
+    cityTooShort: "Enter at least 3 characters",
+    azimuthFilter: "Azimuth Filter",
+    azimuthExplanation: "Filter passes by direction (0° = East, 90° = South, 180° = West, 270° = North)",
+    trajectorySettings: "Satellite Trajectory"
   }
 } as const;

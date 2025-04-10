@@ -35,8 +35,28 @@ export interface SatellitePassData {
 export async function getSatellites(): Promise<Satellite[]> {
   // Combine satellites from all subfolder JSON files
   return [
-    ...(amateurData as Satellite[]),
-    ...(weatherData as Satellite[])
+    ...amateurData.map((data) => ({
+      id: data.id,
+      name: data.name,
+      tle1: data.tle1,
+      tle2: data.tle2,
+      description: data.description,
+      frequency: [], // Provide default or mapped values
+      modulation: "", // Provide default or mapped values
+      image: data.image,
+      category: data.category,
+    })),
+    ...weatherData.map((data) => ({
+      id: data.id,
+      name: data.name,
+      tle1: data.tle1,
+      tle2: data.tle2,
+      description: data.description,
+      frequency: [], // Provide default or mapped values
+      modulation: "", // Provide default or mapped values
+      image: data.image,
+      category: data.category,
+    }))
   ];
 }
 
@@ -50,7 +70,9 @@ export async function getSatellitePasses(
   elevation: number,
   utcOffset: number,
   startTime: number = Math.floor(Date.now() / 1000),
-  endTime: number = startTime + 86400 // 24h de prévisions
+  endTime: number = startTime + 86400, // 24h de prévisions
+  minAzimuth: number = 0, // Ajout du paramètre pour l'azimut minimum
+  maxAzimuth: number = 360 // Ajout du paramètre pour l'azimut maximum
 ): Promise<SatellitePassData[]> {
   const satellites = await getSatellites();
   const tle = satellites.find((s) => s.id === satelliteId);
@@ -66,6 +88,25 @@ export async function getSatellitePasses(
   const passes: SatellitePassData[] = [];
   const step = 60; // Vérification toutes les 60 secondes
   let currentPass: SatellitePassData | null = null;
+  let passAzimuthsWithinRange = false; // Pour suivre si le passage inclut des azimuts dans la plage spécifiée
+
+  // Fonction pour vérifier si un azimut est dans la plage demandée
+  const isAzimuthInRange = (azimuth: number): boolean => {
+    // Normaliser l'azimut à des valeurs entre 0 et 360
+    const normalizedAzimuth = ((azimuth % 360) + 360) % 360;
+    
+    // Cas particulier: plage complète
+    if (minAzimuth === 0 && maxAzimuth === 360) return true;
+    
+    // Si la plage ne traverse pas le nord (0°/360°)
+    if (minAzimuth <= maxAzimuth) {
+      return normalizedAzimuth >= minAzimuth && normalizedAzimuth <= maxAzimuth;
+    } 
+    // Si la plage traverse le nord (ex: 330° à 30°)
+    else {
+      return normalizedAzimuth >= minAzimuth || normalizedAzimuth <= maxAzimuth;
+    }
+  };
 
   for (let t = startTime; t <= endTime; t += step) {
     const date = new Date(t * 1000);
@@ -80,30 +121,41 @@ export async function getSatellitePasses(
     const positionEcf = eciToEcf(positionEci, gmst);
     const lookAngles = ecfToLookAngles(observerGd, positionEcf);
     const elevationDeg = rad2deg(lookAngles.elevation);
-    const azimuthDeg = rad2deg(lookAngles.azimuth); // Calcul de l'azimuth
+    const azimuthDeg = rad2deg(lookAngles.azimuth);
 
     if (elevationDeg > elevation) {
+      const azimuthInRange = isAzimuthInRange(azimuthDeg);
+      
       if (!currentPass) {
         currentPass = {
           startTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
           endTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
           maxElevation: elevationDeg,
-          aosAzimuth: azimuthDeg, // Toujours défini
-          losAzimuth: azimuthDeg, // Toujours défini
+          aosAzimuth: azimuthDeg,
+          losAzimuth: azimuthDeg,
         };
+        passAzimuthsWithinRange = azimuthInRange;
       } else {
         currentPass.endTime = new Date((t + utcOffset * 3600) * 1000).toISOString();
         currentPass.maxElevation = Math.max(currentPass.maxElevation, elevationDeg);
-        currentPass.losAzimuth = azimuthDeg; // Toujours défini
+        currentPass.losAzimuth = azimuthDeg;
+        
+        // Si un des points du passage est dans la plage d'azimut, on considère le passage comme valide
+        if (azimuthInRange) {
+          passAzimuthsWithinRange = true;
+        }
       }
     } else if (currentPass) {
-      // Fin d'un passage, on l'ajoute
-      passes.push(currentPass);
+      // Fin d'un passage, on l'ajoute seulement s'il contenait des azimuts dans la plage demandée
+      if (passAzimuthsWithinRange) {
+        passes.push(currentPass);
+      }
       currentPass = null;
+      passAzimuthsWithinRange = false;
     }
   }
 
-  if (currentPass) {
+  if (currentPass && passAzimuthsWithinRange) {
     passes.push(currentPass);
   }
 

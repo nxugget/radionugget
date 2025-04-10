@@ -27,3 +27,7 @@ h1 {
 h2 {
   @apply font-alien text-3xl font-semibold;
 }
+
+h3 {
+  @apply font-alien text-2xl;
+}

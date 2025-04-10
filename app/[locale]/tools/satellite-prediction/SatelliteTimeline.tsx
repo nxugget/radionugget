@@ -10,7 +10,9 @@ interface SatellitePass {
   endTime: string;
   maxElevation: number;
   satelliteName: string;
-  satelliteId: string; // Added satelliteId property
+  satelliteId: string;
+  aosAzimuth: number; // Ajout de la propriété aosAzimuth
+  losAzimuth: number; // Ajout de la propriété losAzimuth
 }
 
 interface TimelineProps {
@@ -35,6 +37,16 @@ function dayDifference(d1: Date, d2: Date): number {
   const date2 = new Date(d2.getFullYear(), d2.getMonth(), d2.getDate());
   return Math.floor((date2.getTime() - date1.getTime()) / (24 * 3600 * 1000));
 }
+
+// Fonction pour convertir un azimut en direction cardinale
+const getCardinalDirection = (azimuth: number): string => {
+  const directions = [
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N",
+  ];
+  const index = Math.round((azimuth % 360) / 22.5);
+  return directions[index];
+};
 
 const SatelliteTimeline: React.FC<TimelineProps> = ({
   passes,
@@ -268,13 +280,17 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
           losLabel += `<sup>+${diffLOS}</sup>`;
         }
         const elevationInt = Math.round(d.maxElevation);
+        const aosAzInt = Math.round(d.aosAzimuth);
+        const losAzInt = Math.round(d.losAzimuth);
         tooltip
           .style("display", "block")
           .html(
             `<strong>${d.satelliteName}</strong><br/>
              AOS: ${aosLabel}<br/>
              LOS: ${losLabel}<br/>
-             Élévation max: ${elevationInt}°<br/>`
+             Élévation max: ${elevationInt}°<br/>
+             Azimuth: ${aosAzInt}° (${getCardinalDirection(d.aosAzimuth)}) → 
+             ${losAzInt}° (${getCardinalDirection(d.losAzimuth)})<br/>`
           );
       })
       .on("mousemove", (event) => {

@@ -54,6 +54,7 @@ export default {
       searchPlaceholder: "Rechercher un satellite...",
       lastUpdate: "Dernière mise à jour:",
       lastTleUpdate: "Dernière mise à jour TLE:",
+      lastTransponderUpdate: "Dernière mise à jour transpondeurs:", 
       noDescription: "Aucune description n'est disponible pour le moment.",
       status: "Statut:",
       frequency: "Fréquence:",
@@ -69,7 +70,8 @@ export default {
       setGrid: "Définir",
       invalidGridSquare: "Gridsquare invalide",
       satMap: "Carte Satellite",
-      tleTitle: "TLE"
+      tleTitle: "TLE",
+      transponders: "Transpondeur"
     },
     countdown: {
       losIn: "LOS dans",
@@ -100,6 +102,15 @@ export default {
       meanMotion: "Mouvement moyen (orbites par jour)",
       revolutionNumber: "Numéro de révolution à l'époque",
       noInfo: "Pas d'info"
+    },
+    transponder: {
+      title: "Transpondeurs",
+      uplink: "Montée",
+      downlink: "Descente", 
+      beacon: "Balise",
+      mode: "Mode",
+      active: "Actif",
+      inactive: "Inactif"
     }
   },
   cookies: {
@@ -135,6 +146,16 @@ export default {
     timelineView: "Chronologie",
     tableView: "Tableau",
     utcTime: "Heure UTC",
-    localTime: "Heure locale"
+    localTime: "Heure locale",
+    invalidLatitude: "Latitude invalide (doit être entre -90° et 90°)",
+    invalidLongitude: "Longitude invalide (doit être entre -180° et 180°)",
+    invalidCoordinates: "Coordonnées invalides",
+    missingCoordinates: "Veuillez entrer des coordonnées valides",
+    cityNotFound: "Ville non trouvée",
+    citySearchError: "Erreur lors de la recherche",
+    cityTooShort: "Entrez au moins 3 caractères",
+    azimuthFilter: "Filtre par Azimut",
+    azimuthExplanation: "Filtrer les passages par direction (0° = Est, 90° = Sud, 180° = Ouest, 270° = Nord)",
+    trajectorySettings: "Trajectoire du Satellite"
   }
 } as const;

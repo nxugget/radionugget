@@ -23,6 +23,15 @@ interface Satellite {
   image?: string;
 }
 
+interface TransponderMode {
+  name: string;
+  status: string;
+  uplink?: string;
+  downlink?: string;
+  beacon?: string;
+  mode: string;
+}
+
 interface SatelliteDetails {
   id: string;
   name: string;
@@ -38,6 +47,9 @@ interface SatelliteDetails {
   tle2: string;
   image_source: string;
   country_image?: string; // Ajout de l'image du drapeau
+  transponders?: {
+    modes: TransponderMode[];
+  };
 }
 
 interface Point {
@@ -88,6 +100,8 @@ export default function SatelliteInfoPage() {
   const [currentPosition, setCurrentPosition] = useState<Point | undefined>(undefined); // State for accurate real-time position
   const [lastTleUpdate, setLastTleUpdate] = useState<string | null>(null); // State to store TLE update time
   const [tleUpdateError, setTleUpdateError] = useState<string | null>(null); // Add error state for debugging
+  const [lastTransponderUpdate, setLastTransponderUpdate] = useState<string | null>(null); // Nouvel état pour les transpondeurs
+  const [transponderUpdateError, setTransponderUpdateError] = useState<string | null>(null); // Nouvel état pour les erreurs de transpondeurs
 
   // New states for focus mode
   const [focusMode, setFocusMode] = useState<boolean>(false);
@@ -168,6 +182,33 @@ export default function SatelliteInfoPage() {
       .catch(error => {
         console.error('Error fetching TLE update information:', error);
         setTleUpdateError(error.message);
+      });
+      
+    // Nouvelle requête pour les transpondeurs
+    console.log('Fetching transponder update information...');
+    fetch('/api/transponders-last-update')
+      .then(response => {
+        console.log('Transponder update response status:', response.status);
+        if (!response.ok) {
+          throw new Error(`API error ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Transponder update data received:', data);
+        if (data && data.updated_at) {
+          // Même formatage que pour les TLEs
+          const date = new Date(data.updated_at);
+          const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0, -3);
+          console.log('Formatted transponder update date:', formattedDate);
+          setLastTransponderUpdate(formattedDate);
+        } else {
+          setTransponderUpdateError('No updated_at field in response');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching transponder update information:', error);
+        setTransponderUpdateError(error.message);
       });
   }, []);
 
@@ -664,25 +705,77 @@ export default function SatelliteInfoPage() {
                       {details?.description ||
                         t("satellites.explorer.noDescription")}
                     </p>
-                    <div className="flex flex-col gap-1 mt-2">
-                      <p className="text-gray-300 text-lg">
-                        {t("satellites.explorer.status")} {details?.status || "N/A"}
-                      </p>
-                      <p className="text-gray-300 text-lg">
-                        {t("satellites.explorer.frequency")}
-                        {details?.frequency ? (
-                          <span>
-                            {details.frequency.downlink && (
-                              <span className="ml-1">↓ {details.frequency.downlink}</span>
-                            )}
-                            {details.frequency.downlink && details.frequency.uplink && " / "}
-                            {details.frequency.uplink && (
-                              <span>↑ {details.frequency.uplink}</span>
-                            )}
-                          </span>
-                        ) : "N/A"}
-                      </p>
-                    </div>
+                    
+                    {/* Transponder Modes Display */}
+                    {details?.transponders?.modes && details.transponders.modes.length > 0 && (
+                      <div className="mt-4 mb-8"> {/* On garde la marge en bas */}
+                        <h3 className="text-lg font-semibold text-white mb-2">
+                          {t("satellites.transponder.title")}
+                        </h3>
+                        
+                        {/* Information de dernière mise à jour des transpondeurs - alignée à gauche comme demandé */}
+                        {lastTransponderUpdate && (
+                          <p className="text-xs text-gray-400 mb-3">
+                            {t("satellites.explorer.lastTransponderUpdate")} {lastTransponderUpdate} UTC
+                          </p>
+                        )}
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {details.transponders.modes.map((mode, index) => {
+                            // Définir la couleur de bordure en fonction du statut
+                            const borderColorClass = mode.status === 'active' 
+                              ? 'border-green-500' 
+                              : 'border-red-500';
+                            
+                            return (
+                              <div 
+                                key={index} 
+                                className={`bg-black bg-opacity-60 rounded-lg p-2 border ${borderColorClass} shadow-md w-64 h-36`}
+                              >
+                                <div className="flex flex-col gap-1 h-full">
+                                  {/* Titre en haut avec "Mode" ajouté avant le mode - suppression des événements de survol */}
+                                  <div className="flex items-center justify-between border-b border-gray-700 pb-1 mb-1">
+                                    <span className="font-medium text-white text-lg">
+                                      Mode {mode.mode || `${index+1}`}
+                                    </span>
+                                    <span className={`text-sm px-2 py-0.5 rounded-full ${
+                                      mode.status === 'active' ? 'bg-green-800 text-green-200' : 
+                                      'bg-red-800 text-red-200'
+                                    }`}>
+                                      {mode.status === 'active' 
+                                        ? t("satellites.transponder.active") 
+                                        : t("satellites.transponder.inactive")}
+                                    </span>
+                                  </div>
+                                  
+                                  {/* Contenu des fréquences */}
+                                  <div className="flex-1 flex flex-col justify-between">
+                                    {mode.uplink ? (
+                                      <div className="text-sm">
+                                        <span className="text-blue-400">↑ {t("satellites.transponder.uplink")}:</span> <span className="text-white">{mode.uplink} MHz</span>
+                                      </div>
+                                    ) : <div className="text-sm opacity-0">-</div>}
+                                    
+                                    {mode.downlink ? (
+                                      <div className="text-sm">
+                                        {/* Couleur du texte Downlink changée à rose */}
+                                        <span className="text-pink-400">↓ {t("satellites.transponder.downlink")}:</span> <span className="text-white">{mode.downlink} MHz</span>
+                                      </div>
+                                    ) : <div className="text-sm opacity-0">-</div>}
+                                    
+                                    {mode.beacon ? (
+                                      <div className="text-sm">
+                                        <span className="text-yellow-400">🔊 {t("satellites.transponder.beacon")}:</span> <span className="text-white">{mode.beacon} MHz</span>
+                                      </div>
+                                    ) : <div className="text-sm opacity-0">-</div>}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="w-full sm:w-56 flex-shrink-0 mb-2">
                     {imageError || !(details?.photoUrl || selectedSatellite?.image) ? (
@@ -721,8 +814,10 @@ export default function SatelliteInfoPage() {
                     onClick={toggleFocusMode}
                     className={`
                       px-4 py-1 rounded-full 
-                      ${focusMode ? 'bg-white text-black opacity-60 hover:opacity-100' : 'bg-purple text-white'} 
-                      font-medium transition-all duration-200
+                      ${focusMode 
+                        ? 'bg-white text-black opacity-60 hover:opacity-100 hover:bg-purple hover:text-white' 
+                        : 'bg-purple text-white hover:bg-white hover:text-purple'} 
+                      font-medium transition-all duration-300 ease-in-out
                       flex items-center gap-1
                     `}
                   >
@@ -766,17 +861,18 @@ export default function SatelliteInfoPage() {
                     
                     {/* Information de position - affichage différent selon le mode */}
                     {focusMode ? (
-                      // Affichage en haut au centre pour le mode FOCUS - taille de texte réduite
-                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20 bg-black/30 px-6 py-3 rounded-xl">
-                        <div className="text-purple text-2xl sm:text-3xl font-bold text-center mb-2">
-                          {t("satellites.explorer.elevation")} {polarInfo.elevation}°
+                      // Affichage en haut au centre pour le mode FOCUS - avec alignement sur une ligne
+                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 bg-black/30 px-6 py-3 rounded-xl">
+                        <div className="flex items-center justify-center gap-2 text-4xl sm:text-6xl font-bold text-center mb-2">
+                          <span className="text-purple">{t("satellites.explorer.elevation")}</span>
+                          <span className="text-purple">{polarInfo.elevation}°</span>
                         </div>
-                        <div className="text-orange text-2xl sm:text-3xl font-bold text-center">
-                          {t("satellites.explorer.azimuth")} {polarInfo.azimuth}°
+                        <div className="flex items-center justify-center gap-2 text-4xl sm:text-6xl font-bold text-center">
+                          <span className="text-orange">{t("satellites.explorer.azimuth")}</span>
+                          <span className="text-orange">{polarInfo.azimuth}°</span>
                         </div>
                       </div>
                     ) : (
-                      // Affichage original pour le mode normal (gauche/droite)
                       <>
                         <div className="absolute top-16 sm:top-20 left-4 sm:left-16 p-2 text-purple text-lg sm:text-xl">
                           {t("satellites.explorer.elevation")} {polarInfo.elevation}°
