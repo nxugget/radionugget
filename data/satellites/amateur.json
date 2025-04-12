@@ -249,8 +249,8 @@
   {
     "id": "25544U",
     "name": "ISS (ZARYA)",
-    "tle1": "1 25544U 98067A   25102.50447499  .00015052  00000+0  27610-3 0  9993",
-    "tle2": "2 25544  51.6375 272.3480 0005481  36.8305  61.1451 15.49480190504972",
+    "tle1": "1 25544U 98067A   25102.76283161  .00014769  00000+0  27102-3 0  9995",
+    "tle2": "2 25544  51.6377 271.0683 0005431  37.9073  62.1636 15.49486476505019",
     "category": "amateur",
     "description": "Launched in 1998, this orbital outpost represents humanity's most ambitious space endeavor while remaining accessible to amateur radio enthusiasts. The ISS's amateur radio station has connected astronauts with earthbound operators and students worldwide, bringing the wonder of space directly into homes and classrooms across the planet.",
     "transponders": {
