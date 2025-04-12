@@ -89,8 +89,8 @@
   {
     "id": "20442U",
     "name": "LUSAT (LO-19)",
-    "tle1": "1 20442U 90005G   25101.91318198  .00000415  00000+0  16563-3 0  9998",
-    "tle2": "2 20442  98.9002 106.4289 0012239  35.3581 324.8411 14.33921619840581",
+    "tle1": "1 20442U 90005G   25102.47140870  .00000411  00000+0  16404-3 0  9990",
+    "tle2": "2 20442  98.9002 107.0033 0012214  33.8312 326.3648 14.33922117840722",
     "category": "amateur",
     "description": "Launched in 1990, this Argentine-built satellite showcased international collaboration in amateur space projects. LO-19 continues to symbolize innovation and dedication within the global ham radio community.",
     "transponders": {
@@ -111,8 +111,8 @@
   {
     "id": "22825U",
     "name": "EYESAT A (AO-27)",
-    "tle1": "1 22825U 93061C   25101.89502085  .00000302  00000+0  13270-3 0  9994",
-    "tle2": "2 22825  98.7422 163.1432 0007281 286.6623  73.3760 14.30772581645328",
+    "tle1": "1 22825U 93061C   25102.45447726  .00000307  00000+0  13446-3 0  9997",
+    "tle2": "2 22825  98.7421 163.7058 0007272 284.8404  75.1973 14.30772990645672",
     "category": "amateur",
     "description": "Launched in 1993, this compact satellite has provided reliable FM voice repeater services to operators worldwide. AO-27's accessibility made it a favorite for newcomers to satellite communication, opening the door for countless enthusiasts to experience their first space-based QSO.",
     "transponders": {
@@ -220,8 +220,8 @@
   {
     "id": "25397U",
     "name": "TECHSAT 1B (GO-32)",
-    "tle1": "1 25397U 98043D   25101.68266177  .00000255  00000+0  13065-3 0  9991",
-    "tle2": "2 25397  98.9664  79.5869 0001983  50.3355 309.7998 14.24293344389906",
+    "tle1": "1 25397U 98043D   25102.38515847  .00000252  00000+0  12927-3 0  9993",
+    "tle2": "2 25397  98.9666  80.3036 0001961  49.2183 310.9165 14.24293775390221",
     "category": "amateur",
     "description": "Launched in 1998, this Israeli technological trailblazer combined cutting-edge research with amateur radio accessibility. GO-32 demonstrated how academic innovation could serve both scientific and community purposes, creating a bridge between professional aerospace development and grassroots radio enthusiasts.",
     "transponders": {
@@ -249,8 +249,8 @@
   {
     "id": "25544U",
     "name": "ISS (ZARYA)",
-    "tle1": "1 25544U 98067A   25102.16447026  .00014053  00000+0  25849-3 0  9993",
-    "tle2": "2 25544  51.6359 274.0371 0005100  32.6107 327.5195 15.49465106504923",
+    "tle1": "1 25544U 98067A   25102.50447499  .00015052  00000+0  27610-3 0  9993",
+    "tle2": "2 25544  51.6375 272.3480 0005481  36.8305  61.1451 15.49480190504972",
     "category": "amateur",
     "description": "Launched in 1998, this orbital outpost represents humanity's most ambitious space endeavor while remaining accessible to amateur radio enthusiasts. The ISS's amateur radio station has connected astronauts with earthbound operators and students worldwide, bringing the wonder of space directly into homes and classrooms across the planet.",
     "transponders": {
@@ -471,8 +471,8 @@
   {
     "id": "27939U",
     "name": "MOZHAYETS 4 (RS-22)",
-    "tle1": "1 27939U 03042A   25102.24328144  .00003067  00000+0  49493-3 0  9994",
-    "tle2": "2 27939  98.3225 270.3074 0011429 189.1697 344.1234 14.72139503152242",
+    "tle1": "1 27939U 03042A   25102.49692899  .00002961  00000+0  47804-3 0  9998",
+    "tle2": "2 27939  98.3225 270.5670 0011447 188.3588 248.3872 14.72140768152288",
     "category": "amateur",
     "description": "Launched in 2003, this Russian student-built satellite combined educational objectives with genuine amateur radio capability. RS-22 showcased the importance of hands-on satellite engineering experience, inspiring a generation of young Russian technologists while providing communication opportunities to operators worldwide.",
     "transponders": {
@@ -594,8 +594,8 @@
   {
     "id": "32953U",
     "name": "YUBILEINY (RS-30)",
-    "tle1": "1 32953U 08025A   25102.13506776  .00000033  00000+0  16576-3 0  9995",
-    "tle2": "2 32953  82.4986 263.5276 0019804 170.9270 189.2172 12.43162194766271",
+    "tle1": "1 32953U 08025A   25102.45698541  .00000037  00000+0  19637-3 0  9997",
+    "tle2": "2 32953  82.4986 263.3272 0019817 170.2319 189.9150 12.43162246766312",
     "category": "amateur",
     "description": "Launched in 2008, this commemorative Russian satellite celebrated Sputnik's 50th anniversary with flair by broadcasting audio recordings replicating the historic first satellite's beeps. RS-30's symbolic mission reconnected modern operators with the dawn of the space age, while its educational outreach ignited curiosity about satellite communication in a new generation.",
     "transponders": {
@@ -616,8 +616,8 @@
   {
     "id": "33499U",
     "name": "KKS-1 (KISEKI)",
-    "tle1": "1 33499U 09002H   25101.89928300  .00003848  00000+0  49924-3 0  9990",
-    "tle2": "2 33499  98.1233  13.1715 0006724 242.6517 117.4011 14.81363961872307",
+    "tle1": "1 33499U 09002H   25102.50719908  .00003679  00000+0  47759-3 0  9997",
+    "tle2": "2 33499  98.1232  13.7877 0006739 240.3988 119.6553 14.81368054872824",
     "category": "amateur",
     "description": "Launched in 2009, this Japanese satellite's name appropriately means 'miracle' – reflecting the wonder of student-built spacecraft reaching orbit. KISEKI combined educational objectives with genuine amateur radio capabilities, transmitting voice recordings and telemetry that connected Tokyo University students directly with the global amateur community.",
     "transponders": {
@@ -892,8 +892,8 @@
   {
     "id": "39430U",
     "name": "GOMX-1",
-    "tle1": "1 39430U 13066Q   25102.12092138  .00004324  00000+0  67701-3 0  9997",
-    "tle2": "2 39430  97.6914 324.3583 0133693  20.1681 340.4736 14.67344307606837",
+    "tle1": "1 39430U 13066Q   25102.53006478  .00004113  00000+0  64442-3 0  9999",
+    "tle2": "2 39430  97.6913 324.7426 0133667  18.8638 341.7452 14.67347093606893",
     "category": "amateur",
     "description": "Launched in 2013, this Danish technological demonstrator showcased innovative approaches to aircraft tracking from space. GOMX-1's pioneering ADS-B receiver proved that satellites could monitor air traffic globally, all while maintaining amateur radio downlinks that allowed enthusiasts to participate in this revolutionary aviation safety advancement.",
     "transponders": {
@@ -914,8 +914,8 @@
   {
     "id": "39440U",
     "name": "CUBEBUG-2 (LO-74)",
-    "tle1": "1 39440U 13066AA  25101.76973009  .00010546  00000+0  10776-2 0  9994",
-    "tle2": "2 39440  97.8452  46.7768 0063529  15.8559 344.4627 14.89254856612688",
+    "tle1": "1 39440U 13066AA  25102.30723613  .00011021  00000+0  11256-2 0  9992",
+    "tle2": "2 39440  97.8454  47.3098 0063452  14.1280 346.1693 14.89266515613960",
     "category": "amateur",
     "description": "Launched in 2013, this Argentinian satellite (affectionately nicknamed 'Manolito') brought Latin American innovation to orbit with style. LO-74's open-source approach to satellite design and operation created unprecedented transparency in space engineering, inviting global participation while establishing Argentina as a significant player in amateur space communication.",
     "transponders": {
@@ -1016,8 +1016,8 @@
   {
     "id": "40021U",
     "name": "DUCHIFAT-1",
-    "tle1": "1 40021U 14033M   25101.29312692  .00040434  00000+0  15957-2 0  9994",
-    "tle2": "2 40021  98.0991 110.6037 0010862 149.7646 210.4219 15.25373667589272",
+    "tle1": "1 40021U 14033M   25102.01470741  .00037733  00000+0  14876-2 0  9992",
+    "tle2": "2 40021  98.0991 111.3845 0010966 147.5745 212.6167 15.25423047589384",
     "category": "amateur",
     "description": "Launched in 2014, this Israeli educational satellite was entirely built by high school students – proving that aerospace engineering isn't just for college-level studies. DUCHIFAT-1's successful deployment and operation shattered age barriers in satellite development, inspiring younger students worldwide while providing reliable packet radio services to the amateur community.",
     "transponders": {
@@ -1074,8 +1074,8 @@
   {
     "id": "40908U",
     "name": "LILACSAT-2",
-    "tle1": "1 40908U 15049K   25102.19062009  .00020712  00000+0  56872-3 0  9999",
-    "tle2": "2 40908  97.5109 121.1778 0009870  23.3457 336.8233 15.37222950529256",
+    "tle1": "1 40908U 15049K   25102.51609115  .00019695  00000+0  54080-3 0  9997",
+    "tle2": "2 40908  97.5108 121.5104 0009823  22.1842 337.9825 15.37234661529302",
     "category": "amateur",
     "description": "Launched in 2015, this Chinese student satellite delighted operators worldwide with its innovative FM transponder and voice messaging capabilities. LILACSAT-2's surprisingly powerful transmissions and user-friendly features made it an instant favorite in the amateur community, showcasing China's growing contribution to accessible space communication technology.",
     "transponders": {
@@ -1161,8 +1161,8 @@
   {
     "id": "42759U",
     "name": "ZHUHAI-1 02 (CAS-4B)",
-    "tle1": "1 42759U 17034B   25101.99530175  .00079983  00000+0  11331-2 0  9996",
-    "tle2": "2 42759  43.0090 309.0892 0019556 244.4919 115.3920 15.55305499433451",
+    "tle1": "1 42759U 17034B   25102.57325111  .00079434  00000+0  11213-2 0  9993",
+    "tle2": "2 42759  43.0089 305.6857 0019599 248.5414 111.3358 15.55404024433549",
     "category": "amateur",
     "description": "Launched in 2017, this Chinese commercial/amateur hybrid satellite demonstrated how professional space assets could incorporate amateur radio capabilities. CAS-4B's powerful linear transponder and APRS digipeater highlighted China's growing sophistication in satellite communication, offering exceptional quality signals that have earned admiration from amateur operators worldwide.",
     "transponders": {
@@ -1204,8 +1204,8 @@
   {
     "id": "42761U",
     "name": "ZHUHAI-1 01 (CAS-4A)",
-    "tle1": "1 42761U 17034D   25102.00305677  .00080614  00000+0  11079-2 0  9991",
-    "tle2": "2 42761  43.0126 306.7118 0021001 249.0022 110.8594 15.56085645433471",
+    "tle1": "1 42761U 17034D   25102.51653356  .00077458  00000+0  10617-2 0  9996",
+    "tle2": "2 42761  43.0124 303.6848 0021031 252.5326 107.3237 15.56171879433553",
     "category": "amateur",
     "description": "Launched in 2017 alongside its twin CAS-4B, this Chinese satellite combined Earth observation capabilities with amateur radio services. CAS-4A's incorporation of ham radio transponders into a commercial remote sensing platform demonstrated China's commitment to serving the amateur community even as it developed advanced space capabilities for economic and scientific purposes.",
     "transponders": {
@@ -1283,8 +1283,8 @@
   {
     "id": "43678U",
     "name": "DIWATA-2B",
-    "tle1": "1 43678U 18084H   25102.21529710  .00005519  00000+0  47284-3 0  9993",
-    "tle2": "2 43678  98.0986 276.1345 0009600 120.7871 239.4296 14.97952103351644",
+    "tle1": "1 43678U 18084H   25102.48249285  .00005382  00000+0  46116-3 0  9999",
+    "tle2": "2 43678  98.0986 276.4116 0009630 119.9638 240.2541 14.97954834351687",
     "category": "amateur",
     "description": "Launched in 2018, this Philippine microsatellite symbolized the nation's growing space capabilities with its advanced Earth observation instruments. DIWATA-2B's amateur radio component created a bridge between professional remote sensing and hobby communication, showcasing how smaller nations could develop meaningful space programs while engaging with the international amateur community.",
     "transponders": {
@@ -1449,8 +1449,8 @@
   {
     "id": "43880U",
     "name": "UWE-4",
-    "tle1": "1 43880U 18111E   25101.68052113  .00027049  00000+0  11255-2 0  9997",
-    "tle2": "2 43880  97.5944  13.7435 0014897  62.6258 297.6492 15.23633998344654",
+    "tle1": "1 43880U 18111E   25102.27158448  .00026547  00000+0  11037-2 0  9991",
+    "tle2": "2 43880  97.5941  14.3416 0014826  61.0581 299.2140 15.23666311342742",
     "category": "amateur",
     "description": "Launched in 2018, this German technological demonstrator showcased revolutionary electric propulsion systems miniaturized for CubeSat platforms. UWE-4's experimental NanoFEEP thrusters represented a breakthrough in small satellite maneuverability, while its amateur radio transmissions invited the ham community to follow these pioneering tests that are reshaping what tiny spacecraft can accomplish in orbit.",
     "transponders": {
@@ -1471,8 +1471,8 @@
   {
     "id": "44854U",
     "name": "DUCHIFAT-3",
-    "tle1": "1 44854U 19089C   25102.03488874  .00066767  00000+0  15779-2 0  9996",
-    "tle2": "2 44854  36.9471   5.9638 0001560 336.0937  23.9745 15.40752953293893",
+    "tle1": "1 44854U 19089C   25102.42369565  .00064266  00000+0  15166-2 0  9996",
+    "tle2": "2 44854  36.9468   3.5144 0001479 341.1463  18.9237 15.40808851293951",
     "category": "amateur",
     "description": "Launched in 2019, this Israeli student satellite continued the successful DUCHIFAT series with enhanced Earth observation capabilities. DUCHIFAT-3's focus on wildfire detection showcased how educational spacecraft could address serious environmental challenges, while its amateur radio component ensured that young satellite builders maintained connection with the broader community of space enthusiasts.",
     "transponders": {
@@ -1493,8 +1493,8 @@
   {
     "id": "44881U",
     "name": "TIANYAN 01",
-    "tle1": "1 44881U 19093C   25102.16120772  .00002490  00000+0  29452-3 0  9992",
-    "tle2": "2 44881  97.7945 179.0320 0015118  66.5631 293.7172 14.85434996287408",
+    "tle1": "1 44881U 19093C   25102.49801561  .00002488  00000+0  29423-3 0  9995",
+    "tle2": "2 44881  97.7945 179.3618 0015107  65.5605 294.7184 14.85436680287450",
     "category": "amateur",
     "description": "Launched in 2019, this Chinese amateur astronomy satellite opened the wonders of space observation to radio enthusiasts worldwide. TIANYAN 01's innovative combination of optical sensors with amateur communication systems created unprecedented opportunities for hobbyists to participate in celestial studies, bridging astronomy and radio communities in a shared exploration of the cosmos.",
     "transponders": {
@@ -1622,8 +1622,8 @@
   {
     "id": "49069U",
     "name": "LEDSAT",
-    "tle1": "1 49069U 21073D   25102.19968291  .00082463  00000+0  13330-2 0  9990",
-    "tle2": "2 49069  97.3937 181.6407 0010763 282.2866  77.7182 15.52504149202356",
+    "tle1": "1 49069U 21073D   25102.26413725  .00080976  00000+0  13088-2 0  9992",
+    "tle2": "2 49069  97.3937 181.7073 0010776 281.9958  78.0086 15.52513341202360",
     "category": "amateur",
     "description": "Launched in 2021, this Italian CubeSat literally shined with its innovative LED-based optical tracking system. LEDSAT's powerful light beacons enabled ground-based tracking with simple equipment, democratizing satellite observation while its radio transmissions provided technical data that helped correlate optical and radio tracking methods in an elegant demonstration of multi-modal space communication.",
     "transponders": {
@@ -1644,8 +1644,8 @@
   {
     "id": "50466U",
     "name": "XW-3 (CAS-9)",
-    "tle1": "1 50466U 21131B   25102.21679487  .00001379  00000+0  44535-3 0  9996",
-    "tle2": "2 50466  98.5083 191.8662 0003171 322.8367  37.2602 14.40714923173042",
+    "tle1": "1 50466U 21131B   25102.49459527  .00001378  00000+0  44489-3 0  9994",
+    "tle2": "2 50466  98.5083 192.1425 0003152 321.7484  38.3481 14.40715631173088",
     "category": "amateur",
     "description": "Launched in 2021, this Chinese amateur satellite represented a new generation of capabilities with its advanced multi-mode transponder system. CAS-9's combination of linear and digital transponders showcased the evolution of amateur space communication, providing both traditional voice operations and next-generation digital modes that are preparing the community for future communications innovations.",
     "transponders": {
@@ -1722,8 +1722,8 @@
   {
     "id": "57167U",
     "name": "STRATOSAT-TK 1 (RS52S)",
-    "tle1": "1 57167U 23091B   25102.21562523  .00057791  00000+0  16845-2 0  9991",
-    "tle2": "2 57167  97.5597 163.9981 0011300 156.7212 203.4545 15.35109705 99047",
+    "tle1": "1 57167U 23091B   25102.54154209  .00057207  00000+0  16659-2 0  9990",
+    "tle2": "2 57167  97.5595 164.3326 0011224 155.7877 204.3896 15.35142945 99091",
     "category": "amateur",
     "description": "Launched in 2023, this Russian student satellite combined atmospheric research with amateur radio education in an elegant package. RS52S's environmental sensors collect valuable data on stratospheric conditions while transmitting findings through amateur frequencies, creating a dual-purpose mission that serves both scientific advancement and community engagement in space exploration.",
     "transponders": {
@@ -1744,8 +1744,8 @@
   {
     "id": "57172U",
     "name": "UMKA 1 (RS40S)",
-    "tle1": "1 57172U 23091G   25102.21915722  .00011455  00000+0  62416-3 0  9993",
-    "tle2": "2 57172  97.5647 157.9194 0015322 170.4115 189.7412 15.14465584 98642",
+    "tle1": "1 57172U 23091G   25102.48344454  .00010882  00000+0  59308-3 0  9999",
+    "tle2": "2 57172  97.5646 158.1822 0015351 169.4732 190.6824 15.14470129 98680",
     "category": "amateur",
     "description": "Launched in 2023, this Russian technology demonstrator (whose name references a beloved cartoon polar bear) brought playful innovation to serious space testing. RS40S's experimental systems explore new approaches to satellite communication and control while its amateur radio component invites enthusiasts to participate in these cutting-edge tests, blending technical advancement with community engagement.",
     "transponders": {
@@ -1766,8 +1766,8 @@
   {
     "id": "57178U",
     "name": "CUBESX-HSE 3 (RS42S)",
-    "tle1": "1 57178U 23091N   25102.19961847  .00017761  00000+0  84190-3 0  9994",
-    "tle2": "2 57178  97.5674 159.7784 0015092 161.2280 198.9514 15.19260135 98744",
+    "tle1": "1 57178U 23091N   25102.39720889  .00017595  00000+0  83396-3 0  9997",
+    "tle2": "2 57178  97.5673 159.9764 0015104 160.6552 199.5259 15.19265856 98773",
     "category": "amateur",
     "description": "Launched in 2023, this Russian university satellite demonstrated how higher education institutions could develop meaningful space capabilities. RS42S's combination of educational objectives with amateur radio accessibility created opportunities for students to gain hands-on aerospace experience while connecting with the broader community of space enthusiasts through open communication channels.",
     "transponders": {
@@ -1788,8 +1788,8 @@
   {
     "id": "57180U",
     "name": "MONITOR-3 (RS58S)",
-    "tle1": "1 57180U 23091Q   25102.16612624  .00017235  00000+0  85246-3 0  9999",
-    "tle2": "2 57180  97.5670 159.1563 0015540 163.3764 196.7982 15.17781314 98706",
+    "tle1": "1 57180U 23091Q   25102.42983649  .00016754  00000+0  82864-3 0  9994",
+    "tle2": "2 57180  97.5669 159.4199 0015564 162.4257 197.7518 15.17788675 98742",
     "category": "amateur",
     "description": "Launched in 2023, this Russian Earth observation CubeSat creatively combined environmental monitoring with amateur radio capabilities. RS58S's compact sensors collect valuable data on our changing planet while its accessible transmissions ensure public engagement with these findings, demonstrating how even small satellites can contribute to both scientific understanding and community education.",
     "transponders": {
@@ -1810,8 +1810,8 @@
   {
     "id": "57182U",
     "name": "MONITOR-4 (RS57S)",
-    "tle1": "1 57182U 23091S   25102.16428083  .00017556  00000+0  86717-3 0  9995",
-    "tle2": "2 57182  97.5665 159.1127 0015571 163.8612 196.3121 15.17823382 98702",
+    "tle1": "1 57182U 23091S   25102.49390944  .00016443  00000+0  81232-3 0  9996",
+    "tle2": "2 57182  97.5664 159.4422 0015611 162.7300 197.4468 15.17832125 98755",
     "category": "amateur",
     "description": "Launched in 2023, this Russian environmental satellite continued the successful MONITOR series with enhanced sensing capabilities. RS57S's focus on atmospheric composition monitoring provided important data for climate research, while its amateur radio component ensured that scientific findings remained accessible to the public, creating a bridge between professional research and community engagement.",
     "transponders": {
@@ -1832,8 +1832,8 @@
   {
     "id": "57184U",
     "name": "MONITOR-2 (RS39S)",
-    "tle1": "1 57184U 23091U   25102.18486350  .00009696  00000+0  54197-3 0  9993",
-    "tle2": "2 57184  97.5671 158.2194 0013392 160.5156 199.6590 15.13625053 98641",
+    "tle1": "1 57184U 23091U   25102.51540581  .00009476  00000+0  52967-3 0  9996",
+    "tle2": "2 57184  97.5670 158.5477 0013423 159.4788 200.6985 15.13630296 98691",
     "category": "amateur",
     "description": "Launched in 2023, this Russian Earth observation platform expanded the growing constellation of environmental monitoring CubeSats. RS39S's specialized sensors focus on specific atmospheric parameters important for climate modeling, while its amateur radio transmissions invite public participation in environmental science, democratizing access to important ecological data.",
     "transponders": {
@@ -1854,8 +1854,8 @@
   {
     "id": "57187U",
     "name": "SVYATOBOR 1 (RS60S)",
-    "tle1": "1 57187U 23091X   25102.19694435  .00014293  00000+0  70885-3 0  9993",
-    "tle2": "2 57187  97.5673 159.8987 0012578 153.7900 206.3972 15.17767464 98758",
+    "tle1": "1 57187U 23091X   25102.46065690  .00013915  00000+0  69011-3 0  9997",
+    "tle2": "2 57187  97.5671 160.1623 0012609 153.0401 207.1490 15.17773423 98792",
     "category": "amateur",
     "description": "Launched in 2023, this uniquely named Russian satellite (referencing a mythological forest protector) focused on environmental monitoring with poetic purpose. RS60S's combination of woodland observation capabilities with amateur radio outreach created a powerful tool for tracking forest health and fire risks, connecting nature conservation efforts with the technical capabilities of the amateur satellite community.",
     "transponders": {
@@ -1876,8 +1876,8 @@
   {
     "id": "57189U",
     "name": "VIZARD-METEO (RS38S)",
-    "tle1": "1 57189U 23091Z   25102.18005846  .00021831  00000+0  96040-3 0  9993",
-    "tle2": "2 57189  97.5660 161.3858 0011307 148.6039 211.5874 15.21829652 98859",
+    "tle1": "1 57189U 23091Z   25102.44306728  .00022066  00000+0  97041-3 0  9998",
+    "tle2": "2 57189  97.5659 161.6502 0011332 147.9583 212.2344 15.21839784 98891",
     "category": "amateur",
     "description": "Launched in 2023, this Russian environmental satellite combined advanced meteorological sensors with amateur radio outreach. RS38S's focus on weather pattern analysis provided valuable data for climate research, while its accessible transmissions ensured public engagement with these findings, creating a bridge between professional research and community education.",
     "transponders": {
@@ -1898,8 +1898,8 @@
   {
     "id": "57190U",
     "name": "NANOZOND 1 (RS49S)",
-    "tle1": "1 57190U 23091AA  25102.20547110  .00044141  00000+0  14225-2 0  9996",
-    "tle2": "2 57190  97.5615 164.3379 0008919 147.5021 212.6771 15.32010774 99067",
+    "tle1": "1 57190U 23091AA  25102.46673289  .00041800  00000+0  13468-2 0  9998",
+    "tle2": "2 57190  97.5613 164.6046 0008923 146.7371 213.4433 15.32029521 99102",
     "category": "amateur",
     "description": "Launched in 2023, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS49S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {
@@ -1920,8 +1920,8 @@
   {
     "id": "57191U",
     "name": "POLYTECH-UNIVERSE 3 (R*)",
-    "tle1": "1 57191U 23091AB  25102.18759922  .00009683  00000+0  53946-3 0  9996",
-    "tle2": "2 57191  97.5641 157.7852 0017761 177.9078 182.2231 15.13685094 98630",
+    "tle1": "1 57191U 23091AB  25102.51812862  .00009460  00000+0  52706-3 0  9992",
+    "tle2": "2 57191  97.5640 158.1134 0017808 176.8294 183.3054 15.13690384 98685",
     "category": "amateur",
     "description": "Launched in 2023, this Russian university satellite showcased the growing capabilities of academic institutions in space exploration. R*'s combination of educational objectives with amateur radio accessibility created opportunities for students to gain hands-on aerospace experience while connecting with the broader community of space enthusiasts through open communication channels.",
     "transponders": {
@@ -1942,8 +1942,8 @@
   {
     "id": "57203U",
     "name": "UTMN 2 (RS27S)",
-    "tle1": "1 57203U 23091AP  25102.15727011  .00019359  00000+0  89162-3 0  9991",
-    "tle2": "2 57203  97.5662 160.7975 0011775 149.6826 210.5092 15.20276136 98814",
+    "tle1": "1 57203U 23091AP  25102.48636700  .00018265  00000+0  84132-3 0  9998",
+    "tle2": "2 57203  97.5661 161.1278 0011789 148.6193 211.5748 15.20285992 98869",
     "category": "amateur",
     "description": "Launched in 2023, this Russian university satellite focused on innovative approaches to Earth observation and amateur radio communication. RS27S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {
@@ -1964,8 +1964,8 @@
   {
     "id": "57205U",
     "name": "ARCCUBE 1 (RS25S)",
-    "tle1": "1 57205U 23091AR  25102.20665485  .00070194  00000+0  17911-2 0  9991",
-    "tle2": "2 57205  97.5539 165.7507 0008142 148.4430 211.7305 15.39217829 99171",
+    "tle1": "1 57205U 23091AR  25102.46669323  .00068566  00000+0  17483-2 0  9998",
+    "tle2": "2 57205  97.5537 166.0192 0008102 147.4886 212.6860 15.39247711 99217",
     "category": "amateur",
     "description": "Launched in 2023, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS25S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {
@@ -1986,8 +1986,8 @@
   {
     "id": "57217U",
     "name": "KUZGTU 1 (RS47S)",
-    "tle1": "1 57217U 23091AV  25102.20372425  .00017718  00000+0  85320-3 0  9996",
-    "tle2": "2 57217  97.5650 159.4071 0015098 162.7247 197.4504 15.18715135 98739",
+    "tle1": "1 57217U 23091AV  25102.53315943  .00016753  00000+0  80681-3 0  9997",
+    "tle2": "2 57217  97.5648 159.7369 0015115 161.7701 198.4078 15.18724081 98785",
     "category": "amateur",
     "description": "Launched in 2023, this Russian university satellite focused on innovative approaches to Earth observation and amateur radio communication. RS47S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {
@@ -2008,8 +2008,8 @@
   {
     "id": "59112U",
     "name": "SONATE-2",
-    "tle1": "1 59112U 24043Q   25101.61672653  .00028327  00000+0  87978-3 0  9999",
-    "tle2": "2 59112  97.5045 231.7428 0010526 325.2219  34.8334 15.33275309 61296",
+    "tle1": "1 59112U 24043Q   25102.33459707  .00029552  00000+0  91635-3 0  9998",
+    "tle2": "2 59112  97.5046 232.4716 0010496 322.4910  37.5599 15.33317595 61408",
     "category": "amateur",
     "description": "Launched in 2024, this German nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. SONATE-2's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2044,8 +2044,8 @@
   {
     "id": "61746U",
     "name": "COLIBRI-S (RS67S)",
-    "tle1": "1 61746U 24199M   25102.20343886  .00022489  00000+0  75621-3 0  9991",
-    "tle2": "2 61746  97.3662 331.2539 0013636  39.0197 321.2025 15.30732174 71155",
+    "tle1": "1 61746U 24199M   25102.53028951  .00022482  00000+0  75568-3 0  9993",
+    "tle2": "2 61746  97.3661 331.5784 0013623  37.7250 322.4944 15.30744737 71207",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS67S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2056,8 +2056,8 @@
   {
     "id": "61753U",
     "name": "HORS 3 (RS81S)",
-    "tle1": "1 61753U 24199U   25102.17345325  .00028113  00000+0  91799-3 0  9999",
-    "tle2": "2 61753  97.3631 331.2363 0012192  46.6341 313.5914 15.31650981 71152",
+    "tle1": "1 61753U 24199U   25102.56543812  .00027411  00000+0  89469-3 0  9994",
+    "tle2": "2 61753  97.3629 331.6260 0012179  45.2542 314.9688 15.31670545 71210",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS81S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2068,8 +2068,8 @@
   {
     "id": "61754U",
     "name": "HORS 4 (RS82S)",
-    "tle1": "1 61754U 24199V   25102.20306126  .00029275  00000+0  93731-3 0  9998",
-    "tle2": "2 61754  97.3627 331.3438 0012215  47.1777 313.0489 15.32274615 71167",
+    "tle1": "1 61754U 24199V   25102.52958281  .00029417  00000+0  94133-3 0  9993",
+    "tle2": "2 61754  97.3625 331.6686 0012191  45.8903 314.3340 15.32291700 71212",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS82S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2080,8 +2080,8 @@
   {
     "id": "61757U",
     "name": "HORIZON (RS59S)",
-    "tle1": "1 61757U 24199Y   25102.16615409  .00040468  00000+0  12050-2 0  9994",
-    "tle2": "2 61757  97.3655 331.5978 0012417  37.3188 322.8916 15.34512894 71173",
+    "tle1": "1 61757U 24199Y   25102.55740747  .00039719  00000+0  11818-2 0  9999",
+    "tle2": "2 61757  97.3652 331.9883 0012372  36.0314 324.1760 15.34541191 71237",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS59S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2092,8 +2092,8 @@
   {
     "id": "61764U",
     "name": "SIT-2086",
-    "tle1": "1 61764U 24199AF  25102.19743229  .00031913  00000+0  99185-3 0  9997",
-    "tle2": "2 61764  97.3632 331.5087 0010646  48.4988 311.7166 15.33225190 68012",
+    "tle1": "1 61764U 24199AF  25102.52375123  .00033014  00000+0  10252-2 0  9999",
+    "tle2": "2 61764  97.3630 331.8338 0010625  47.2777 312.9358 15.33245092 68066",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. SIT-2086's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2104,8 +2104,8 @@
   {
     "id": "61765U",
     "name": "MORDOVIA-IOT (RS50S)",
-    "tle1": "1 61765U 24199AG  25102.15271669  .00050992  00000+0  13877-2 0  9999",
-    "tle2": "2 61765  97.3642 331.9119 0011588  34.5041 325.6953 15.37285733 68040",
+    "tle1": "1 61765U 24199AG  25102.54326427  .00049662  00000+0  13503-2 0  9993",
+    "tle2": "2 61765  97.3639 332.3033 0011530  33.1401 327.0564 15.37320865 68105",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS50S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2116,8 +2116,8 @@
   {
     "id": "61766U",
     "name": "RUZAEVKA 390 (RS44S)",
-    "tle1": "1 61766U 24199AH  25102.18822625  .00046966  00000+0  13163-2 0  9991",
-    "tle2": "2 61766  97.3640 331.8609 0011635  34.3018 325.8976 15.36389789 68049",
+    "tle1": "1 61766U 24199AH  25102.57900129  .00045688  00000+0  12794-2 0  9999",
+    "tle2": "2 61766  97.3638 332.2520 0011582  33.0213 327.1752 15.36423509 68100",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS44S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2128,8 +2128,8 @@
   {
     "id": "61772U",
     "name": "HYPERVIEW 1G (RS66S)",
-    "tle1": "1 61772U 24199AP  25102.17155754  .00035934  00000+0  11362-2 0  9991",
-    "tle2": "2 61772  97.3630 331.2333 0015569  48.3229 311.9342 15.32586527 68006",
+    "tle1": "1 61772U 24199AP  25102.56330274  .00034168  00000+0  10799-2 0  9997",
+    "tle2": "2 61772  97.3628 331.6231 0015542  47.0673 313.1870 15.32610791 68061",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS66S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2140,8 +2140,8 @@
   {
     "id": "61779U",
     "name": "ALTAIR (RS65S)",
-    "tle1": "1 61779U 24199AW  25102.20602228  .00014270  00000+0  52716-3 0  9994",
-    "tle2": "2 61779  97.3644 330.7575 0017203  49.3272 310.9460 15.27703072 71123",
+    "tle1": "1 61779U 24199AW  25102.53352073  .00013806  00000+0  51000-3 0  9999",
+    "tle2": "2 61779  97.3643 331.0810 0017166  48.2546 312.0158 15.27711343 71170",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS65S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2152,8 +2152,8 @@
   {
     "id": "61781U",
     "name": "ASRTU-1 (AO-123)",
-    "tle1": "1 61781U 24199AY  25102.16249980  .00012929  00000+0  48309-3 0  9996",
-    "tle2": "2 61781  97.3639 330.6561 0017458  49.6140 310.6620 15.27345585 67966",
+    "tle1": "1 61781U 24199AY  25102.55558970  .00012257  00000+0  45804-3 0  9992",
+    "tle2": "2 61781  97.3638 331.0441 0017435  48.3155 311.9572 15.27354541 68024",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. AO-123's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2164,8 +2164,8 @@
   {
     "id": "61782U",
     "name": "TUSUR GO (RS78S)",
-    "tle1": "1 61782U 24199AZ  25102.18356619  .00042206  00000+0  13083-2 0  9998",
-    "tle2": "2 61782  97.3625 331.2180 0016135  47.6184 312.6421 15.33174299 68009",
+    "tle1": "1 61782U 24199AZ  25102.57516087  .00040159  00000+0  12442-2 0  9991",
+    "tle2": "2 61782  97.3623 331.6079 0016099  46.3433 313.9141 15.33202963 68069",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS78S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2176,8 +2176,8 @@
   {
     "id": "61784U",
     "name": "SAMSAT-IONOSPHERE (RS7*)",
-    "tle1": "1 61784U 24199BB  25102.19458792  .00029560  00000+0  98131-3 0  9992",
-    "tle2": "2 61784  97.3634 331.0607 0016739  48.4104 311.8569 15.31043970 71146",
+    "tle1": "1 61784U 24199BB  25102.58672801  .00029222  00000+0  96956-3 0  9992",
+    "tle2": "2 61784  97.3632 331.4501 0016719  46.9928 313.2711 15.31064323 71203",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS7*'s compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
@@ -2188,8 +2188,8 @@
   {
     "id": "61785U",
     "name": "RTU MIREA 1 (RS51S)",
-    "tle1": "1 61785U 24199BC  25102.18130211  .00031647  00000+0  10401-2 0  9997",
-    "tle2": "2 61785  97.3633 331.0773 0016524  47.9668 312.2977 15.31356693 67996",
+    "tle1": "1 61785U 24199BC  25102.57336190  .00030948  00000+0  10166-2 0  9995",
+    "tle2": "2 61785  97.3632 331.4667 0016515  46.5981 313.6632 15.31378859 68053",
     "category": "amateur",
     "description": "Launched in 2024, this Russian nanosatellite focused on innovative approaches to Earth observation and amateur radio communication. RS51S's compact design and advanced sensors demonstrated the potential of small satellites to contribute to environmental monitoring, while its accessible transmissions invited public participation in these important scientific endeavors.",
     "transponders": {},
