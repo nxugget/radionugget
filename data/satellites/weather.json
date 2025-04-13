@@ -9,11 +9,11 @@
     "transponders": {
       "modes": [
         {
-          "status": "active",
+          "status": "inactive",
           "uplink": "",
           "downlink": "137.620",
           "beacon": "",
-          "mode": "APT"
+          "mode": "Call sign"
         }
       ]
     },
@@ -43,11 +43,11 @@
     "transponders": {
       "modes": [
         {
-          "status": "active",
+          "status": "inactive",
           "uplink": "",
           "downlink": "137.9125",
           "beacon": "",
-          "mode": "APT"
+          "mode": "Call sign"
         }
       ]
     },
@@ -113,11 +113,11 @@
     "transponders": {
       "modes": [
         {
-          "status": "active",
+          "status": "inactive",
           "uplink": "",
           "downlink": "137.100",
           "beacon": "",
-          "mode": "APT"
+          "mode": "Call sign"
         }
       ]
     },
