@@ -2,8 +2,8 @@
   {
     "id": "25338U",
     "name": "NOAA 15",
-    "tle1": "1 25338U 98030A   25104.15539976  .00000393  00000+0  17929-3 0  9993",
-    "tle2": "2 25338  98.5408 130.6312 0010776 158.6504 201.5128 14.26941078400356",
+    "tle1": "1 25338U 98030A   25104.50599980  .00000406  00000+0  18471-3 0  9991",
+    "tle2": "2 25338  98.5407 130.9736 0010806 157.6873 202.4780 14.26941449400402",
     "category": "weather",
     "description": "Launched in 1998, this veteran weather satellite continues to deliver valuable atmospheric data after more than 25 years in orbit. NOAA 15's impressive longevity has provided meteorologists with a consistent long-term dataset, making it a cornerstone for climate change research while still contributing to daily weather forecasting worldwide.",
     "transponders": {
@@ -24,8 +24,8 @@
   {
     "id": "28054U",
     "name": "DMSP 5D-3 F16 (USA 172)",
-    "tle1": "1 28054U 03048A   25104.20077646  .00000285  00000+0  17319-3 0  9996",
-    "tle2": "2 28054  99.0168 119.5181 0006101 283.4907 158.4338 14.14334854108829",
+    "tle1": "1 28054U 03048A   25104.49831464  .00000284  00000+0  17221-3 0  9994",
+    "tle2": "2 28054  99.0168 119.8185 0006098 282.4827 233.5478 14.14335052108866",
     "category": "weather",
     "description": "Launched in 2003, this military weather satellite exemplifies the crucial intersection of defense and meteorology. F16's specialized sensors provide vital cloud cover and precipitation data to military planners while simultaneously contributing to civilian weather models, demonstrating how national security and public safety concerns can be addressed by the same space asset.",
     "transponders": {},
@@ -36,8 +36,8 @@
   {
     "id": "28654U",
     "name": "NOAA 18",
-    "tle1": "1 28654U 05018A   25104.20948920  .00000397  00000+0  23404-3 0  9999",
-    "tle2": "2 28654  98.8429 184.3181 0013067 290.3498  69.6270 14.13574345 25784",
+    "tle1": "1 28654U 05018A   25104.49261755  .00000397  00000+0  23409-3 0  9999",
+    "tle2": "2 28654  98.8429 184.5980 0013063 289.4718  70.5043 14.13574597 25826",
     "category": "weather",
     "description": "Launched in 2005, this reliable weather sentinel has been tracking storms and monitoring environmental changes for nearly two decades. NOAA 18's suite of advanced instruments captures detailed images and atmospheric profiles used for hurricane tracking, sea ice monitoring, and climate studies, providing critical data that helps meteorologists protect lives and property worldwide.",
     "transponders": {
@@ -82,8 +82,8 @@
   {
     "id": "29522U",
     "name": "DMSP 5D-3 F17 (USA 191)",
-    "tle1": "1 29522U 06050A   25104.20744713  .00000377  00000+0  21798-3 0  9997",
-    "tle2": "2 29522  98.7414 114.5828 0009723 194.2473 165.8427 14.14811342951754",
+    "tle1": "1 29522U 06050A   25104.49032905  .00000384  00000+0  22150-3 0  9992",
+    "tle2": "2 29522  98.7414 114.8599 0009750 193.4062 166.6854 14.14811652951798",
     "category": "weather",
     "description": "Launched in 2006, this military weather observer combines national security with environmental monitoring in one sophisticated package. F17's microwave imaging and sounding suite can peer through clouds to detect precipitation patterns and sea ice extent, providing tactical weather intelligence to military operations while contributing valuable data to climate researchers studying polar ice changes.",
     "transponders": {},
@@ -106,8 +106,8 @@
   {
     "id": "33591U",
     "name": "NOAA 19",
-    "tle1": "1 33591U 09005A   25104.20675568  .00000378  00000+0  22522-3 0  9999",
-    "tle2": "2 33591  99.0015 168.5848 0014304 159.4169 200.7582 14.13339466834148",
+    "tle1": "1 33591U 09005A   25104.41913706  .00000377  00000+0  22506-3 0  9992",
+    "tle2": "2 33591  99.0015 168.7985 0014319 158.8294 201.3473 14.13339666834171",
     "category": "weather",
     "description": "Launched in 2009, this final member of NOAA's legendary POES satellite series caps a weather monitoring legacy stretching back to 1978. NOAA 19's comprehensive instrument suite continues to deliver detailed atmospheric soundings and imagery that support weather forecasting worldwide, while also monitoring ozone depletion and space weather events that can impact our technology-dependent civilization.",
     "transponders": {
@@ -128,8 +128,8 @@
   {
     "id": "35491U",
     "name": "GOES 14",
-    "tle1": "1 35491U 09033A   25103.58504330 -.00000060  00000+0  00000+0 0  9991",
-    "tle2": "2 35491   0.5677  88.6905 0000317  24.9511 190.6744  1.00270967  2283",
+    "tle1": "1 35491U 09033A   25104.55060715 -.00000058  00000+0  00000+0 0  9990",
+    "tle2": "2 35491   0.5699  88.6771 0000392  22.8615 181.3295  1.00271005 57858",
     "category": "weather",
     "description": "Launched in 2009, this vigilant weather sentinel patiently serves as an orbital backup, ready to spring into action when other satellites need maintenance or replacement. GOES 14's standby status exemplifies the redundancy built into critical weather monitoring infrastructure, ensuring continuous coverage of severe weather phenomena that could threaten lives and property across the Americas.",
     "transponders": {},
@@ -140,8 +140,8 @@
   {
     "id": "35951U",
     "name": "DMSP 5D-3 F18 (USA 210)",
-    "tle1": "1 35951U 09057A   25104.20296025  .00000556  00000+0  31225-3 0  9993",
-    "tle2": "2 35951  98.8561  82.2287 0011872  35.4665 324.7295 14.14584272798913",
+    "tle1": "1 35951U 09057A   25104.48588639  .00000556  00000+0  31234-3 0  9998",
+    "tle2": "2 35951  98.8561  82.5093 0011859  34.7169 325.4776 14.14584662798956",
     "category": "weather",
     "description": "Launched in 2009, this military meteorological observer represents a critical link in the chain of weather satellites supporting national defense. F18's specialized sensors provide visibility through darkness and cloud cover, enabling military planners to anticipate weather conditions that might affect operations, while simultaneously contributing valuable data to global environmental monitoring and climate research efforts.",
     "transponders": {},
@@ -176,8 +176,8 @@
   {
     "id": "37214U",
     "name": "FENGYUN 3B",
-    "tle1": "1 37214U 10059A   25104.23724721  .00000206  00000+0  13049-3 0  9999",
-    "tle2": "2 37214  99.0195 142.0603 0021404 323.8119 109.5213 14.14712709746819",
+    "tle1": "1 37214U 10059A   25104.53727061  .00000202  00000+0  12821-3 0  9995",
+    "tle2": "2 37214  99.0194 142.3634 0021391 322.9380 197.5554 14.14712856746852",
     "category": "weather",
     "description": "Launched in 2010, this sophisticated Chinese weather satellite further expanded the country's growing meteorological monitoring capabilities. FY-3B's afternoon orbit complements its morning-orbit siblings, ensuring comprehensive daily coverage of atmospheric conditions, while its advanced instruments provide crucial data for weather forecasting, climate research, and environmental monitoring across Asia and beyond.",
     "transponders": {},
@@ -188,8 +188,8 @@
   {
     "id": "37849U",
     "name": "SUOMI NPP",
-    "tle1": "1 37849U 11061A   25104.15329441  .00000233  00000+0  13140-3 0  9990",
-    "tle2": "2 37849  98.7542  44.0564 0002470 102.0774 258.0679 14.19518355697567",
+    "tle1": "1 37849U 11061A   25104.50572481  .00000239  00000+0  13405-3 0  9993",
+    "tle2": "2 37849  98.7543  44.4047 0002475 101.3802 258.7653 14.19518561697611",
     "category": "weather",
     "description": "Launched in 2011, this groundbreaking satellite represented a crucial bridge between generations of weather monitoring technology. Named for meteorology pioneer Verner Suomi, NPP introduced advanced instruments that dramatically improved weather forecasting precision while ensuring continuity of climate data records during a transition period between satellite series, demonstrating forward-thinking program management in Earth observation.",
     "transponders": {},
@@ -212,8 +212,8 @@
   {
     "id": "38771U",
     "name": "METOP-B",
-    "tle1": "1 38771U 12049A   25104.15679289  .00000297  00000+0  15526-3 0  9990",
-    "tle2": "2 38771  98.5828 159.9451 0001740 123.5300 236.6044 14.21477378652303",
+    "tle1": "1 38771U 12049A   25104.50873890  .00000305  00000+0  15896-3 0  9993",
+    "tle2": "2 38771  98.5828 160.2874 0001753 123.0445 237.0901 14.21477676652359",
     "category": "weather",
     "description": "Launched in 2012, this European polar orbiter represents a cornerstone of the global atmospheric monitoring network. METOP-B's sophisticated suite of instruments provides crucial vertical profiles of temperature and humidity that dramatically improve the accuracy of numerical weather prediction models, while simultaneously tracking ozone levels, monitoring solar radiation, and even relaying distress signals from ships and aircraft in trouble.",
     "transponders": {},
@@ -236,8 +236,8 @@
   {
     "id": "39260U",
     "name": "FENGYUN 3C",
-    "tle1": "1 39260U 13052A   25104.24502936  .00000223  00000+0  13477-3 0  9995",
-    "tle2": "2 39260  98.4527  94.1140 0014750 173.9835 186.1520 14.15604562597940",
+    "tle1": "1 39260U 13052A   25104.52775441  .00000229  00000+0  13754-3 0  9993",
+    "tle2": "2 39260  98.4527  94.3822 0014768 173.1727 186.9651 14.15604754597980",
     "category": "weather",
     "description": "Launched in 2013, this advanced Chinese meteorological satellite further expanded the nation's weather monitoring capabilities with next-generation technology. FY-3C's suite of 12 sophisticated instruments includes microwave sounders that can peer through clouds to measure atmospheric conditions below, significantly enhancing precipitation forecasts while contributing to China's growing role in international meteorological cooperation.",
     "transponders": {},
@@ -248,8 +248,8 @@
   {
     "id": "40069U",
     "name": "METEOR-M 2",
-    "tle1": "1 40069U 14037A   25104.23098384  .00000332  00000+0  17144-3 0  9990",
-    "tle2": "2 40069  98.4657  91.4786 0005335 191.4202 168.6855 14.21271114558382",
+    "tle1": "1 40069U 14037A   25104.51258220  .00000337  00000+0  17400-3 0  9998",
+    "tle2": "2 40069  98.4657  91.7486 0005353 190.5445 169.5622 14.21271354558424",
     "category": "weather",
     "description": "Launched in 2014, this Russian weather monitoring satellite significantly enhanced the nation's meteorological capabilities with its modern sensor suite. Meteor-M 2's combination of visible, infrared, and microwave instruments provides comprehensive data on atmospheric conditions, sea surface temperatures, and ice coverage, supporting accurate forecasting across Russia's vast territory while contributing valuable polar observations to the international weather monitoring community.",
     "transponders": {
@@ -282,8 +282,8 @@
   {
     "id": "40367U",
     "name": "FENGYUN 2G",
-    "tle1": "1 40367U 14090A   25103.88308575 -.00000290  00000+0  00000+0 0  9999",
-    "tle2": "2 40367   4.5487  78.0075 0002002 112.3049  69.2828  1.00267063 37696",
+    "tle1": "1 40367U 14090A   25104.48318225 -.00000289  00000+0  00000+0 0  9997",
+    "tle2": "2 40367   4.5501  78.0006 0002009 111.2485 286.9616  1.00266818 37742",
     "category": "weather",
     "description": "Launched in 2014, this Chinese geostationary satellite continued the expansion of the nation's weather monitoring capabilities with enhanced regional coverage. FY-2G's strategic positioning over the Indian Ocean extended China's meteorological reach westward, providing crucial data on weather systems developing over this vital region while supporting the Belt and Road Initiative by offering improved weather services to partner nations across Asia and Africa.",
     "transponders": {},
@@ -294,8 +294,8 @@
   {
     "id": "40732U",
     "name": "METEOSAT-11 (MSG-4)",
-    "tle1": "1 40732U 15034A   25103.89400722  .00000072  00000+0  00000+0 0  9999",
-    "tle2": "2 40732   2.1286  72.2370 0000860 321.3141 139.9806  1.00277875  2912",
+    "tle1": "1 40732U 15034A   25104.32249567  .00000073  00000+0  00000+0 0  9997",
+    "tle2": "2 40732   2.1297  72.2391 0000861 320.4866 295.4936  1.00278012 35712",
     "category": "weather",
     "description": "Launched in 2015, this European weather watchkeeper represents the culmination of second-generation Meteosat technology after decades of refinement. MSG-4's position over the prime meridian provides crucial coverage of Europe, Africa, and surrounding oceans with 12-channel multispectral imagery every 15 minutes, supporting everything from immediate severe weather warnings to long-term climate studies of this environmentally diverse and populous region.",
     "transponders": {},
@@ -378,8 +378,8 @@
   {
     "id": "43013U",
     "name": "NOAA 20 (JPSS-1)",
-    "tle1": "1 43013U 17073A   25104.16899800  .00000213  00000+0  12191-3 0  9994",
-    "tle2": "2 43013  98.7381  43.4828 0002241  88.8722 271.2711 14.19524865383608",
+    "tle1": "1 43013U 17073A   25104.52142689  .00000212  00000+0  12123-3 0  9994",
+    "tle2": "2 43013  98.7382  43.8305 0002244  88.2260 271.9173 14.19525025383650",
     "category": "weather",
     "description": "Launched in 2017, this sophisticated polar-orbiting satellite represents the new generation of American weather monitoring technology. NOAA 20's suite of advanced instruments provides unprecedented detail of atmospheric conditions, sea surface temperatures, and polar ice, delivering critical data that has improved weather forecast accuracy by 50% while tracking environmental changes like Arctic ice loss with remarkable precision.",
     "transponders": {
@@ -407,8 +407,8 @@
   {
     "id": "41888U",
     "name": "CYGFM08",
-    "tle1": "1 41888U 16078E   25103.61887627  .00022245  00000+0  53962-3 0  9999",
-    "tle2": "2 41888  34.9465 172.3332 0010618  92.7394 267.4541 15.40050282462337",
+    "tle1": "1 41888U 16078E   25104.52640540  .00021662  00000+0  52486-3 0  9993",
+    "tle2": "2 41888  34.9462 166.4717 0010685 101.7879 258.4039 15.40088812462509",
     "category": "weather",
     "description": "Launched in 2016 as part of an innovative constellation, this microsatellite helped revolutionize tropical cyclone forecasting with creative technology. CYGFM08's ability to measure ocean surface roughness by detecting reflected GPS signals allows meteorologists to determine hurricane wind speeds in regions where traditional aircraft reconnaissance is unavailable, significantly improving intensity predictions for these dangerous storms.",
     "transponders": {},
@@ -443,8 +443,8 @@
   {
     "id": "43010U",
     "name": "FENGYUN 3D",
-    "tle1": "1 43010U 17072A   25104.14722477  .00000266  00000+0  14773-3 0  9999",
-    "tle2": "2 43010  98.9574  67.3017 0001485 153.4621 206.6631 14.19607729384113",
+    "tle1": "1 43010U 17072A   25104.49963179  .00000266  00000+0  14762-3 0  9991",
+    "tle2": "2 43010  98.9574  67.6582 0001503 152.7723 207.3531 14.19607959384166",
     "category": "weather",
     "description": "Launched in 2017, this advanced Chinese polar-orbiting satellite continues the expansion of the nation's impressive meteorological monitoring capabilities. FY-3D's morning orbit complements afternoon-orbit siblings to provide comprehensive daily coverage, while its cutting-edge instruments support more accurate weather forecasting, environmental monitoring, and climate research, emphasizing China's growing role in international Earth observation cooperation.",
     "transponders": {},
@@ -479,8 +479,8 @@
   {
     "id": "43689U",
     "name": "METOP-C",
-    "tle1": "1 43689U 18087A   25104.19270495  .00000299  00000+0  15634-3 0  9994",
-    "tle2": "2 43689  98.6784 165.2791 0000619  23.3659 336.7546 14.21512647333881",
+    "tle1": "1 43689U 18087A   25104.47425427  .00000301  00000+0  15732-3 0  9995",
+    "tle2": "2 43689  98.6784 165.5560 0000600  22.8363 337.2840 14.21512850333928",
     "category": "weather",
     "description": "Launched in 2018, this European polar-orbiting satellite completed a constellation that has revolutionized global weather forecasting accuracy. MetOp-C's sophisticated instrument suite provides detailed profiles of atmospheric temperature and humidity, tracks atmospheric composition, and monitors sea ice extent, contributing essential data to numerical weather prediction models that have dramatically improved forecast reliability from days to weeks ahead.",
     "transponders": {},
@@ -491,8 +491,8 @@
   {
     "id": "43823U",
     "name": "GEO-KOMPSAT-2A",
-    "tle1": "1 43823U 18100A   25103.98905435 -.00000336  00000+0  00000+0 0  9995",
-    "tle2": "2 43823   0.0188  63.5695 0002307   5.4556 257.7064  1.00269656 23359",
+    "tle1": "1 43823U 18100A   25104.27463009 -.00000336  00000+0  00000+0 0  9994",
+    "tle2": "2 43823   0.0194  64.2893 0002289   4.7985   0.7326  1.00269578 23362",
     "category": "weather",
     "description": "Launched in 2018, this sophisticated South Korean satellite represented a major advancement in the nation's meteorological capabilities. GEO-KOMPSAT-2A's advanced imager provides 16 spectral bands of high-resolution imagery covering the Asia-Pacific region every 10 minutes, supporting more accurate forecasting of typhoons, heavy rainfall, and other severe weather events while monitoring air quality, sea surface temperatures, and other environmental parameters vital to South Korea's security and economy.",
     "transponders": {},
@@ -503,8 +503,8 @@
   {
     "id": "44387U",
     "name": "METEOR-M2 2",
-    "tle1": "1 44387U 19038A   25104.22395120  .00000286  00000+0  14395-3 0  9993",
-    "tle2": "2 44387  98.8709  81.3637 0001716 133.0628 227.0694 14.24185984300239",
+    "tle1": "1 44387U 19038A   25104.50497161  .00000290  00000+0  14568-3 0  9999",
+    "tle2": "2 44387  98.8709  81.6473 0001727 132.6202 227.5122 14.24186209300271",
     "category": "weather",
     "description": "Launched in 2019, this Russian polar-orbiting satellite expanded the nation's weather monitoring capabilities despite early challenges that tested ground controllers' ingenuity. Meteor-M2-2's diverse sensor suite provides comprehensive data on atmospheric conditions, sea surface temperatures, and ice coverage even after surviving a micrometeoroid strike, demonstrating the resilience of modern satellite design while delivering valuable environmental information across Russia's vast and climatically diverse territory.",
     "transponders": {
@@ -537,8 +537,8 @@
   {
     "id": "49008U",
     "name": "FENGYUN 3E",
-    "tle1": "1 49008U 21062A   25104.19097632  .00000085  00000+0  60672-4 0  9998",
-    "tle2": "2 49008  98.7433 107.6032 0000698 204.1764 155.9379 14.19858327195702",
+    "tle1": "1 49008U 21062A   25104.47285324  .00000085  00000+0  60677-4 0  9991",
+    "tle2": "2 49008  98.7433 107.8817 0000716 202.6080 157.5064 14.19858401195746",
     "category": "weather",
     "description": "Launched in 2021, this advanced Chinese meteorological satellite introduced innovative early-morning orbit monitoring to the global weather observation system. FY-3E's dawn-monitoring capability complements existing morning and afternoon orbiters, creating more comprehensive daily coverage of evolving weather systems while its cutting-edge instruments measure everything from atmospheric temperature profiles to soil moisture, enhancing China's contribution to international weather forecasting efforts.",
     "transponders": {},
@@ -549,8 +549,8 @@
   {
     "id": "51850U",
     "name": "GOES 18",
-    "tle1": "1 51850U 22021A   25104.15065182  .00000105  00000+0  00000+0 0  9990",
-    "tle2": "2 51850   0.0192  46.4698 0000262  37.8370  35.5002  1.00271664 11507",
+    "tle1": "1 51850U 22021A   25104.51225352  .00000105  00000+0  00000+0 0  9997",
+    "tle2": "2 51850   0.0018 157.2455 0000281 286.9682 166.1266  1.00271831 11509",
     "category": "weather",
     "description": "Launched in 2022, this advanced American weather sentinel maintains vigilant watch over the western United States and Pacific Ocean with state-of-the-art capabilities. GOES-18's enhanced imaging system captures detailed views of wildfires, atmospheric rivers, and tropical cyclones, while its Geostationary Lightning Mapper tracks lightning strikes in real-time, providing forecasters with unprecedented tools to predict severe weather development and protect lives and property across the western hemisphere.",
     "transponders": {},
@@ -602,8 +602,8 @@
   {
     "id": "55973U",
     "name": "TIANMU-1 03",
-    "tle1": "1 55973U 23039A   25104.16259312  .00019084  00000+0  58728-3 0  9991",
-    "tle2": "2 55973  97.4951 261.7982 0004489 186.4783 173.6402 15.33693483114805",
+    "tle1": "1 55973U 23039A   25104.48881264  .00019420  00000+0  59732-3 0  9993",
+    "tle2": "2 55973  97.4952 262.1291 0004507 185.4505 174.6689 15.33706948114850",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite forms part of an ambitious constellation focused on real-time tracking and forecasting of tropical cyclones and severe weather. Tianmu-1 03's compact size belies its sophisticated capabilities, with specialized instruments designed to measure atmospheric temperature, humidity, and precipitation, demonstrating China's growing expertise in developing coordinated small satellite networks that complement traditional larger weather monitoring platforms.",
     "transponders": {},
@@ -614,8 +614,8 @@
   {
     "id": "55974U",
     "name": "TIANMU-1 04",
-    "tle1": "1 55974U 23039B   25104.11819939  .00019971  00000+0  61030-3 0  9999",
-    "tle2": "2 55974  97.4878 261.0778 0005439 184.7508 175.3684 15.33901554114792",
+    "tle1": "1 55974U 23039B   25104.50960966  .00020308  00000+0  62022-3 0  9997",
+    "tle2": "2 55974  97.4878 261.4744 0005462 183.4029 176.7177 15.33917843114856",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite exemplifies a modern trend toward using coordinated satellite constellations to enhance weather monitoring capabilities. Tianmu-1 04's specialized instruments work in concert with its constellation partners to provide comprehensive, frequent observations of developing weather systems, particularly focusing on the rapid changes that occur during tropical cyclone formation and intensification across the western Pacific region.",
     "transponders": {},
@@ -626,8 +626,8 @@
   {
     "id": "55975U",
     "name": "TIANMU-1 05",
-    "tle1": "1 55975U 23039C   25104.19665513  .00019592  00000+0  60326-3 0  9991",
-    "tle2": "2 55975  97.4924 261.6053 0003840 201.5857 158.5224 15.33672852114795",
+    "tle1": "1 55975U 23039C   25104.52287928  .00019802  00000+0  60943-3 0  9997",
+    "tle2": "2 55975  97.4924 261.9360 0003855 200.5977 159.5110 15.33685866114847",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to an innovative weather monitoring network designed to track and forecast severe weather events. Tianmu-1 05's coordinated operations with its constellation partners enable more frequent observations than possible with single satellites, providing crucial data on rapidly developing storm systems and enhancing China's ability to predict and respond to dangerous weather phenomena threatening densely populated coastal regions.",
     "transponders": {},
@@ -638,8 +638,8 @@
   {
     "id": "55976U",
     "name": "TIANMU-1 06",
-    "tle1": "1 55976U 23039D   25104.19702721  .00019976  00000+0  60887-3 0  9993",
-    "tle2": "2 55976  97.4938 261.8927 0004282 200.6754 159.4316 15.33989982114809",
+    "tle1": "1 55976U 23039D   25104.52318397  .00020030  00000+0  61025-3 0  9990",
+    "tle2": "2 55976  97.4938 262.2236 0004298 199.6956 160.4121 15.34003040114859",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite forms part of a sophisticated constellation focused on monitoring and forecasting severe weather events. Tianmu-1 06's combination of compact size and advanced sensors demonstrates a growing trend toward distributed weather monitoring systems, where multiple smaller satellites work in coordination to provide more frequent coverage than possible with individual larger platforms, enhancing prediction capabilities for dangerous storms.",
     "transponders": {},
@@ -650,8 +650,8 @@
   {
     "id": "57166U",
     "name": "METEOR-M2 3",
-    "tle1": "1 57166U 23091A   25104.20997769  .00000071  00000+0  49823-4 0  9998",
-    "tle2": "2 57166  98.6668 161.5087 0003578 354.2247   5.8890 14.23991988 93464",
+    "tle1": "1 57166U 23091A   25104.49103717  .00000070  00000+0  49663-4 0  9992",
+    "tle2": "2 57166  98.6668 161.7858 0003562 353.3723   6.7408 14.23992055 93500",
     "category": "weather",
     "description": "Launched in 2023, this advanced Russian meteorological satellite expanded the nation's weather monitoring capabilities with next-generation technology. Meteor-M2-3's diverse sensor suite provides comprehensive data on atmospheric conditions, sea surface temperatures, and ice coverage across Russia's vast territory, from the Baltic to the Pacific, enhancing forecast accuracy while contributing valuable observations of the rapidly changing Arctic region to the international meteorological community.",
     "transponders": {
@@ -672,8 +672,8 @@
   {
     "id": "57399U",
     "name": "TIANMU-1 07",
-    "tle1": "1 57399U 23101A   25104.16700215  .00011048  00000+0  45560-3 0  9990",
-    "tle2": "2 57399  97.3165 159.5628 0004082 190.8987 169.2163 15.24222988 96161",
+    "tle1": "1 57399U 23101A   25104.49524860  .00011303  00000+0  46595-3 0  9999",
+    "tle2": "2 57399  97.3164 159.8832 0004112 189.6969 170.4190 15.24230096 96219",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends the innovative Tianmu constellation's capabilities for monitoring severe weather systems. Tianmu-1 07's specialized instruments work in coordination with its constellation partners to track rapidly evolving tropical cyclones and monsoon developments, demonstrating China's commitment to enhancing its meteorological capabilities through modern distributed satellite networks that provide more frequent observations than traditional single-satellite approaches.",
     "transponders": {},
@@ -684,8 +684,8 @@
   {
     "id": "57400U",
     "name": "TIANMU-1 08",
-    "tle1": "1 57400U 23101B   25104.19903094  .00009968  00000+0  41120-3 0  9992",
-    "tle2": "2 57400  97.3154 159.4300 0005920 203.2681 156.8290 15.24231323 96166",
+    "tle1": "1 57400U 23101B   25104.46162697  .00010332  00000+0  42605-3 0  9994",
+    "tle2": "2 57400  97.3152 159.6864 0005945 202.3779 157.7201 15.24236369 96208",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to an expanding constellation focused on enhancing severe weather prediction capabilities. Tianmu-1 08's coordination with its constellation partners enables more frequent observations of developing weather systems than possible with individual larger satellites, providing crucial data for meteorologists tracking typhoons, heavy rainfall events, and other dangerous weather phenomena affecting China's densely populated coastal regions.",
     "transponders": {},
@@ -696,8 +696,8 @@
   {
     "id": "57401U",
     "name": "TIANMU-1 09",
-    "tle1": "1 57401U 23101C   25104.18216737  .00010670  00000+0  43916-3 0  9990",
-    "tle2": "2 57401  97.3108 159.0776 0005796 200.0016 160.0995 15.24290539 96160",
+    "tle1": "1 57401U 23101C   25104.51039946  .00011410  00000+0  46927-3 0  9990",
+    "tle2": "2 57401  97.3107 159.3979 0005832 199.0180 161.0841 15.24297728 96211",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends an innovative constellation approach to weather monitoring and prediction. Tianmu-1 09's compact yet sophisticated instruments work in concert with multiple constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -708,8 +708,8 @@
   {
     "id": "57402U",
     "name": "TIANMU-1 10",
-    "tle1": "1 57402U 23101D   25104.14787508  .00011083  24679-7  45390-3 0  9999",
-    "tle2": "2 57402  97.3191 159.6403 0007762 202.2638 157.8264 15.24316999 96156",
+    "tle1": "1 57402U 23101D   25104.47610145  .00011299  25649-7  46262-3 0  9993",
+    "tle2": "2 57402  97.3189 159.9610 0007782 201.0041 159.0878 15.24323995 96208",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite forms part of a cutting-edge constellation focused on improving severe weather forecasting capabilities. Tianmu-1 10's collaboration with its constellation partners enables meteorologists to track rapidly evolving storm systems with greater frequency than possible with traditional satellite approaches, enhancing China's ability to predict and respond to dangerous weather phenomena that threaten lives and infrastructure.",
     "transponders": {},
@@ -720,8 +720,8 @@
   {
     "id": "57490U",
     "name": "FENGYUN 3F",
-    "tle1": "1 57490U 23111A   25104.19057965  .00000200  00000+0  11475-3 0  9999",
-    "tle2": "2 57490  98.7299 176.0126 0000545  56.3357 303.7871 14.20027057 87986",
+    "tle1": "1 57490U 23111A   25104.47242308  .00000217  00000+0  12265-3 0  9993",
+    "tle2": "2 57490  98.7299 176.2907 0000532  56.7608 303.3620 14.20027259 88022",
     "category": "weather",
     "description": "Launched in 2023, this advanced Chinese polar-orbiting satellite continued the evolution of the nation's meteorological monitoring capabilities. FY-3F's sophisticated instrument suite provides comprehensive data on atmospheric temperature profiles, precipitation patterns, and environmental parameters, enhancing China's contribution to the global weather forecasting network while supporting climate research and disaster monitoring efforts across Asia and beyond.",
     "transponders": {},
@@ -744,8 +744,8 @@
   {
     "id": "58645U",
     "name": "TIANMU-1 11",
-    "tle1": "1 58645U 23205A   25104.14770574  .00009957  00000+0  44675-3 0  9995",
-    "tle2": "2 58645  97.3770 128.3319 0012010  79.2731 280.9856 15.21325858 72178",
+    "tle1": "1 58645U 23205A   25104.54235009  .00010138  00000+0  45470-3 0  9995",
+    "tle2": "2 58645  97.3770 128.7187 0012004  78.1112 282.1469 15.21334116 72237",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends the ambitious Tianmu constellation dedicated to enhanced monitoring of severe weather systems. Tianmu-1 11's compact yet sophisticated instruments work in coordination with numerous constellation partners to provide frequent observations of developing tropical cyclones, monsoon patterns, and other significant weather phenomena, demonstrating China's commitment to distributed satellite networks for improved meteorological forecasting.",
     "transponders": {},
@@ -756,8 +756,8 @@
   {
     "id": "58646U",
     "name": "TIANMU-1 12",
-    "tle1": "1 58646U 23205B   25104.16417817  .00009252  00000+0  41490-3 0  9996",
-    "tle2": "2 58646  97.3755 128.2201 0009993  74.1571 286.0766 15.21385281 72165",
+    "tle1": "1 58646U 23205B   25104.49303591  .00010083  00000+0  45174-3 0  9992",
+    "tle2": "2 58646  97.3756 128.5423 0009977  73.2559 286.9771 15.21392406 72211",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to an expanding constellation focused on enhancing weather forecasting precision through coordinated observations. Tianmu-1 12's specialized instruments complement its constellation partners by monitoring specific atmospheric parameters, demonstrating how modern distributed satellite networks can provide more frequent updates on developing weather systems than possible with traditional approaches, particularly for fast-evolving phenomena like tropical cyclones.",
     "transponders": {},
@@ -768,8 +768,8 @@
   {
     "id": "58647U",
     "name": "TIANMU-1 13",
-    "tle1": "1 58647U 23205C   25104.19516866  .00009820  00000+0  43977-3 0  9997",
-    "tle2": "2 58647  97.3786 128.3650 0010020  57.3432 302.8770 15.21414540 72164",
+    "tle1": "1 58647U 23205C   25104.52401978  .00010110  00000+0  45258-3 0  9999",
+    "tle2": "2 58647  97.3786 128.6874 0009977  56.3269 303.8917 15.21421467 72217",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends the Tianmu constellation's capabilities for monitoring severe weather systems. Tianmu-1 13's compact yet sophisticated instruments work in coordination with its constellation partners to track rapidly evolving tropical cyclones, monsoon patterns, and other significant weather phenomena, demonstrating China's commitment to distributed satellite networks for improved meteorological forecasting.",
     "transponders": {},
@@ -780,8 +780,8 @@
   {
     "id": "58648U",
     "name": "TIANMU-1 14",
-    "tle1": "1 58648U 23205D   25104.18038894  .00008949  00000+0  40128-3 0  9993",
-    "tle2": "2 58648  97.3714 127.9206 0010684  60.0577 300.1718 15.21390989 72168",
+    "tle1": "1 58648U 23205D   25104.50924511  .00009685  00000+0  43393-3 0  9994",
+    "tle2": "2 58648  97.3714 128.2427 0010654  58.9768 301.2512 15.21398120 72217",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to the Tianmu constellation's innovative approach to weather monitoring and prediction. Tianmu-1 14's compact yet sophisticated instruments work in concert with its constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -792,8 +792,8 @@
   {
     "id": "58660U",
     "name": "TIANMU-1 19",
-    "tle1": "1 58660U 23208A   25104.19548614  .00013811  00000+0  58804-3 0  9991",
-    "tle2": "2 58660  97.4218 216.9504 0006186  45.0581 315.1156 15.23081333 71851",
+    "tle1": "1 58660U 23208A   25104.45827894  .00014311  00000+0  60904-3 0  9990",
+    "tle2": "2 58660  97.4218 217.2101 0006170  44.3331 315.8399 15.23089298 71894",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends the Tianmu constellation's capabilities for monitoring severe weather systems. Tianmu-1 19's compact yet sophisticated instruments work in coordination with its constellation partners to track rapidly evolving tropical cyclones, monsoon patterns, and other significant weather phenomena, demonstrating China's commitment to distributed satellite networks for improved meteorological forecasting.",
     "transponders": {},
@@ -804,8 +804,8 @@
   {
     "id": "58661U",
     "name": "TIANMU-1 20",
-    "tle1": "1 58661U 23208B   25104.24156851  .00013310  00000+0  54663-3 0  9999",
-    "tle2": "2 58661  97.4154 217.2072 0008944  51.4477 308.7561 15.24292275 71908",
+    "tle1": "1 58661U 23208B   25104.50415288  .00013594  00000+0  55808-3 0  9996",
+    "tle2": "2 58661  97.4153 217.4670 0008923  50.6193 309.5834 15.24299369 71943",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to the Tianmu constellation's innovative approach to weather monitoring and prediction. Tianmu-1 20's compact yet sophisticated instruments work in concert with its constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -816,8 +816,8 @@
   {
     "id": "58662U",
     "name": "TIANMU-1 21",
-    "tle1": "1 58662U 23208C   25104.24483018  .00015167  00000+0  59026-3 0  9998",
-    "tle2": "2 58662  97.4196 218.2043 0008412  50.0291 310.1685 15.26070400 71958",
+    "tle1": "1 58662U 23208C   25104.57267821  .00015527  00000+0  60397-3 0  9999",
+    "tle2": "2 58662  97.4196 218.5297 0008384  49.0388 311.1574 15.26080455 72001",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite extends the Tianmu constellation's capabilities for monitoring severe weather systems. Tianmu-1 21's compact yet sophisticated instruments work in coordination with its constellation partners to track rapidly evolving tropical cyclones, monsoon patterns, and other significant weather phenomena, demonstrating China's commitment to distributed satellite networks for improved meteorological forecasting.",
     "transponders": {},
@@ -828,8 +828,8 @@
   {
     "id": "58663U",
     "name": "TIANMU-1 22",
-    "tle1": "1 58663U 23208D   25104.24827392  .00013041  00000+0  55481-3 0  9996",
-    "tle2": "2 58663  97.4212 217.1088 0005279  69.1882 290.9919 15.23127223 71879",
+    "tle1": "1 58663U 23208D   25104.57675522  .00013289  00000+0  56514-3 0  9990",
+    "tle2": "2 58663  97.4213 217.4335 0005263  68.3332 291.8465 15.23135761 71920",
     "category": "weather",
     "description": "Launched in 2023, this Chinese microsatellite contributes to the Tianmu constellation's innovative approach to weather monitoring and prediction. Tianmu-1 22's compact yet sophisticated instruments work in concert with its constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -852,8 +852,8 @@
   {
     "id": "58701U",
     "name": "TIANMU-1 16",
-    "tle1": "1 58701U 24004B   25104.16076808  .00010203  00000+0  45622-3 0  9996",
-    "tle2": "2 58701  97.4583 286.7480 0009160  81.5293 278.6980 15.21468083 70430",
+    "tle1": "1 58701U 24004B   25104.48960734  .00009807  00000+0  43860-3 0  9991",
+    "tle2": "2 58701  97.4583 287.0738 0009150  80.5630 279.6640 15.21474826 70484",
     "category": "weather",
     "description": "Launched in 2024, this Chinese microsatellite contributes to the Tianmu constellation's innovative approach to weather monitoring and prediction. Tianmu-1 16's compact yet sophisticated instruments work in concert with its constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -864,8 +864,8 @@
   {
     "id": "58702U",
     "name": "TIANMU-1 17",
-    "tle1": "1 58702U 24004C   25104.15066200  .00009737  00000+0  43688-3 0  9991",
-    "tle2": "2 58702  97.4621 287.0192 0007015  78.6701 281.5323 15.21379498 70420",
+    "tle1": "1 58702U 24004C   25104.54529182  .00009901  00000+0  44406-3 0  9999",
+    "tle2": "2 58702  97.4621 287.4103 0006983  77.5432 282.6585 15.21387854 70481",
     "category": "weather",
     "description": "Launched in 2024, this Chinese microsatellite extends the Tianmu constellation's capabilities for monitoring severe weather systems. Tianmu-1 17's compact yet sophisticated instruments work in coordination with its constellation partners to track rapidly evolving tropical cyclones, monsoon patterns, and other significant weather phenomena, demonstrating China's commitment to distributed satellite networks for improved meteorological forecasting.",
     "transponders": {},
@@ -876,8 +876,8 @@
   {
     "id": "58703U",
     "name": "TIANMU-1 18",
-    "tle1": "1 58703U 24004D   25104.19507066  .00010425  00000+0  46717-3 0  9998",
-    "tle2": "2 58703  97.4638 287.2124 0007022  71.0431 289.1565 15.21404810 70431",
+    "tle1": "1 58703U 24004D   25104.52392352  .00010640  00000+0  47659-3 0  9990",
+    "tle2": "2 58703  97.4639 287.5384 0007028  70.1406 290.0586 15.21412273 70482",
     "category": "weather",
     "description": "Launched in 2024, this Chinese microsatellite contributes to the Tianmu constellation's innovative approach to weather monitoring and prediction. Tianmu-1 18's compact yet sophisticated instruments work in concert with its constellation partners to provide frequent observations of developing weather systems, demonstrating how modern distributed satellite networks can enhance forecasting capabilities by capturing the rapid changes that occur during storm development and intensification.",
     "transponders": {},
@@ -900,8 +900,8 @@
   {
     "id": "59051U",
     "name": "METEOR-M2 4",
-    "tle1": "1 59051U 24039A   25104.15691513  .00000117  00000+0  72270-4 0  9991",
-    "tle2": "2 59051  98.6445  65.3591 0006685 341.7152  18.3784 14.22357047 58273",
+    "tle1": "1 59051U 24039A   25104.50864307  .00000106  00000+0  67208-4 0  9996",
+    "tle2": "2 59051  98.6445  65.7040 0006666 340.6501  19.4423 14.22357122 58323",
     "category": "weather",
     "description": "Launched in 2024, this advanced Russian meteorological satellite expanded the nation's weather monitoring capabilities with next-generation technology. Meteor-M2-4's diverse sensor suite provides comprehensive data on atmospheric conditions, sea surface temperatures, and ice coverage across Russia's vast territory, from the Baltic to the Pacific, enhancing forecast accuracy while contributing valuable observations of the rapidly changing Arctic region to the international meteorological community.",
     "transponders": {
