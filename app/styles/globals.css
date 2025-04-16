@@ -31,3 +31,33 @@ h2 {
 h3 {
   @apply font-alien text-2xl;
 }
+
+.purple-slider {
+  /* Chrome, Safari, Opera */
+  accent-color: #b400ff;
+}
+
+/* Firefox */
+.purple-slider::-moz-range-thumb {
+  background: #b400ff;
+  border-color: #b400ff;
+}
+
+/* Edge et IE */
+.purple-slider::-ms-thumb {
+  background: #b400ff;
+  border-color: #b400ff;
+}
+
+/* Pour la barre de progression */
+.purple-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #b400ff 0%, #b400ff var(--value, 0%), #ddd var(--value, 0%), #ddd 100%);
+}
+
+.purple-slider::-moz-range-track {
+  background-color: #ddd;
+}
+
+.purple-slider::-moz-range-progress {
+  background-color: #b400ff;
+}

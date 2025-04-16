@@ -1,133 +1,55 @@
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
-const { URL } = require('url');
 
-// Sources TLE pour chaque catégorie
-const SOURCES = [
-  { url: "https://celestrak.org/NORAD/elements/amateur.txt", category: "amateur" },
-  { url: "https://celestrak.org/NORAD/elements/weather.txt", category: "weather" }
-];
+// Chemin vers le fichier satellites.json
+const dataPath = path.join(__dirname, '../data/satellites.json');
 
-// Écrire directement dans le dossier public à la racine
-const publicVersionPath = path.join(__dirname, '..', 'public', 'tle-last-update.json');
-
-const versionData = JSON.stringify({ updated_at: new Date().toISOString() }, null, 2);
-fs.writeFileSync(publicVersionPath, versionData); // Écrire directement dans le dossier public racine
-
-// Télécharge le contenu brut depuis une URL
-function fetchTLE(url) {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    https.get(new URL(url), res => {
-      res.on('data', chunk => data += chunk );
-      res.on('end', () => resolve(data));
-    }).on('error', err => reject(err));
-  });
-}
-
-// Parse les données téléchargées et retourne un objet mapping { id: { tle1, tle2 } }
-function parseTLEData(rawData) {
-  const lines = rawData.trim().split("\n");
-  const mapping = {};
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith("1 ")) {
-      const tle1 = lines[i].trim();
-      const tle2 = lines[i + 1] ? lines[i + 1].trim() : "";
-      const id = tle1.split(" ")[1]; // le deuxième champ correspond à l'identifiant
-      mapping[id] = { tle1, tle2 };
-      i++; // sauter la seconde ligne
-    }
+// Fonction pour récupérer le TLE via CelesTrak pour un numéro NORAD donné
+async function fetchTLE(noradId) {
+  const url = `https://celestrak.com/NORAD/elements/gp.php?CATNR=${noradId}&FORMAT=tle`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Erreur lors de la récupération du TLE pour NORAD ${noradId}`);
+  const text = await res.text();
+  // On attend 2 lignes de TLE après une éventuelle première ligne titre
+  const lines = text.trim().split('\n').filter(l => l.trim() !== '');
+  if (lines.length >= 2) {
+    // Si une ligne de titre est présente, on décalera d'une ligne
+    return lines.length === 2 ? { tle1: lines[0], tle2: lines[1] } : { tle1: lines[1], tle2: lines[2] };
   }
-  return mapping;
+  throw new Error(`TLE incomplet pour NORAD ${noradId}`);
 }
 
-// Télécharge les TLE pour chaque source et agrège les résultats
-async function downloadNewTLE() {
-  let overallTLE = {};
-  for (const source of SOURCES) {
-    console.log(`🔄 Fetching TLE for ${source.category} from ${source.url}...`);
-    try {
-      const rawData = await fetchTLE(source.url);
-      const parsed = parseTLEData(rawData);
-      console.log(`✅ Fetched ${Object.keys(parsed).length} TLE entries for ${source.category}`);
-      overallTLE = { ...overallTLE, ...parsed };
-    } catch (error) {
-      console.error(`❌ Error fetching TLE for ${source.category}:`, error);
-    }
-  }
-  return overallTLE;
-}
-
-// Function to load a JSON file and check for duplicate ids
-function loadAndValidateJSON(filePath) {
-  const fileData = fs.readFileSync(filePath, 'utf8');
-  let data;
+// Mise à jour des TLE pour chaque satellite
+(async () => {
   try {
-    data = JSON.parse(fileData);
-  } catch (error) {
-    console.error(`Error parsing ${filePath}:`, error);
-    return null;
-  }
-  
-  const seenIds = new Set();
-  const duplicates = [];
-  data.forEach(item => {
-    if (seenIds.has(item.id)) {
-      duplicates.push(item.id);
+    const satellites = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+    let updated = false;
+    for (let sat of satellites) {
+      if (!sat.norad_id) continue;
+      try {
+        const newTLE = await fetchTLE(sat.norad_id);
+        // Mettez à jour uniquement si l'un des TLE diffère
+        if (newTLE.tle1 !== sat.tle1 || newTLE.tle2 !== sat.tle2) {
+          console.log(`Mise à jour NORAD ${sat.norad_id} (${sat.name})`);
+          sat.tle1 = newTLE.tle1;
+          sat.tle2 = newTLE.tle2;
+          updated = true;
+        } else {
+          console.log(`Aucune mise à jour pour NORAD ${sat.norad_id}`);
+        }
+      } catch (err) {
+        console.error(`Erreur pour NORAD ${sat.norad_id} : ${err.message}`);
+      }
+      // Petite pause pour éviter de saturer l'API (optionnel)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    if (updated) {
+      fs.writeFileSync(dataPath, JSON.stringify(satellites, null, 2), 'utf8');
+      console.log('Fichier satellites.json mis à jour.');
     } else {
-      seenIds.add(item.id);
+      console.log('Aucune modification détectée.');
     }
-  });
-  
-  if (duplicates.length) {
-    console.error(`Duplicate id(s) found in ${filePath}:`, duplicates);
-    // Optionally, you may choose to exit or remove duplicates here.
+  } catch (err) {
+    console.error(`Erreur globale : ${err.message}`);
   }
-  return data;
-}
-
-// Met à jour les fichiers en remplaçant uniquement tle1 et tle2 si une nouvelle TLE existe
-function updateFileTLE(filePath, newTLEData) {
-  console.log(`⏳ Updating file: ${filePath}`);
-  const jsonData = loadAndValidateJSON(filePath);
-  if (!jsonData) return;
-  let updatedCount = 0;
-  jsonData.forEach(satellite => {
-    if (newTLEData[satellite.id]) {
-      satellite.tle1 = newTLEData[satellite.id].tle1;
-      satellite.tle2 = newTLEData[satellite.id].tle2;
-      updatedCount++;
-    }
-  });
-  fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
-  console.log(`✅ Updated ${updatedCount} satellites in file: ${filePath}`);
-}
-
-// Fonction principale qui télécharge les nouvelles TLE et met à jour les fichiers
-async function main() {
-  const newTLEData = await downloadNewTLE();
-  // Chemins des fichiers de satellites
-  const amateurFile = path.join(__dirname, '..', 'data', 'satellites', 'amateur.json');
-  const weatherFile = path.join(__dirname, '..', 'data', 'satellites', 'weather.json');
-  updateFileTLE(amateurFile, newTLEData);
-  updateFileTLE(weatherFile, newTLEData);
-}
-
-main();
-
-async function run() {
-  const newTLEData = await downloadNewTLE();
-  const amateurFile = path.join(__dirname, '..', 'data', 'satellites', 'amateur.json');
-  const weatherFile = path.join(__dirname, '..', 'data', 'satellites', 'weather.json');
-  updateFileTLE(amateurFile, newTLEData);
-  updateFileTLE(weatherFile, newTLEData);
-}
-
-// Si ce script est lancé en CLI, on exécute
-if (require.main === module) {
-  run();
-}
-
-// Pour que d'autres puissent l'importer (optionnel)
-module.exports = run;
+})();

@@ -11,106 +11,121 @@ interface AzimuthSelectorProps {
 
 const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimuth, onChange }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [dragging, setDragging] = useState<"min" | "max" | null>(null);
   const [dimensions, setDimensions] = useState({ width: 300, height: 300 });
-  const [dragStartAngle, setDragStartAngle] = useState<number | null>(null);
   
-  // Fonction pour normaliser un angle entre 0 et 360
+  // Normalize angle to 0-360 range
   const normalizeAngle = (angle: number): number => {
     return ((angle % 360) + 360) % 360;
   };
   
-  // Obtenir les points d'un arc pour le dessin du secteur sélectionné
-  const getArcPath = (startAngle: number, endAngle: number, radius: number): string => {
-    if (startAngle === endAngle) return "";
+  // Function to get azimuth angle (0-360) from mouse coordinates
+  // 0° is North (top), 90° is East (right), etc.
+  const getAzimuthFromMouse = (x: number, y: number, centerX: number, centerY: number): number => {
+    // Calculate relative position from center
+    const dx = x - centerX;
+    const dy = centerY - y; // Invert y because SVG y-axis goes down
     
-    // En SVG, 0° est à droite (Est) et 90° est en bas (Sud).
-    // Pour qu'une valeur d'angle de 0° corresponde au Nord (haut),
-    // nous devons soustraire 90° à l'angle.
-    const toSvgAngle = (a: number) => ((a - 90) + 360) % 360;
+    // Calculate angle in radians and convert to degrees
+    let angle = Math.atan2(dx, dy) * (180 / Math.PI);
     
-    const startRadian = toSvgAngle(startAngle) * Math.PI / 180;
-    const endRadian = toSvgAngle(endAngle) * Math.PI / 180;
+    // Normalize to 0-360 range
+    return normalizeAngle(angle);
+  };
+  
+  // Function to calculate position on circle from angle
+  const getPositionFromAngle = (angle: number, radius: number, centerX: number, centerY: number) => {
+    // Convert angle to radians, adjust for SVG coordinate system
+    const radians = (90 - angle) * Math.PI / 180;
     
-    const start = {
-      x: Math.cos(startRadian) * radius,
-      y: Math.sin(startRadian) * radius
+    return {
+      x: centerX + radius * Math.cos(radians),
+      y: centerY - radius * Math.sin(radians)
     };
+  };
+  
+  // Function to create arc path for sector
+  const createSectorPath = (min: number, max: number, radius: number, centerX: number, centerY: number): string => {
+    // Special case for full circle (0-360)
+    if ((min === 0 && max === 360) || min === max) {
+      return `M ${centerX} ${centerY} L ${centerX} ${centerY - radius} A ${radius} ${radius} 0 1 1 ${centerX - 0.001} ${centerY - radius} Z`;
+    }
     
-    const end = {
-      x: Math.cos(endRadian) * radius,
-      y: Math.sin(endRadian) * radius
-    };
+    // Handle case when min > max (crossing 0/360 boundary)
+    const actualMax = min > max ? max + 360 : max;
     
-    const largeArcFlag = (endAngle - startAngle + 360) % 360 > 180 ? 1 : 0;
+    // Calculate arc sweep
+    const largeArcFlag = actualMax - min > 180 ? 1 : 0;
     
-    return `M 0 0 L ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y} Z`;
+    // Get points on circle for min and max angles
+    const startPos = getPositionFromAngle(min, radius, centerX, centerY);
+    const endPos = getPositionFromAngle(max, radius, centerX, centerY);
+    
+    return `M ${centerX} ${centerY} L ${startPos.x} ${startPos.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endPos.x} ${endPos.y} Z`;
   };
 
   useEffect(() => {
     if (!svgRef.current) return;
     
-    // Adapter les dimensions au conteneur parent
+    // Clear previous content
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+    
+    // Set up dimensions
     const containerWidth = svgRef.current.parentElement?.clientWidth || 300;
     const size = Math.min(containerWidth, 250);
     setDimensions({ width: size, height: size });
     
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-    
-    const { width, height } = dimensions;
+    const width = size;
+    const height = size;
+    const centerX = width / 2;
+    const centerY = height / 2;
     const radius = Math.min(width, height) / 2 - 30;
     const innerRadius = radius - 30;
     
-    // Groupe principal centré
-    const g = svg.append("g")
-      .attr("transform", `translate(${width / 2}, ${height / 2})`);
+    // Increase the label radius to give more room for 3-digit numbers
+    const labelRadius = radius + 18; // Increased from +10 to +18
     
-    // Cercle extérieur de la boussole
-    g.append("circle")
+    // Draw outer circle
+    svg.append("circle")
+      .attr("cx", centerX)
+      .attr("cy", centerY)
       .attr("r", radius)
       .attr("fill", "none")
       .attr("stroke", "rgba(255, 255, 255, 0.3)")
       .attr("stroke-width", 2);
     
-    // Cercle intérieur
-    g.append("circle")
+    // Draw inner circle
+    svg.append("circle")
+      .attr("cx", centerX)
+      .attr("cy", centerY)
       .attr("r", innerRadius)
       .attr("fill", "none")
       .attr("stroke", "rgba(255, 255, 255, 0.2)")
       .attr("stroke-width", 1);
     
-    // Points cardinaux correctement placés
-    // Nord à 0° (haut), Est à 90° (droite), etc.
-    const cardinalPoints = [
-      { angle: 0, label: "N" },   // Nord en haut
-      { angle: 90, label: "E" },  // Est à droite
-      { angle: 180, label: "S" }, // Sud en bas
-      { angle: 270, label: "W" }  // Ouest à gauche
-    ];
-    
-    // Fonction pour convertir l'angle d'azimut (0° au Nord) en angle SVG (0° à l'Est)
-    const toSvgAngle = (a: number) => ((a - 90) + 360) % 360;
-    
-    // Ajouter des graduations tous les 30 degrés
+    // Draw degree markings every 30 degrees
     for (let angle = 0; angle < 360; angle += 30) {
-      const radian = toSvgAngle(angle) * Math.PI / 180;
       const isCardinal = angle % 90 === 0;
       const tickLength = isCardinal ? 15 : 10;
       
-      g.append("line")
-        .attr("x1", Math.cos(radian) * innerRadius)
-        .attr("y1", Math.sin(radian) * innerRadius)
-        .attr("x2", Math.cos(radian) * (innerRadius + tickLength))
-        .attr("y2", Math.sin(radian) * (innerRadius + tickLength))
+      const innerPos = getPositionFromAngle(angle, innerRadius, centerX, centerY);
+      const outerPos = getPositionFromAngle(angle, innerRadius + tickLength, centerX, centerY);
+      
+      // Draw tick mark
+      svg.append("line")
+        .attr("x1", innerPos.x)
+        .attr("y1", innerPos.y)
+        .attr("x2", outerPos.x)
+        .attr("y2", outerPos.y)
         .attr("stroke", isCardinal ? "white" : "rgba(255, 255, 255, 0.6)")
         .attr("stroke-width", isCardinal ? 2 : 1);
-        
-      // Ajouter les valeurs d'angle tous les 30 degrés
+      
+      // Draw degree label (except for cardinal points)
       if (!isCardinal) {
-        g.append("text")
-          .attr("x", Math.cos(radian) * (radius + 10))
-          .attr("y", Math.sin(radian) * (radius + 10))
+        const labelPos = getPositionFromAngle(angle, labelRadius, centerX, centerY);
+        svg.append("text")
+          .attr("x", labelPos.x)
+          .attr("y", labelPos.y)
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
           .attr("fill", "rgba(255, 255, 255, 0.6)")
@@ -119,12 +134,19 @@ const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimut
       }
     }
     
-    // Ajouter les labels des points cardinaux
+    // Draw cardinal points
+    const cardinalPoints = [
+      { angle: 0, label: "N" },
+      { angle: 90, label: "E" },
+      { angle: 180, label: "S" },
+      { angle: 270, label: "W" }
+    ];
+    
     cardinalPoints.forEach(point => {
-      const radian = toSvgAngle(point.angle) * Math.PI / 180;
-      g.append("text")
-        .attr("x", Math.cos(radian) * (radius + 15))
-        .attr("y", Math.sin(radian) * (radius + 15))
+      const pos = getPositionFromAngle(point.angle, labelRadius + 5, centerX, centerY);
+      svg.append("text")
+        .attr("x", pos.x)
+        .attr("y", pos.y)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
         .attr("fill", "white")
@@ -133,98 +155,81 @@ const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimut
         .text(point.label);
     });
     
-    // Le secteur sélectionné
-    let minAngle = minAzimuth;
-    let maxAngle = maxAzimuth;
-    
-    // Si minAzimuth > maxAzimuth, ajuster les angles pour un tracé correct
-    if (minAngle > maxAngle && maxAngle !== 0) {
-      maxAngle += 360;
-    }
-    
-    // Dessiner le secteur sélectionné - Changement de couleur à orange
-    const arcPath = getArcPath(minAngle, maxAngle, innerRadius);
-    g.append("path")
-      .attr("d", arcPath)
-      .attr("fill", "rgba(255, 170, 0, 0.4)") // Modifié à orange (ffaa00) avec transparence
-      .attr("stroke", "rgba(255, 170, 0, 0.8)") // Contour orange
+    // Draw selected sector - Changed to purple with higher transparency
+    const sectorPath = createSectorPath(minAzimuth, maxAzimuth, innerRadius, centerX, centerY);
+    svg.append("path")
+      .attr("d", sectorPath)
+      .attr("fill", "rgba(180, 0, 255, 0.3)") // Changed to purple with higher transparency
+      .attr("stroke", "rgba(180, 0, 255, 0.6)") // Changed to purple with medium transparency
       .attr("stroke-width", 1);
-
-    // Calcule l'angle à partir des coordonnées - correction pour que 0° soit au Nord
-    const calculateAngle = (x: number, y: number): number => {
-      // Atan2 donne l'angle en radians par rapport à l'axe positif X, où positif Y pointe vers le bas
-      // Nous convertissons en degrés et ajustons pour que 0° soit au nord
-      const angle = Math.atan2(y, x) * 180 / Math.PI;
-      // +90 pour faire correspondre l'origine au Nord (plutôt qu'à l'Est)
-      return normalizeAngle(angle + 90);
-    };
     
-    // Les poignées pour le min et max azimut - Changement de couleur à purple
+    // Create draggable handles for min and max azimuth
     const createHandle = (angle: number, type: "min" | "max") => {
-      const radian = toSvgAngle(angle) * Math.PI / 180;
-      const x = Math.cos(radian) * innerRadius;
-      const y = Math.sin(radian) * innerRadius;
+      const pos = getPositionFromAngle(angle, innerRadius, centerX, centerY);
       
-      // Ligne du centre à la poignée
-      g.append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", x)
-        .attr("y2", y)
-        .attr("stroke", "#b400ff") // Modifié à purple
+      // Draw line from center to handle - Changed back to purple
+      svg.append("line")
+        .attr("x1", centerX)
+        .attr("y1", centerY)
+        .attr("x2", pos.x)
+        .attr("y2", pos.y)
+        .attr("stroke", "#b400ff") // Changed back to purple from orange
         .attr("stroke-width", 2)
-        .attr("stroke-dasharray", "4 2");
+        .attr("class", "no-hover-effect"); // Ajout de la classe pour désactiver l'effet hover
       
-      // Cercle poignée
-      const handle = g.append("circle")
-        .attr("cx", x)
-        .attr("cy", y)
+      // Draw handle circle - Changed back to purple
+      const handle = svg.append("circle")
+        .attr("cx", pos.x)
+        .attr("cy", pos.y)
         .attr("r", 10)
-        .attr("fill", "#b400ff") // Modifié à purple
-        .attr("cursor", "pointer")
-        .attr("class", `handle-${type}`);
+        .attr("fill", "#b400ff") // Changed back to purple from orange
+        .attr("class", "no-hover-effect") // Ajout de la classe pour désactiver l'effet hover
+        .attr("cursor", "pointer");
       
-      // Label de l'angle
-      g.append("text")
-        .attr("x", Math.cos(radian) * (innerRadius + 25))
-        .attr("y", Math.sin(radian) * (innerRadius + 25))
+      // Add angle label - Changed back to purple
+      const labelPos = getPositionFromAngle(angle, innerRadius + 25, centerX, centerY);
+      svg.append("text")
+        .attr("x", labelPos.x)
+        .attr("y", labelPos.y)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        .attr("fill", "#b400ff") // Modifié à purple
+        .attr("fill", "#b400ff") // Changed back to purple from orange
+        .attr("class", "no-hover-effect") // Ajout de la classe pour désactiver l'effet hover
         .attr("font-weight", "bold")
         .text(angle + "°");
       
-      // Gestion du drag améliorée pour cette poignée
-      handle.call(
-        d3.drag<SVGCircleElement, unknown>()
-          .on("start", (event) => {
-            const [x, y] = d3.pointer(event, g.node());
-            setDragging(type);
-            setDragStartAngle(calculateAngle(x, y));
-          })
-          .on("drag", (event) => {
-            const [x, y] = d3.pointer(event, g.node());
-            const currentAngle = calculateAngle(x, y);
-            
-            // Calcul amélioré pour un mouvement plus fluide
-            if (type === "min") {
-              onChange(currentAngle, maxAzimuth);
-            } else {
-              onChange(minAzimuth, currentAngle);
-            }
-          })
-          .on("end", () => {
-            setDragging(null);
-            setDragStartAngle(null);
-          })
-      );
+      // Fixed drag behavior with proper TypeScript typing
+      const dragBehavior = d3.drag<SVGCircleElement, unknown>()
+        .on("drag", (event) => {
+          // Calculate azimuth angle from mouse position
+          const mouseX = event.x;
+          const mouseY = event.y;
+          const newAngle = normalizeAngle(getAzimuthFromMouse(mouseX, mouseY, centerX, centerY));
+          
+          // Update state based on which handle is being dragged
+          if (type === "min") {
+            // Keep 360 as 360, not 0
+            const adjustedNewAngle = newAngle === 0 ? 360 : newAngle;
+            onChange(adjustedNewAngle, maxAzimuth);
+          } else {
+            // Special handling for max angle - allow setting to 360
+            const adjustedNewAngle = newAngle === 0 ? 360 : newAngle;
+            onChange(minAzimuth, adjustedNewAngle);
+          }
+        });
+      
+      // Apply the drag behavior to the handle
+      handle.call(dragBehavior);
     };
     
-    // Créer les deux poignées
+    // Create both handles, making sure we display 360° instead of 0° for the max if appropriate
     createHandle(minAzimuth, "min");
-    createHandle(maxAzimuth, "max");
+    createHandle(maxAzimuth === 0 ? 360 : maxAzimuth, "max");
     
-  }, [minAzimuth, maxAzimuth, dimensions, onChange, dragStartAngle]);
+  }, [minAzimuth, maxAzimuth, dimensions, onChange]);
+
+  // Display 360 instead of 0 for max azimuth
+  const displayMaxAzimuth = maxAzimuth === 0 ? 360 : maxAzimuth;
 
   return (
     <div className="flex justify-center items-center w-full">
@@ -236,10 +241,9 @@ const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimut
           className="cursor-default"
           style={{ touchAction: "none" }}
         />
-        {/* Format modifié pour afficher "Between X° and Y°" */}
         <div className="flex justify-center text-white mt-2 text-sm">
           <span>
-            Between <span className="text-purple font-bold">{minAzimuth}°</span> and <span className="text-purple font-bold">{maxAzimuth}°</span>
+            Between <span className="text-purple font-bold">{minAzimuth}°</span> and <span className="text-purple font-bold">{displayMaxAzimuth}°</span>
           </span>
         </div>
       </div>

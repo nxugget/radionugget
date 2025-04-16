@@ -51,8 +51,6 @@ export default function SatelliteSearch({
   // Helper function to get filter name for display
   const getFilterDisplayName = (filter: string) => {
     if (filter === "all") return "";
-    if (filter === "weather") return t("satellite.filterWeather");
-    if (filter === "amateur") return t("satellite.filterAmateur");
     if (filter === "favorite") return t("satellite.filterFavorites");
     return "";
   };
@@ -83,26 +81,6 @@ export default function SatelliteSearch({
             }`}
           >
             {t("satellite.filterAll")}
-          </button>
-          <button
-            onClick={() => setActiveFilter("weather")}
-            className={`px-4 py-2 rounded-md text-white font-bold ${
-              activeFilter === "weather"
-                ? "bg-purple"
-                : "bg-gray-900 hover:bg-purple"
-            }`}
-          >
-            {t("satellite.filterWeather")}
-          </button>
-          <button
-            onClick={() => setActiveFilter("amateur")}
-            className={`px-4 py-2 rounded-md text-white font-bold ${
-              activeFilter === "amateur"
-                ? "bg-purple"
-                : "bg-gray-900 hover:bg-purple"
-            }`}
-          >
-            {t("satellite.filterAmateur")}
           </button>
           <button
             onClick={() => setActiveFilter("favorite")}

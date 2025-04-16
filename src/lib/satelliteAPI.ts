@@ -1,8 +1,7 @@
 "use server";
 
 import { twoline2satrec, propagate, gstime, eciToEcf, ecfToLookAngles } from "satellite.js";
-import amateurData from "@/data/satellites/amateur.json";
-import weatherData from "@/data/satellites/weather.json";
+import satelliteData from "@/data/satellites.json";
 
 function deg2rad(deg: number): number {
   return (deg * Math.PI) / 180;
@@ -22,42 +21,31 @@ export interface Satellite {
   modulation: string;
   image: string;
   category: string;
+  transmitters: any[]; 
 }
 
 export interface SatellitePassData {
   startTime: string;
   endTime: string;
   maxElevation: number;
-  aosAzimuth: number; // Obligatoire
-  losAzimuth: number; // Obligatoire
+  aosAzimuth: number; 
+  losAzimuth: number; 
 }
 
 export async function getSatellites(): Promise<Satellite[]> {
-  // Combine satellites from all subfolder JSON files
-  return [
-    ...amateurData.map((data) => ({
-      id: data.id,
-      name: data.name,
-      tle1: data.tle1,
-      tle2: data.tle2,
-      description: data.description,
-      frequency: [], // Provide default or mapped values
-      modulation: "", // Provide default or mapped values
-      image: data.image,
-      category: data.category,
-    })),
-    ...weatherData.map((data) => ({
-      id: data.id,
-      name: data.name,
-      tle1: data.tle1,
-      tle2: data.tle2,
-      description: data.description,
-      frequency: [], // Provide default or mapped values
-      modulation: "", // Provide default or mapped values
-      image: data.image,
-      category: data.category,
-    }))
-  ];
+  // Transform the raw data to match the Satellite interface
+  return satelliteData.map((sat: any) => ({
+    id: sat.norad_id,
+    name: sat.name,
+    tle1: sat.tle1,
+    tle2: sat.tle2,
+    description: sat.description || "",
+    frequency: sat.transmitters ? sat.transmitters.map((tx: any) => tx.downlink) : [],
+    modulation: sat.transmitters && sat.transmitters.length > 0 ? sat.transmitters[0].mode : "",
+    image: sat.image, 
+    category: sat.category || "",
+    transmitters: sat.transmitters || [] // Transmet l'ensemble des transmitters
+  }));
 }
 
 /**
@@ -88,7 +76,9 @@ export async function getSatellitePasses(
   const passes: SatellitePassData[] = [];
   const step = 60; // Vérification toutes les 60 secondes
   let currentPass: SatellitePassData | null = null;
-  let passAzimuthsWithinRange = false; // Pour suivre si le passage inclut des azimuts dans la plage spécifiée
+  let passMaxElevation = 0; // Pour suivre l'élévation maximale pendant un passage
+  let passStartAzimuth = 0; // Pour enregistrer l'azimut au début du passage
+  let passEndAzimuth = 0; // Pour enregistrer l'azimut à la fin du passage
 
   // Fonction pour vérifier si un azimut est dans la plage demandée
   const isAzimuthInRange = (azimuth: number): boolean => {
@@ -124,9 +114,11 @@ export async function getSatellitePasses(
     const azimuthDeg = rad2deg(lookAngles.azimuth);
 
     if (elevationDeg > elevation) {
-      const azimuthInRange = isAzimuthInRange(azimuthDeg);
-      
       if (!currentPass) {
+        // Début d'un nouveau passage
+        passStartAzimuth = azimuthDeg; // Enregistrer l'azimut de début
+        passMaxElevation = elevationDeg;
+        
         currentPass = {
           startTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
           endTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
@@ -134,29 +126,46 @@ export async function getSatellitePasses(
           aosAzimuth: azimuthDeg,
           losAzimuth: azimuthDeg,
         };
-        passAzimuthsWithinRange = azimuthInRange;
       } else {
+        // Mise à jour du passage en cours
         currentPass.endTime = new Date((t + utcOffset * 3600) * 1000).toISOString();
-        currentPass.maxElevation = Math.max(currentPass.maxElevation, elevationDeg);
-        currentPass.losAzimuth = azimuthDeg;
+        currentPass.losAzimuth = azimuthDeg; // Mettre à jour l'azimut de fin
         
-        // Si un des points du passage est dans la plage d'azimut, on considère le passage comme valide
-        if (azimuthInRange) {
-          passAzimuthsWithinRange = true;
+        // Mettre à jour l'élévation maximale si nécessaire
+        if (elevationDeg > passMaxElevation) {
+          passMaxElevation = elevationDeg;
+          currentPass.maxElevation = elevationDeg;
         }
+        
+        // Enregistrer l'azimut actuel comme potentiel azimut de fin
+        passEndAzimuth = azimuthDeg;
       }
     } else if (currentPass) {
-      // Fin d'un passage, on l'ajoute seulement s'il contenait des azimuts dans la plage demandée
-      if (passAzimuthsWithinRange) {
+      // Fin d'un passage - vérifier si les azimuts de début ET de fin sont dans la plage
+      const startInRange = isAzimuthInRange(passStartAzimuth);
+      const endInRange = isAzimuthInRange(passEndAzimuth);
+      
+      // Ajouter le passage seulement si les deux azimuts sont dans la plage demandée
+      if (startInRange && endInRange) {
         passes.push(currentPass);
       }
+      
+      // Réinitialisation pour le prochain passage
       currentPass = null;
-      passAzimuthsWithinRange = false;
+      passMaxElevation = 0;
+      passStartAzimuth = 0;
+      passEndAzimuth = 0;
     }
   }
 
-  if (currentPass && passAzimuthsWithinRange) {
-    passes.push(currentPass);
+  // Pour le dernier passage en cours si la simulation se termine pendant un passage
+  if (currentPass) {
+    const startInRange = isAzimuthInRange(passStartAzimuth);
+    const endInRange = isAzimuthInRange(passEndAzimuth);
+    
+    if (startInRange && endInRange) {
+      passes.push(currentPass);
+    }
   }
 
   return passes;

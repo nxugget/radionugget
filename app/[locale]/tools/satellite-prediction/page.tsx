@@ -387,8 +387,8 @@ export default function SatelliteTracker() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-6">
-      <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-6">
+    <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:p-6">
+      <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-3 sm:p-6">
         <div className="w-full flex justify-center mb-6">
           <TypewriterEffectSmooth
             as="h1"
@@ -623,44 +623,153 @@ export default function SatelliteTracker() {
 
             <div className="bg-nottooblack p-4 rounded-md">
               <h2 className="text-white text-lg text-center mb-4">{t("satellite.trajectorySettings")}</h2>
-              <div className="flex flex-col md:flex-row gap-6 justify-center">
+              <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
                 <div className="md:w-1/2 flex flex-col items-center justify-center">
                   <p className="text-white mb-3 text-center">{t("satellite.minElevation")}</p>
-                  <div className="relative h-[250px] w-[60px] flex justify-center mx-auto">
-                    <div className="absolute w-6 h-full bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className="relative flex justify-center items-center mx-auto"
+                    style={{ height: "250px" }}
+                  >
+                    <div className="vertical-slider-container" style={{ height: "250px", position: "relative", width: "40px" }}>
+                      {/* Piste de fond du slider */}
                       <div 
-                        className="w-full bg-purple rounded-full absolute bottom-0"
-                        style={{ height: `${(elevation/90)*100}%` }}
-                      ></div>
-                    </div>
-                    
-                    <input
-                      type="range"
-                      min="0"
-                      max="90"
-                      value={elevation}
-                      onChange={(e) => setElevation(Number(e.target.value))}
-                      className="absolute h-full opacity-0 cursor-pointer z-10 w-14"
-                      style={{ transform: "rotate(180deg)" }}
-                    />
-                    
-                    <div 
-                      className="absolute flex items-center justify-center rounded-full bg-purple text-white shadow-lg pointer-events-none z-0 transform -translate-x-1/2"
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        left: '50%',
-                        bottom: `calc(${(elevation/90)*100}% - 18px)`,
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        lineHeight: '1',
-                      }}
-                    >
-                      {elevation}°
+                        className="slider-track-bg"
+                        style={{
+                          position: "absolute",
+                          width: "6px",
+                          height: "100%",
+                          backgroundColor: "#333333",
+                          borderRadius: "3px",
+                          left: "50%",
+                          transform: "translateX(-50%)"
+                        }}
+                      />
+                      {/* Partie colorée active du slider */}
+                      <div 
+                        className="slider-track-fill"
+                        style={{
+                          position: "absolute",
+                          width: "6px",
+                          bottom: "0",
+                          backgroundColor: "#b400ff",
+                          borderRadius: "3px",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          height: `${(elevation/90) * 100}%`
+                        }}
+                      />
+                      {/* Indicateur de position du curseur */}
+                      <div
+                        className="slider-thumb"
+                        style={{
+                          position: "absolute",
+                          width: "16px",
+                          height: "16px",
+                          backgroundColor: "#b400ff",
+                          borderRadius: "50%",
+                          left: "50%",
+                          bottom: `calc(${(elevation/90) * 100}% - 8px)`,
+                          transform: "translateX(-50%)",
+                          boxShadow: "0 0 5px rgba(180, 0, 255, 0.5)"
+                        }}
+                      />
+                      {/* Zone tactile interactive révisée pour prévenir les erreurs */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                          cursor: "pointer",
+                          left: 0,
+                          top: 0
+                        }}
+                        onMouseDown={(e) => {
+                          // Capturer les références aux éléments dès le début
+                          const container = e.currentTarget;
+                          const rect = container.getBoundingClientRect();
+                          
+                          // Fonction qui calcule et met à jour l'élévation
+                          const calculateElevation = (clientY: number) => {
+                            const y = clientY - rect.top;
+                            const percentage = 1 - Math.max(0, Math.min(1, y / rect.height));
+                            const newValue = Math.round(percentage * 90);
+                            setElevation(Math.max(0, Math.min(90, newValue)));
+                          };
+                          
+                          // Appliquer immédiatement au premier clic
+                          calculateElevation(e.clientY);
+                          
+                          // Fonction de déplacement qui utilise les références capturées
+                          const handleMove = (moveEvent: MouseEvent) => {
+                            calculateElevation(moveEvent.clientY);
+                          };
+                          
+                          // Nettoyage des écouteurs d'événements
+                          const handleMouseUp = () => {
+                            document.removeEventListener('mousemove', handleMove);
+                            document.removeEventListener('mouseup', handleMouseUp);
+                          };
+                          
+                          // Ajout des écouteurs d'événements
+                          document.addEventListener('mousemove', handleMove);
+                          document.addEventListener('mouseup', handleMouseUp);
+                        }}
+                        onClick={(e) => {
+                          // Gestion simplifiée pour les clics simples
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const y = e.clientY - rect.top;
+                          const percentage = 1 - Math.max(0, Math.min(1, y / rect.height));
+                          const newValue = Math.round(percentage * 90);
+                          setElevation(Math.max(0, Math.min(90, newValue)));
+                        }}
+                        // Interface tactile simplifiée et plus robuste
+                        onTouchStart={(e) => {
+                          // Éviter les comportements par défaut
+                          e.preventDefault();
+                          
+                          // Capturer les références initiales
+                          const container = e.currentTarget;
+                          const rect = container.getBoundingClientRect();
+                          
+                          // Fonction qui calcule et met à jour l'élévation
+                          const calculateElevation = (clientY: number) => {
+                            if (!rect) return; // Protection supplémentaire
+                            const y = clientY - rect.top;
+                            const percentage = 1 - Math.max(0, Math.min(1, y / rect.height));
+                            const newValue = Math.round(percentage * 90);
+                            setElevation(Math.max(0, Math.min(90, newValue)));
+                          };
+                          
+                          // Appliquer au premier toucher
+                          if (e.touches && e.touches[0]) {
+                            calculateElevation(e.touches[0].clientY);
+                          }
+                          
+                          // Fonction de gestion du mouvement
+                          const handleTouchMove = (touchEvent: TouchEvent) => {
+                            touchEvent.preventDefault();
+                            if (touchEvent.touches && touchEvent.touches[0]) {
+                              calculateElevation(touchEvent.touches[0].clientY);
+                            }
+                          };
+                          
+                          // Nettoyage des écouteurs
+                          const handleTouchEnd = () => {
+                            document.removeEventListener('touchmove', handleTouchMove, { passive: false } as EventListenerOptions);
+                            document.removeEventListener('touchend', handleTouchEnd);
+                          };
+                          
+                          // Ajout des écouteurs tactiles
+                          document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                          document.addEventListener('touchend', handleTouchEnd);
+                        }}
+                      />
                     </div>
                   </div>
+                  <div className="text-purple text-center mt-2 font-bold text-xl">
+                    {elevation}°
+                  </div>
                 </div>
-                
                 <div className="md:w-1/2 flex flex-col items-center justify-center">
                   <p className="text-white mb-3 text-center">{t("satellite.azimuthFilter")}</p>
                   <AzimuthSelector
@@ -675,7 +784,7 @@ export default function SatelliteTracker() {
         </div>
 
         {/* Bouton Predict centré sur l'écran au lieu d'être dans la div de droite */}
-        <div className="mt-8 w-full flex justify-center">
+        <div className="mt-8 w-full flex flex-col items-center">
           <button
             onClick={getPredictions}
             className="px-[40px] py-[17px] rounded-full cursor-pointer border-0 bg-white shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"

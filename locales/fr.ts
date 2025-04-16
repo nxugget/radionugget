@@ -54,7 +54,7 @@ export default {
       searchPlaceholder: "Rechercher un satellite...",
       lastUpdate: "Dernière mise à jour:",
       lastTleUpdate: "Dernière mise à jour TLE:",
-      lastTransponderUpdate: "Dernière mise à jour transpondeurs:", 
+      lastTransmitterUpdate: "Dernière mise à jour transmetteurs:", 
       noDescription: "Aucune description n'est disponible pour le moment.",
       status: "Statut:",
       frequency: "Fréquence:",
@@ -71,7 +71,7 @@ export default {
       invalidGridSquare: "Gridsquare invalide",
       satMap: "Carte Satellite",
       tleTitle: "TLE",
-      transponders: "Transpondeur"
+      transponders: "Transmetteurs"
     },
     countdown: {
       losIn: "LOS dans",
@@ -103,10 +103,9 @@ export default {
       revolutionNumber: "Numéro de révolution à l'époque",
       noInfo: "Pas d'info"
     },
-    transponder: {
-      title: "Transpondeurs",
+    transmitter: {
       uplink: "Montée",
-      downlink: "Descente", 
+      downlink: "Descente",
       beacon: "Balise",
       mode: "Mode",
       active: "Actif",
@@ -124,8 +123,8 @@ export default {
     predictableSatellites: "Satellites prédictibles",
     satellitesToPredict: "Satellites à prédire",
     chooseYourPosition: "Choisir votre position",
-    cityPlaceholder: "Ville (ex: Paris)",
-    gridSquarePlaceholder: "Grid Square (ex: JN18du)",
+    cityPlaceholder: "Ville (ex: Reykjavik)",
+    gridSquarePlaceholder: "Grid Square (ex: DM27bf)",
     latitude: "Latitude",
     longitude: "Longitude",
     coordinatesExplanation: "Les valeurs négatives indiquent le Sud pour la latitude et l'Ouest pour la longitude.",

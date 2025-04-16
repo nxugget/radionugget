@@ -21,6 +21,7 @@ interface Satellite {
   name: string;
   category?: string;
   image?: string;
+  country?: string; // Ajout de la propriété country
 }
 
 interface TransponderMode {
@@ -50,6 +51,7 @@ interface SatelliteDetails {
   transponders?: {
     modes: TransponderMode[];
   };
+  transmitters?: any[]; // Added transmitters for compatibility
 }
 
 interface Point {
@@ -61,12 +63,52 @@ interface Point {
 const deg2rad = (deg: number) => deg * (Math.PI / 180);
 const rad2deg = (rad: number) => rad * (180 / Math.PI);
 
+// Ajout de la fonction helper pour formater la fréquence
+const formatFrequency = (freq: number): string =>
+  `${(freq / 1000000).toFixed(4).replace('.', ',')}`;
+
 function isValidEciVec3(value: any): value is EciVec3<number> {
   return value && typeof value === "object" && "x" in value && "y" in value && "z" in value;
 }
 
 // Constantes pour le localStorage
 const GRIDSQUARE_STORAGE_KEY = "satellite-explorer-gridsquare";
+
+function SatelliteItem({ satellite }: { satellite: any }) {
+  const countries = satellite.country 
+    ? satellite.country.split(",").map((c: string) => c.trim().toLowerCase()) 
+    : [];
+
+  return (
+    <div>
+      <h2 className="flex items-center gap-2">
+        {satellite.name}
+        {countries.map((code: string, idx: number) => (
+          <img
+            key={idx}
+            src={`/images/flags/${code}.png`}
+            alt={code}
+            className="w-6 h-4 object-cover rounded"
+          />
+        ))}
+      </h2>
+      {satellite.transmitters && satellite.transmitters.length > 0 && (
+        <div>
+          <h3>Transmitters</h3>
+          <ul>
+            {satellite.transmitters.map((tx: any, idx: number) => (
+              <li key={idx}>
+                {tx.description ? tx.description : ""}
+                {tx.mode && ` – Mode: ${tx.mode}`}
+                {tx.downlink && ` – Downlink: ${tx.downlink}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function SatelliteInfoPage() {
   const t = useI18n(); // Initialize i18n
@@ -661,14 +703,26 @@ export default function SatelliteInfoPage() {
                   className="w-full sm:w-80 mx-auto"
                   showButton={false}
                 />
+                {/* Mise à jour du bloc Powered by */}
+                <div className="flex justify-center mt-2">
+                  <div className="inline-flex items-center bg-gray-700/40 rounded px-1 py-1">
+                    <span className="text-gray-400 text-sm mr-2">Powered by</span>
+                    <a href="https://www.satnogs.org" target="_blank" rel="noopener noreferrer">
+                      <img src="/images/icon/satnogs.png" alt="SatNOGS" className="h-6 w-auto mx-1 cursor-pointer" />
+                    </a>
+                    <a href="https://celestrak.com" target="_blank" rel="noopener noreferrer">
+                      <img src="/images/icon/celestrak.png" alt="CelesTrak" className="h-6 w-auto mx-1 cursor-pointer" />
+                    </a>
+                  </div>
+                </div>
                 {showSuggestions && filteredSatellites.length > 0 && (
                   <div
                     ref={suggestionsRef}
                     className="absolute top-full left-1/2 transform -translate-x-1/2 w-full sm:w-80 bg-black/70 rounded-lg mt-2 max-h-[150px] overflow-y-auto z-50 shadow-lg" // Centré avec l'input
                   >
-                    {filteredSatellites.map((sat) => (
+                    {filteredSatellites.map((sat, index) => (
                       <div
-                        key={sat.id}
+                        key={`${sat.id}-${index}`}
                         className="p-2 text-white hover:bg-zinc-700 cursor-pointer"
                         onClick={() => handleSatelliteSelect(sat.id)}
                       >
@@ -691,81 +745,66 @@ export default function SatelliteInfoPage() {
                       <h2 className="text-2xl sm:text-3xl font-bold text-white">
                         {details?.name || selectedSatellite.name}
                       </h2>
-                      {details?.country_image && (
+                      {(details?.country_image || (selectedSatellite?.country && selectedSatellite.country.split(",")[0].trim() !== "")) && (
                         <div className="w-10 h-6 rounded-md shadow-md overflow-hidden">
                           <img
-                            src={details.country_image}
+                            src={
+                              details?.country_image ||
+                              (selectedSatellite?.country
+                                ? `/images/flags/${selectedSatellite.country.split(",")[0].trim().toLowerCase()}.png`
+                                : "")
+                            }
                             alt="Country flag"
                             className="w-full h-full object-cover"
+                            onError={(e) => (e.currentTarget.style.display = "none")}
                           />
                         </div>
                       )}
                     </div>
-                    <p className="text-gray-300 text-lg">
-                      {details?.description ||
-                        t("satellites.explorer.noDescription")}
-                    </p>
                     
-                    {/* Transponder Modes Display */}
-                    {details?.transponders?.modes && details.transponders.modes.length > 0 && (
-                      <div className="mt-4 mb-8"> {/* On garde la marge en bas */}
-                        <h3 className="text-lg font-semibold text-white mb-2">
-                          {t("satellites.transponder.title")}
-                        </h3>
-                        
-                        {/* Information de dernière mise à jour des transpondeurs - alignée à gauche comme demandé */}
+                    {/* Transmitter Display */}
+                    {(details?.transmitters ?? []).length > 0 && (
+                      <div className="mt-4 mb-8">
                         {lastTransponderUpdate && (
                           <p className="text-xs text-gray-400 mb-3">
-                            {t("satellites.explorer.lastTransponderUpdate")} {lastTransponderUpdate} UTC
+                            {t("satellites.explorer.lastTransmitterUpdate")} {lastTransponderUpdate} UTC
                           </p>
                         )}
-                        
-                        <div className="flex flex-wrap gap-2">
-                          {details.transponders.modes.map((mode, index) => {
-                            // Définir la couleur de bordure en fonction du statut
-                            const borderColorClass = mode.status === 'active' 
-                              ? 'border-green-500' 
-                              : 'border-red-500';
-                            
+                        <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
+                          {(details?.transmitters ?? []).map((tx: any, index: number) => {
+                            const isActive = tx.status === "active";
                             return (
-                              <div 
-                                key={index} 
-                                className={`bg-black bg-opacity-60 rounded-lg p-2 border ${borderColorClass} shadow-md w-64 h-36`}
+                              <div
+                                key={index}
+                                className={`relative bg-black bg-opacity-60 rounded-lg p-2 border shadow-md w-64 h-36 ${isActive ? "border-green-500" : "border-red-500"}`}
                               >
+                                {/* Status label */}
+                                <div className={`absolute top-2 right-2 bg-black bg-opacity-50 border rounded-md px-1 py-0.5 text-xs ${isActive ? "border-green-500 text-green-500" : "border-red-500 text-red-500"}`}>
+                                  {isActive ? t("satellites.transmitter.active") : t("satellites.transmitter.inactive")}
+                                </div>
                                 <div className="flex flex-col gap-1 h-full">
-                                  {/* Titre en haut avec "Mode" ajouté avant le mode - suppression des événements de survol */}
+                                  {/* Affiche la description plutôt que le mode */}
                                   <div className="flex items-center justify-between border-b border-gray-700 pb-1 mb-1">
                                     <span className="font-medium text-white text-lg">
-                                      Mode {mode.mode || `${index+1}`}
-                                    </span>
-                                    <span className={`text-sm px-2 py-0.5 rounded-full ${
-                                      mode.status === 'active' ? 'bg-green-800 text-green-200' : 
-                                      'bg-red-800 text-red-200'
-                                    }`}>
-                                      {mode.status === 'active' 
-                                        ? t("satellites.transponder.active") 
-                                        : t("satellites.transponder.inactive")}
+                                      {tx.description || `Transmitter ${index + 1}`}
                                     </span>
                                   </div>
-                                  
-                                  {/* Contenu des fréquences */}
                                   <div className="flex-1 flex flex-col justify-between">
-                                    {mode.uplink ? (
+                                    {tx.uplink ? (
                                       <div className="text-sm">
-                                        <span className="text-blue-400">↑ {t("satellites.transponder.uplink")}:</span> <span className="text-white">{mode.uplink} MHz</span>
+                                        <span className="text-blue-400">↑ {t("satellites.transmitter.uplink")}:</span> <span className="text-white">{formatFrequency(tx.uplink)} MHz</span>
                                       </div>
                                     ) : <div className="text-sm opacity-0">-</div>}
                                     
-                                    {mode.downlink ? (
+                                    {tx.downlink ? (
                                       <div className="text-sm">
-                                        {/* Couleur du texte Downlink changée à rose */}
-                                        <span className="text-pink-400">↓ {t("satellites.transponder.downlink")}:</span> <span className="text-white">{mode.downlink} MHz</span>
+                                        <span className="text-pink-400">↓ {t("satellites.transmitter.downlink")}:</span> <span className="text-white">{formatFrequency(tx.downlink)} MHz</span>
                                       </div>
                                     ) : <div className="text-sm opacity-0">-</div>}
                                     
-                                    {mode.beacon ? (
+                                    {tx.beacon ? (
                                       <div className="text-sm">
-                                        <span className="text-yellow-400">🔊 {t("satellites.transponder.beacon")}:</span> <span className="text-white">{mode.beacon} MHz</span>
+                                        <span className="text-yellow-400">🔊 {t("satellites.transmitter.beacon")}:</span> <span className="text-white">{formatFrequency(tx.beacon)} MHz</span>
                                       </div>
                                     ) : <div className="text-sm opacity-0">-</div>}
                                   </div>
@@ -777,12 +816,10 @@ export default function SatelliteInfoPage() {
                       </div>
                     )}
                   </div>
-                  <div className="w-full sm:w-56 flex-shrink-0 mb-2">
+                  <div className="w-full sm:w-72 flex-shrink-0 mb-2">
                     {imageError || !(details?.photoUrl || selectedSatellite?.image) ? (
-                      <div className="w-full h-32 flex flex-col items-center justify-center bg-gray-900 bg-opacity-30 text-purple text-xl font-bold rounded-lg">
-                        <span>{details?.name || selectedSatellite?.name || "Satellite"}</span>
-                        <span>{t("satellites.explorer.photoNA")}</span>
-                      </div>
+                      // display nothing at all if no image found
+                      null
                     ) : (
                       <div className="relative w-full h-32">
                         <img
@@ -791,9 +828,6 @@ export default function SatelliteInfoPage() {
                           className="w-full h-full object-contain rounded-lg"
                           onError={() => setImageError(true)}
                         />
-                        <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1 py-0.5 rounded">
-                          {details?.image_source || t("satellites.explorer.source")}
-                        </div>
                       </div>
                     )}
                   </div>
