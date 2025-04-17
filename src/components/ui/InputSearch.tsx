@@ -12,6 +12,8 @@ interface InputSearchProps {
 	 * Permet de passer des classes personalisées pour la largeur (ex: "w-auto") qui remplace "w-full" par défaut.
 	 */
 	className?: string;
+	// Nouvelle prop pour modifier la taille du texte de l'input
+	textSize?: string;
 }
 
 const defaultIcon = (
@@ -21,7 +23,7 @@ const defaultIcon = (
 );
 
 const InputSearch = forwardRef<HTMLFormElement, InputSearchProps>(
-  ({ placeholder, value, onChange, onFocus, onSubmit, buttonContent = defaultIcon, showButton = true, className }, ref) => {
+  ({ placeholder, value, onChange, onFocus, onSubmit, buttonContent = defaultIcon, showButton = true, className, textSize = "text-sm" }, ref) => {
     // Utilise la classe passée ou "w-full" par défaut
     const inputWidthClass = className ? className : "w-full";
     return (
@@ -32,7 +34,7 @@ const InputSearch = forwardRef<HTMLFormElement, InputSearchProps>(
           value={value}
           onChange={onChange}
           onFocus={onFocus} // Ajout de l'événement onFocus
-          className={`bg-gray-700 text-white rounded-full pl-4 ${showButton ? "pr-12" : "pr-4"} py-2 ${inputWidthClass} focus:outline-none focus:ring-1 focus:ring-purple focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
+          className={`bg-gray-700 text-white ${textSize} rounded-full pl-4 ${showButton ? "pr-12" : "pr-4"} py-2 ${inputWidthClass} focus:outline-none focus:ring-1 focus:ring-purple focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
         />
         {showButton && (
           <button

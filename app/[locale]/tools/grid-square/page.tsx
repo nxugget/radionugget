@@ -313,7 +313,7 @@ export default function GridSquareCalculator() {
                 value={directSearch}
                 onChange={(e) => setDirectSearch(e.target.value)}
                 onSubmit={handleDirectSearchSubmit}
-                className="w-auto min-w-[200px]" // largeur minimale augmentée
+                className="w-auto min-w-[250px]" // increased minimum width from 200px to 250px
               />
               <div className="text-center">
                 {directSearchError && (
