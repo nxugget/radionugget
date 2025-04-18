@@ -49,7 +49,7 @@ export default {
   betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com",
   satellites: {
     explorer: {
-      title: "Explorateur de Satellites",
+      title: "Explorateur Satellites",
       loading: "Chargement...",
       searchPlaceholder: "Rechercher un satellite...",
       lastUpdate: "Dernière mise à jour:",
@@ -86,6 +86,9 @@ export default {
       launchYear: "Désignation internationale (Année de lancement)",
       launchNumber: "Désignation internationale (Numéro de lancement)",
       launchPiece: "Désignation internationale (Partie du lancement)",
+      intlDesignatorYear: "Désignation internationale (Année de lancement)",  // ajout
+      intlDesignatorLaunchNumber: "Désignation internationale (Numéro de lancement)",  // ajout
+      intlDesignatorPiece: "Désignation internationale (Partie du lancement)",  // ajout
       epochYear: "Année d'époque (Deux derniers chiffres de l'année)",
       epochDay: "Époque (Jour de l'année plus partie fractionnelle)",
       firstTimeDerivative: "Première dérivée temporelle du mouvement moyen (rev/jour²)",
@@ -116,6 +119,7 @@ export default {
     message: "Pour sauvegarder tes favoris et ta position, cette page utilise des cookies. Ces derniers sont stockés uniquement sur ton appareil et personne d'autres n'y aura accès :)",
     accept: "Accepter"
   },
+  and: "et", // Ajouté pour "Powered by"
   satellite: {
     name: "Satellite",
     pass: "Passage",

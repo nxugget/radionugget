@@ -156,17 +156,14 @@ export default function SatelliteInfoPage() {
       const storedGridSquare = localStorage.getItem(GRIDSQUARE_STORAGE_KEY);
       
       if (storedGridSquare && isValidGridSquare(storedGridSquare)) {
-        console.log("Loaded GridSquare from localStorage:", storedGridSquare);
         setGridSquare(storedGridSquare);
       } else {
-        console.log("Using default GridSquare: DM27bf");
         setGridSquare("DM27bf");
       }
       
       // Marquer comme chargée pour éviter les problèmes de rendu
       setGridSquareLoaded(true);
     } catch (error) {
-      console.error("Error loading GridSquare from localStorage:", error);
       setGridSquare("DM27bf");
       setGridSquareLoaded(true);
     }
@@ -178,13 +175,10 @@ export default function SatelliteInfoPage() {
     if (!gridSquareLoaded || !gridSquare) return;
     
     try {
-      console.log("Updating coordinates from GridSquare:", gridSquare);
       const coords = getGridSquareCoords(gridSquare);
       setLatitude(coords.lat);
       setLongitude(coords.lon);
     } catch (error) {
-      console.error("Error converting grid square to coordinates:", error);
-      
       // Fallback à la valeur par défaut en cas d'erreur
       try {
         const defaultCoords = getGridSquareCoords("DM27bf");
@@ -200,56 +194,46 @@ export default function SatelliteInfoPage() {
 
   useEffect(() => {
     // Fetch the TLE last update data
-    console.log('Fetching TLE update information...');
     fetch('/api/tle-last-update')
       .then(response => {
-        console.log('TLE update response status:', response.status);
         if (!response.ok) {
           throw new Error(`API error ${response.status}`);
         }
         return response.json();
       })
       .then(data => {
-        console.log('TLE update data received:', data);
         if (data && data.lastUpdate) {
           // Format the date to show date and time (without seconds) and specify UTC
           const date = new Date(data.lastUpdate);
           const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0, -3);
-          console.log('Formatted TLE update date:', formattedDate);
           setLastTleUpdate(formattedDate);
         } else {
           setTleUpdateError('No lastUpdate field in response');
         }
       })
       .catch(error => {
-        console.error('Error fetching TLE update information:', error);
         setTleUpdateError(error.message);
       });
       
     // Nouvelle requête pour les transpondeurs
-    console.log('Fetching transponder update information...');
     fetch('/api/transponders-last-update')
       .then(response => {
-        console.log('Transponder update response status:', response.status);
         if (!response.ok) {
           throw new Error(`API error ${response.status}`);
         }
         return response.json();
       })
       .then(data => {
-        console.log('Transponder update data received:', data);
         if (data && data.updated_at) {
           // Même formatage que pour les TLEs
           const date = new Date(data.updated_at);
           const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\..+/, '').slice(0, -3);
-          console.log('Formatted transponder update date:', formattedDate);
           setLastTransponderUpdate(formattedDate);
         } else {
           setTransponderUpdateError('No updated_at field in response');
         }
       })
       .catch(error => {
-        console.error('Error fetching transponder update information:', error);
         setTransponderUpdateError(error.message);
       });
   }, []);
@@ -284,11 +268,17 @@ export default function SatelliteInfoPage() {
           setDetails(data);
         })
         .catch((error) => {
-          console.error("Erreur de récupération des détails :", error);
           setDetails(null);
         });
     }
   }, [selectedSatellite, details]);
+
+  useEffect(() => {
+    if (selectedSatellite) {
+      console.log("Satellite sélectionné :", selectedSatellite);
+      console.log("Valeur de country :", selectedSatellite.country);
+    }
+  }, [selectedSatellite]);
 
   const formatCountdown = (seconds: number): string => {
     if (seconds < 0) return t("satellites.countdown.noPassPredicted");
@@ -323,7 +313,6 @@ export default function SatelliteInfoPage() {
           setCountdown(t("satellites.countdown.noPassNext24h"));
         }
       } catch (e) {
-        console.error("Error fetching realtime polar data", e);
       }
     }, 1000);
     return () => clearInterval(interval);
@@ -395,8 +384,6 @@ export default function SatelliteInfoPage() {
           }
         }
       }
-      
-      console.log(`Computed trajectory for current pass only`);
     } else {
       // CASE 2: Satellite not visible - show ONLY the NEXT pass
       // First, find the time of the next AOS if available from polarInfo
@@ -406,10 +393,8 @@ export default function SatelliteInfoPage() {
       let nextAosTime: Date | null = null;
       if (polarInfo.nextAOSCountdown > 0) {
         nextAosTime = new Date(now.getTime() + polarInfo.nextAOSCountdown * 1000);
-        console.log(`Next AOS in ${polarInfo.nextAOSCountdown} seconds`);
       } else {
         // Otherwise search for the next AOS
-        console.log("Searching for next AOS...");
         let prevEl = -1;
         
         for (let t = 0; t <= maxSecondsSearch; t += 60) {
@@ -424,7 +409,6 @@ export default function SatelliteInfoPage() {
             // Check crossing from below horizon to above horizon (rising)
             if (prevEl <= 0 && el > 0) {
               nextAosTime = new Date(sampleTime);
-              console.log(`Found next AOS at ${nextAosTime.toISOString()}`);
               break;
             }
             prevEl = el;
@@ -481,10 +465,6 @@ export default function SatelliteInfoPage() {
             }
           }
         }
-        
-        console.log(`Computed trajectory for next pass with ${points.length} points`);
-      } else {
-        console.log("No future passes found within search window");
       }
     }
 
@@ -552,12 +532,10 @@ export default function SatelliteInfoPage() {
     if (newFocusMode) {
       if (focusContainerRef.current && focusContainerRef.current.requestFullscreen) {
         focusContainerRef.current.requestFullscreen().catch(err => {
-          console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
         });
       }
     } else if (document.fullscreenElement && document.exitFullscreen) {
       document.exitFullscreen().catch(err => {
-        console.error(`Error attempting to exit fullscreen mode: ${err.message}`);
       });
     }
   };
@@ -587,8 +565,6 @@ export default function SatelliteInfoPage() {
         
         // Sauvegarder dans le localStorage
         localStorage.setItem(GRIDSQUARE_STORAGE_KEY, newGridSquare);
-        
-        console.log(`Grid square ${newGridSquare} saved to localStorage`);
       } catch {
         setGridSquareError(true); // Set error if invalid
         setGridSquare(""); // Reset Grid Square if invalid
@@ -674,13 +650,19 @@ export default function SatelliteInfoPage() {
         <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-3 sm:p-6">
           {!focusMode && (
             <>
-              <div className="w-full flex justify-center mb-2"> {/* Reduced margin between title and beta description */}
+              <div className="w-full flex justify-center mb-2">
                 <TypewriterEffectSmooth
                   as="h1"
-                  words={[
-                    { text: "Satellite", className: "text-purple" },
-                    { text: t("satellites.explorer.title"), className: "text-white" },
-                  ]}
+                  words={
+                    (() => {
+                      const title = t("satellites.explorer.title");
+                      const [first, ...rest] = title.split(" ");
+                      return [
+                        { text: first, className: "text-white" },
+                        { text: rest.join(" "), className: "text-purple" }
+                      ];
+                    })()
+                  }
                   className="text-2xl font-bold text-center text-white"
                   cursorClassName="bg-purple"
                 />
@@ -705,13 +687,26 @@ export default function SatelliteInfoPage() {
                 />
                 {/* Mise à jour du bloc Powered by */}
                 <div className="flex justify-center mt-2">
-                  <div className="inline-flex items-center bg-gray-700/40 rounded px-1 py-1">
-                    <span className="text-gray-400 text-sm mr-2">Powered by</span>
+                  <div className="inline-flex items-center rounded px-1 py-1">
+                    <span className="italic text-gray-200 text-sm mr-2">Powered by</span>
                     <a href="https://www.satnogs.org" target="_blank" rel="noopener noreferrer">
-                      <img src="/images/icon/satnogs.png" alt="SatNOGS" className="h-6 w-auto mx-1 cursor-pointer" />
+                      <img
+                        src="/images/icon/satnogs.png"
+                        alt="SatNOGS"
+                        className="h-16 w-16 mx-1 cursor-pointer object-contain"
+                        style={{ minWidth: "64px", minHeight: "64px" }}
+                      />
                     </a>
+                    <span className="italic text-gray-200 text-sm mx-1 select-none">
+                      {t("and")}
+                    </span>
                     <a href="https://celestrak.com" target="_blank" rel="noopener noreferrer">
-                      <img src="/images/icon/celestrak.png" alt="CelesTrak" className="h-6 w-auto mx-1 cursor-pointer" />
+                      <img
+                        src="/images/icon/celestrak.png"
+                        alt="CelesTrak"
+                        className="h-16 w-16 mx-1 cursor-pointer object-contain"
+                        style={{ minWidth: "64px", minHeight: "64px" }}
+                      />
                     </a>
                   </div>
                 </div>
@@ -742,24 +737,25 @@ export default function SatelliteInfoPage() {
                 <div className="flex flex-col sm:flex-row gap-4 items-start">
                   <div className="flex-1 flex flex-col gap-2">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight m-0 p-0">
                         {details?.name || selectedSatellite.name}
                       </h2>
-                      {(details?.country_image || (selectedSatellite?.country && selectedSatellite.country.split(",")[0].trim() !== "")) && (
-                        <div className="w-10 h-6 rounded-md shadow-md overflow-hidden">
-                          <img
-                            src={
-                              details?.country_image ||
-                              (selectedSatellite?.country
-                                ? `/images/flags/${selectedSatellite.country.split(",")[0].trim().toLowerCase()}.png`
-                                : "")
-                            }
-                            alt="Country flag"
-                            className="w-full h-full object-cover"
-                            onError={(e) => (e.currentTarget.style.display = "none")}
-                          />
-                        </div>
-                      )}
+                      {selectedSatellite?.country && selectedSatellite.country.trim() !== "" && (() => {
+                        const countries = selectedSatellite.country.split(",").map(c => c.trim().toLowerCase());
+                        return (
+                          <div className="flex gap-1 items-center">
+                            {countries.map((code, idx) => (
+                              <img
+                                key={idx}
+                                src={`/images/flags/${code}.png`}
+                                alt={`flag of ${code}`}
+                                className="h-7 w-auto rounded shadow-md align-middle self-center relative -top-px"
+                                style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                              />
+                            ))}
+                          </div>
+                        );
+                      })()}
                     </div>
                     
                     {/* Transmitter Display */}
@@ -770,13 +766,13 @@ export default function SatelliteInfoPage() {
                             {t("satellites.explorer.lastTransmitterUpdate")} {lastTransponderUpdate} UTC
                           </p>
                         )}
-                        <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto">
+                        <div className="grid grid-cols-4 gap-2 max-h-[200px] overflow-y-auto">
                           {(details?.transmitters ?? []).map((tx: any, index: number) => {
                             const isActive = tx.status === "active";
                             return (
                               <div
                                 key={index}
-                                className={`relative bg-black bg-opacity-60 rounded-lg p-2 border shadow-md w-64 h-36 ${isActive ? "border-green-500" : "border-red-500"}`}
+                                className={`relative bg-black bg-opacity-60 rounded-lg p-2 border shadow-md w-full h-36 ${isActive ? "border-green-500" : "border-red-500"}`}
                               >
                                 {/* Status label */}
                                 <div className={`absolute top-2 right-2 bg-black bg-opacity-50 border rounded-md px-1 py-0.5 text-xs ${isActive ? "border-green-500 text-green-500" : "border-red-500 text-red-500"}`}>
@@ -784,8 +780,8 @@ export default function SatelliteInfoPage() {
                                 </div>
                                 <div className="flex flex-col gap-1 h-full">
                                   {/* Affiche la description plutôt que le mode */}
-                                  <div className="flex items-center justify-between border-b border-gray-700 pb-1 mb-1">
-                                    <span className="font-medium text-white text-lg">
+                                  <div className="flex items-center flex-wrap justify-between border-b border-gray-700 pb-1 mb-1 pr-12">
+                                    <span className="font-medium text-white text-lg break-words">
                                       {tx.description || `Transmitter ${index + 1}`}
                                     </span>
                                   </div>

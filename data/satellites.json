@@ -3979,5 +3979,377 @@
     ],
     "image": "",
     "country": "JP"
+  },
+  {
+    "norad_id": "25338",
+    "name": "NOAA 15",
+    "tle1": "1 25338U 98030A   25108.08211616  .00000352  00000+0  16231-3 0  9997\r",
+    "tle2": "2 25338  98.5403 134.4657 0010991 147.8270 212.3583 14.26944280400919",
+    "transmitters": [
+      {
+        "description": "APT",
+        "mode": "APT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137620000
+      },
+      {
+        "description": "SARSAT L-Band",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1544500000
+      },
+      {
+        "description": "HRPT",
+        "mode": "HRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1702500000
+      },
+      {
+        "description": "Direct Sounder Broadcast",
+        "mode": "DSB",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137350000
+      },
+      {
+        "description": "Direct Sounder Broadcast",
+        "mode": "DSB",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 137770000
+      },
+      {
+        "description": "S-band telemetry",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2247490000
+      },
+      {
+        "description": "APT Transmission",
+        "mode": "APT",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 137500000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/satellite_NOAA-15.jpg",
+    "country": "US"
+  },
+  {
+    "norad_id": "28654",
+    "name": "NOAA 18",
+    "tle1": "1 28654U 05018A   25108.10250027  .00000371  00000+0  22003-3 0  9992\r",
+    "tle2": "2 28654  98.8427 188.1675 0013063 278.3086  81.6605 14.13577818 26333",
+    "transmitters": [
+      {
+        "description": "APT Downlink",
+        "mode": "APT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137912500
+      },
+      {
+        "description": "ARGOS-3 A-DCS 465.9875MHz",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 465987500
+      },
+      {
+        "description": "SARSAT L-Band",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1544500000
+      },
+      {
+        "description": "HRPT Downlink",
+        "mode": "HRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1707000000
+      },
+      {
+        "description": "Direct Sounder Broadcast",
+        "mode": "DSB",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137350000
+      },
+      {
+        "description": "Noaa 18 SGLS channel",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2247484000
+      },
+      {
+        "description": "GAC (active over Eastern US)",
+        "mode": "FMN",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1698000000
+      },
+      {
+        "description": "APT IQ Recording",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137912500
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/NOAA-18_or_19_rendering.jpg",
+    "country": "US"
+  },
+  {
+    "norad_id": "33591",
+    "name": "NOAA 19",
+    "tle1": "1 33591U 09005A   25108.10041032  .00000354  00000+0  21230-3 0  9994\r",
+    "tle2": "2 33591  99.0010 172.5020 0014465 148.8903 211.3128 14.13342587834698",
+    "transmitters": [
+      {
+        "description": "APT Downlink",
+        "mode": "APT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "ARGOS-3 A-DCS 465.9875MHz",
+        "mode": "BPSK PMT-A3",
+        "status": "active",
+        "uplink": null,
+        "downlink": 465987500
+      },
+      {
+        "description": "SARSAT L-Band",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1544500000
+      },
+      {
+        "description": "HRPT Downlink",
+        "mode": "HRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1698000000
+      },
+      {
+        "description": "137.932",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137932000
+      },
+      {
+        "description": "Direct Sounder Broadcast",
+        "mode": "DSB",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137770000
+      },
+      {
+        "description": "Telemetry",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2247500000
+      },
+      {
+        "description": "GAC - LHCP (active over Norway)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1702500000
+      },
+      {
+        "description": "APT IQ recording usage",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/NOAA-18_or_19_rendering.jpg",
+    "country": "US"
+  },
+  {
+    "norad_id": "57166",
+    "name": "METEOR-M2 3",
+    "tle1": "1 57166U 23091A   25108.21507431  .00000051  00000+0  41215-4 0  9991\r",
+    "tle2": "2 57166  98.6662 165.4576 0003348 341.4546  18.6510 14.23992826 94036",
+    "transmitters": [
+      {
+        "description": "SARSAT L-Band",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1544500000
+      },
+      {
+        "description": "Raw X-Band",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 8320000000
+      },
+      {
+        "description": "S-Band TLM",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 3405235000
+      },
+      {
+        "description": "Raw X-Band",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 8128000000
+      },
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137912500
+      },
+      {
+        "description": "LRPT S-E RHCP D 72 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "LRPT S-E RHCP D 72 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "LRPT IQ recording usage",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "LRPT IQ recording usage",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "HRPT",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1700000000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites",
+    "country": "US"
+  },
+  {
+    "norad_id": "59051",
+    "name": "METEOR-M2 4",
+    "tle1": "1 59051U 24039A   25108.09626681  .00000099  00000+0  64203-4 0  9998\r",
+    "tle2": "2 59051  98.6449  69.2226 0006475 329.7111  30.3692 14.22358118 58837",
+    "transmitters": [
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137912500
+      },
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "LRPT S-E RHCP D 80 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "HRPT",
+        "mode": "HRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1705000000
+      },
+      {
+        "description": "HRPT",
+        "mode": "HRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1700000000
+      },
+      {
+        "description": "LRPT IQ recording usage",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "LRPT IQ recording usage",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "SARSAT L-band",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 1544500000
+      },
+      {
+        "description": "LRPT S-E RHCP D 72 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137100000
+      },
+      {
+        "description": "LRPT S-E RHCP D 72 kbps",
+        "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/2922080812.jpeg",
+    "country": "US"
   }
 ]

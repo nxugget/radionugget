@@ -22,6 +22,7 @@ export interface Satellite {
   image: string;
   category: string;
   transmitters: any[]; 
+  country?: string; // Added optional country property
 }
 
 export interface SatellitePassData {
@@ -33,18 +34,20 @@ export interface SatellitePassData {
 }
 
 export async function getSatellites(): Promise<Satellite[]> {
-  // Transform the raw data to match the Satellite interface
-  return satelliteData.map((sat: any) => ({
-    id: sat.norad_id,
+  // Use the imported satelliteData instead of fetch
+  const data = satelliteData;
+  return data.map((sat: any) => ({
+    id: sat.norad_id, // ensure id is mapped correctly
     name: sat.name,
+    image: sat.image,
+    country: sat.country, // explicitly map the country value
     tle1: sat.tle1,
     tle2: sat.tle2,
     description: sat.description || "",
     frequency: sat.transmitters ? sat.transmitters.map((tx: any) => tx.downlink) : [],
     modulation: sat.transmitters && sat.transmitters.length > 0 ? sat.transmitters[0].mode : "",
-    image: sat.image, 
     category: sat.category || "",
-    transmitters: sat.transmitters || [] // Transmet l'ensemble des transmitters
+    transmitters: sat.transmitters || [] // Pass through all transmitters
   }));
 }
 

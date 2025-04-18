@@ -86,6 +86,9 @@ export default {
       launchYear: "International Designator (Launch Year)",
       launchNumber: "International Designator (Launch Number)",
       launchPiece: "International Designator (Piece of the launch)",
+      intlDesignatorYear: "International Designator (Launch Year)",  // ajout
+      intlDesignatorLaunchNumber: "International Designator (Launch Number)",  // ajout
+      intlDesignatorPiece: "International Designator (Piece of the launch)",  // ajout
       epochYear: "Epoch Year (Last two digits of the year)",
       epochDay: "Epoch (Day of year plus fractional portion)",
       firstTimeDerivative: "First Time Derivative of Mean Motion (rev/day²)",
@@ -116,6 +119,7 @@ export default {
     message: "To save your favorites and your position, this page uses cookies. These are stored only on your device and no one else will have access to them :)",
     accept: "Accept"
   },
+  and: "and", // Added for "Powered by"
   satellite: {
     name: "Satellite",
     pass: "Pass",

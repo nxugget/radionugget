@@ -87,8 +87,12 @@ export default function TLEDisplay({ tle1, tle2 }: TLEDisplayProps) {
   const [popup, setPopup] = useState<PopupData | null>(null);
   return (
     <div className="relative p-1 sm:p-4 rounded w-full text-center tracking-normal text-white">
-      {tle1 && <RenderTLELine line={tle1} lineType="line1" setPopup={setPopup} />}
-      {tle2 && <RenderTLELine line={tle2} lineType="line2" setPopup={setPopup} />}
+      <div className="flex justify-center w-full">
+        <div className="inline-block text-left">
+          {tle1 && <RenderTLELine line={tle1} lineType="line1" setPopup={setPopup} />}
+          {tle2 && <RenderTLELine line={tle2} lineType="line2" setPopup={setPopup} />}
+        </div>
+      </div>
       {popup && (
         <div 
           className="fixed bg-black text-white text-xs sm:text-sm px-2 py-1 rounded z-50"
