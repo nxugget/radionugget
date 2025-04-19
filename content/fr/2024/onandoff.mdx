@@ -28,12 +28,12 @@ Depuis **URH**, on peut sélectionner comme type de modulation `ASK`. On peut au
 Truc important à trouver, c'est le `Samples/Symbol` qui pour une modualtion numérique représente la taille d'**1 bit**
 Pour la trouver, soit on clique sur `Autodetect`, des fois ça marche (comme ici où il me trouve `200`) mais apprenons à le faire manuellement quand même :)  
 
-![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.png)
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.webp)
 Pour ce faire, on va devoir repérer le **plus petit** morceau de signal. 
 Zoomons sur le premier morceau de l'image précédente qui semble faire partie des plus petits. Et on sélectionne "à peu près" ce morceau pour regarder en bas la valeur qui nous est affichée. Ici, `210` est la taille du plus petit mot qu'on puisse faire et donc la taille d'**1** symbole. Si on veut faire des mots plus grands, leur taille sera un multiple de `210`. 
 Bref, changeons notre `Samples/Symbol` avec cette valeur.
 
-![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff5.png)
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff5.webp)
 A noter que c'est pas la valeur exacte, c'est une valeur approximative, et d'ailleurs, ce que je trouve est légèrement différent de ce que nous donnait l'**Autodetect**.
 Pas grave, on voit qu'au niveau de ce qui est décodé, hors mis la dernière, chaque ligne est similaire. Le même signal est répété.
 J'en ai profité pour basculer de la vue **Hex** vers **ASCII** pour voir si un flag apparaissait mais ce serait oublié un détail important sur [URH](https://github.com/jopohl/urh).

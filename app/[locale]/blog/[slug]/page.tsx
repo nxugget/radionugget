@@ -43,16 +43,18 @@ export default async function Article({ params }: { params: { locale: string; sl
       <Head params={params} metadata={metadata} />
       <main className="flex justify-center py-8 min-h-screen relative">
         <div className="w-full max-w-7xl px-0 sm:px-8">
-          {/* 🔥 HEADER AVEC IMAGE BLURRED */}
           <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden rounded-lg shadow-lg">
             <div className="absolute inset-0">
               <Image 
                 src={metadata.thumbnail} 
                 alt={metadata.title} 
                 fill 
+                sizes="(max-width: 768px) 100vw, 1200px"
                 className="object-cover"
-                priority={false} // Disable priority loading for lazy loading
-                loading="lazy" // Enable lazy loading
+                priority={true}
+                quality={80}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
               />
             </div>
 
@@ -99,6 +101,7 @@ export default async function Article({ params }: { params: { locale: string; sl
                 h2: (props) => <h2 className="text-3xl font-bold mt-6 mb-3 text-white" {...props} />,
                 h3: (props) => <h3 className="text-2xl font-semibold mt-5 mb-2 text-white" {...props} />,
                 img: (props) => {
+                  const isGif = props.src?.toLowerCase().endsWith('.gif');
                   return (
                     <figure className="flex justify-center my-6 w-full">
                       <ZoomImage 
@@ -108,7 +111,8 @@ export default async function Article({ params }: { params: { locale: string; sl
                         width={900} 
                         height={500} 
                         style={{ width: "auto", height: "auto" }}
-                        loading="lazy" // Enable lazy loading for MDX images
+                        loading="lazy"
+                        unoptimized={isGif} // Add unoptimized property for GIFs
                       />
                     </figure>
                   );

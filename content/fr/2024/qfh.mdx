@@ -6,8 +6,9 @@ thumbnail: "/images/blog/thumbnail/qfh.webp"
 tags: ["radio"]
 slug: "qfh"
 ---
-Lors de mon tout premier projet de <SmartLink href="/blog/space/satellite/noaa">réception d'images satellites</SmartLink>, j'avais fait une antenne **V-dipôle**. Elle a l'avantage d'être très facile à réaliser et d'obtenir des résultats très convaincants. 
-Le souci, c'est les bandes grises d'**interférences** que j'ai sur toutes mes images comme par exemple [celle-ci](https://station.radionugget.com/images/NOAA-19-20240816-201800-MCIR.jpg).
+Lors de mon tout premier projet de <SmartLink slug="noaa">réception d'images satellites</SmartLink>, j'avais fait une antenne **V-dipôle**. Elle a l'avantage d'être très facile à réaliser et d'obtenir des résultats très convaincants. 
+Le souci, c'est les bandes grises d'**interférences** que j'ai sur toutes mes images.
+
 J'ai essayé énormément de choses afin de les enlever, mais je n'y suis jamais parevenu. J'ai donc décidé de changer d'antenne par une **antenne quadrifilaire** ou antenne **QFH** (**Q**uadri**F**ilar **H**elicoidal). On verra bien si ça résoudra le problème :) 
 
 # Fonctionnement d'une antenne QFH
@@ -71,10 +72,10 @@ En effet, le signal est converti en courant dans un sens dans une des branches e
 Mais dans un câble **coaxial**, le courant n'est transmis QUE dans le **centre du câble** et donc dans un seul sens. Le courant est alors **asymétrique**. La tresse extérieure est reliée à la masse et agit comme isolant afin d'éviter que le câble se comporte comme une antenne (et aussi pour protéger le signal).
 Bref, si on ne fait rien, une partie du signal reçue va aller à la masse ce qui provoque de grosse pertes. Ainsi, on vient placer un **balun** pour **bal**enced->**un**balanced ou dit autrement **symétrique->asymétrique** qui vient régler ce souci.
 
-![DIY QFH balun](/images/blog/2024/qfh/qfh15.jpg)
+![DIY QFH balun](/images/blog/2024/qfh/qfh15.webp)
 
 On parle de **balun 1:1**. Le premier **1** représente l'**impédance** du côté **symétrique** donc l'antenne (`50Ω`) et le deuxième celle du côté **asymétrique** donc le câble (`50Ω`). Dans un **balun 1:1**, ces **2 impédances** sont **égales**.
-Les **4 tours** ne sont pas une règle absolue mais semblent être une bonne balance pour les [ondes VHF](https://fr.wikipedia.org/wiki/Très_haute_fréquence)
+Les **4 tours** ne sont pas une règle absolue mais semblent être une bonne balance pour les [ondes VHF](https://fr.wikipedia.org/wiki/Très_haute_fréquence).
 
 ### Câblage
 Il existe plusieurs méthodes pour raccorder les tiges mais voici un schema des liaisons à respecter : 
@@ -86,31 +87,31 @@ D'abord, on fait des petits trous au bout des tiges du cuivre et on les lime.
 
 Ensuite, on peut faire le câblage comme sur le schéma. Je l'ai fais sans soudure en torsadant les câbles entre eux et en les serrant bien à l'aide de colliers de serrage. 
 
-![DIY QFH](/images/blog/2024/qfh/qfh7.jpg)
+![DIY QFH](/images/blog/2024/qfh/qfh7.webp)
 L'idéal reste quand même la soudure mais pour des signaux comme ceux des **NOAA** et **METEOR**, ça fera l'affaire.
 
-![DIY QFH](/images/blog/2024/qfh/qfh8.jpg)
+![DIY QFH](/images/blog/2024/qfh/qfh8.webp)
 J'ai représenté le courant en provenance de l'âme du câble en rouge et celui en provenance de la tresse en bleu.
 On peut ensuite fermé le dessus pour protéger le câblage de la pluie.
 
 ### Installation
 J'ai fais un petit trou en bas du tube pour y faire sortir le câble, ça évite de l'écraser lorsque l'on pose l'antenne à plat. 
 
-![DIY QFH](/images/blog/2024/qfh/qfh11.jpg)
+![DIY QFH](/images/blog/2024/qfh/qfh11.webp)
 Pour la placer le plus haut possible, j'ai rajouté une longueur de tube PVC. Je n'avais pas de manchon pour les relier, donc j'ai mis un **té**.
 Et voilà l'antenne fièrement installée en haut de mon toit. 
 
-![DIY QFH](/images/blog/2024/qfh/qfh14.jpeg)
+![DIY QFH](/images/blog/2024/qfh/qfh14.webp)
 
 # Tests
 Sortons notre testeur d'antenne pour voir ces performances. Bien que les valeurs soient surtout utiles dans le cas où l'on souhaite émettre, elles nous permettent quand même de voir si notre antenne est bien calibrée.
 
-![DIY QFH SWR](/images/blog/2024/qfh/qfh16.jpg)
+![DIY QFH SWR](/images/blog/2024/qfh/qfh16.webp)
 Le **VSWR** est à `1.487` est vraiment pas mal pour une antenne **QFH** faite à la main. Tant que c'est `<1.5`, on peut considérer que l'antenne est bien calibrée. 
 L'**impédance** à `46.21Ω` est très bien aussi, puisque qu'elle match à peu près les `50Ω` de notre câble.
 
 Et enfin, voici ce qu'on peut tirer de cette antenne : 
 
-![DIY QFH METEOR](/images/blog/2024/qfh/qfh18.jpg)
+![DIY QFH METEOR](/images/blog/2024/qfh/qfh18.webp)
 
 Concernant la problématique de départ, mes images ne contiennent (presque) plus aucune interférences ! Vous pouvez d'ailleurs en voir certaines dans ma [galerie](https://radionugget.com/gallery).

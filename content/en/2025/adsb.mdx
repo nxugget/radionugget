@@ -38,15 +38,15 @@ You should end up with something like this:
 
 For the build, I stripped the plastic off some [round connectors](https://www.amazon.fr/Electriques-Femelles-Connecteur-%C3%A9lectrique-Embouts/dp/B0B3TW8QDW/ref=sr_1_5?sr=8-5) and soldered one onto each of the four copper rods. The central piece is soldered directly onto a component [similar to this](https://fr.aliexpress.com/item/1005003799744884.html?...).
 
-![GroundPlane antenna](/images/blog/2025/adsb/adsb6.jpg)
+![GroundPlane antenna](/images/blog/2025/adsb/adsb6.webp)
 
 I set everything up and ended up with an awesome antenna that delivers excellent performance. Just a reminder: the [SWR](https://en.wikipedia.org/wiki/Standing_wave_ratio) should be as close as possible to 1, and the **impedance** should be around 50Ω.
 
-![GroundPlane Network Analyzer](/images/blog/2025/adsb/adsb7.jpg)
+![GroundPlane Network Analyzer](/images/blog/2025/adsb/adsb7.webp)
 
 Now, all that's left is to mount it optimally on your roof. In my case, the setup was only temporary until I found a better solution.
 
-![Ground plane antenna](/images/blog/2025/adsb/adsb8.jpg)
+![Ground plane antenna](/images/blog/2025/adsb/adsb8.webp)
 
 Now, let's move on to the software part :)
 
@@ -55,7 +55,7 @@ First, download the [PI24 image](https://repo-feed.flightradar24.com/rpi_images/
 
 Once your SD card is inserted and formatted, unzip the Pi24 image (so that only the file `fr24-raspberry-pi-latest.img` remains), launch Etcher, select your image, choose your SD card as the target, and hit *Flash*.
 
-![Balena Etcher](/images/blog/2025/adsb/adsb3.png)
+![Balena Etcher](/images/blog/2025/adsb/adsb3.webp)
 
 When finished, don’t eject the SD card yet if you can’t connect an Ethernet cable to your Pi. You’ll need to configure your Wi‑Fi first. Open the SD card on your computer and locate the file named `wpa_supplicant.conf.template`. Rename it to `wpa_supplicant.conf`, open it, and fill in your Wi‑Fi details:
 
@@ -73,13 +73,13 @@ Now, eject the SD card and insert it into your Raspberry Pi. Once you’ve hooke
 
 After booting up, create a **FlightRadar** account and visit [this link](https://www.flightradar24.com/build-your-own) which will automatically detect your Pi24 and prompt you to register it. If all goes well, you should see a page like this:
 
-![Pi24 activation](/images/blog/2025/adsb/adsb4.png)
+![Pi24 activation](/images/blog/2025/adsb/adsb4.webp)
 
 Click on `Activate`, fill in your station’s latitude and longitude, verify the information, and you’ll get a confirmation message along with an email containing your sharing key and radar code. Your account, initially set to a free `Basic` tier, will automatically upgrade to a `Business` subscription once your station starts sending data to **FlightRadar’s** servers.
 
 And finally, the moment we’ve all been waiting for: see the aircraft detected by **YOUR** station. On **FlightRadar**, navigate to `Filters` → `Custom` and select your receiver (in my case, it’s listed as `T-LFBD111`):
 
-![Flight Radar Map](/images/blog/2025/adsb/adsb5.png)
+![Flight Radar Map](/images/blog/2025/adsb/adsb5.webp)
 
 As you can see, the DIY antenna provides surprisingly solid coverage, even though its placement wasn’t perfect (I live roughly near where it says **Gujan-Mestras**). You can boost its performance with an LNA filter for the 1090MHz frequency or consider buying a commercial antenna, but for now, this setup works just fine.
 

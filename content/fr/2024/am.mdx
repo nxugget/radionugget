@@ -21,23 +21,23 @@ L'**amplitude** d'un signal représente sa **hauteur maximale** par rapport à s
 Cette valeur est importante pour déterminer la qualité du signal modulé. Plus l’amplitude du **signal modulé** est élevée, meilleure en théorie sera la **qualité** de la réception, car cela permet de mieux différencier le **signal utile** du **bruit ambiant**. 
 En **modulation d'amplitude** noté **AM**, on va venir faire varier l'**amplitude** de l'**onde porteuse** en fonction de l'**amplitude** du **signal modulant**. 
 Pour mieux comprendre, on va utiliser un très célèbre logiciel nommé [GNURadio](https://www.google.com/search?client=safari&rls=en&q=gnuradio&ie=UTF-8&oe=UTF-8). Ce n'est pas très grave de ne pas savoir comme il fonctionne. Mais dans l'idée, ça permet de manipuler des signaux radio en utilisant des blocs qu'on vient relier entre eux.
-![Logiciel GnuRadio](/images/blog/2024/am/modulation2.png)
+![Logiciel GnuRadio](/images/blog/2024/am/modulation2.webp)
 Donc là, on place 2 blocs `Signal Source` qui permettent de générer un signal, un pour notre **Signal Modulant** qui a une fréquence de `20Hz` et un autre qui sera notre onde porteuse avec une fréquence de `1000Hz` donc bien plus élevée que le signal modulant.
 Le bloc `Throttle`, on s'en fiche pour ce cours mais sachez qu'il est là pour éviter de faire crash le PC en réduisant la cadence à laquelle le CPU voudrait éxecuter le programme. Un seul placé quelque part suffit, c'est pour ça que y en a juste un. Bref, revenons à ce qui nous intéresse.
 Le bloc `QT GUI TIME SINK` va nous permettre de visualiser nos deux signaux dans le **temps**. 
 Voilà ce qu'on obtient lorsque l'on lance notre programme : 
-![Logiciel GnuRadio](/images/blog/2024/am/modulation3.png)
+![Logiciel GnuRadio](/images/blog/2024/am/modulation3.webp)
 On voit nos 2 jolies sinusoides, la rouge qui est notre **porteuse** et la bleu notre **signal modulant**. 
 
 #  Modulation d'amplitude
 À présent, superposant nos deux signaux en les **multipliant**. ([Les fameuses maths qui se cachent derrière](https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)). 
-![Logiciel GnuRadio](/images/blog/2024/am/modulation4.png)
+![Logiciel GnuRadio](/images/blog/2024/am/modulation4.webp)
 Donc ici, on a juste rajouté le bloc `Multiply` et on renvoie le signal modulé dans notre `QT GUI Time Sink`. J'ai aussi laissé les 2 autres signaux reliés au `QT GUI Time Sink` pour qu'on puisse mieux comprendre. Et pareil, le bloc `Throttle`, vous pouvez l'ignorer.
 Lançons le programme et laissons apparraître uniquement le **signal modulé** pour voir à quoi il ressemble. 
-![Logiciel GnuRadio](/images/blog/2024/am/modulation5.png)
+![Logiciel GnuRadio](/images/blog/2024/am/modulation5.webp)
 On peut voir cette forme caractéristique d'un signal modulé en **amplitude**. 
 Et maintenant, affichons nos 3 signaux (modulant, porteuse et modulé)
-![Logiciel GnuRadio](/images/blog/2024/am/modulation6.png)
+![Logiciel GnuRadio](/images/blog/2024/am/modulation6.webp)
 On comprend déjà mieux, lorsque que l'**amplitude** de notre **signal modulant** diminue, ça diminue en conséquence l'**amplitude** de la **porteuse**. 
 
 C'est tout pour ce cours simplifié sur la **modulation d'amplitude**. Il existe bien d'autres types de modulation ([FM](https://fr.wikipedia.org/wiki/Modulation_de_fr%C3%A9quence#:~:text=En%20modulation%20de%20fr%C3%A9quence%2C%20l,(att%C3%A9nuation%20et%20bruit%20importants).), [PM](https://fr.wikipedia.org/wiki/Modulation_de_phase#:~:text=La%20modulation%20de%20phase%20ou,Cette%20modulation%20est%20non%20lin%C3%A9aire.), ...) qu'on choisit en fonction de ce que l'on veut transmettre, de notre bande passante, du bruit environnant, etc, ... mais on garde ça pour une prochaine fois :) 

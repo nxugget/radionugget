@@ -6,8 +6,8 @@ thumbnail: "/images/blog/thumbnail/qfh.webp"
 tags: ["radio"]
 slug: "qfh"
 ---
-In my very first project to <SmartLink href="/blog/space/satellite/noaa">receive satellite images</SmartLink>, I built a **V-dipole** antenna. It’s very easy to make and produces convincing results.  
-The downside? All those gray interference bands on every image, like [this one](https://station.radionugget.com/images/NOAA-19-20240816-201800-MCIR.jpg).  
+In my very first project to <SmartLink slug="noaa">receive satellite images</SmartLink>, I built a **V-dipole** antenna. It’s very easy to make and produces convincing results.  
+The downside ? All those gray interference bands on every image.  
 I tried countless fixes to remove them but to no avail, so I decided to switch to a **quadrifilar** antenna, or **QFH** (**Q**uadri**F**ilar **H**elicoidal). Let’s see if this solves the problem :)
 
 # How a QFH Antenna Works
@@ -74,7 +74,7 @@ However, in a coaxial cable, the current travels **only in the center**, making 
 If left uncorrected, some of the received signal will go to ground, causing significant losses.  
 A **balun** converts from **balanced** to **unbalanced** (or vice versa), resolving this issue.
 
-![QFH Balun](/images/blog/2024/qfh/qfh15.jpg)
+![QFH Balun](/images/blog/2024/qfh/qfh15.webp)
 This is a **1:1 balun**. The first “1” represents the impedance on the balanced side (the antenna, approximately `50Ω`), and the second “1” is for the unbalanced side (the cable, also `50Ω`). In a 1:1 balun, these two impedances are equal.  
 The choice of **4 turns** is not absolute but appears optimal for [VHF waves](https://en.wikipedia.org/wiki/Très_haute_fréquence).
 
@@ -87,30 +87,30 @@ First, drill small holes at the end of each copper rod and file them smooth.
 ![DIY QFH Wiring](/images/blog/2024/qfh/qfh6.webp)
 Then, wire the connections as shown in the diagram. I did it without soldering by twisting the wires together and securing them with zip ties.
 
-![DIY QFH Wired](/images/blog/2024/qfh/qfh7.jpg)
+![DIY QFH Wired](/images/blog/2024/qfh/qfh7.webp)
 Soldering is ideal, but for signals like NOAA and METEOR, this method works.
-![DIY QFH Wired 2](/images/blog/2024/qfh/qfh8.jpg)
+![DIY QFH Wired 2](/images/blog/2024/qfh/qfh8.webp)
 Here, the red illustrates the current from the cable's center and the blue from the braid.
 Finally, cover the top to protect the wiring from the rain.
 
 ### Installation
 I drilled a small hole at the bottom of the tube to let the cable exit; this prevents it from being crushed when laying the antenna flat.
 
-![DIY QFH Cable Exit](/images/blog/2024/qfh/qfh11.jpg)
+![DIY QFH Cable Exit](/images/blog/2024/qfh/qfh11.webp)
 To raise the antenna as high as possible, I added an extra piece of PVC tube. Lacking a sleeve to connect them, I used a **T-joint**.
 And there you have it, the antenna proudly installed on my roof.
 
-![QFH on Roof](/images/blog/2024/qfh/qfh14.jpeg)
+![QFH on Roof](/images/blog/2024/qfh/qfh14.webp)
 
 # Testing
 Now, let’s check its performance using an antenna tester. Although these values are mostly useful for transmission, they help verify if our antenna is well tuned.
 
-![QFH SWR Test](/images/blog/2024/qfh/qfh16.jpg)
+![QFH SWR Test](/images/blog/2024/qfh/qfh16.webp)
 The **VSWR** is `1.487`, which is excellent for a DIY QFH antenna, anything `<1.5` means it’s well calibrated.  
 The **impedance** of `46.21Ω` is also very good, as it’s close to the desired `50Ω`.
 
 Finally, here’s the output the antenna provides:
 
-![QFH METEOR Image](/images/blog/2024/qfh/qfh18.jpg)
+![QFH METEOR Image](/images/blog/2024/qfh/qfh18.webp)
 
 Concerning the original interference issue, my images now show (almost) no interference! Check out some examples in my [gallery](https://radionugget.com/gallery).

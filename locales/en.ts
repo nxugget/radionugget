@@ -141,6 +141,11 @@ export default {
     cleanAll: "Clean All",
     addToFavorites: "Add to favorites",
     search: "Search...",
+    searchPlaceholder: "Search satellites...", // Added missing translation
+    toggleFavorites: "Toggle favorites", // Added missing translation
+    allCategories: "All categories", // Added missing translation
+    found: "found", // Added missing translation
+    addAllFiltered: "Add all filtered", // Added missing translation
     filterAll: "All",
     filterWeather: "Weather",
     filterAmateur: "Amateur",

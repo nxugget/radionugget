@@ -22,7 +22,7 @@ Vouloir recevoir des images de l'ISS c'est bien, encore faut-il qu'elle soit en 
 Si une transmission **SSTV** est prévue, alors il va falloir prédire les horaires de passage de l'**ISS**. Pour cela, plusieurs méthodes, dans mon cas, j'utilise le site [AMSAT](https://www.amsat.org/track/).
 Dans le rectangle rouge, on entre nos coordonnées géographiques puis on clique sur **Predict**. On peut voir la liste des prochains passages de l'**ISS** au dessus de nous. On va préférer se concentrer sur les passages avec une **élévation** élevée (rectangle vert) donc minimum **20** sauf si vous êtes dans une zone avec un horizon super dégagé.
 
-![ISS prediction](/images/blog/2024/sstv/sstv2.png)
+![ISS prediction](/images/blog/2024/sstv/sstv2.webp)
 
 ## Logiciel
 On peut faire de la **SSTV** avec un simple **talkie-walkie** permettant d'écouter le signal et en même temps, depuis un logiciel le décoder. C'est la méthode la plus simple, mais le décodage du signal se fait avec un micro (téléphone ou ordinateur), ce qui n'est pas optimal.  
@@ -41,13 +41,13 @@ Côté **SDR**, n'importe quel récepteur fera l'affaire, j'ai eu des résultats
 #  Réception
 Comme ces transmissions sont rares, je ne vais pas prendre le risque de décoder en live mais je vais d'abord enregistrer le signal et le décoder hors ligne, comme sur le schéma *Traitement offline* un peu plus haut. Voici mes setups :
 
-![SSTV antenna](/images/blog/2024/sstv/sstv7.jpg)
+![SSTV antenna](/images/blog/2024/sstv/sstv7.webp)
 Depuis [SDR++](https://www.sdrpp.org), on règle la fréquence à laquelle le contact **ARISS** est prévue, dans mon cas `145.800MHz`. On sélectionne [NFM](https://fr.wikipedia.org/wiki/Bande_étroite) comme **modulation**. 
 Dans la section `Record`, on lance l'enregistrement en appuyant sur **Record**.
 Si tout se passe bien, vous devriez voir clairement le signal apparaître. N'hésitez à régler le `Max` et le `Min` à droite pour bien refaire ressortir le signal sur la cascade.
 La station n'émet pas en continue donc si vous recevez rien au début c'est normal, soyez patient. Une tonalité bien précise marquera le début de la transmission. 
 
-![SDR++ SSTV](/images/blog/2024/sstv/sstv4.png)
+![SDR++ SSTV](/images/blog/2024/sstv/sstv4.webp)
 
 Une autre tonalité marquera la fin de la transmission, vous pouvez stopper l'enregistrement, noter où le fichier `.wav` est enregistré et passer au décodage de notre signal.
 Voici un exemple de ce que vous allez entendre : <audio controls src="/audio/sstv.mp3" style={{ display: 'inline-block', maxWidth: '100%' }}></audio>  
@@ -57,8 +57,8 @@ On ouvre notre enregistrement avec [Audacity](https://www.audacityteam.org) et o
 Depuis le logiciel **SSTV**, on modifie l'**input** en sélectionnant aussi `VB-Cable`. On peut choisir le mode **SSTV** car il est donné par **ARISS** donc `PD120`. En `auto`, ça devrait trouver tout seul. 
 On a plus qu'à lancer l'audio depuis **Audacity** et automatiquement, le logiciel **SSTV** va commencer à former l'image.
 
-![Black Cat SSTV](/images/blog/2024/sstv/sstv5.png)
+![Black Cat SSTV](/images/blog/2024/sstv/sstv5.webp)
 Voici quelques exemples d'images que j'ai reçue, à gauche avec l'antenne **QFH** et à droite avec la **Yagi**  : 
-![ARISS SSTV](/images/blog/2024/sstv/sstv6.jpg)
+![ARISS SSTV](/images/blog/2024/sstv/sstv6.webp)
 
 Si vous voulez vous entraîner à décoder des signaux **SSTV**, vous avez des challenges comme [celui-ci](https://www.root-me.org/fr/Challenges/Reseau/RF-Transmission-satellite) sur **Root-me** ou [celui-là](https://app.hackthebox.com/challenges/Signals) sur **HackTheBox**.

@@ -102,7 +102,7 @@ export default function SatelliteTracker() {
         setFavorites([]);
       }
     }
-  }, []);
+  }, []); // Ajout []
 
   // Mettre à jour les cookies lors du changement de position
   useEffect(() => {
@@ -191,7 +191,7 @@ export default function SatelliteTracker() {
       }
     };
     fetchSatellitesData();
-  }, []);
+  }, []); // Ajout []
 
   const unselectedSatellites = satellites.filter(
     (sat) => !selectedSatellites.some((sel) => sel.id === sat.id)
@@ -365,7 +365,7 @@ export default function SatelliteTracker() {
       // Ne plus afficher de message d'erreur pour les requêtes trop courtes
       setCityError(null);
     }
-  }, [cityQuery, t]);
+  }, [cityQuery, t]); // Ajout [cityQuery, t]
 
   const handleCitySelect = (city: any) => {
     setCityQuery(city.display_name);
@@ -406,22 +406,19 @@ export default function SatelliteTracker() {
         <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
         <div className="flex flex-col md:flex-row gap-6">
           {/* PARTIE GAUCHE : sélection des satellites */}
-          <div className="md:w-1/2 p-6 rounded-lg shadow-lg flex flex-col gap-6">
-            <div className="bg-nottooblack p-4 rounded-md flex flex-col gap-4">
-              <h2 className="text-white text-lg text-center">{t("satellite.predictableSatellites")}</h2>
-              <SatelliteSearch
-                satellites={unselectedSatellites}
-                selectedSatelliteId={selectedAvailableId}
-                onSelect={(id) => {
-                  setSelectedAvailableId(id);
-                  setSelectedChosenId(null);
-                }}
-                favorites={favorites}
-                onToggleFavorite={toggleFavorite}
-                onAddAll={handleAddAllFiltered}
-              />
-            </div>
-
+          <div className="md:w-1/2 rounded-lg shadow-lg flex flex-col gap-6">
+            {/* Nouveau design pour la zone de sélection */}
+            <SatelliteSearch
+              satellites={unselectedSatellites}
+              selectedSatelliteId={selectedAvailableId}
+              onSelect={(id) => {
+                setSelectedAvailableId(id);
+                setSelectedChosenId(null);
+              }}
+              favorites={favorites}
+              onToggleFavorite={toggleFavorite}
+              onAddAll={handleAddAllFiltered}
+            />
             <div className="flex items-center justify-center gap-8">
               <button
                 onClick={moveOneDown}

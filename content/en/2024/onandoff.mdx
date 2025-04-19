@@ -30,12 +30,12 @@ From URH, you can select the modulation type ``ASK``. You can also change the ``
 An important parameter to find is the ``Samples/Symbol``, which for digital modulation represents the duration of one ``bit``.
 To find it, click ``Autodetect``; sometimes it works (like here where it finds ``200``) but let’s learn to do it manually :)
 
-![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.png)
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.webp)
 To do this, zoom in on the smallest segment of signal.  
 Select approximately that segment to see the value shown below. Here, ``210`` is the size of the smallest word possible, hence the size of one symbol. For larger words, their size will be multiples of ``210``.  
 Alright, change the ``Samples/Symbol`` to this value.
 
-![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff5.png)
+![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff5.webp)
 Note that this value is approximate and may differ slightly from what ``Autodetect`` suggests.
 No worries, the decoded output shows that every line (except perhaps the last) is similar. The same signal repeats.
 I switched from Hex to ASCII view to see if a flag appeared, but that would be a minor detail regarding [URH](https://github.com/jopohl/urh).

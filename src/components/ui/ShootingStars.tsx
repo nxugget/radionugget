@@ -41,6 +41,7 @@ const getRandomStartPoint = () => {
       return { x: 0, y: 0, angle: 45 };
   }
 };
+
 export const ShootingStars: React.FC<ShootingStarsProps> = ({
   minSpeed = 5,
   maxSpeed = 15,
@@ -79,40 +80,41 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   }, [minSpeed, maxSpeed, minDelay, maxDelay]);
 
   useEffect(() => {
+    let animationFrame: number;
+
     const moveStar = () => {
-      if (star) {
-        setStar((prevStar) => {
-          if (!prevStar) return null;
-          const newX =
-            prevStar.x +
-            prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180);
-          const newY =
-            prevStar.y +
-            prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
-          const newDistance = prevStar.distance + prevStar.speed;
-          const newScale = 1 + newDistance / 100;
-          if (
-            newX < -20 ||
-            newX > window.innerWidth + 20 ||
-            newY < -20 ||
-            newY > window.innerHeight + 20
-          ) {
-            return null;
-          }
-          return {
-            ...prevStar,
-            x: newX,
-            y: newY,
-            distance: newDistance,
-            scale: newScale,
-          };
-        });
-      }
+      setStar((prevStar) => {
+        if (!prevStar) return null;
+        const newX =
+          prevStar.x +
+          prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180);
+        const newY =
+          prevStar.y +
+          prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
+        const newDistance = prevStar.distance + prevStar.speed;
+        const newScale = 1 + newDistance / 100;
+        if (
+          newX < -20 ||
+          newX > window.innerWidth + 20 ||
+          newY < -20 ||
+          newY > window.innerHeight + 20
+        ) {
+          return null;
+        }
+        return {
+          ...prevStar,
+          x: newX,
+          y: newY,
+          distance: newDistance,
+          scale: newScale,
+        };
+      });
+      animationFrame = requestAnimationFrame(moveStar);
     };
 
-    const animationFrame = requestAnimationFrame(moveStar);
+    animationFrame = requestAnimationFrame(moveStar);
     return () => cancelAnimationFrame(animationFrame);
-  }, [star]);
+  }, []);
 
   return (
     <svg

@@ -16,6 +16,17 @@ export default function Head({ params }: { params: { locale: string } }) {
     ? 'https://radionugget.com/fr/grid-square'
     : 'https://radionugget.com/en/grid-square';
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": title,
+    "description": description,
+    "url": url,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "inLanguage": locale,
+  };
+
   return (
     <>
       <title>{title}</title>
@@ -34,6 +45,11 @@ export default function Head({ params }: { params: { locale: string } }) {
       <link rel="alternate" hrefLang="en" href="https://radionugget.com/en/grid-square" />
       <link rel="alternate" hrefLang="x-default" href="https://radionugget.com/en/grid-square" />
 
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
     </>
   );
 }

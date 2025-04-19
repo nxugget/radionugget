@@ -254,7 +254,7 @@ export const Navbar = () => {
                     <Link href={getNewLocalePath("en")} onClick={() => setLangDropdownOpen(false)}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
-                          src="/images/flags/en.png"
+                          src="/images/flags/gb.png"
                           alt="English"
                           width={40}
                           height={30}
@@ -372,7 +372,7 @@ export const Navbar = () => {
                     }}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
                         <Image
-                          src="/images/flags/en.png"
+                          src="/images/flags/gb.png"
                           alt="English"
                           width={30}
                           height={20}

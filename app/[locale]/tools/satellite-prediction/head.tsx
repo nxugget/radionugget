@@ -20,6 +20,19 @@ export default async function Head({ params }: { params: { locale: string } }) {
   // Récupération des satellites
   const satellites = await getSatellites();
 
+  // Schema.org JSON-LD pour l'outil de prédiction de satellites
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": title,
+    "description": description,
+    "url": url,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "inLanguage": locale,
+    "keywords": satellites.map(sat => sat.name).join(", ")
+  };
+
   return (
     <>
       <title>{title}</title>
@@ -46,6 +59,12 @@ export default async function Head({ params }: { params: { locale: string } }) {
           content={`${satellite.name}`}
         />
       ))}
+
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
     </>
   );
 }

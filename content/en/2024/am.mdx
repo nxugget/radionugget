@@ -23,27 +23,27 @@ In **amplitude modulation** (AM), we vary the **amplitude** of the **carrier wav
 
 To demonstrate, we’re using a well-known software called [GNURadio](https://www.google.com/search?client=safari&rls=en&q=gnuradio&ie=UTF-8&oe=UTF-8).  
 It’s totally fine if you’re not familiar with how it works; essentially, it lets you manipulate radio signals using interconnected blocks.
-![GNURadio Software](/images/blog/2024/am/modulation2.png)
+![GNURadio Software](/images/blog/2024/am/modulation2.webp)
 Here, you place two `Signal Source` blocks to generate a signal, one for the **modulating signal** with a frequency of `20Hz` and another for the **carrier wave** with a frequency of `1000Hz` (much higher than the modulating signal).
 
 The `Throttle` block isn’t critical for this lesson; it’s there to prevent your PC from crashing by limiting the rate at which the CPU processes the program. One instance placed anywhere is enough, that’s why there’s only one. Anyway, back to what matters.
 
 The `QT GUI TIME SINK` block lets us visualize the two signals over time.  
 Here’s what you get when you run the program:
-![GNURadio Software](/images/blog/2024/am/modulation3.png)
+![GNURadio Software](/images/blog/2024/am/modulation3.webp)
 You can see our two neat sinusoids: the red one is the **carrier**, and the blue one is the **modulating signal**.
 
 # Amplitude Modulation
 Next, we superimpose our two signals by multiplying them ([check out the math behind it](https://en.wikipedia.org/wiki/Modulation_d%27amplitude#Principe)).  
-![GNURadio Software](/images/blog/2024/am/modulation4.png)
+![GNURadio Software](/images/blog/2024/am/modulation4.webp)
 Here, we simply added a `Multiply` block and route the modulated signal to our `QT GUI Time Sink`. I also left the other two signals connected to the sink for a clearer understanding. Similarly, you can ignore the `Throttle` block.
 
 Now, let’s run the program and display only the **modulated signal** to see what it looks like:
-![GNURadio Software](/images/blog/2024/am/modulation5.png)
+![GNURadio Software](/images/blog/2024/am/modulation5.webp)
 You can see the characteristic shape of an amplitude-modulated signal.
 
 And now, let’s display all three signals (modulating, carrier, and modulated):
-![GNURadio Software](/images/blog/2024/am/modulation6.png)
+![GNURadio Software](/images/blog/2024/am/modulation6.webp)
 It becomes clear that as the **amplitude** of our modulating signal decreases, the **amplitude** of the carrier drops accordingly.
 
 That’s it for this simplified lesson on **amplitude modulation**. There are many other modulation types ([FM](https://en.wikipedia.org/wiki/Modulation_de_fr%C3%A9quence#:~:text=En%20modulation%20de%20fr%C3%A9quence%2C%20l,(att%C3%A9nuation%20et%20bruit%20importants).), [PM](https://en.wikipedia.org/wiki/Modulation_de_phase#:~:text=La%20modulation%20de%20phase%20ou,Cette%20modulation%20est%20non%20lin%C3%A9aire.), ...) chosen based on what you’re transmitting, your available bandwidth, the ambient noise, etc., but we’ll save that for another time :)

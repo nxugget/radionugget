@@ -141,6 +141,11 @@ export default {
     cleanAll: "Tout effacer",
     addToFavorites: "Ajouter aux favoris",
     search: "Rechercher...",
+    searchPlaceholder: "Rechercher des satellites...", // Added missing translation
+    toggleFavorites: "Basculer les favoris", // Added missing translation
+    allCategories: "Toutes catégories", // Added missing translation
+    found: "trouvés", // Added missing translation
+    addAllFiltered: "Ajouter tous les filtrés", // Added missing translation
     filterAll: "Tous",
     filterWeather: "Météo",
     filterAmateur: "Amateur",

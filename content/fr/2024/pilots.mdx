@@ -32,14 +32,14 @@ On les retrouve entre `108` et `137MHz`. Maintenant, il va falloir savoir quelle
 Il existe un super site permettant de nous afficher les fréquences utilisées pour l'aéronautique, le tout avec même une carte, il s'agit de [Openaip](https://www.openaip.net). On peut accéder à la map en cliquant [ici](https://www.openaip.net/map).
 On va s'intéresser a l'aéroport de Bordeaux-Merignac **BOD** pour l'exemple.
 
-![Openaip BOD](/images/blog/2024/pilots/pilots3.png)
+![Openaip BOD](/images/blog/2024/pilots/pilots3.webp)
 On peut voir sur le côté tout un tas de fréquences utilisées par l'aéroport dont nottament celle de la tour de contrôle indiqué par **TWR** . 
 
 # Passons à l'écoute
 Dans mon cas, je vais utiliser [SDR++](https://www.sdrpp.org) car j'aime bien ce logiciel mais ça fonctionnera pareil avec n'importe lequel. On sélectionne son récepteur **SDR** relié à notre antenne. On choisit un niveau de gain qui nous convient, on change le type de modulation avec `AM` et aussi la **bande passante** qu'on met à `15000`. 
 Une fois ceci fait, on peut sélectionner manuellement une fréquence trouvée sur [Openaip](https://www.openaip.net) mais on peut aussi profiter du fait d'avoir un spectrogramme et observer si des pics apparaissent. 
 
-![SDR++ aero](/images/blog/2024/pilots/pilots4.png)
+![SDR++ aero](/images/blog/2024/pilots/pilots4.webp)
 Voici un morceau de ce que j'ai pu écouter par exemple : <audio controls src="/audio/pilots.wav" style={{ display: 'inline-block', maxWidth: '100%' }}></audio>  
 
 Les communications ne sont pas en continues donc patienter jusqu'à trouver un pic, placez-vous dessus, et bonne écoute :)

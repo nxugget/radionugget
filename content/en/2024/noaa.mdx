@@ -31,7 +31,7 @@ NOAA satellites don’t directly capture photographs of Earth. They use a [scann
 This data is transmitted using the [APT](https://en.wikipedia.org/wiki/Automatic_picture_transmission) (Automatic Picture Transmission) mode, dating back to 1960. Only these 3 satellites still use it. The image resolution is around `4km` per pixel.  
 Here’s an example of an image I received using APT:
 
-![Image brut APT NOAA](/images/blog/2024/noaa/image_reel.png)
+![Image brut APT NOAA](/images/blog/2024/noaa/image_reel.webp)
 The transmission comprises **two image channels**, telemetry data, and synchronization bits.  
 - The left channel is a visible-light image (although another sensor might be used depending on cloud cover).  
 - The right channel comes from an **infrared** sensor.  
@@ -42,7 +42,7 @@ All this data is sent line by line horizontally.
 Before transmission, images undergo geometric correction to remove **distortion** caused by Earth’s curvature ([because, you know, the Earth isn’t flat](https://www.youtube.com/watch?v=l4Po4cdCsI0)).  
 With these two images, you can generate alternate versions, for instance, a thermal image:
 
-![Image thermique NOAA](/images/blog/2024/noaa/image_thermique.png)
+![Image thermique NOAA](/images/blog/2024/noaa/image_thermique.webp)
 This type of image is key for meteorologists to predict the weather ⛈️.
 
 ## How an Antenna and SDR Work
@@ -80,14 +80,14 @@ Since the initial results were not convincing, I removed the terminal block and 
 A dipole isn’t omnidirectional, so its orientation matters. NOAA satellites on polar orbits approach either from the **north** or the **south**. Orient the antenna towards one direction; if mismatched, you can simply flip the image later.  
 Here’s the final setup as installed on a south-facing roof:
 
-![Antenne v-dipôle](/images/blog/2024/noaa/roof.JPEG)
+![Antenne v-dipôle](/images/blog/2024/noaa/roof.webp)
 Note that a dish or Yagi antenna would be entirely different for this project.
 
 ### Raspberry Pi
 For this project, I use a **Raspberry Pi 4 Model B** running a 64-bit **Raspbian Lite OS**, without a graphical interface to minimize interference from the GPU/CPU.  
 It’s placed in a tupperware in the attic to protect it from dust. The **SDR** receiver is an **RTL-SDR V4** dongle, connected via about 5m of reclaimed TV coaxial cable, though a high-quality cable like RG58 is preferred.
 
-![RTL-SDR V4 on Raspberry](/images/blog/2024/noaa/tupperware.jpg)
+![RTL-SDR V4 on Raspberry](/images/blog/2024/noaa/tupperware.webp)
 
 ### Filter
 Although the SDR records the specified frequency, it isn’t perfect, so nearby interfering signals may still be present. Some may consider using an **LNA** (Low Noise Amplifier) to filter and boost signals in a specific frequency band. For this project, an LNA for **137MHz** (like [this one](https://www.amazon.fr/NooElec-SAWbird-NOAA-Applications-Fr%C3%A9quence/dp/B07TWPR871/)) could be used.  
@@ -154,7 +154,7 @@ This command records and processes the audio signal into an image. More details 
 ### Image Retrieval
 Once the processing is complete, SatDump applies image processing as specified in `settings.yml` to generate various outputs (colored images, thermal images, etc.). These are then available on the “captures” page of your website.
 For instance, here’s a processed image from **NOAA 19**:
-![NOAA images](/images/blog/2024/noaa/image_noaa.jpg)  
+![NOAA images](/images/blog/2024/noaa/image_noaa.webp)  
 You’ll notice some bands in the middle due to interference from my imperfect antenna, I’m working on that.
 
 # What's Next & Improvements

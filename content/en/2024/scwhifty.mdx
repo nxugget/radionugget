@@ -14,15 +14,15 @@ To understand this writeup, it's important to grasp modulation concepts, so chec
 
 The challenge begins with a file named `sdr-challenge2.cfile`; open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty1.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty1.webp)
 
 We notice several similar segments, likely the same signal repeated. Zoom in on one segment to "crop" it so we can work on a single instance.
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty2.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty2.webp)
 
 Zooming in even further, something interesting appears. Some parts seem more "closely spaced" than others:
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty3.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty3.webp)
 
 By "closely spaced," you can hear that the distance between each period varies, meaning the **frequency** is different. More precisely, there are **two distinct frequencies** of roughly different durations.
 Without taking any risks, we can assume this is **FSK** (**F**requency **S**hift **K**eying) modulation.
@@ -32,7 +32,7 @@ This digital modulation technique uses one frequency to represent a **0** and an
 
 Switch to [URH](https://github.com/jopohl/urh) and select `FSK` as the modulation type. Next, find the `Samples/Symbol` value, which for digital modulation represents the duration of one **bit**. To do this, select the smallest segment possible; in my case, it shows around `203µs`.
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty5.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty5.webp)
 
 So, we set the `Samples/Symbol` to roughly `200µs`. You can pick any other segment with the same frequency, and it will always be a multiple (400µs, 600µs, 800µs, etc.), confirming that one bit is approximately `200µs`. 
 
@@ -40,12 +40,12 @@ Also, as a general rule, add at least **5%** of `Error Tolerance` relative to th
 
 Switch to the `Demodulated` view to continue your inspection, which should display something like:
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty6.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty6.webp)
 
 Now, you need to tell URH which frequency corresponds to a `1` and which to a `0`. In the `Demodulated` view, notice that the **pink** color represents `1` and **green** represents `0`. This is why, initially, with the entire signal in **green**, URH decodes only `0`s.  
 But if you move the cursor so it lies exactly in the middle of the transition, where URH detects the difference between the two frequencies, you’ll see both `0`s and `1`s appearing.  
 Also, by switching the display from `Bits` to `ASCII` under `Show data as`, your flag should become visible!
 
-![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty7.png)
+![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty7.webp)
 
 The cursor can be a bit finicky; you can manually tweak the `Center` value on the left (which is equivalent to moving the cursor) or adjust the `Error Tolerance` if any characters still look odd.

@@ -29,7 +29,7 @@ Les **NOAA** ne prennent pas directement des photos de la Terre. Ils utilisent u
 Pour cela ils vont utiliser le mode [APT](https://en.wikipedia.org/wiki/Automatic_picture_transmission) (**A**utomatic **P**icture **T**ransmission). Il date de 1960 et seules ces 3 satellites l'utilisent encore. La qualité n'est que de `4km` pour 1 pixel. 
 Voici un exemple d'image transmise que j'ai reçu avec ce système :
 
-![Image brut APT NOAA](/images/blog/2024/noaa/image_reel.png)
+![Image brut APT NOAA](/images/blog/2024/noaa/image_reel.webp)
 La transmission est composée de **deux canaux d'images**, des **informations télémétriques** et des **données de synchronisation**. 
 - Le premier canal (image de gauche) d'image est pris avec un capteur dans les longueurs d'onde visibles. (Un autre capteur peut être utilisé en fonction de la quantité de nuages). 
 - Le second canal (image à droite) utilise un capteur **infrarouge**. 
@@ -39,7 +39,7 @@ La transmission est composée de **deux canaux d'images**, des **informations t�
 Toutes ces données vont être envoyées ligne par ligne à l'horizontal. 
 Avant d'être diffusées, les images recoivent des corrections géométriques permettant ainsi d'être exempt de la **distorsion** causée par la **courbure** de la Terre ([car oui, la Terre n'est pas plate](https://www.youtube.com/watch?v=l4Po4cdCsI0)).
 Ainsi, avec ces deux images capturées, on peut obtenir d'autres types d'image. Par exemple, voici une image thermique générée par les deux images précédentes : 
-![Image thermique NOAA](/images/blog/2024/noaa/image_thermique.png)
+![Image thermique NOAA](/images/blog/2024/noaa/image_thermique.webp)
 C'est grâce à ce genre d'image que les personnes dans la météorologie seront à même de prédire le temps qu'il va faire ⛈️.
 
 ## Fonctionnement d'une antenne et SDR
@@ -75,13 +75,13 @@ Les premiers résultats n'étant pas très convaincant, je décide d'enlever le 
 ### Placement et Orientation
 Une antenne **dipôle** n'est pas **omnidirectionelles** et il va falloir la placer correctement. Les **NOAA** avec leur orbite polaire arrive soit par le **nord** soit par le **sud**. Par conséquant, on doit orienter l'antenne dans l'une de ses directions, n'importe laquelle. Si on la place vers le **nord** alors que le satellite arrivait par le **sud**, on aura juste à retourner l'image.  :) 
 Voilà le rendu final de l'antenne sur le toit orienté plein **sud** dans mon cas : 
-![Antenne v-dipôle](/images/blog/2024/noaa/roof.JPEG)
+![Antenne v-dipôle](/images/blog/2024/noaa/roof.webp)
 Évidemment, la parabole et l'antenne râteau n'ont rien à voir pour ce projet. 
 ### Raspberry
 Pour ce projet, j'utilise un **Raspberry 4 model B** qui tourne sur **Raspbian lite OS** en **64-bits**. Il n'aura pas d'**interface graphique** afin d'éviter toutes fréquences parasites provoquées par la consommation du **CPU** et de la **RAM** à cause des composants graphiques. 
 Ce dernier sera placé dans les combles dans un tupperware pour le protéger de la poussière. Pour le récepteur **SDR**, j'utilise la clé **RTL-SDR V4**. Elle sera reliée à l'antenne par **5m** de câble coaxial **TV** de récup, mais c'est mieux de prendre un bon câble style du **RG58**.
 
-![RTL-SDR V4 sur Raspberry](/images/blog/2024/noaa/tupperware.jpg)
+![RTL-SDR V4 sur Raspberry](/images/blog/2024/noaa/tupperware.webp)
 
 ### Filtre
 Bien que la clé **SDR** a pour rôle d'enregistrer dans la fréquence qu'on lui demande, elle n'est pas parfaite et il y aura toujours des signaux parasites autour. Pour régler ce problème, on peut être tenté par utiliser un **LNA** (**L**ow **N**oise **A**mplicator). Il va nous permettre de filtrer et amplifier les signaux dans une gamme de fréquence bien spécifique. Par exemple, pour ce projet, il faudrait un **LNA 137MHz** comme [celui-ci](https://www.amazon.fr/NooElec-SAWbird-NOAA-Applications-Fr%C3%A9quence/dp/B07TWPR871/ref=sr_1_1?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3JXDFIBNMHG1C&dib=eyJ2IjoiMSJ9.mFFmWr9UNDTELd7jA4G3G_iBBoiZyBRdYts8EgwXjuPBWJLnSzPtd_hfNc6sTTgiroKvpfoo1WDs9PUSsw-bGdF9iZwPsRWrWcLuK9lIbKwP4fd7HcMHoxqDOJy0zJAWGNPMXH_JHCNHBzbCmf7j052pjModyeE24G2PRjrts9uRofPh-Hig5qU23rs-xIFGjjdblbDF-z591mkmuFgJmsfqtFTj0ovWvRypJBq-TU33UGYfUyFhZocThOVzagjOwaeGVeWTvkWXhrZhwu7GRGdtG05_gowpSti7dIi5EWQ.UU5r_ajUrMU4Jy6f6F7zP7GwyrtH0BbD78t7OoBGTf8&dib_tag=se&keywords=nooelec+137&qid=1726996924&sprefix=nooelec+13%2Caps%2C97&sr=8-1). 
@@ -159,7 +159,7 @@ On va pas rentrer dans les détails de chacun des arguments mais cette commande 
 ### Récupération des images
 Une fois tout le traitement terminé, [satdump](https://www.satdump.org/download/) va appliquer un traitement sur l'image reçue selon ce que l'on a mis comme paramètres dans le fichier `settings.yml`. Ainsi, il va pouvoir en générer plusieurs, comme des images en couleurs ou en vision thermique. Ces dernières étant disponible depuis la section `captures` de votre site.
 Voici un exemple de la même image de **NOAA 19** reçue mais avec un traitement différent :
-![NOAA images](/images/blog/2024/noaa/image_noaa.jpg)  
+![NOAA images](/images/blog/2024/noaa/image_noaa.webp)  
 Comme vous pouvez le voir, il y a pas mal de bandes en plein milieu, ce sont des interférences dues à mon antenne qui n'est pas parfaite. J'y travaille afin d'avoir une image parfaitement nette.
 
 # Suite et Améliorations

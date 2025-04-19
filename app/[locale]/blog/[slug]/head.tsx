@@ -9,6 +9,22 @@ export default function Head({ params, metadata }: { params: { locale: string; s
   const image = metadata.thumbnail;
   const url = `https://radionugget.com/${locale}/blog/${params.slug}`;
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "image": image,
+    "url": url,
+    "inLanguage": locale,
+    "datePublished": metadata.date,
+    "dateModified": metadata.modifiedDate || metadata.date,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": url
+    }
+  };
+
   return (
     <>
       <title>{title}</title>
@@ -22,6 +38,12 @@ export default function Head({ params, metadata }: { params: { locale: string; s
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      
+      {/* Schema.org JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
     </>
   );
 }

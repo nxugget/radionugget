@@ -12,22 +12,22 @@ The [DragonOS](https://cemaxecuter.com/) distribution is a fork of [Lubuntu](htt
 To grab the **ISO**, just head over [here](https://sourceforge.net/projects/dragonos-focal/files/latest/download). Next, you’ll need a hypervisor like **VirtualBox** or **VMWare**, whichever you prefer. Since I’m on **Windows**, I’m keeping it simple with **VirtualBox**, which you can download [here](https://www.virtualbox.org/wiki/Downloads). For **Mac ARM**, you’d need to use **VMWare** :)  
 Launch **VirtualBox** and click the **New** button to import your **ISO**.
 
-![VirtualBox New](/images/blog/2024/dragonos/dragonos1.png)
+![VirtualBox New](/images/blog/2024/dragonos/dragonos1.webp)
 Click **Next** to allocate your hardware resources. For **RAM**, 4GB should suffice; if in doubt (since some apps can be hungry), I recommend 8GB (8192Mb). For the **CPU**, it depends on your setup, I set it to **6**, though **2** or **4** should work fine.
 
-![VirtualBox Hardware](/images/blog/2024/dragonos/dragonos2.png)
+![VirtualBox Hardware](/images/blog/2024/dragonos/dragonos2.webp)
 Then, click **Next** to set up disk space. Allocate at least **30GB** since later steps require a minimum of 30GB.
 
-![VirtualBox Disk](/images/blog/2024/dragonos/dragonos3.png)
+![VirtualBox Disk](/images/blog/2024/dragonos/dragonos3.webp)
 Finally, click **Next** and then **Finish**.
 
 # First Boot
 Now, double-click to launch **DragonOS**. You might see a screen like this:
 
-![DragonOS Boot Loading](/images/blog/2024/dragonos/dragonos4.png)
+![DragonOS Boot Loading](/images/blog/2024/dragonos/dragonos4.webp)
 Press **Enter** and after a few moments, you’ll land on a desktop that looks like this:
 
-![DragonOS desktop](/images/blog/2024/dragonos/dragonos5.png)
+![DragonOS desktop](/images/blog/2024/dragonos/dragonos5.webp)
 The installation isn’t complete yet, you’ll notice an **Install DragonOS FocalX** icon on the desktop. You need to run it because if you shut down the VM now, everything you did will be lost.  
 Double-click the icon and follow the installation prompts. The default options work fine. After a bit, you’ll be prompted to reboot the VM, and then you’re all set!
 
@@ -36,21 +36,21 @@ On **DragonOS**, you’ll find a slew of preinstalled software, so we won’t co
 Let’s test things out by plugging in your **SDR** receiver. In my setup, I use the **RTL-SDR V4** dongle along with the awesome **SDR++** software.
 Before proceeding, you need to instruct **VirtualBox** to recognize your **SDR** dongle connected via your host’s **USB** port. In the menu, go to **Devices -> USB** and click on your **SDR** receiver.
 
-![Virtual Box USB SDR](/images/blog/2024/dragonos/dragonos6.png)
+![Virtual Box USB SDR](/images/blog/2024/dragonos/dragonos6.webp)
 Now, you’re ready to listen. In **SDR++**, under **Source**, select **RTL-SDR** and choose your receiver from the dropdown below. Then click the **Play** button and everything should work like a charm!
 
-![DragonOS SDR++](/images/blog/2024/dragonos/dragonos7.png)
+![DragonOS SDR++](/images/blog/2024/dragonos/dragonos7.webp)
 
 # Shared Folder
 When you want to work with files from your **host machine** on your **VM**, you’ll need a way to transfer them. A simple solution is setting up a **shared folder**.
 First, ensure that the **Guest Additions** are installed. These drivers enhance the interaction between the **VM** and the **host**.
 Within the **VM**, click on **Devices -> Insert Guest Additions CD Image...** at the top, and then **Execute** the `autorun.sh` script.
 
-![Guest Additions VirtualBox](/images/blog/2024/dragonos/dragonos9.png)
+![Guest Additions VirtualBox](/images/blog/2024/dragonos/dragonos9.webp)
 Next, shut down the **VM**, click on **Settings** (the yellow gear icon), then go to **Shared Folders**. Right-click and choose **Add Shared Folder**.
 Finally, select the folder from your host machine you’d like to share and check **Auto-Mount**.
 
-![VirtualBox shared folder](/images/blog/2024/dragonos/dragonos8.png)
+![VirtualBox shared folder](/images/blog/2024/dragonos/dragonos8.webp)
 Now, inside the **VM** file explorer, you should see your shared folder under the name `sf_Downloads`.
 If you encounter any permissions issues, open a **terminal** and type `sudo adduser [your-user] vboxsf`, then reboot the **VM**, and it should work perfectly.
 
