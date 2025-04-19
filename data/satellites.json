@@ -2,8 +2,8 @@
   {
     "norad_id": "32788",
     "name": "AAUSAT-2",
-    "tle1": "1 32788U 08021F   25108.48592336  .00317801  00000+0  23020-2 0  9993\r",
-    "tle2": "2 32788  97.6011 104.4238 0008832 131.7153 228.4867 15.72467234925271",
+    "tle1": "1 32788U 08021F   25108.93134283  .00293421  00000+0  21083-2 0  9994\r",
+    "tle2": "2 32788  97.6009 104.9094 0008793 131.4007 228.8013 15.72727750925341",
     "transmitters": [
       {
         "description": "Mode U 1k2 AFSK TLM",
@@ -19,8 +19,8 @@
   {
     "norad_id": "22825",
     "name": "AO-27",
-    "tle1": "1 22825U 93061C   25107.76930633  .00000251  00000+0  11294-3 0  9997\r",
-    "tle2": "2 22825  98.7411 169.0499 0007252 266.9020  93.1333 14.30776375646168",
+    "tle1": "1 22825U 93061C   25109.16794370  .00000230  00000+0  10514-3 0  9990\r",
+    "tle2": "2 22825  98.7410 170.4563 0007273 262.1260  97.9097 14.30777173646630",
     "transmitters": [
       {
         "description": "Mode V/U FM",
@@ -57,8 +57,8 @@
   {
     "norad_id": "39444",
     "name": "AO-73",
-    "tle1": "1 39444U 13066AE  25107.84760497  .00011967  00000+0  91645-3 0  9991\r",
-    "tle2": "2 39444  97.7715  69.6166 0040514 202.9880 156.9532 15.01359045615678",
+    "tle1": "1 39444U 13066AE  25109.11390779  .00010620  00000+0  81334-3 0  9994\r",
+    "tle2": "2 39444  97.7717  70.8839 0040615 198.7030 161.2704 15.01386194616454",
     "transmitters": [
       {
         "description": "Mode U/V Linear",
@@ -112,6 +112,44 @@
   {
     "norad_id": "61781",
     "name": "AO-123",
+    "tle1": "1 61781U 24199AY  25109.23774074  .00010266  00000+0  38248-3 0  9991\r",
+    "tle2": "2 61781  97.3622 337.6388 0016773  26.1033 334.1048 15.27511570 69047",
+    "transmitters": [
+      {
+        "description": "Image download",
+        "mode": "QPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 10460000000
+      },
+      {
+        "description": "Mode V/U - FM Transceiver",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145850000,
+        "downlink": 435400000
+      },
+      {
+        "description": "Mode U - Telemetry",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435400000
+      },
+      {
+        "description": "Mode U - SSDV",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436210000
+      }
+    ],
+    "image": "satellites/300px-阿斯图友谊号_IPvWmAo.jpg",
+    "country": "CN,RU"
+  },
+  {
+    "norad_id": "61781",
+    "name": "ASRTU-1",
     "tle1": "1 61781U 24199AY  25108.84469189  .00009912  00000+0  36951-3 0  9990\r",
     "tle2": "2 61781  97.3622 337.2509 0016811  27.4294 332.7829 15.27502571 68988",
     "transmitters": [
@@ -150,8 +188,8 @@
   {
     "norad_id": "57175",
     "name": "BSUSat-2",
-    "tle1": "1 57175U 23091K   25108.85117758  .00014360  00000+0  70581-3 0  9995\r",
-    "tle2": "2 57175  97.5627 165.3644 0013654 157.1013 203.0832 15.18067208 99700",
+    "tle1": "1 57175U 23091K   25109.24666672  .00015929  00000+0  78204-3 0  9995\r",
+    "tle2": "2 57175  97.5625 165.7597 0013669 155.8476 204.3401 15.18081485 99768",
     "transmitters": [
       {
         "description": "Mode U 9k6 FSK AX.25",
@@ -198,8 +236,8 @@
   {
     "norad_id": "40908",
     "name": "CAS-3H",
-    "tle1": "1 40908U 15049K   25108.82969541  .00015627  00000+0  42659-3 0  9999\r",
-    "tle2": "2 40908  97.5109 127.9655 0008914 359.6144   0.5091 15.37475004530271",
+    "tle1": "1 40908U 15049K   25109.22019565  .00016831  00000+0  45902-3 0  9998\r",
+    "tle2": "2 40908  97.5109 128.3648 0008856 358.2286   1.8925 15.37489546530338",
     "transmitters": [
       {
         "description": "CW Beacon",
@@ -243,8 +281,8 @@
   {
     "norad_id": "44881",
     "name": "CAS-6",
-    "tle1": "1 44881U 19093C   25108.82994067  .00001905  00000+0  22669-3 0  9990\r",
-    "tle2": "2 44881  97.7933 185.5614 0014766  46.3642 313.8795 14.85463352288391",
+    "tle1": "1 44881U 19093C   25109.16674173  .00001749  00000+0  20856-3 0  9993\r",
+    "tle2": "2 44881  97.7939 185.8911 0014763  45.2302 315.0111 14.85463761288444",
     "transmitters": [
       {
         "description": "Mode V CW TLM",
@@ -288,8 +326,8 @@
   {
     "norad_id": "50466",
     "name": "CAS-9",
-    "tle1": "1 50466U 21131B   25108.88396353  .00001073  00000+0  34956-3 0  9990\r",
-    "tle2": "2 50466  98.5082 198.4983 0002965 295.9584  64.1299 14.40731342174003",
+    "tle1": "1 50466U 21131B   25109.23120984  .00001094  00000+0  35601-3 0  9996\r",
+    "tle2": "2 50466  98.5081 198.8438 0002953 294.4877  65.6003 14.40732390174055",
     "transmitters": [
       {
         "description": "Mode U - Telemetry",
@@ -326,8 +364,8 @@
   {
     "norad_id": "60246",
     "name": "CatSat",
-    "tle1": "1 60246U 24125J   25107.57746129  .00013592  00000+0  47073-3 0  9991\r",
-    "tle2": "2 60246  97.2645 319.6319 0041858 283.2374  76.4199 15.29114417 41882",
+    "tle1": "1 60246U 24125J   25109.14798932  .00012653  00000+0  43792-3 0  9996\r",
+    "tle2": "2 60246  97.2646 321.1652 0041854 277.3828  82.2657 15.29154543 42121",
     "transmitters": [
       {
         "description": "Mode U - FSK2k4",
@@ -364,8 +402,8 @@
   {
     "norad_id": "27844",
     "name": "CO-55",
-    "tle1": "1 27844U 03031E   25107.91017096  .00000684  00000+0  31736-3 0  9990\r",
-    "tle2": "2 27844  98.6784 116.8602 0009252 348.0942  12.0016 14.23942041131174",
+    "tle1": "1 27844U 03031E   25108.96417969  .00000624  00000+0  29095-3 0  9998\r",
+    "tle2": "2 27844  98.6783 117.9007 0009209 344.9858  15.1046 14.23943280131327",
     "transmitters": [
       {
         "description": "Mode U TLM",
@@ -426,8 +464,8 @@
   {
     "norad_id": "28895",
     "name": "CO-58",
-    "tle1": "1 28895U 05043F   25107.93446710  .00003883  00000+0  64337-3 0  9990\r",
-    "tle2": "2 28895  98.2415 251.6574 0015853 113.3543 246.9333 14.70766931 39203",
+    "tle1": "1 28895U 05043F   25108.95495177  .00003226  00000+0  53599-3 0  9993\r",
+    "tle2": "2 28895  98.2417 252.6892 0015860 110.3905 249.9006 14.70773511 39589",
     "transmitters": [
       {
         "description": "Mode U CW BEACON",
@@ -450,8 +488,8 @@
   {
     "norad_id": "32785",
     "name": "CO-65",
-    "tle1": "1 32785U 08021C   25107.91748858  .00009796  00000+0  71730-3 0  9992\r",
-    "tle2": "2 32785  97.7830  78.7291 0011330  40.6415 319.5654 15.03722968921236",
+    "tle1": "1 32785U 08021C   25109.18179762  .00009087  00000+0  66542-3 0  9993\r",
+    "tle2": "2 32785  97.7831  80.0007 0011234  37.2824 322.9179 15.03745369921428",
     "transmitters": [
       {
         "description": "Mode U TLM 1",
@@ -548,6 +586,30 @@
     "country": "US"
   },
   {
+    "norad_id": "57175",
+    "name": "CubeBel-2",
+    "tle1": "1 57175U 23091K   25108.85117758  .00014360  00000+0  70581-3 0  9995\r",
+    "tle2": "2 57175  97.5627 165.3644 0013654 157.1013 203.0832 15.18067208 99700",
+    "transmitters": [
+      {
+        "description": "Mode U 9k6 FSK AX.25",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436990000
+      },
+      {
+        "description": "Mode S - Transmitter",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2425000000
+      }
+    ],
+    "image": "satellites/CUBEBEL-2-resize.jpg",
+    "country": "BY"
+  },
+  {
     "norad_id": "39440",
     "name": "CubeBug-2",
     "tle1": "1 39440U 13066AA  25108.82417224  .00007549  00000+0  77160-3 0  9990\r",
@@ -574,8 +636,8 @@
   {
     "norad_id": "47952",
     "name": "CubeSX-HSE-1",
-    "tle1": "1 47952U 21022W   25108.69647733  .00203589  00000+0  15205-2 0  9996\r",
-    "tle2": "2 47952  97.4216  19.1540 0010845 112.3665 247.8748 15.72039419225651",
+    "tle1": "1 47952U 21022W   25108.95108500  .00201381  00000+0  14980-2 0  9996\r",
+    "tle2": "2 47952  97.4214  19.4247 0010849 112.0980 248.1436 15.72140799225693",
     "transmitters": [
       {
         "description": "Mode X - DVB-S2",
@@ -605,8 +667,8 @@
   {
     "norad_id": "47951",
     "name": "CubeSX-Sirius-HSE",
-    "tle1": "1 47951U 21022V   25108.80250062  .00194145  00000+0  14823-2 0  9995\r",
-    "tle2": "2 47951  97.4208  19.0298 0011045 115.5949 244.6456 15.71537394225658",
+    "tle1": "1 47951U 21022V   25109.12086058  .00200670  00000+0  15231-2 0  9998\r",
+    "tle2": "2 47951  97.4207  19.3682 0010994 115.1211 245.1193 15.71660565225704",
     "transmitters": [
       {
         "description": "Mode X - DVB-S2",
@@ -658,10 +720,79 @@
     "country": "US"
   },
   {
+    "norad_id": "27844",
+    "name": "CUTE-I",
+    "tle1": "1 27844U 03031E   25107.91017096  .00000684  00000+0  31736-3 0  9990\r",
+    "tle2": "2 27844  98.6784 116.8602 0009252 348.0942  12.0016 14.23942041131174",
+    "transmitters": [
+      {
+        "description": "Mode U TLM",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437470000
+      },
+      {
+        "description": "Mode U TLM",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436837500
+      },
+      {
+        "description": "PE0SAT - CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436835820
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/cute-1__1.jpg",
+    "country": "JP"
+  },
+  {
+    "norad_id": "32785",
+    "name": "CUTE1.7+APDII",
+    "tle1": "1 32785U 08021C   25107.91748858  .00009796  00000+0  71730-3 0  9992\r",
+    "tle2": "2 32785  97.7830  78.7291 0011330  40.6415 319.5654 15.03722968921236",
+    "transmitters": [
+      {
+        "description": "Mode U TLM 1",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437275000
+      },
+      {
+        "description": "Mode U TLM 2",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437475000
+      },
+      {
+        "description": "PE0SAT - CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437274600
+      },
+      {
+        "description": "Mode L/U Digipeater",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": 1267600000,
+        "downlink": 437475000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/CO-65-300x197.jpg",
+    "country": "JP"
+  },
+  {
     "norad_id": "43678",
     "name": "Diwata-2",
-    "tle1": "1 43678U 18084H   25108.82824441  .00004925  00000+0  42181-3 0  9996\r",
-    "tle2": "2 43678  98.1013 282.9936 0010191  99.9274 260.3098 14.98020267352639",
+    "tle1": "1 43678U 18084H   25109.22901901  .00004887  00000+0  41852-3 0  9999\r",
+    "tle2": "2 43678  98.1014 283.4093 0010213  98.7845 261.4533 14.98024524352698",
     "transmitters": [
       {
         "description": "Mode S",
@@ -805,8 +936,8 @@
   {
     "norad_id": "58472",
     "name": "Eirsat-1",
-    "tle1": "1 58472U 23185L   25108.82983832  .00089980  00000+0  12322-2 0  9999\r",
-    "tle2": "2 58472  97.3739 183.6854 0006840 249.0236 111.0288 15.57067863 77086",
+    "tle1": "1 58472U 23185L   25109.21542297  .00098156  00000+0  13387-2 0  9996\r",
+    "tle2": "2 58472  97.3739 184.0841 0006840 247.0587 112.9947 15.57147913 77148",
     "transmitters": [
       {
         "description": "Mode U - GMSK9k6",
@@ -822,8 +953,8 @@
   {
     "norad_id": "58470",
     "name": "ENSO",
-    "tle1": "1 58470U 23185J   25108.83313444  .00055706  00000+0  99447-3 0  9997\r",
-    "tle2": "2 58470  97.3761 182.5085 0007249 253.4640 106.5815 15.49849616 77007",
+    "tle1": "1 58470U 23185J   25109.22051694  .00062698  00000+0  11161-2 0  9991\r",
+    "tle2": "2 58470  97.3762 182.9049 0007264 251.4602 108.5860 15.49900783 77066",
     "transmitters": [
       {
         "description": "HF Transmitter",
@@ -1053,6 +1184,37 @@
     "country": "JP"
   },
   {
+    "norad_id": "39444",
+    "name": "FUNcube-1",
+    "tle1": "1 39444U 13066AE  25107.84760497  .00011967  00000+0  91645-3 0  9991\r",
+    "tle2": "2 39444  97.7715  69.6166 0040514 202.9880 156.9532 15.01359045615678",
+    "transmitters": [
+      {
+        "description": "Mode U/V Linear",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "435130000-435150000",
+        "downlink": "145950000-145970000"
+      },
+      {
+        "description": "CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145815000
+      },
+      {
+        "description": "BPSK Telemetry",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145935000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/FUNCUBE-1.jpg",
+    "country": ""
+  },
+  {
     "norad_id": "43792",
     "name": "FUNcube-4",
     "tle1": "1 43792U 18099AL  25108.72220649  .00002863  00000+0  22046-3 0  9995\r",
@@ -1100,8 +1262,8 @@
   {
     "norad_id": "43803",
     "name": "FUNcube-6",
-    "tle1": "1 43803U 18099AX  25107.72790442  .00018312  00000+0  86766-3 0  9995\r",
-    "tle2": "2 43803  97.4707 167.3146 0006393 338.5035  21.5930 15.19349601348745",
+    "tle1": "1 43803U 18099AX  25109.11093224  .00016399  00000+0  77649-3 0  9997\r",
+    "tle2": "2 43803  97.4709 168.6834 0006345 332.3781  27.7116 15.19397233348953",
     "transmitters": [
       {
         "description": "BPSK1k2 TLM",
@@ -1131,8 +1293,8 @@
   {
     "norad_id": "39430",
     "name": "GOMX-1",
-    "tle1": "1 39430U 13066Q   25108.80347443  .00003141  00000+0  49421-3 0  9995\r",
-    "tle2": "2 39430  97.6900 330.6334 0133029 358.8417   1.2461 14.67395855607817",
+    "tle1": "1 39430U 13066Q   25109.21260256  .00003100  00000+0  48797-3 0  9997\r",
+    "tle2": "2 39430  97.6900 331.0176 0132991 357.5335   2.5198 14.67398872607877",
     "transmitters": [
       {
         "description": "4k8 AFSK",
@@ -1162,8 +1324,8 @@
   {
     "norad_id": "25397",
     "name": "GO-32",
-    "tle1": "1 25397U 98043D   25107.93487595  .00000217  00000+0  11387-3 0  9997\r",
-    "tle2": "2 25397  98.9673  85.9662 0001739  39.5444 320.5860 14.24296707390799",
+    "tle1": "1 25397U 98043D   25108.91836899  .00000195  00000+0  10468-3 0  9995\r",
+    "tle2": "2 25397  98.9674  86.9697 0001695  37.8945 322.2352 14.24297132391156",
     "transmitters": [
       {
         "description": "Mode V/U APRS,BBS 9K6 FSK",
@@ -1228,8 +1390,8 @@
   {
     "norad_id": "47959",
     "name": "GRBALPHA",
-    "tle1": "1 47959U 21022AD  25108.79729006  .00187984  00000+0  14380-2 0  9991\r",
-    "tle2": "2 47959  97.4206  19.3822 0010671 114.6362 245.6013 15.71514809224490",
+    "tle1": "1 47959U 21022AD  25109.17932430  .00218986  00000+0  16581-2 0  9993\r",
+    "tle2": "2 47959  97.4205  19.7883 0010629 114.2555 245.9820 15.71671286224552",
     "transmitters": [
       {
         "description": "Mode U - GFSK9k6 - AX.25 G3RUH",
@@ -1259,8 +1421,8 @@
   {
     "norad_id": "60237",
     "name": "GRBBeta",
-    "tle1": "1 60237U 24128C   25107.82350417  .00007941  00000+0  60281-3 0  9990\r",
-    "tle2": "2 60237  61.9919 263.4270 0046998  45.9529 314.5417 15.02065342 42277",
+    "tle1": "1 60237U 24128C   25108.88862503  .00006876  00000+0  52393-3 0  9992\r",
+    "tle2": "2 60237  61.9919 259.7165 0047103  46.1878 314.3092 15.02080805 42433",
     "transmitters": [
       {
         "description": "Mode V - GFSK9k6 - AX.25",
@@ -1437,6 +1599,44 @@
     "country": "JP"
   },
   {
+    "norad_id": "50466",
+    "name": "HO-113",
+    "tle1": "1 50466U 21131B   25108.88396353  .00001073  00000+0  34956-3 0  9990\r",
+    "tle2": "2 50466  98.5082 198.4983 0002965 295.9584  64.1299 14.40731342174003",
+    "transmitters": [
+      {
+        "description": "Mode U - Telemetry",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435575000
+      },
+      {
+        "description": "Mode U - GMSK4k8 AX.25 Telemetry",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435725000
+      },
+      {
+        "description": "Mode V/U - Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "145855000-145885000",
+        "downlink": "435165000-435195000"
+      },
+      {
+        "description": "Mode U Audio",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435180000
+      }
+    ],
+    "image": "satellites/cas9.png",
+    "country": "CN"
+  },
+  {
     "norad_id": "62692",
     "name": "HYDRA-T",
     "tle1": "1 62692U 25009CM  25107.20222341  .00059958  00000+0  23902-2 0  9995\r",
@@ -1493,8 +1693,8 @@
   {
     "norad_id": "51044",
     "name": "IRIS-A",
-    "tle1": "1 51044U 22002BN  25108.73500262  .00204492  00000+0  12395-2 0  9993\r",
-    "tle2": "2 51044  97.3270 186.3971 0002070 255.3974 104.7063 15.76967392181661",
+    "tle1": "1 51044U 22002BN  25109.17916191  .00212630  00000+0  12765-2 0  9998\r",
+    "tle2": "2 51044  97.3270 186.8668 0002251 254.1396 105.9622 15.77163608181736",
     "transmitters": [
       {
         "description": "Mode U - GMSK9k6 AX.25",
@@ -1517,8 +1717,8 @@
   {
     "norad_id": "25544",
     "name": "ISS",
-    "tle1": "1 25544U 98067A   25108.80708381  .00015380  00000+0  27994-3 0  9991\r",
-    "tle2": "2 25544  51.6364 241.1465 0005317  53.0043 307.1431 15.49683987505954",
+    "tle1": "1 25544U 98067A   25109.19400237  .00016425  00000+0  29822-3 0  9996\r",
+    "tle2": "2 25544  51.6363 239.2305 0005385  54.5570 305.5921 15.49697821506016",
     "transmitters": [
       {
         "description": "Mode V APRS",
@@ -1854,10 +2054,103 @@
     "country": "RU,US"
   },
   {
+    "norad_id": "24278",
+    "name": "JAS-2",
+    "tle1": "1 24278U 96046B   25108.55457143  .00000015  00000+0  47880-4 0  9994\r",
+    "tle2": "2 24278  98.5811   9.2841 0350815 117.3073 246.4244 13.53244295415986",
+    "transmitters": [
+      {
+        "description": "Mode U CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435795000
+      },
+      {
+        "description": "Mode V/U Linear Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "145900000-146000000",
+        "downlink": "435800000-435900000"
+      },
+      {
+        "description": "Mode U Digitalker",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435910000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/fo29.gif",
+    "country": "JP"
+  },
+  {
+    "norad_id": "43803",
+    "name": "JO-97",
+    "tle1": "1 43803U 18099AX  25107.72790442  .00018312  00000+0  86766-3 0  9995\r",
+    "tle2": "2 43803  97.4707 167.3146 0006393 338.5035  21.5930 15.19349601348745",
+    "transmitters": [
+      {
+        "description": "BPSK1k2 TLM",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145840000
+      },
+      {
+        "description": "U/V SSB Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "435100000-435120000",
+        "downlink": "145855000-145875000"
+      },
+      {
+        "description": "U/V CW Transponder",
+        "mode": "CW",
+        "status": "active",
+        "uplink": "435100000-435120000",
+        "downlink": "145855000-145875000"
+      }
+    ],
+    "image": "satellites/jy1sat-cubesat.jpg",
+    "country": "JO"
+  },
+  {
+    "norad_id": "43803",
+    "name": "JY1Sat",
+    "tle1": "1 43803U 18099AX  25107.72790442  .00018312  00000+0  86766-3 0  9995\r",
+    "tle2": "2 43803  97.4707 167.3146 0006393 338.5035  21.5930 15.19349601348745",
+    "transmitters": [
+      {
+        "description": "BPSK1k2 TLM",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145840000
+      },
+      {
+        "description": "U/V SSB Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "435100000-435120000",
+        "downlink": "145855000-145875000"
+      },
+      {
+        "description": "U/V CW Transponder",
+        "mode": "CW",
+        "status": "active",
+        "uplink": "435100000-435120000",
+        "downlink": "145855000-145875000"
+      }
+    ],
+    "image": "satellites/jy1sat-cubesat.jpg",
+    "country": "JO"
+  },
+  {
     "norad_id": "49402",
     "name": "KOSEN-1",
-    "tle1": "1 49402U 21102H   25108.66042527  .00010032  00000+0  47540-3 0  9991\r",
-    "tle2": "2 49402  97.3766 154.7738 0014481 258.2087 101.7524 15.19411892189407",
+    "tle1": "1 49402U 21102H   25109.12142321  .00009912  00000+0  46965-3 0  9991\r",
+    "tle2": "2 49402  97.3766 155.2242 0014476 256.3176 103.6447 15.19421361189479",
     "transmitters": [
       {
         "description": "Mode HF/U - Onboard SDR",
@@ -1894,8 +2187,8 @@
   {
     "norad_id": "49069",
     "name": "LEDSAT",
-    "tle1": "1 49069U 21073D   25108.77184498  .00064432  00000+0  10065-2 0  9997\r",
-    "tle2": "2 49069  97.3915 188.4134 0011098 257.6843 102.3168 15.53522772203372",
+    "tle1": "1 49069U 21073D   25109.15831129  .00070416  00000+0  10967-2 0  9990\r",
+    "tle2": "2 49069  97.3916 188.8116 0011086 255.8588 104.1434 15.53581561203434",
     "transmitters": [
       {
         "description": "Mode U - Beacon GMSK9k6 AX.100",
@@ -1914,6 +2207,75 @@
     ],
     "image": "satellites/ledsat.png",
     "country": "IT"
+  },
+  {
+    "norad_id": "40908",
+    "name": "LilacSat-2",
+    "tle1": "1 40908U 15049K   25108.82969541  .00015627  00000+0  42659-3 0  9999\r",
+    "tle2": "2 40908  97.5109 127.9655 0008914 359.6144   0.5091 15.37475004530271",
+    "transmitters": [
+      {
+        "description": "CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437200000
+      },
+      {
+        "description": "FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 144350000,
+        "downlink": 437200000
+      },
+      {
+        "description": "APRS Digipeater",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": 144390000,
+        "downlink": 144390000
+      },
+      {
+        "description": "GFSK Telemetry",
+        "mode": "GFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437225000
+      },
+      {
+        "description": "BPSK Telemetry",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437200000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/LILACSAT-2.jpg",
+    "country": "CN"
+  },
+  {
+    "norad_id": "39440",
+    "name": "LO-74",
+    "tle1": "1 39440U 13066AA  25108.82417224  .00007549  00000+0  77160-3 0  9990\r",
+    "tle2": "2 39440  97.8458  53.7721 0062612 352.6982   7.3316 14.89394677614931",
+    "transmitters": [
+      {
+        "description": "9k6 FSK TLM",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437445000
+      },
+      {
+        "description": "UHF 1K2 AFSK Telemetry",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437445000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/cubebug-1__1.jpg",
+    "country": "AR"
   },
   {
     "norad_id": "60209",
@@ -1949,8 +2311,8 @@
   {
     "norad_id": "43780",
     "name": "MOVE-2",
-    "tle1": "1 43780U 18099Y   25108.14015528  .00150677  00000+0  20380-2 0  9991\r",
-    "tle2": "2 43780  97.4690 180.5462 0002517 257.9278 102.1695 15.57207062349599",
+    "tle1": "1 43780U 18099Y   25109.16821599  .00154646  00000+0  20671-2 0  9990\r",
+    "tle2": "2 43780  97.4682 181.6240 0002662 255.5604 104.5356 15.57511560349753",
     "transmitters": [
       {
         "description": "CW Beacon",
@@ -2026,6 +2388,486 @@
     "country": "SG"
   },
   {
+    "norad_id": "40931",
+    "name": "ORARI",
+    "tle1": "",
+    "tle2": "",
+    "transmitters": [
+      {
+        "description": "APRS",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": 145825000,
+        "downlink": 145825000
+      },
+      {
+        "description": "V/U FM Voice (PL 88.5Hz)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145880000,
+        "downlink": 435880000
+      },
+      {
+        "description": "AFSK1K2 TLM",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437425000
+      },
+      {
+        "description": "50 mW 22 WPM",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145825000
+      },
+      {
+        "description": "Mode X (170 MHz)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 8200000000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/LAPAN-A2_12tCGA2.jpg",
+    "country": "ID"
+  },
+  {
+    "norad_id": "26931",
+    "name": "PCSAT-1",
+    "tle1": "1 26931U 01043C   25107.83399000  .00000456  00000+0  20196-3 0  9991\r",
+    "tle2": "2 26931  67.0500 264.2109 0005578 270.7949  89.2513 14.31699032229557",
+    "transmitters": [
+      {
+        "description": "Mode V/V APRS AFSK",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": 145825000,
+        "downlink": 145825000
+      },
+      {
+        "description": "PE0SAT - 1k2 AFSK APRS",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145826800
+      },
+      {
+        "description": "Mode V - R2 Backup APRS 1K2",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 144390000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/no44.gif",
+    "country": "US"
+  },
+  {
+    "norad_id": "43700",
+    "name": "Phase-4A",
+    "tle1": "1 43700U 18090A   25108.18173894  .00000153  00000+0  00000+0 0  9996\r",
+    "tle2": "2 43700   0.0155 243.7533 0001801 177.7557 236.2970  1.00268730 23655",
+    "transmitters": [
+      {
+        "description": "BPSK400 Upper Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489795000-10489800000"
+      },
+      {
+        "description": "CW Lower Beacon",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489550000-10489555000"
+      },
+      {
+        "description": "CW Only Transpoder",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": "2400055000-2400100000",
+        "downlink": "10489555000-10489600000"
+      },
+      {
+        "description": "Narrowband digimodes(500Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400100000-2400120000",
+        "downlink": "10489600000-10489620000"
+      },
+      {
+        "description": "digimodes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400120000-2400140000",
+        "downlink": "10489620000-10489640000"
+      },
+      {
+        "description": "Mixed modes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400140000-2400190000",
+        "downlink": "10489640000-10489690000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400190000-2400295000",
+        "downlink": "10489690000-10489795000"
+      },
+      {
+        "description": "CW Lower Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489500000-10489505000"
+      },
+      {
+        "description": "CW Only Transpoder",
+        "mode": "CW",
+        "status": "active",
+        "uplink": "2400005000-2400040000",
+        "downlink": "10489505000-10489540000"
+      },
+      {
+        "description": "Narrowband digimodes(500Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400040000-2400080000",
+        "downlink": "10489540000-10489580000"
+      },
+      {
+        "description": "digimodes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400080000-2400150000",
+        "downlink": "10489580000-10489650000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400150000-2400245000",
+        "downlink": "10489650000-10489745000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400255000-2400350000",
+        "downlink": "10489755000-10489850000"
+      },
+      {
+        "description": "BPSK400 Middle Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489745000-10489755000"
+      },
+      {
+        "description": "Mixed modes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400350000-2400495000",
+        "downlink": "10489850000-10489995000"
+      },
+      {
+        "description": "CW Experimental Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489995000-10490000000"
+      },
+      {
+        "description": "BPSK400 Middle Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489745000-10489755000"
+      },
+      {
+        "description": "BPSK400 Lower Beacon",
+        "mode": "BPSK",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489550000-10489555000"
+      },
+      {
+        "description": "Experimental Beacon",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489995000-10490000000"
+      },
+      {
+        "description": "CW Upper Beacon",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489795000-10489800000"
+      },
+      {
+        "description": "International Emergency Frequency",
+        "mode": "USB",
+        "status": "active",
+        "uplink": 2400360000,
+        "downlink": 10489860000
+      },
+      {
+        "description": "IS0GRB Winlink Server",
+        "mode": "OFDM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 10489635000
+      },
+      {
+        "description": "IS0GRB Winlink Server",
+        "mode": "OFDM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 10489635000
+      }
+    ],
+    "image": "satellites/Eshail_2.jpg",
+    "country": "QA"
+  },
+  {
+    "norad_id": "43678",
+    "name": "PO-101",
+    "tle1": "1 43678U 18084H   25108.82824441  .00004925  00000+0  42181-3 0  9996\r",
+    "tle2": "2 43678  98.1013 282.9936 0010191  99.9274 260.3098 14.98020267352639",
+    "transmitters": [
+      {
+        "description": "Mode S",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2284991000
+      },
+      {
+        "description": "AFSK1k2",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": 437500000,
+        "downlink": 145900000
+      },
+      {
+        "description": "FM VOICE",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 437500000,
+        "downlink": 145900000
+      },
+      {
+        "description": "CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145900000
+      }
+    ],
+    "image": "satellites/diwata-2__1.jpg",
+    "country": "PH"
+  },
+  {
+    "norad_id": "43700",
+    "name": "QO-100",
+    "tle1": "1 43700U 18090A   25108.18173894  .00000153  00000+0  00000+0 0  9996\r",
+    "tle2": "2 43700   0.0155 243.7533 0001801 177.7557 236.2970  1.00268730 23655",
+    "transmitters": [
+      {
+        "description": "BPSK400 Upper Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489795000-10489800000"
+      },
+      {
+        "description": "CW Lower Beacon",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489550000-10489555000"
+      },
+      {
+        "description": "CW Only Transpoder",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": "2400055000-2400100000",
+        "downlink": "10489555000-10489600000"
+      },
+      {
+        "description": "Narrowband digimodes(500Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400100000-2400120000",
+        "downlink": "10489600000-10489620000"
+      },
+      {
+        "description": "digimodes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400120000-2400140000",
+        "downlink": "10489620000-10489640000"
+      },
+      {
+        "description": "Mixed modes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400140000-2400190000",
+        "downlink": "10489640000-10489690000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": "2400190000-2400295000",
+        "downlink": "10489690000-10489795000"
+      },
+      {
+        "description": "CW Lower Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489500000-10489505000"
+      },
+      {
+        "description": "CW Only Transpoder",
+        "mode": "CW",
+        "status": "active",
+        "uplink": "2400005000-2400040000",
+        "downlink": "10489505000-10489540000"
+      },
+      {
+        "description": "Narrowband digimodes(500Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400040000-2400080000",
+        "downlink": "10489540000-10489580000"
+      },
+      {
+        "description": "digimodes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400080000-2400150000",
+        "downlink": "10489580000-10489650000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400150000-2400245000",
+        "downlink": "10489650000-10489745000"
+      },
+      {
+        "description": "SSB Only Transpoder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400255000-2400350000",
+        "downlink": "10489755000-10489850000"
+      },
+      {
+        "description": "BPSK400 Middle Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489745000-10489755000"
+      },
+      {
+        "description": "Mixed modes(2700Hz max BW)",
+        "mode": "FM",
+        "status": "active",
+        "uplink": "2400350000-2400495000",
+        "downlink": "10489850000-10489995000"
+      },
+      {
+        "description": "CW Experimental Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489995000-10490000000"
+      },
+      {
+        "description": "BPSK400 Middle Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489745000-10489755000"
+      },
+      {
+        "description": "BPSK400 Lower Beacon",
+        "mode": "BPSK",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489550000-10489555000"
+      },
+      {
+        "description": "Experimental Beacon",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": "10489995000-10490000000"
+      },
+      {
+        "description": "CW Upper Beacon",
+        "mode": "CW",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": "10489795000-10489800000"
+      },
+      {
+        "description": "International Emergency Frequency",
+        "mode": "USB",
+        "status": "active",
+        "uplink": 2400360000,
+        "downlink": 10489860000
+      },
+      {
+        "description": "IS0GRB Winlink Server",
+        "mode": "OFDM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 10489635000
+      },
+      {
+        "description": "IS0GRB Winlink Server",
+        "mode": "OFDM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 10489635000
+      }
+    ],
+    "image": "satellites/Eshail_2.jpg",
+    "country": "QA"
+  },
+  {
+    "norad_id": "43017",
+    "name": "RadFxSat",
+    "tle1": "1 43017U 17073E   25108.44273200  .00012357  00000+0  64507-3 0  9993\r",
+    "tle2": "2 43017  97.5327 340.5433 0174855 344.7667  14.8331 15.03725432401376",
+    "transmitters": [
+      {
+        "description": "DUV TLM",
+        "mode": "DUV",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145960000
+      },
+      {
+        "description": "Mode U/V FM Voice CTCSS 67.0Hz",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 435250000,
+        "downlink": 145960000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/RadFxSat_Flight-300x300.jpg",
+    "country": "US"
+  },
+  {
     "norad_id": "60243",
     "name": "ROBUSTA-3A",
     "tle1": "1 60243U 24128J   25107.79485856  .00011471  00000+0  82739-3 0  9994\r",
@@ -2076,8 +2918,8 @@
   {
     "norad_id": "59112",
     "name": "SONATE-2",
-    "tle1": "1 59112U 24043Q   25107.88112512  .00023724  00000+0  72946-3 0  9992\r",
-    "tle2": "2 59112  97.5060 238.1033 0010386 301.0842  58.9381 15.33632972 62253",
+    "tle1": "1 59112U 24043Q   25108.92505554  .00022308  00000+0  68515-3 0  9994\r",
+    "tle2": "2 59112  97.5058 239.1638 0010395 297.1029  62.9152 15.33680712 62418",
     "transmitters": [
       {
         "description": "Mode V - CW",
@@ -2121,8 +2963,8 @@
   {
     "norad_id": "43804",
     "name": "Suomi-100",
-    "tle1": "1 43804U 18099AY  25107.72687988  .00015458  00000+0  77961-3 0  9991\r",
-    "tle2": "2 43804  97.4771 166.7516 0011496 337.7576  22.3157 15.17169412348683",
+    "tle1": "1 43804U 18099AY  25109.11189698  .00014793  00000+0  74542-3 0  9994\r",
+    "tle2": "2 43804  97.4772 168.1186 0011455 332.4120  27.6505 15.17209920348892",
     "transmitters": [
       {
         "description": "GMSK9k6 TLM",
@@ -2138,8 +2980,8 @@
   {
     "norad_id": "43188",
     "name": "S-NetA",
-    "tle1": "1 43188U 18014J   25107.67213396  .00010120  00000+0  60594-3 0  9990\r",
-    "tle2": "2 43188  97.5675  11.2425 0011265  50.2511 309.9709 15.11154299394381",
+    "tle1": "1 43188U 18014J   25109.19509529  .00008142  00000+0  48805-3 0  9997\r",
+    "tle2": "2 43188  97.5675  12.7491 0011214  46.2315 313.9841 15.11180953394615",
     "transmitters": [
       {
         "description": "S-Band Downlink",
@@ -2160,10 +3002,76 @@
     "country": "DE"
   },
   {
+    "norad_id": "25397",
+    "name": "TechSat-1B",
+    "tle1": "1 25397U 98043D   25107.93487595  .00000217  00000+0  11387-3 0  9997\r",
+    "tle2": "2 25397  98.9673  85.9662 0001739  39.5444 320.5860 14.24296707390799",
+    "transmitters": [
+      {
+        "description": "Mode V/U APRS,BBS 9K6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 145930000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode V/U APRS 9K6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 145850000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode V/U BBS 9k6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 145890000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode L/U 9K6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 1269900000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode L/U 9K6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 1269800000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode L/U 9K6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": 1269700000,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode U 9k6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435225000
+      },
+      {
+        "description": "Mode U 9k6 FSK",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435325000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/gurwinIIb.gif",
+    "country": "IL"
+  },
+  {
     "norad_id": "49396",
     "name": "TeikyoSat-4",
-    "tle1": "1 49396U 21102B   25107.71567470  .00004310  00000+0  28870-3 0  9994\r",
-    "tle2": "2 49396  97.4161 148.0442 0011355 320.6986  39.3417 15.07358141188585",
+    "tle1": "1 49396U 21102B   25109.17609658  .00003437  00000+0  23095-3 0  9994\r",
+    "tle2": "2 49396  97.4161 149.4526 0011187 315.5341  44.4989 15.07369324188805",
     "transmitters": [
       {
         "description": "Mode U - CW Beacon",
@@ -2207,8 +3115,8 @@
   {
     "norad_id": "63217",
     "name": "TEVEL2-1",
-    "tle1": "1 63217U 25052H   25107.67625683  .00018324  00000+0  88329-3 0  9991\r",
-    "tle2": "2 63217  97.4352   2.4360 0004170 153.8295 206.3151 15.18762370  5217",
+    "tle1": "1 63217U 25052H   25109.12570610  .00017330  00000+0  83443-3 0  9990\r",
+    "tle2": "2 63217  97.4349   3.8612 0004276 150.5246 209.6230 15.18812033  5435",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
@@ -2234,8 +3142,8 @@
   {
     "norad_id": "63213",
     "name": "TEVEL2-4",
-    "tle1": "1 63213U 25052D   25107.67141439  .00018945  00000+0  90686-3 0  9997\r",
-    "tle2": "2 63213  97.4377   2.4522 0004451 141.5055 218.6497 15.18997510  5215",
+    "tle1": "1 63213U 25052D   25109.18651076  .00018488  00000+0  88365-3 0  9991\r",
+    "tle2": "2 63213  97.4374   3.9428 0004413 136.4077 223.7507 15.19053838  5449",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
@@ -2261,8 +3169,8 @@
   {
     "norad_id": "63239",
     "name": "TEVEL2-7",
-    "tle1": "1 63239U 25052AF  25107.70225309  .00018547  00000+0  92535-3 0  9991\r",
-    "tle2": "2 63239  97.4421   2.4284 0008042 184.4167 175.6997 15.17537110  5210",
+    "tle1": "1 63239U 25052AF  25109.15287187  .00016559  00000+0  82558-3 0  9999\r",
+    "tle2": "2 63239  97.4416   3.8536 0008236 179.5095 180.6148 15.17585976  5430",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
@@ -2270,8 +3178,8 @@
   {
     "norad_id": "63237",
     "name": "TEVEL2-8",
-    "tle1": "1 63237U 25052AD  25107.70091625  .00019057  00000+0  94864-3 0  9995\r",
-    "tle2": "2 63237  97.4421   2.4301 0007873 183.5992 176.5187 15.17612117  5217",
+    "tle1": "1 63237U 25052AD  25109.15146350  .00016739  00000+0  83269-3 0  9993\r",
+    "tle2": "2 63237  97.4418   3.8554 0008110 178.9528 181.1724 15.17661027  5433",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
@@ -2279,17 +3187,107 @@
   {
     "norad_id": "63238",
     "name": "TEVEL2-9",
-    "tle1": "1 63238U 25052AE  25107.70152965  .00018680  00000+0  93097-3 0  9999\r",
-    "tle2": "2 63238  97.4425   2.4300 0008048 183.9213 176.1959 15.17574183  5219",
+    "tle1": "1 63238U 25052AE  25109.15211343  .00016279  00000+0  81084-3 0  9991\r",
+    "tle2": "2 63238  97.4419   3.8552 0008250 179.3012 180.8235 15.17622128  5433",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
   {
+    "norad_id": "44881",
+    "name": "TIANQIN-1",
+    "tle1": "1 44881U 19093C   25108.82994067  .00001905  00000+0  22669-3 0  9990\r",
+    "tle2": "2 44881  97.7933 185.5614 0014766  46.3642 313.8795 14.85463352288391",
+    "transmitters": [
+      {
+        "description": "Mode V CW TLM",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145910000
+      },
+      {
+        "description": "Mode V GMSK4k8 AX.25 TLM",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145890000
+      },
+      {
+        "description": "Mode U/V Linear Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "435270000-435290000",
+        "downlink": "145915000-145935000"
+      },
+      {
+        "description": "Transmitter 401.545-401.555",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 401550000
+      },
+      {
+        "description": "S-band telemetry",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2278328000
+      }
+    ],
+    "image": "",
+    "country": "CN"
+  },
+  {
+    "norad_id": "44881",
+    "name": "TO-108",
+    "tle1": "1 44881U 19093C   25108.82994067  .00001905  00000+0  22669-3 0  9990\r",
+    "tle2": "2 44881  97.7933 185.5614 0014766  46.3642 313.8795 14.85463352288391",
+    "transmitters": [
+      {
+        "description": "Mode V CW TLM",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145910000
+      },
+      {
+        "description": "Mode V GMSK4k8 AX.25 TLM",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145890000
+      },
+      {
+        "description": "Mode U/V Linear Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "435270000-435290000",
+        "downlink": "145915000-145935000"
+      },
+      {
+        "description": "Transmitter 401.545-401.555",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 401550000
+      },
+      {
+        "description": "S-band telemetry",
+        "mode": "FM",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2278328000
+      }
+    ],
+    "image": "",
+    "country": "CN"
+  },
+  {
     "norad_id": "57172",
     "name": "UmKA-1",
-    "tle1": "1 57172U 23091G   25108.89210570  .00008994  00000+0  48901-3 0  9999\r",
-    "tle2": "2 57172  97.5630 164.5543 0015808 148.8097 211.4076 15.14604046 99652",
+    "tle1": "1 57172U 23091G   25109.22243353  .00009594  00000+0  52123-3 0  9990\r",
+    "tle2": "2 57172  97.5630 164.8828 0015845 147.6271 212.5936 15.14611995 99707",
     "transmitters": [
       {
         "description": "Mode U - GMSK 4k8 (G3RUH) TLM",
@@ -2385,8 +3383,8 @@
   {
     "norad_id": "46276",
     "name": "UPMSat-2",
-    "tle1": "1 46276U 20061E   25107.75077784  .00067663  00000+0  78875-3 0  9999\r",
-    "tle2": "2 46276  97.2477 180.6268 0001681 138.2729 221.8657 15.61446810257205",
+    "tle1": "1 46276U 20061E   25109.16057642  .00071155  00000+0  82278-3 0  9990\r",
+    "tle2": "2 46276  97.2475 182.0690 0001778 140.4423 219.6965 15.61644096257428",
     "transmitters": [
       {
         "description": "PE0SAT - 1k2 BPSK AFSK Tones",
@@ -2409,8 +3407,8 @@
   {
     "norad_id": "43880",
     "name": "UWE-4",
-    "tle1": "1 43880U 18111E   25107.72190990  .00023963  00000+0  98842-3 0  9993\r",
-    "tle2": "2 43880  97.5924  19.8583 0014182  44.3247 315.9123 15.23963517345575",
+    "tle1": "1 43880U 18111E   25109.23205886  .00023284  00000+0  95865-3 0  9990\r",
+    "tle2": "2 43880  97.5920  21.3864 0013998  39.7846 320.4415 15.24034766343803",
     "transmitters": [
       {
         "description": "FSK9k6 AX.25 TLM - 16K0F2D",
@@ -2433,8 +3431,8 @@
   {
     "norad_id": "58261",
     "name": "Veronika",
-    "tle1": "1 58261U 23174F   25108.81920536  .00105626  00000+0  14251-2 0  9993\r",
-    "tle2": "2 58261  97.4152 192.4025 0007849 223.4310 136.6328 15.57403674 80591",
+    "tle1": "1 58261U 23174F   25109.20470470  .00122035  00000+0  16370-2 0  9991\r",
+    "tle2": "2 58261  97.4153 192.8037 0007887 222.0453 138.0198 15.57501167 80658",
     "transmitters": [
       {
         "description": "Mode U/U - GFSK9k6 AX.25 G3RUH",
@@ -2459,7 +3457,100 @@
       }
     ],
     "image": "satellites/veronika_G6OopQK.jpg",
-    "country": "SK"
+    "country": ""
+  },
+  {
+    "norad_id": "27848",
+    "name": "XI-IV",
+    "tle1": "1 27848U 03031J   25107.97469925  .00000589  00000+0  27935-3 0  9992\r",
+    "tle2": "2 27848  98.6810 116.9692 0009567   5.2276 354.9000 14.23284440130889",
+    "transmitters": [
+      {
+        "description": "Mode U CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436847500
+      },
+      {
+        "description": "Mode U AFSK TLM",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437490000
+      },
+      {
+        "description": "PE0SAT - CW Beacon",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436848700
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/xi-4__1.jpg",
+    "country": "JP"
+  },
+  {
+    "norad_id": "28895",
+    "name": "XI-V",
+    "tle1": "1 28895U 05043F   25107.93446710  .00003883  00000+0  64337-3 0  9990\r",
+    "tle2": "2 28895  98.2415 251.6574 0015853 113.3543 246.9333 14.70766931 39203",
+    "transmitters": [
+      {
+        "description": "Mode U CW BEACON",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437463100
+      },
+      {
+        "description": "Mode U TLM",
+        "mode": "AFSK",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 437345000
+      }
+    ],
+    "image": "https://db-satnogs.freetls.fastly.net/media/satellites/XI-V-Sai-Five-300x225.jpg",
+    "country": "JP"
+  },
+  {
+    "norad_id": "50466",
+    "name": "XW-3",
+    "tle1": "1 50466U 21131B   25108.88396353  .00001073  00000+0  34956-3 0  9990\r",
+    "tle2": "2 50466  98.5082 198.4983 0002965 295.9584  64.1299 14.40731342174003",
+    "transmitters": [
+      {
+        "description": "Mode U - Telemetry",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435575000
+      },
+      {
+        "description": "Mode U - GMSK4k8 AX.25 Telemetry",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435725000
+      },
+      {
+        "description": "Mode V/U - Transponder",
+        "mode": "USB",
+        "status": "active",
+        "uplink": "145855000-145885000",
+        "downlink": "435165000-435195000"
+      },
+      {
+        "description": "Mode U Audio",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 435180000
+      }
+    ],
+    "image": "satellites/cas9.png",
+    "country": "CN"
   },
   {
     "norad_id": "39417",
@@ -2495,8 +3586,8 @@
   {
     "norad_id": "42759",
     "name": "ZHUHAI-1 02",
-    "tle1": "1 42759U 17034B   25108.86429509  .00067845  00000+0  92560-3 0  9995\r",
-    "tle2": "2 42759  43.0088 268.6045 0019964 289.2852  70.5851 15.56373368434529",
+    "tle1": "1 42759U 17034B   25108.92846946  .00069404  00000+0  94618-3 0  9999\r",
+    "tle2": "2 42759  43.0087 268.2259 0019948 289.6918  70.1792 15.56384861434531",
     "transmitters": [
       {
         "description": "CW Beacon",
@@ -2526,8 +3617,8 @@
   {
     "norad_id": "49399",
     "name": "Z-Sat",
-    "tle1": "1 49399U 21102E   25108.80808168  .00006401  00000+0  35632-3 0  9997\r",
-    "tle2": "2 49399  97.3856 151.8829 0016538 284.2648  75.6747 15.13860609189143",
+    "tle1": "1 49399U 21102E   25109.27076820  .00006704  00000+0  37293-3 0  9992\r",
+    "tle2": "2 49399  97.3857 152.3317 0016532 282.5075  77.4307 15.13867609189218",
     "transmitters": [
       {
         "description": "Mode V - CW Beacon",
@@ -2557,8 +3648,8 @@
   {
     "norad_id": "25338",
     "name": "NOAA 15",
-    "tle1": "1 25338U 98030A   25108.85343455  .00000309  00000+0  14471-3 0  9995\r",
-    "tle2": "2 25338  98.5402 135.2188 0011026 145.7090 214.4804 14.26944643401028",
+    "tle1": "1 25338U 98030A   25109.20403362  .00000322  00000+0  14998-3 0  9998\r",
+    "tle2": "2 25338  98.5402 135.5611 0011045 144.7908 215.4005 14.26945023401072",
     "transmitters": [
       {
         "description": "APT",
@@ -2616,8 +3707,8 @@
   {
     "norad_id": "28654",
     "name": "NOAA 18",
-    "tle1": "1 28654U 05018A   25108.81031971  .00000328  00000+0  19728-3 0  9997\r",
-    "tle2": "2 28654  98.8426 188.8673 0013055 276.1490  83.8195 14.13578237 26438",
+    "tle1": "1 28654U 05018A   25109.16422934  .00000321  00000+0  19347-3 0  9999\r",
+    "tle2": "2 28654  98.8426 189.2172 0013056 275.0745  84.8938 14.13578481 26481",
     "transmitters": [
       {
         "description": "APT Downlink",
@@ -2682,8 +3773,8 @@
   {
     "norad_id": "33591",
     "name": "NOAA 19",
-    "tle1": "1 33591U 09005A   25108.80834668  .00000304  00000+0  18570-3 0  9994\r",
-    "tle2": "2 33591  99.0009 173.2142 0014493 146.9853 213.2226 14.13342890834791",
+    "tle1": "1 33591U 09005A   25109.16231468  .00000303  00000+0  18539-3 0  9997\r",
+    "tle2": "2 33591  99.0008 173.5702 0014501 146.0801 214.1301 14.13343164834844",
     "transmitters": [
       {
         "description": "APT Downlink",
@@ -2755,8 +3846,8 @@
   {
     "norad_id": "57166",
     "name": "METEOR-M2 3",
-    "tle1": "1 57166U 23091A   25108.84745775  .00000039  00000+0  35843-4 0  9991\r",
-    "tle2": "2 57166  98.6661 166.0811 0003312 339.2130  20.8914 14.23992925 94122",
+    "tle1": "1 57166U 23091A   25109.19878190  .00000037  00000+0  35089-4 0  9998\r",
+    "tle2": "2 57166  98.6660 166.4275 0003296 338.0776  22.0261 14.23993012 94175",
     "transmitters": [
       {
         "description": "SARSAT L-Band",
@@ -2849,8 +3940,8 @@
   {
     "norad_id": "59051",
     "name": "METEOR-M2 4",
-    "tle1": "1 59051U 24039A   25108.87006772  .00000079  00000+0  54948-4 0  9990\r",
-    "tle2": "2 59051  98.6449  69.9815 0006435 327.2632  32.8147 14.22358247 58942",
+    "tle1": "1 59051U 24039A   25109.22179536  .00000087  00000+0  58637-4 0  9997\r",
+    "tle2": "2 59051  98.6450  70.3265 0006409 326.1630  33.9138 14.22358375 58995",
     "transmitters": [
       {
         "description": "LRPT S-E RHCP D 80 kbps",
