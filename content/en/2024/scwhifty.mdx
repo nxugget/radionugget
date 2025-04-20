@@ -12,7 +12,7 @@ The challenge is available at [this address](https://ringzer0ctf.com/challenges/
 
 To understand this writeup, it's important to grasp modulation concepts, so check out <SmartLink slug="am">this lesson</SmartLink> :)
 
-The challenge begins with a file named `sdr-challenge2.cfile`; open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
+The challenge begins with a file named `sdr-challenge2.cfile`, open it with [Universal Radio Hacker](https://github.com/jopohl/urh).
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty1.webp)
 
@@ -30,7 +30,7 @@ This digital modulation technique uses one frequency to represent a **0** and an
 
 ![FSK Diagram](/images/blog/2024/scwhifty/scwhifty4.svg)
 
-Switch to [URH](https://github.com/jopohl/urh) and select `FSK` as the modulation type. Next, find the `Samples/Symbol` value, which for digital modulation represents the duration of one **bit**. To do this, select the smallest segment possible; in my case, it shows around `203µs`.
+Switch to [URH](https://github.com/jopohl/urh) and select `FSK` as the modulation type. Next, find the `Samples/Symbol` value, which for digital modulation represents the duration of one **bit**. To do this, select the smallest segment possible, in my case, it shows around `203µs`.
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty5.webp)
 
@@ -48,4 +48,4 @@ Also, by switching the display from `Bits` to `ASCII` under `Show data as`, your
 
 ![Universal Radio Hacker](/images/blog/2024/scwhifty/scwhifty7.webp)
 
-The cursor can be a bit finicky; you can manually tweak the `Center` value on the left (which is equivalent to moving the cursor) or adjust the `Error Tolerance` if any characters still look odd.
+The cursor can be a bit finicky, you can manually tweak the `Center` value on the left (which is equivalent to moving the cursor) or adjust the `Error Tolerance` if any characters still look odd.

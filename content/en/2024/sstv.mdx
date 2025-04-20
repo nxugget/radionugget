@@ -27,7 +27,7 @@ Enter your geographic coordinates in the red rectangle and click **Predict**. Fo
 
 ## Software
 You can decode SSTV with a simple walkie-talkie paired with software, but the best method is to use an SDR and decode the signal using dedicated software.  
-In my setup, I use [SDR++](https://www.sdrpp.org) to receive the signal and [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) to decode it on a Mac (for Linux, try [QSSTV](https://doc.ubuntu-fr.org/qsstv); on Windows, use [MMSTV](https://hamsoft.ca/pages/mmsstv.php)).
+In my setup, I use [SDR++](https://www.sdrpp.org) to receive the signal and [Black Cat SSTV](https://www.blackcatsystems.com/software/sstv.html) to decode it on a Mac (for Linux, try [QSSTV](https://doc.ubuntu-fr.org/qsstv), on Windows, use [MMSTV](https://hamsoft.ca/pages/mmsstv.php)).
 
 Since the SSTV decoder needs an audio input and our SDR software outputs the audio, the simplest solution is to use a virtual audio cable. Here’s a diagram showing how it works:
 
@@ -38,14 +38,14 @@ Install [VB-Cable](https://vb-audio.com/Cable/) to create this virtual connectio
 ## Hardware
 For best results, an antenna specifically tuned to the ISS’s transmission frequency is ideal. I used a <SmartLink slug="qfh">QFH 137MHz</SmartLink> antenna along with a terrestrial **Yagi**.  
 Since the Yagi is directional, you must manually track the ISS using one of many available apps, while the omnidirectional <SmartLink slug="qfh">QFH</SmartLink> requires no special handling.  
-Any SDR receiver works; I had good results with the [RTL-SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html) and the [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html).
+Any SDR receiver works, I had good results with the [RTL-SDR V4](https://www.passion-radio.fr/cles-rtl-sdr/r828d-v4-2402.html) and the [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html).
 
 # Reception
 Since these SSTV transmissions are rare, I record the signal first and decode it offline as illustrated in the *Offline Processing* diagram above. My setup is as follows:
 
 ![SSTV antenna](/images/blog/2024/sstv/sstv7.webp)
 Using [SDR++](https://www.sdrpp.org), set the frequency during the ARISS contact, in my case, `145.800MHz`, and choose [NFM](https://en.wikipedia.org/wiki/Bande_étroite) as the modulation mode.  
-Under the `Record` section, click **Record**. Be patient if no signal appears immediately; a distinct tone marks the beginning of the transmission. Adjust the `Max` and `Min` settings on the waterfall display to clearly highlight the signal.
+Under the `Record` section, click **Record**. Be patient if no signal appears immediately, a distinct tone marks the beginning of the transmission. Adjust the `Max` and `Min` settings on the waterfall display to clearly highlight the signal.
 
 ![SDR++ SSTV](/images/blog/2024/sstv/sstv4.webp)
 

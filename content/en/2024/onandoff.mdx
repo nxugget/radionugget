@@ -12,7 +12,7 @@ The challenge is available at [this address](https://ringzer0ctf.com/challenges/
 
 To understand this writeup, it’s important to grasp modulation concepts, so check out <SmartLink slug="am">this lesson</SmartLink> :)
 
-We start with a file named `sdr-challenge1.cfile`; open it with [Universal Radio Hacker](https://github.com/jopohl/urh). 
+We start with a file named `sdr-challenge1.cfile`, open it with [Universal Radio Hacker](https://github.com/jopohl/urh). 
 
 ![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff1.webp)
 
@@ -28,7 +28,7 @@ This modulation type is widely used to send digital data such as with garage doo
 
 From URH, you can select the modulation type ``ASK``. You can also change the ``Show data as`` setting to ``ASCII`` so the data is displayed in clear text.
 An important parameter to find is the ``Samples/Symbol``, which for digital modulation represents the duration of one ``bit``.
-To find it, click ``Autodetect``; sometimes it works (like here where it finds ``200``) but let’s learn to do it manually :)
+To find it, click ``Autodetect``, sometimes it works (like here where it finds ``200``) but let’s learn to do it manually :)
 
 ![Universal Radio Hacker](/images/blog/2024/onandoff/onandoff4.webp)
 To do this, zoom in on the smallest segment of signal.  

@@ -22,11 +22,11 @@ This value is crucial for determining the quality of the modulated signal. In th
 In **amplitude modulation** (AM), we vary the **amplitude** of the **carrier wave** depending on the **amplitude** of the **modulating signal**.
 
 To demonstrate, we’re using a well-known software called [GNURadio](https://www.google.com/search?client=safari&rls=en&q=gnuradio&ie=UTF-8&oe=UTF-8).  
-It’s totally fine if you’re not familiar with how it works; essentially, it lets you manipulate radio signals using interconnected blocks.
+It’s totally fine if you’re not familiar with how it works. Essentially, it lets you manipulate radio signals using interconnected blocks.
 ![GNURadio Software](/images/blog/2024/am/modulation2.webp)
 Here, you place two `Signal Source` blocks to generate a signal, one for the **modulating signal** with a frequency of `20Hz` and another for the **carrier wave** with a frequency of `1000Hz` (much higher than the modulating signal).
 
-The `Throttle` block isn’t critical for this lesson; it’s there to prevent your PC from crashing by limiting the rate at which the CPU processes the program. One instance placed anywhere is enough, that’s why there’s only one. Anyway, back to what matters.
+The `Throttle` block isn’t critical for this lesson, it’s there to prevent your PC from crashing by limiting the rate at which the CPU processes the program. One instance placed anywhere is enough, that’s why there’s only one. Anyway, back to what matters.
 
 The `QT GUI TIME SINK` block lets us visualize the two signals over time.  
 Here’s what you get when you run the program:

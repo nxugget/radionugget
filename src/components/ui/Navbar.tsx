@@ -19,6 +19,13 @@ export const Navbar = () => {
   const pathname = usePathname() || ""; // Default to empty string if null
   const currentLocale = pathname.startsWith("/fr") ? "fr" : "en";
 
+  // Ajoute ce mapping juste après la déclaration de currentLocale
+  const flagSrc = (locale: string) => {
+    if (locale === "en") return "/images/flags/gb.png";
+    if (locale === "fr") return "/images/flags/fr.png";
+    return `/images/flags/${locale}.png`;
+  };
+
   // Indicator states for the smooth navigation effect
   const [indicatorStyle, setIndicatorStyle] = useState({
     left: 0,
@@ -237,7 +244,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-2" ref={langDropdownDesktopRef}>
             <div className="relative cursor-pointer">
               <Image
-                src={`/images/flags/${currentLocale}.png`}
+                src={flagSrc(currentLocale)}
                 alt="Current Language"
                 width={40}
                 height={30}
@@ -352,7 +359,7 @@ export const Navbar = () => {
             {/* Language Switcher - FIXED SYNTAX */}
             <div className="relative cursor-pointer" ref={langDropdownMobileRef}>
               <Image
-                src={`/images/flags/${currentLocale}.png`}
+                src={flagSrc(currentLocale)}
                 alt="Current Language"
                 width={30}
                 height={20}

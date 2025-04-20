@@ -12,31 +12,62 @@ import dynamic from "next/dynamic";
 import ZoomImage from "../ZoomImage";
 import Head from "./head";
 
+// Génération statique des slugs pour Next.js App Router
+export async function generateStaticParams() {
+  const localesDir = path.join(process.cwd(), "content");
+  const locales = fs.readdirSync(localesDir).filter((locale) =>
+    fs.statSync(path.join(localesDir, locale)).isDirectory()
+  );
+  const params = [];
+  for (const locale of locales) {
+    const contentDir = path.join(localesDir, locale);
+    const years = fs.readdirSync(contentDir).filter((year) =>
+      fs.statSync(path.join(contentDir, year)).isDirectory()
+    );
+    for (const year of years) {
+      const yearDir = path.join(contentDir, year);
+      const files = fs.readdirSync(yearDir).filter((f) => f.endsWith(".mdx"));
+      for (const file of files) {
+        params.push({
+          locale,
+          slug: file.replace(/\.mdx$/, ""),
+        });
+      }
+    }
+  }
+  return params;
+}
+
+// Extraction du contenu et metadata à build-time
+async function getArticleData(locale: string, slug: string) {
+  const contentDir = path.join(process.cwd(), "content", locale);
+  const years = fs.readdirSync(contentDir).filter((year) =>
+    fs.statSync(path.join(contentDir, year)).isDirectory()
+  );
+  for (const year of years) {
+    const possiblePath = path.join(contentDir, year, `${slug}.mdx`);
+    if (fs.existsSync(possiblePath)) {
+      const fileContent = fs.readFileSync(possiblePath, "utf-8");
+      const parsed = matter(fileContent);
+      return {
+        metadata: parsed.data,
+        content: parsed.content,
+      };
+    }
+  }
+  return null;
+}
+
 const DynamicTypewriterEffect = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
 
 export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
 
-  const contentDir = path.join(process.cwd(), "content", params.locale);
-  const years = fs.readdirSync(contentDir).filter((year) => fs.statSync(path.join(contentDir, year)).isDirectory());
+  // Utilise la fonction statique pour récupérer les données
+  const article = await getArticleData(params.locale, params.slug);
 
-  let filePath = "";
-  let metadata = null;
-  let content = "";
-
-  for (const year of years) {
-    const possiblePath = path.join(contentDir, year, `${params.slug}.mdx`);
-    if (fs.existsSync(possiblePath)) {
-      filePath = possiblePath;
-      const fileContent = fs.readFileSync(filePath, "utf-8");
-      const parsed = matter(fileContent);
-      metadata = parsed.data;
-      content = parsed.content;
-      break;
-    }
-  }
-
-  if (!filePath || !metadata) return <p className="text-white text-center">404</p>;
+  if (!article) return <p className="text-white text-center">404</p>;
+  const { metadata, content } = article;
 
   return (
     <>
@@ -46,13 +77,12 @@ export default async function Article({ params }: { params: { locale: string; sl
           <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden rounded-lg shadow-lg">
             <div className="absolute inset-0">
               <Image 
-                src={metadata.thumbnail} 
+                src={metadata.thumbnail || "/default-thumbnail.jpg"} 
                 alt={metadata.title} 
                 fill 
                 sizes="(max-width: 768px) 100vw, 1200px"
                 className="object-cover"
-                priority={true}
-                quality={80}
+                quality={60} // Baisse la qualité pour accélérer le FCP
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
               />
