@@ -7,15 +7,15 @@ export default async function Head({ params }: { params: { locale: string } }) {
 
   const isFr = locale.startsWith('fr');
   const title = isFr
-    ? 'Prédiction Satellites'
-    : 'Satellites Prediction';
+    ? 'PrediSat | RadioNugget'
+    : 'PrediSat | RadioNugget';
   const description = isFr
     ? 'Recherchez parmis les satellites radioamateurs pour obtenir des prédictions de passage.'
     : 'Look up amateur radio satellites to get pass predictions.';
 
   const url = isFr
-    ? 'https://radionugget.com/fr/satellite-prediction'
-    : 'https://radionugget.com/en/satellite-prediction';
+    ? 'https://radionugget.com/fr/predi-sat'
+    : 'https://radionugget.com/en/predi-sat';
 
   // Récupération des satellites
   const satellites = await getSatellites();
@@ -47,9 +47,9 @@ export default async function Head({ params }: { params: { locale: string } }) {
       <meta property="og:description" content={description} />
 
       {/* Hreflang for alternate languages */}
-      <link rel="alternate" hrefLang="fr" href="https://radionugget.com/fr/satellite-prediction" />
-      <link rel="alternate" hrefLang="en" href="https://radionugget.com/en/satellite-prediction" />
-      <link rel="alternate" hrefLang="x-default" href="https://radionugget.com/en/satellite-prediction" />
+      <link rel="alternate" hrefLang="fr" href="https://radionugget.com/fr/predi-sat" />
+      <link rel="alternate" hrefLang="en" href="https://radionugget.com/en/predi-sat" />
+      <link rel="alternate" hrefLang="x-default" href="https://radionugget.com/en/predi-sat" />
 
       {/* Balises SEO pour chaque satellite */}
       {satellites.map((satellite) => (

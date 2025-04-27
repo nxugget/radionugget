@@ -40,18 +40,18 @@ export default function SatelliteSearch({
   }, [satellites, query, showFavorites, favorites]);
 
   return (
-    <div className="flex flex-col gap-3 bg-nottooblack p-4 rounded-md">
-      <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-2 sm:gap-3 bg-nottooblack p-2 sm:p-4 rounded-md">
+      <div className="flex gap-1 sm:gap-2 items-center">
         <input
           type="text"
           placeholder={t("satellite.search")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-zinc-700 text-white px-4 py-2 rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-purple"
+          className="bg-zinc-700 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-purple text-xs sm:text-base"
         />
         <button
           onClick={() => setShowFavorites((v) => !v)}
-          className={`ml-2 flex items-center justify-center px-3 py-2 rounded-md font-bold transition-colors duration-200 ${
+          className={`ml-1 sm:ml-2 flex items-center justify-center px-2 sm:px-3 py-1 sm:py-2 rounded-md font-bold transition-colors duration-200 ${
             showFavorites
               ? "bg-orange text-black"
               : "bg-zinc-800 text-white hover:bg-orange hover:text-black"
@@ -62,13 +62,13 @@ export default function SatelliteSearch({
         </button>
         <button
           onClick={() => onAddAll && onAddAll(filteredSatellites)}
-          className="ml-2 text-sm font-bold text-white hover:text-orange transition-colors bg-transparent px-2 py-1 rounded-md"
+          className="ml-1 sm:ml-2 text-xs sm:text-sm font-bold text-white hover:text-orange transition-colors bg-transparent px-1 sm:px-2 py-1 rounded-md"
           style={{ boxShadow: "none", background: "none" }}
         >
           {t("satellite.addAll")}
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto mt-1">
+      <div className="grid grid-cols-2 xs:grid-cols-3 gap-1 sm:gap-2 max-h-[120px] sm:max-h-[200px] overflow-y-auto mt-1 mb-0">
         {filteredSatellites.map((sat) => {
           const isSelected = sat.id === selectedSatelliteId;
           const countries = sat.country

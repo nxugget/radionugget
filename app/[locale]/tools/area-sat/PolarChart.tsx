@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
 interface PolarChartProps {
-  satelliteId: string;
+  areaSatId: string; // Renamed from satelliteId
   trajectoryPoints?: Point[]; // Points de trajectoire pour le tracé
   currentPosition?: Point; // New prop for real-time position
   currentTime?: Date; // New prop to determine past vs future trajectory
@@ -18,7 +18,7 @@ interface Point {
 }
 
 const PolarChart: React.FC<PolarChartProps> = ({ 
-  satelliteId, 
+  areaSatId, // Renamed from satelliteId
   trajectoryPoints, 
   currentPosition,
   currentTime = new Date(), // Use current time by default
@@ -101,17 +101,16 @@ const PolarChart: React.FC<PolarChartProps> = ({
      .attr("fill", "#b400ff")
      .raise();
 
-    // Remove the marker definitions entirely, we'll draw the arrow manually
+    // Only keep the areaSat pattern definition (was satellite)
     const defs = svg.append("defs");
 
-    // Only keep the satellite pattern definition
     defs.append("pattern")
-      .attr("id", "satellite-pattern")
+      .attr("id", "areaSat-pattern") // Renamed pattern id
       .attr("width", 1)
       .attr("height", 1)
       .attr("patternUnits", "objectBoundingBox")
       .append("image")
-      .attr("href", "/images/icon/satellite-icon.svg")
+      .attr("href", "/images/icon/satellite-icon.svg") // Keep icon unless you want to change it
       .attr("width", 24)
       .attr("height", 24)
       .attr("x", 0)
@@ -125,9 +124,9 @@ const PolarChart: React.FC<PolarChartProps> = ({
       let pastPoints: Point[] = [];
       let futurePoints: Point[] = [];
       
-      // Handle differently based on if the satellite is visible
+      // Handle differently based on if the areaSat is visible
       if (currentPosition && currentPosition.el > 0) {
-        // CASE 1: Satellite is currently visible - split into past/future
+        // CASE 1: AreaSat is currently visible - split into past/future
         if (trajectoryPoints.some(p => p.time !== undefined)) {
           pastPoints = trajectoryPoints
             .filter(p => p.time && p.time.getTime() <= now.getTime())
@@ -143,7 +142,7 @@ const PolarChart: React.FC<PolarChartProps> = ({
           futurePoints = trajectoryPoints.slice(midPoint);
         }
       } else {
-        // CASE 2: Satellite is not visible - show all points as future trajectory
+        // CASE 2: AreaSat is not visible - show all points as future trajectory
         futurePoints = [...trajectoryPoints];
         pastPoints = []; // Empty past points - don't show red line
       }
@@ -373,7 +372,7 @@ const PolarChart: React.FC<PolarChartProps> = ({
       }
     }
 
-    // Draw current position - only if the satellite is above the horizon
+    // Draw current position - only if the areaSat is above the horizon
     if (currentPosition) {
       const scale = radius / 90;
       const angle = (currentPosition.az - 90) * (Math.PI / 180); // Adjust azimuth to match polar chart orientation
@@ -396,7 +395,7 @@ const PolarChart: React.FC<PolarChartProps> = ({
   }, [trajectoryPoints, currentPosition, currentTime, isFocusMode]);
 
   return (
-    <div className="w-full flex justify-center items-center">
+    <div className="w-full flex justify-center items-center min-w-[220px]">
       <svg ref={chartRef} className="max-w-full h-auto" preserveAspectRatio="xMidYMid meet" />
     </div>
   );

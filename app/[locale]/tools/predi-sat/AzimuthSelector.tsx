@@ -68,7 +68,7 @@ const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimut
     const updateDimensions = () => {
       if (!svgRef.current) return;
       const containerWidth = svgRef.current.parentElement?.clientWidth || 300;
-      const size = Math.min(containerWidth, 250);
+      const size = Math.min(containerWidth, window.innerWidth < 500 ? 180 : 250);
       setDimensions({ width: size, height: size });
     };
     updateDimensions();
@@ -239,16 +239,33 @@ const AzimuthSelector: React.FC<AzimuthSelectorProps> = ({ minAzimuth, maxAzimut
   const displayMaxAzimuth = maxAzimuth === 0 ? 360 : maxAzimuth;
 
   return (
-    <div className="flex justify-center items-center w-full">
-      <div className="relative">
-        <svg 
-          ref={svgRef} 
-          width={dimensions.width} 
-          height={dimensions.height}
-          className="cursor-default"
-          style={{ touchAction: "none" }}
-        />
-        <div className="flex justify-center text-white mt-2 text-sm">
+    <div className="flex justify-center items-center">
+      <div
+        className="flex flex-col items-center"
+        style={{
+          width: 240, // Augmente la largeur pour éviter la coupure à droite
+          maxWidth: "100%",
+          marginLeft: 0, // Remet à zéro le décalage gauche
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", height: dimensions.height }}>
+          <svg
+            ref={svgRef}
+            width={dimensions.width}
+            height={dimensions.height}
+            className="cursor-default"
+            style={{
+              touchAction: "none",
+              width: "100%",
+              height: "auto",
+              minWidth: 120,
+              maxWidth: 240,
+              display: "block",
+              overflow: "visible", // Important pour ne rien couper
+            }}
+          />
+        </div>
+        <div className="text-white text-xs sm:text-sm" style={{ marginTop: 18 }}>
           <span>
             Between <span className="text-purple font-bold">{minAzimuth}°</span> and <span className="text-purple font-bold">{displayMaxAzimuth}°</span>
           </span>

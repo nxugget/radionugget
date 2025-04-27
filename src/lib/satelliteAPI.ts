@@ -37,7 +37,7 @@ export async function getSatellites(): Promise<Satellite[]> {
   // Use the imported satelliteData instead of fetch
   const data = satelliteData;
   return data.map((sat: any) => ({
-    id: sat.norad_id, // ensure id is mapped correctly
+    id: sat.norad_id?.toString(), // <-- force string
     name: sat.name,
     image: sat.image,
     country: sat.country, // explicitly map the country value

@@ -60,13 +60,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
 
     const parentDiv = d3.select(svgRef.current.parentElement);
 
-    // Get parent container width for better sizing
+    // Responsive: adapt width to parent or window
     const containerWidth = svgRef.current.parentElement?.clientWidth || window.innerWidth;
-
-    // Increase left margin to accommodate longer satellite names
-    const width = Math.min(containerWidth - 100, 1600);
-    const margin = { top: 60, right: 50, bottom: 50, left: 180 }; // Increased from 140 to 180
-    const rowHeight = 40;
+    const width = Math.min(containerWidth - 10, 1200); // Reduce max width for mobile
+    const margin = { top: 40, right: 20, bottom: 30, left: containerWidth < 500 ? 90 : 180 }; // Smaller margin on mobile
+    const rowHeight = containerWidth < 500 ? 28 : 40;
 
     // Unique satellites and inner height calculation
     const uniqueSatellites = Array.from(
@@ -88,11 +86,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       }
     });
 
-    // X axis: time scale with better tick spacing for wider display
+    // X axis: time scale
     const now = new Date();
-    now.setMinutes(0, 0, 0); // Round to the nearest hour
+    now.setMinutes(0, 0, 0);
     const maxEnd = new Date(now);
-    maxEnd.setHours(maxEnd.getHours() + 24); // 24 hours from now
+    maxEnd.setHours(maxEnd.getHours() + 24);
     const xScale = d3
       .scaleTime()
       .domain([now, maxEnd])
@@ -105,12 +103,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .range([margin.top, margin.top + innerHeight])
       .padding(0);
 
-    // Time format and X axis drawing with more frequent ticks for wider timeline
-    const timeFormat = d3.timeFormat("%H");
+    // Time format and X axis drawing
+    const timeFormat = d3.timeFormat(containerWidth < 500 ? "%H" : "%H");
     const tooltipTimeFormat = d3.timeFormat("%I:%M %p");
 
-    // Adapt tick frequency based on available width for better readability
-    const tickInterval = width > 1000 ? 1 : 2; // Use hourly ticks for wider displays
+    const tickInterval = width > 600 ? 1 : 3; // Fewer ticks on mobile
 
     const xAxis = d3
       .axisTop(xScale)
@@ -129,9 +126,9 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     xAxisGroup.selectAll(".tick line").remove();
     xAxisGroup.selectAll(".tick text")
       .style("fill", "#fff")
-      .style("font-size", "14px"); // Reduced font size
+      .style("font-size", containerWidth < 500 ? "10px" : "14px");
 
-    // Vertical grid lines - match tick frequency
+    // Vertical grid lines
     const hourInterval = d3.timeHour.every(tickInterval)!;
     const hourTicks = xScale.ticks(hourInterval);
     svg
@@ -149,8 +146,8 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .style("stroke-dasharray", "4 2")
       .style("stroke-width", 1);
 
-    // Always draw Y axis for desktop
-    const yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(15); // Increased tick padding for more space
+    // Always draw Y axis
+    const yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(containerWidth < 500 ? 5 : 15);
     const yAxisGroup = svg
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
@@ -159,11 +156,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
     yAxisGroup.selectAll(".tick line").remove();
     yAxisGroup.selectAll<SVGTextElement, string>("text")
       .attr("text-anchor", "end")
-      .attr("dx", "-1em") // More space between text and axis
-      .style("font-size", "14px") // Reduced font size
+      .attr("dx", containerWidth < 500 ? "-0.5em" : "-1em")
+      .style("font-size", containerWidth < 500 ? "10px" : "14px")
       .style("font-weight", "bold")
-      .style("fill", (d: string) => colorMap[d] || "#fff") // Apply the satellite's color
-      .text((d: string) => d) // Set the text content
+      .style("fill", (d: string) => colorMap[d] || "#fff")
+      .text((d: string) => d)
       .each(function (d: string) {
         const satelliteId = passes.find((p) => p.satelliteName === d)?.satelliteId;
 
@@ -171,39 +168,33 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
           const textElement = d3.select(this);
           const textNode = textElement.node();
 
-          // More aggressive text truncation
           if (textNode) {
             const textWidth = (textNode as SVGTextElement).getComputedTextLength();
-            const availableWidth = margin.left - 30; // More space reserved for text
+            const availableWidth = margin.left - 30;
 
-            // If text is too long, truncate with ellipsis with more aggressive ratio
             if (textWidth > availableWidth) {
               const text = d;
               const ellipsis = "...";
-              // More conservative ratio to ensure text fits
               const ratio = (availableWidth - 20) / textWidth;
               const visibleLength = Math.max(5, Math.floor(text.length * ratio) - ellipsis.length);
               const truncatedText = text.substring(0, visibleLength) + ellipsis;
 
-              // Apply truncated text
               textElement.text(truncatedText);
 
-              // Add tooltip with full name
               textElement
-                .append("title") // Native SVG title element acts as a tooltip
+                .append("title")
                 .text(d);
             }
           }
 
           textElement
-            .html("") // Clear existing text
+            .html("")
             .append("a")
-            .attr("href", `/${"fr" /* ou dynamique */}/tools/satellite-explorer?satelliteId=${encodeURIComponent(satelliteId)}`)
+            .attr("href", `/${"fr" /* ou dynamique */}/tools/area-sat?satelliteId=${encodeURIComponent(satelliteId)}`)
             .attr("target", "_blank")
             .style("text-decoration", "none")
             .style("fill", colorMap[d] || "#fff")
             .text(function() {
-              // Get the truncated text if we calculated it above
               if (textNode && (textNode as SVGTextElement).getComputedTextLength() > (margin.left - 30)) {
                 const text = d;
                 const ellipsis = "...";
@@ -213,7 +204,7 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
               }
               return d;
             })
-            .append("title") // Add tooltip regardless
+            .append("title")
             .text(d);
         }
       });
@@ -230,22 +221,25 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .attr("y1", (d) => yScale(d)!)
       .attr("y2", (d) => yScale(d)!)
       .style("stroke", "rgba(255,255,255,0.5)")
-      .style("stroke-width", 2);
+      .style("stroke-width", 1);
 
-    // Tooltip setup
-    const tooltip = parentDiv
+    // Tooltip setup (dans le body)
+    const tooltip = d3
+      .select(document.body)
       .append("div")
+      .attr("id", "sat-timeline-tooltip")
       .style("position", "absolute")
       .style("background", "rgba(0, 0, 0, 0.8)")
       .style("color", "#fff")
-      .style("padding", "8px 12px")
+      .style("padding", "6px 10px")
       .style("border-radius", "6px")
       .style("pointer-events", "none")
       .style("display", "none")
-      .style("font-size", "16px");
+      .style("font-size", containerWidth < 500 ? "12px" : "16px")
+      .style("z-index", "999999");
 
     // Draw the pass rectangles
-    const rectWidth = 30;
+    const rectWidth = containerWidth < 500 ? 18 : 30;
     svg
       .selectAll("rect.pass")
       .data(passes)
@@ -258,7 +252,6 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       })
       .attr("y", (d) => {
         const yPos = yScale(d.satelliteName)!;
-        // Center in the band
         return yPos + (yScale.bandwidth() - (rowHeight - 4)) / 2;
       })
       .attr("width", rectWidth)
@@ -294,27 +287,28 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
           );
       })
       .on("mousemove", (event) => {
+        // Position absolue sur la page
         tooltip
-          .style("top", `${event.offsetY - 40}px`)
-          .style("left", `${event.offsetX + 10}px`);
+          .style("top", `${event.pageY - 40}px`)
+          .style("left", `${event.pageX + 10}px`);
       })
       .on("mouseout", () => {
         tooltip.style("display", "none");
       });
 
-    // Container styling - add padding on the left side
+    // Container styling - responsive
     if (svgRef.current?.parentElement) {
       d3.select(svgRef.current.parentElement)
         .style("background", "#1a1a1a")
-        .style("border-radius", "12px")
-        .style("padding", "20px 10px")
-        .style("box-shadow", "0px 4px 10px rgba(0, 0, 0, 0.3)")
+        .style("border-radius", "8px")
+        .style("padding", containerWidth < 500 ? "8px 2px" : "20px 10px")
+        .style("box-shadow", "0px 2px 6px rgba(0, 0, 0, 0.2)")
         .style("overflow-x", "auto")
         .style("white-space", "nowrap")
         .style("max-width", "100%")
         .style("display", "flex")
         .style("justify-content", "center")
-        .style("padding-left", "20px"); // Add explicit left padding
+        .style("padding-left", containerWidth < 500 ? "2px" : "20px");
     }
 
     return () => {
@@ -323,8 +317,8 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
   }, [passes, useLocalTime, utcOffset]);
 
   return (
-    <div className="relative w-full flex justify-center">
-      <svg ref={svgRef}></svg>
+    <div className="relative w-full flex justify-center overflow-x-auto">
+      <svg ref={svgRef} style={{ minWidth: 320, width: "100%" }} />
     </div>
   );
 };

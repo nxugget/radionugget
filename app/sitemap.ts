@@ -1,13 +1,17 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/src/lib/getPosts';
+import { getSatellites } from '@/src/lib/satelliteAPI';
 
 const baseUrl = 'https://radionugget.com';
 const locales = ['fr', 'en'];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = getAllPosts();
+  
+  // Fetch all satellites for sitemap
+  const satellites = await getSatellites();
 
-  const staticPaths = ['', '/blog', '/gallery', '/tools/grid-square'];
+  const staticPaths = ['', '/blog', '/gallery', '/tools/grid-square', '/tools/satellite-prediction', '/tools/area-sat'];
   const staticPages: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
@@ -22,7 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const postPages: MetadataRoute.Sitemap = [];
   for (const locale of locales) {
     for (const post of posts) {
-
       const formattedSlug = post.slug.replace(/\/\d{4}(?=\/)/, '');
       postPages.push({
         url: `${baseUrl}/${locale}${formattedSlug}`,
@@ -32,6 +35,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
   }
+  
+  // Create entries for individual satellite pages
+  const satellitePages: MetadataRoute.Sitemap = [];
+  for (const locale of locales) {
+    for (const satellite of satellites) {
+      satellitePages.push({
+        url: `${baseUrl}/${locale}/tools/area-sat?satelliteId=${encodeURIComponent(satellite.id)}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.7,
+      });
+    }
+  }
 
-  return [...staticPages, ...postPages];
+  return [...staticPages, ...postPages, ...satellitePages];
 }

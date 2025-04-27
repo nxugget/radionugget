@@ -5,8 +5,8 @@ import { twoline2satrec, propagate, gstime, eciToGeodetic, EciVec3 } from "satel
 import dynamic from "next/dynamic";
 
 // Define interfaces outside the dynamic import
-interface SatMapProps {
-  satelliteId: string;
+interface AreaSatMapProps {
+  areaSatId: string;
   tle1: string;
   tle2: string;
 }
@@ -27,14 +27,15 @@ function isValidEciVec3(value: any): value is EciVec3<number> {
 const COLORS = {
   PAST_ORBIT: '#dc2626', // Red for LOS - matching text-red-600
   FUTURE_ORBIT: '#228B22', // Green for AOS - matching text-[#228B22]
-  SATELLITE: 'white' // Changed to white for the satellite marker
+  AREA_SAT: 'white' // Changed to white for the areaSat marker
 };
 
 // Define styles as a JavaScript object to keep everything in one file
 const styles = {
   mapContainer: {
     width: "100%",
-    height: "100%", // Changé de 400px à 100% pour remplir le conteneur parent
+    height: "100%",
+    minHeight: 0,
     position: "relative",
     borderRadius: "8px",
     overflow: "hidden",
@@ -48,11 +49,12 @@ const styles = {
     zIndex: 1,
     margin: "0",
     padding: "0",
+    minHeight: 0,
   } as React.CSSProperties,
   loadingContainer: {
     width: "100%",
-    height: "100%", // Changé pour s'adapter au conteneur parent
-    minHeight: "400px", // Hauteur minimale pour les petits écrans
+    height: "100%",
+    minHeight: 0,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -63,14 +65,14 @@ const styles = {
 };
 
 // Create the component that will be dynamically loaded
-const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
+const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   // We need to import Leaflet inside the component to avoid SSR issues
   const L = require("leaflet");
   require("leaflet/dist/leaflet.css");
   
   const mapRef = useRef<any>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const satelliteMarkerRef = useRef<any>(null);
+  const areaSatMarkerRef = useRef<any>(null);
   const orbitPathsRef = useRef<any[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
   const satrec = useRef<any>(null);
@@ -82,7 +84,7 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
   const POSITION_UPDATE_INTERVAL = 1000; // Update position every second
   const TRAJECTORY_UPDATE_INTERVAL = 10000; // Update trajectory every 10 seconds
 
-  // Function to calculate satellite position at a given time
+  // Function to calculate areaSat position at a given time
   const calculatePosition = (satrecObj: any, date: Date): GeoPoint | null => {
     try {
       const positionAndVelocity = propagate(satrecObj, date);
@@ -117,8 +119,13 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
     // Add Leaflet specific CSS to handle zoom controls and other elements
     const leafletStyles = `
       .leaflet-container {
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #111 !important;
+        border-radius: 8px;
       }
       .leaflet-control-container .leaflet-top,
       .leaflet-control-container .leaflet-bottom {
@@ -135,9 +142,13 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
       .leaflet-bar a:hover {
         background-color: #444;
       }
-      /* Custom satellite icon styles */
-      .satellite-icon {
+      /* Custom areaSat icon styles */
+      .areaSat-icon {
         filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+      }
+      /* Remove map edge fade/borders */
+      .leaflet-tile {
+        background: #111 !important;
       }
     `;
 
@@ -163,22 +174,50 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
         const darkMapUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
         
         // Définir les limites de la carte pour éviter le défilement au-delà des bords du monde
-        const southWest = L.latLng(-90, -180);
-        const northEast = L.latLng(90, 180);
+        const southWest = L.latLng(-85, -180);
+        const northEast = L.latLng(85, 180);
         const bounds = L.latLngBounds(southWest, northEast);
-        
+
+        // Calculer la position initiale du satellite si possible
+        let initialCenter: [number, number] = [0, 0];
+        let initialZoom = 1;
+        if (tle1 && tle2) {
+          try {
+            const satrecObj = twoline2satrec(tle1.trim(), tle2.trim());
+            const now = new Date();
+            const positionAndVelocity = propagate(satrecObj, now);
+            if (
+              positionAndVelocity &&
+              typeof positionAndVelocity !== "boolean" &&
+              positionAndVelocity.position &&
+              isValidEciVec3(positionAndVelocity.position)
+            ) {
+              const gmst = gstime(now);
+              const pos = eciToGeodetic(positionAndVelocity.position, gmst);
+              initialCenter = [
+                (pos.latitude * 180) / Math.PI,
+                (pos.longitude * 180) / Math.PI,
+              ];
+              initialZoom = 3; // Zoom légèrement sur la position du satellite
+            }
+          } catch {
+            // fallback: [0,0], zoom 1
+          }
+        }
+
         // Create map instance with modified options
         const map = L.map(mapContainerRef.current, {
-          center: [0, 0],
-          zoom: 1, // Ajusté pour mieux s'adapter aux mobiles
+          center: initialCenter,
+          zoom: initialZoom,
           minZoom: 1,
           maxZoom: 10,
-          worldCopyJump: false, // Désactiver la répétition de la carte
+          worldCopyJump: true,
           attributionControl: false,
-          maxBounds: bounds, // Ajouter les limites maximales
-          maxBoundsViscosity: 1.0, // Rendre les limites totalement inflexibles
-          dragging: !L.Browser.mobile, // Désactive le glissement sur mobile par défaut
-          tap: !L.Browser.mobile, // Désactive les événements de tap sur mobile
+          maxBounds: bounds,
+          maxBoundsViscosity: 1.0,
+          dragging: !L.Browser.mobile,
+          tap: !L.Browser.mobile,
+          crs: L.CRS.EPSG3857,
         });
 
         // Add touch support for mobile
@@ -213,9 +252,9 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
         setMapInitialized(false);
       }
     };
-  }, [L]);
+  }, [L, tle1, tle2]);
 
-  // Initialize satellite tracking when TLEs are provided
+  // Initialize areaSat tracking when TLEs are provided
   useEffect(() => {
     if (!tle1 || !tle2) return;
     
@@ -236,9 +275,9 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
         orbitPathsRef.current = [];
         
         // Clean up marker
-        if (satelliteMarkerRef.current) {
-          satelliteMarkerRef.current.removeFrom(mapRef.current);
-          satelliteMarkerRef.current = null;
+        if (areaSatMarkerRef.current) {
+          areaSatMarkerRef.current.removeFrom(mapRef.current);
+          areaSatMarkerRef.current = null;
         }
       }
     };
@@ -347,22 +386,22 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
     });
   };
 
-  // Set up satellite tracking and regular updates
+  // Set up areaSat tracking and regular updates
   useEffect(() => {
     if (!mapInitialized || !mapRef.current || !satrec.current) return;
     
-    // Create custom satellite icon with white color - Fix the icon path
-    const satelliteIcon = L.icon({
+    // Create custom areaSat icon with white color - Fix the icon path
+    const areaSatIcon = L.icon({
       iconUrl: '/images/icon/satellite-icon.svg', // Match the path where we created the SVG
       iconSize: [32, 32], 
       iconAnchor: [16, 16],
-      className: 'satellite-icon white-satellite' // Add class for white styling
+      className: 'areaSat-icon white-areaSat' // Add class for white styling
     });
 
-    // Add custom styling for white satellite icon
+    // Add custom styling for white areaSat icon
     const styleElement = document.createElement('style');
     styleElement.textContent = `
-      .white-satellite {
+      .white-areaSat {
         filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
       }
     `;
@@ -371,25 +410,23 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
     // Initial orbit path drawing
     updateOrbitPaths();
 
-    // Initial satellite marker (icon only, no point)
+    // Initial areaSat marker (icon only, no point)
     const currentPosition = calculatePosition(satrec.current, new Date());
     if (currentPosition && mapRef.current) {
-      satelliteMarkerRef.current = L.marker([currentPosition.lat, currentPosition.lng], {
-        icon: satelliteIcon,
-        title: satelliteId
+      areaSatMarkerRef.current = L.marker([currentPosition.lat, currentPosition.lng], {
+        icon: areaSatIcon,
+        title: areaSatId
       }).addTo(mapRef.current);
 
-      // Center the map on the satellite initially
-      mapRef.current.setView([currentPosition.lat, currentPosition.lng], 3);
     }
 
-    // Update the satellite position regularly
+    // Update the areaSat position regularly
     const positionInterval = setInterval(() => {
       if (!mapRef.current || !satrec.current) return;
       
       const position = calculatePosition(satrec.current, new Date());
-      if (position && satelliteMarkerRef.current) {
-        satelliteMarkerRef.current.setLatLng([position.lat, position.lng]);
+      if (position && areaSatMarkerRef.current) {
+        areaSatMarkerRef.current.setLatLng([position.lat, position.lng]);
       }
     }, POSITION_UPDATE_INTERVAL);
 
@@ -403,7 +440,7 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
       clearInterval(trajectoryInterval);
       document.head.removeChild(styleElement); // Clean up style element
     };
-  }, [mapInitialized, satelliteId]);
+  }, [mapInitialized, areaSatId]);
 
   return (
     <div style={styles.mapContainer}>
@@ -413,7 +450,7 @@ const SatMapComponent = ({ satelliteId, tle1, tle2 }: SatMapProps) => {
 };
 
 // Disable SSR for this component since Leaflet requires browser-only APIs
-const SatMap = dynamic(() => Promise.resolve(SatMapComponent), {
+const AreaSatMap = dynamic(() => Promise.resolve(AreaSatMapComponent), {
   ssr: false,
   loading: () => (
     <div style={styles.loadingContainer}>
@@ -422,4 +459,4 @@ const SatMap = dynamic(() => Promise.resolve(SatMapComponent), {
   ),
 });
 
-export default SatMap;
+export default AreaSatMap;

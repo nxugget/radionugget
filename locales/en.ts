@@ -14,9 +14,9 @@ export default {
     home: "Home",
     blog: "Blog",
     tools: "Tools",
-    gridSquare: "Grid Square",
-    satellitePrediction: "Satellite Prediction",
-    satelliteInfo: "Satellite Explorer",
+    gridSquare: "GridSquare",
+    satellitePrediction: "PrediSat",
+    satelliteInfo: "AreaSat",
     gallery: "Gallery",
     english: "English",
     french: "Français"
@@ -49,7 +49,7 @@ export default {
   betaDescription: "This tool is in beta version. If you notice any bugs or have improvement ideas, I am extremely open and responsive :) You can send me an email at this address: contact@radionugget.com",
   satellites: {
     explorer: {
-      title: "Satellite Explorer",
+      title: "Area Satellite",
       loading: "Loading...",
       searchPlaceholder: "Search for a satellite...",
       lastUpdate: "Last update:",
@@ -104,6 +104,7 @@ export default {
       meanAnomaly: "Mean Anomaly (degrees)",
       meanMotion: "Mean Motion (orbits per day)",
       revolutionNumber: "Revolution Number at Epoch",
+      checksum: "Checksum (modulo 10)", // Added for TLE
       noInfo: "No info"
     },
     transmitter: { 
@@ -122,7 +123,6 @@ export default {
   and: "and", // Added for "Powered by"
   satellite: {
     name: "Satellite",
-    pass: "Pass",
     prediction: "Prediction",
     predictableSatellites: "Predictable Satellites",
     satellitesToPredict: "Satellites to Predict",

@@ -1,17 +1,17 @@
-// Définition des couleurs pour les satellites - palette personnalisée
+// Définition des couleurs pour les satellites - palette lumineuse, variée et inspirée de l'espace
 export const satelliteColors = [
-  "#FF6B6B", // Rouge corail
-  "#4ECDC4", // Turquoise
-  "#45B7D1", // Bleu ciel
-  "#FFA733", // Orange pastel
-  "#7DCE82", // Vert menthe
-  "#9D5CFF", // Violet lavande
-  "#FF9FB2", // Rose pêche
-  "#58C3FF", // Bleu azur
-  "#FFDA77", // Jaune pâle
-  "#B8F7D4", // Vert pastel
-  "#FF7E5F", // Vermillon
-  "#6A5ACD"  // Bleu ardoise
+  "#A3BFFA", // Bleu clair stellaire
+  "#FFD166", // Jaune comète
+  "#B983FF", // Violet nébuleuse
+  "#5DFDCB", // Vert turquoise cosmique
+  "#FF6B6B", // Rouge corail (supernova)
+  "#F3E8FF", // Blanc violet (voie lactée)
+  "#4361EE", // Bleu étoilé
+  "#FF9F1C", // Orange solaire
+  "#3A86FF", // Bleu profond
+  "#FF61A6", // Rose galaxie
+  "#C1C8E4", // Gris lunaire lumineux
+  "#00F5D4"  // Vert-bleu néon
 ];
 
 // Fonction utilitaire pour obtenir une couleur cohérente pour le même satellite

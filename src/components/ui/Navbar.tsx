@@ -207,7 +207,7 @@ export const Navbar = () => {
 
                 {isToolsOpen && (
                   <div
-                    className="absolute left-0 top-full mt-1 bg-black/80 backdrop-blur-xl rounded-sm shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-1 px-2 py-0.5 min-w-max"
+                    className="absolute left-0 top-full mt-2 bg-black/80 backdrop-blur-xl rounded-2xl shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-1 px-2 py-2 min-w-max"
                   >
                     <Link
                       href="/tools/grid-square"
@@ -215,18 +215,18 @@ export const Navbar = () => {
                     >
                       {t("navbar.gridSquare")}
                     </Link>
-                    {/*<Link
-                      href="/tools/satellite-prediction"
+                    <Link
+                      href="/tools/predi-sat"
                       className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
                     >
                       {t("navbar.satellitePrediction")}
-                    </Link>*/}
-                    {/*<Link
-                      href="/tools/satellite-explorer"
+                    </Link>
+                    <Link
+                      href="/tools/area-sat"
                       className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
                     >
                       {t("navbar.satelliteInfo")}
-                    </Link>*/}
+                    </Link>
                   </div>
                 )}
               </div>
@@ -343,12 +343,12 @@ export const Navbar = () => {
                   <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.gridSquare")}
                   </Link>
-                  {/*<Link href="/tools/satellite-prediction" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  <Link href="/tools/predi-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.satellitePrediction")}
-                  </Link>*/}
-                  {/*<Link href="/tools/satellite-explorer" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  </Link>
+                  <Link href="/tools/area-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
                     {t("navbar.satelliteInfo")}
-                  </Link>*/}
+                  </Link>
                 </div>
               )}
             </div>
@@ -356,7 +356,6 @@ export const Navbar = () => {
               {t("navbar.gallery")}
             </Link>
             
-            {/* Language Switcher - FIXED SYNTAX */}
             <div className="relative cursor-pointer" ref={langDropdownMobileRef}>
               <Image
                 src={flagSrc(currentLocale)}
