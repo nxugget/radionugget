@@ -39,6 +39,13 @@ async function updateTransmitters() {
       }
     }
     
+    // Toujours mettre à jour la date, même si aucun satellite n'a changé
+    const updatePath = path.join(__dirname, '..', 'public', 'transponders-last-update.json');
+    await fs.writeFile(
+      updatePath,
+      JSON.stringify({ updated_at: new Date().toISOString() }, null, 2)
+    );
+    console.log('transponders-last-update.json updated.');
     if (updatedCount > 0) {
       await fs.writeFile(jsonFile, JSON.stringify(satellites, null, 2));
       console.log(`Updated ${updatedCount} satellite(s).`);

@@ -46,6 +46,14 @@ async function fetchTLE(noradId) {
     if (updated) {
       fs.writeFileSync(dataPath, JSON.stringify(satellites, null, 2), 'utf8');
       console.log('Fichier satellites.json mis à jour.');
+      // Ajout : mise à jour du fichier tle-last-update.json
+      const tleUpdatePath = path.join(__dirname, '../public/tle-last-update.json');
+      fs.writeFileSync(
+        tleUpdatePath,
+        JSON.stringify({ updated_at: new Date().toISOString() }, null, 2),
+        'utf8'
+      );
+      console.log('Fichier tle-last-update.json mis à jour.');
     } else {
       console.log('Aucune modification détectée.');
     }

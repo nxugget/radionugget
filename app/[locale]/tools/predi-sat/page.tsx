@@ -908,7 +908,11 @@ export default function SatelliteTracker() {
         {allPredictions.length > 0 && (
           <div className="mt-4 sm:mt-6 w-full flex justify-center">
             <div className="w-full max-w-full sm:max-w-[1400px] overflow-visible">
-              {viewMode === "timeline" ? (
+              {allPredictions.every(pred => pred.passes.length === 0) ? (
+                <div className="w-full text-center text-red-500 font-bold text-lg py-8">
+                  {t("satellites.countdown.noPassPredicted")}
+                </div>
+              ) : viewMode === "timeline" ? (
                 <div className="overflow-x-auto">
                   <SatelliteTimeline
                     key={JSON.stringify(allPredictions)}
