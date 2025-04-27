@@ -2209,7 +2209,22 @@
     "name": "TEVEL2-1",
     "tle1": "1 63217U 25052H   25115.97690948  .00020516  00000+0  97876-3 0  9992\r",
     "tle2": "2 63217  97.4359  10.6021 0005166 133.3705 226.7960 15.19094152  6474",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2236,7 +2251,22 @@
     "name": "TEVEL2-4",
     "tle1": "1 63213U 25052D   25116.16833771  .00020870  00000+0  98829-3 0  9995\r",
     "tle2": "2 63213  97.4385  10.8171 0005285 122.3716 237.8031 15.19347033  6504",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2245,7 +2275,22 @@
     "name": "TEVEL2-5",
     "tle1": "1 63214U 25052E   25115.97091435  .00020271  00000+0  96070-3 0  9998\r",
     "tle2": "2 63214  97.4386  10.6225 0005218 122.8149 237.3589 15.19326371  6476",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2254,7 +2299,22 @@
     "name": "TEVEL2-6",
     "tle1": "1 63215U 25052F   25115.97188215  .00020034  00000+0  95062-3 0  9999\r",
     "tle2": "2 63215  97.4385  10.6217 0005255 123.9004 236.2731 15.19286498  6472",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2263,7 +2323,22 @@
     "name": "TEVEL2-7",
     "tle1": "1 63239U 25052AF  25115.94372748  .00018825  00000+0  93066-3 0  9995\r",
     "tle2": "2 63239  97.4421  10.5278 0009124 156.9470 203.2174 15.17846879  6464",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder - Beacon",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2272,7 +2347,22 @@
     "name": "TEVEL2-8",
     "tle1": "1 63237U 25052AD  25116.20565934  .00019501  00000+0  96143-3 0  9995\r",
     "tle2": "2 63237  97.4420  10.7893 0009029 156.3775 203.7875 15.17936262  6506",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
@@ -2281,7 +2371,22 @@
     "name": "TEVEL2-9",
     "tle1": "1 63238U 25052AE  25116.20649824  .00019419  00000+0  95854-3 0  9993\r",
     "tle2": "2 63238  97.4423  10.7890 0009109 156.4726 203.6926 15.17893426  6503",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US"
   },
