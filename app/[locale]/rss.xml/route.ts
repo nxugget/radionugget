@@ -80,7 +80,7 @@ ${enclosure}
 <channel>
 <title>${titles[locale] || "RadioNugget Blog"}</title>
 <link>${baseUrl}/${locale}/blog</link>
-<atom:link href="${baseUrl}/${locale}/rss.xml" rel="self" type="application/rss+xml" />
+<atom:link href="${request.url}" rel="self" type="application/rss+xml" />
 <description>${descriptions[locale] || "RadioNugget blog articles"}</description>
 <language>${locale}</language>
 ${items.join('\n')}
