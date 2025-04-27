@@ -33,9 +33,25 @@ export async function GET(
       const { data } = matter(fileContent);
       const slug = file.replace('.mdx', '');
       const url = `${baseUrl}/${locale}/blog/${slug}`;
-      const enclosure = data.thumbnail
-        ? `<enclosure url="${data.thumbnail}" type="image/jpeg" />`
-        : '';
+      let enclosure = '';
+      if (data.thumbnail) {
+        let enclosureUrl = data.thumbnail;
+        if (!/^https?:\/\//.test(enclosureUrl)) {
+          enclosureUrl = baseUrl + (enclosureUrl.startsWith('/') ? '' : '/') + enclosureUrl;
+        }
+        let length = 0;
+        try {
+          // Only try to stat local files
+          if (enclosureUrl.startsWith(baseUrl + '/')) {
+            const localPath = path.join(process.cwd(), enclosureUrl.replace(baseUrl, ''));
+            const stat = await fs.promises.stat(localPath);
+            length = stat.size;
+          }
+        } catch {
+          // ignore stat errors, leave length as 0
+        }
+        enclosure = `<enclosure url="${enclosureUrl}" type="image/jpeg" length="${length}" />`;
+      }
       items.push(
 `<item>
 <title><![CDATA[${data.title || ''}]]></title>
@@ -60,10 +76,11 @@ ${enclosure}
   };
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${titles[locale] || "RadioNugget Blog"}</title>
 <link>${baseUrl}/${locale}/blog</link>
+<atom:link href="${baseUrl}/${locale}/rss.xml" rel="self" type="application/rss+xml" />
 <description>${descriptions[locale] || "RadioNugget blog articles"}</description>
 <language>${locale}</language>
 ${items.join('\n')}
