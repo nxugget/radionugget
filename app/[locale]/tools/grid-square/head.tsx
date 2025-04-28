@@ -6,11 +6,11 @@ export default function Head({ params }: { params: { locale: string } }) {
 
   const isFr = locale.startsWith('fr');
   const title = isFr
-    ? 'Calculateur Grid Square | Carte Grid Square interactive'
-    : 'Grid Square Calculator | Grid Square interactive Map';
+    ? 'Map & Calculateur de Grid Square'
+    : 'Grid Square Calculator & Map';
   const description = isFr
-    ? 'Entrez une adresse pour obtenir son Grid Square radioamateur, visualisez-la sur une carte interactive, et explorez ses coordonnées.'
-    : 'Enter an address to get its ham radio Grid Square, view it on an interactive map, and explore its coordinates.';
+    ? 'Entrez une adresse pour obtenir son Grid Square, visualisez-la sur une carte interactive, et explorez ses coordonnées.'
+    : 'Enter an address to get its Grid Square, view it on an interactive map, and explore its coordinates.';
 
   const url = isFr
     ? 'https://radionugget.com/fr/grid-square'

@@ -372,3 +372,9 @@ code{
 //   justify-content: center;
 //   min-height: 80vh; // pour centrer verticalement le contenu
 // }
+
+@media (max-width: 768px) {
+  .background-mobile-adjust {
+    background-position: 20% center !important; // Ajustez le pourcentage selon vos besoins
+  }
+}

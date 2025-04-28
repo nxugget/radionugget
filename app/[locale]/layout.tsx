@@ -20,7 +20,6 @@ export default async function RootLayout({ params, children }: { params: { local
         <BlackHole className="absolute inset-0 z-[-3]" />
         {/* Foreground elements */}
         <I18nProviderClient locale={locale}>
-          {/* Tous les composants qui utilisent useI18n doivent être ici */}
           <Navbar />
           <main className="pt-24 pb-[60px] relative z-10">
             {children}
