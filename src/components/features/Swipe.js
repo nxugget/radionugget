@@ -19,7 +19,7 @@ export default function swipedetect(el, callback) {
         startX = touchobj.pageX;
         startY = touchobj.pageY;
         startTime = new Date().getTime();
-        e.preventDefault();
+        // Ne pas empêcher le comportement par défaut ici
       },
       false
     );
@@ -27,7 +27,7 @@ export default function swipedetect(el, callback) {
     touchsurface.addEventListener(
       "touchmove",
       function (e) {
-        e.preventDefault();
+        // Ne pas empêcher le comportement par défaut ici pour permettre le scroll
       },
       false
     );
@@ -42,14 +42,17 @@ export default function swipedetect(el, callback) {
         if (elapsedTime <= allowedTime) {
           if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
             swipedir = distX < 0 ? "left" : "right";
+            callback(e, swipedir);
+            e.preventDefault(); // Empêche le scroll horizontal natif uniquement si swipe horizontal détecté
+            return;
           } else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint) {
             swipedir = distY < 0 ? "up" : "down";
+            // Laisse le scroll vertical natif fonctionner
           }
         }
         callback(e, swipedir);
-        e.preventDefault();
+        // Ne pas empêcher le comportement par défaut ici
       },
       false
     );
-  }
-  
+}

@@ -45,11 +45,23 @@ function CookieBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 flex flex-col md:flex-row justify-between items-center">
-      <p className="text-sm mb-2 md:mb-0">
+    <div
+      className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-2 sm:p-4 flex flex-col md:flex-row justify-between items-center z-50"
+      style={{
+        fontSize: "12px", // plus petit sur mobile
+        lineHeight: "1.2",
+      }}
+    >
+      <p className="text-xs sm:text-sm mb-1 md:mb-0 text-center md:text-left">
         {t("cookies.message")}
       </p>
-      <button onClick={handleAccept} className="bg-purple hover:bg-orange hover:text-black text-white px-4 py-2 transition-colors rounded-md">
+      <button
+        onClick={handleAccept}
+        className="bg-purple hover:bg-orange hover:text-black text-white px-3 py-1 sm:px-4 sm:py-2 transition-colors rounded-md text-xs sm:text-base"
+        style={{
+          minWidth: "80px",
+        }}
+      >
         {t("cookies.accept")}
       </button>
     </div>
@@ -397,7 +409,7 @@ export default function SatelliteTracker() {
               { text: t("satellite.name"), className: "text-purple" },
               { text: t("satellite.prediction"), className: "text-white" },
             ]}
-            className="text-lg xs:text-xl md:text-3xl font-bold text-center text-white overflow-hidden"
+            className="text-lg xs:text-xl md:text-3xl font-bold text-center text-white overflow-hidden font-alien"
             cursorClassName="bg-purple"
           />
         </div>
@@ -592,104 +604,121 @@ export default function SatelliteTracker() {
           <div className="md:w-1/2 w-full flex flex-col gap-3 sm:gap-6">
             <div className="bg-nottooblack p-2 sm:p-4 rounded-md h-full justify-start flex flex-col">
               <h2 className="text-white text-lg text-center mb-4">{t("satellite.chooseYourPosition")}</h2>
-              <div className="flex flex-col gap-2 sm:gap-4">
-                <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-4 w-full mx-auto">
-                  <div className="relative flex-1 min-w-[120px]">
+              {/* Ligne unique pour inputs + bouton + "OR" sur mobile */}
+              <div
+                className="flex flex-row items-center justify-center gap-2 sm:gap-4 w-full mx-auto"
+                style={{
+                  flexWrap: "nowrap",
+                  overflowX: "auto",
+                  minWidth: 0,
+                  overflowY: "visible",
+                  paddingTop: 4,
+                  paddingBottom: 4,
+                  // Ajout d'un paddingLeft pour laisser la place au ring à gauche du premier input
+                  paddingLeft: 8,
+                }}
+              >
+                <div className="relative flex-1 min-w-[120px]">
+                  <input
+                    type="text"
+                    value={cityQuery}
+                    onChange={(e) => setCityQuery(e.target.value)}
+                    placeholder={t("satellite.cityPlaceholder")}
+                    className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                      cityError ? "border-red-500 border" : ""
+                    }`}
+                    style={{
+                      // Ajout d'un zIndex pour que le ring passe au-dessus du parent scrollable
+                      zIndex: 1,
+                      position: "relative",
+                    }}
+                    onFocus={() => setCitySuggestions([])}
+                  />
+                  {cityError && (
+                    <p className="text-red-500 text-sm mt-1 absolute">{cityError}</p>
+                  )}
+                  {citySuggestions.length > 0 && (
+                    <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
+                      {citySuggestions.map((city, idx) => (
+                        <li
+                          key={idx}
+                          className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
+                          onClick={() => handleCitySelect(city)}
+                        >
+                          {city.display_name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <span className="text-white font-bold px-1 select-none">{t("or")}</span>
+                <div className="relative flex-1 min-w-[120px]">
+                  <input
+                    type="text"
+                    value={gridSquareInput}
+                    onChange={(e) => handleGridSquareChange(e.target.value)}
+                    onBlur={validateGridSquare}
+                    placeholder={t("satellite.gridSquarePlaceholder")}
+                    className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                      gridSquareError ? "border-red-500 border" : ""
+                    }`}
+                    style={{
+                      zIndex: 1,
+                      position: "relative",
+                    }}
+                  />
+                  {gridSquareError && (
+                    <p className="text-red-500 text-sm mt-1 absolute">{gridSquareError}</p>
+                  )}
+                </div>
+                <span className="text-white font-bold px-1 select-none">{t("or")}</span>
+                <div className="flex-shrink-0 flex items-center">
+                  <LocationButton
+                    onClick={useCurrentLocation}
+                    loading={locationLoading}
+                    title={t("useMyLocation")}
+                    size={32}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-1 sm:gap-2 mt-2 sm:mt-4">
+                <div className="flex gap-1 sm:gap-2">
+                  <div className="flex flex-col items-center w-1/2">
+                    <label className="text-white font-bold mb-1">{t("satellite.latitude")}</label>
                     <input
                       type="text"
-                      value={cityQuery}
-                      onChange={(e) => setCityQuery(e.target.value)}
-                      placeholder={t("satellite.cityPlaceholder")}
-                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none ${
-                        cityError ? "border-red-500 border" : "focus:ring-2 focus:ring-purple"
-                      }`}
-                      onFocus={() => setCitySuggestions([])}
+                      value={invalidGridSquare ? "..." : (isNaN(latitude) ? "..." : latitude.toFixed(5))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        if (!isNaN(value) && value >= -90 && value <= 90) {
+                          setLatitude(value);
+                          setInvalidGridSquare(false);
+                        }
+                      }}
+                      placeholder={t("satellite.latitude")}
+                      className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                     />
-                    {cityError && (
-                      <p className="text-red-500 text-sm mt-1 absolute">{cityError}</p>
-                    )}
-                    {citySuggestions.length > 0 && (
-                      <ul className="absolute left-0 right-0 bg-black/70 text-white rounded-md shadow-md max-h-60 overflow-y-auto z-10">
-                        {citySuggestions.map((city, idx) => (
-                          <li
-                            key={idx}
-                            className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:text-purple-500"
-                            onClick={() => handleCitySelect(city)}
-                          >
-                            {city.display_name}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
                   </div>
-                  <span className="text-white font-bold hidden xs:inline">{t("or")}</span>
-
-                  <div className="relative flex-1 min-w-[120px]">
+                  <div className="flex flex-col items-center w-1/2">
+                    <label className="text-white font-bold mb-1">{t("satellite.longitude")}</label>
                     <input
                       type="text"
-                      value={gridSquareInput}
-                      onChange={(e) => handleGridSquareChange(e.target.value)}
-                      onBlur={validateGridSquare}
-                      placeholder={t("satellite.gridSquarePlaceholder")}
-                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none ${
-                        gridSquareError ? "border-red-500 border" : "focus:ring-2 focus:ring-purple"
-                      }`}
-                    />
-                    {gridSquareError && (
-                      <p className="text-red-500 text-sm mt-1 absolute">{gridSquareError}</p>
-                    )}
-                  </div>
-                  <span className="text-white font-bold hidden xs:inline">{t("or")}</span>
-
-                  <div className="flex-shrink-0">
-                    <LocationButton
-                      onClick={useCurrentLocation}
-                      loading={locationLoading}
-                      title={t("useMyLocation")}
-                      size={32}
+                      value={invalidGridSquare ? "..." : (isNaN(longitude) ? "..." : longitude.toFixed(5))}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        if (!isNaN(value) && value >= -180 && value <= 180) {
+                          setLongitude(value);
+                          setInvalidGridSquare(false);
+                        }
+                      }}
+                      placeholder={t("satellite.longitude")}
+                      className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
                     />
                   </div>
                 </div>
-
-                <div className="flex flex-col gap-1 sm:gap-2 mt-2 sm:mt-4">
-                  <div className="flex gap-1 sm:gap-2">
-                    <div className="flex flex-col items-center w-1/2">
-                      <label className="text-white font-bold mb-1">{t("satellite.latitude")}</label>
-                      <input
-                        type="text"
-                        value={invalidGridSquare ? "..." : (isNaN(latitude) ? "..." : latitude.toFixed(5))}
-                        onChange={(e) => {
-                          const value = Number(e.target.value);
-                          if (!isNaN(value) && value >= -90 && value <= 90) {
-                            setLatitude(value);
-                            setInvalidGridSquare(false);
-                          }
-                        }}
-                        placeholder={t("satellite.latitude")}
-                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
-                      />
-                    </div>
-                    <div className="flex flex-col items-center w-1/2">
-                      <label className="text-white font-bold mb-1">{t("satellite.longitude")}</label>
-                      <input
-                        type="text"
-                        value={invalidGridSquare ? "..." : (isNaN(longitude) ? "..." : longitude.toFixed(5))}
-                        onChange={(e) => {
-                          const value = Number(e.target.value);
-                          if (!isNaN(value) && value >= -180 && value <= 180) {
-                            setLongitude(value);
-                            setInvalidGridSquare(false);
-                          }
-                        }}
-                        placeholder={t("satellite.longitude")}
-                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
-                      />
-                    </div>
-                  </div>
-                  <p className="text-white text-xs sm:text-sm text-center mt-1 sm:mt-2">
-                    {t("satellite.coordinatesExplanation")}
-                  </p>
-                </div>
+                <p className="text-white text-xs sm:text-sm text-center mt-1 sm:mt-2">
+                  {t("satellite.coordinatesExplanation")}
+                </p>
               </div>
             </div>
             <div className="bg-nottooblack p-2 sm:p-4 rounded-md">
@@ -701,9 +730,9 @@ export default function SatelliteTracker() {
                     <p className="text-white mb-3 text-center">{t("satellite.minElevation")}</p>
                     <div
                       className="relative flex justify-center items-center mx-auto h-full"
-                      style={{ height: "240px", maxWidth: "100%" }}
+                      style={{ height: "225px", maxWidth: "100%" }} // Hauteur réduite
                     >
-                      <div className="vertical-slider-container" style={{ height: "240px", width: "32px", position: "relative" }}>
+                      <div className="vertical-slider-container" style={{ height: "160px", width: "32px", position: "relative" }}>
                         <div 
                           className="slider-track-bg"
                           style={{
@@ -823,9 +852,9 @@ export default function SatelliteTracker() {
                     <div
                       className="text-purple text-xs sm:text-sm"
                       style={{
-                        marginTop: 18, // identique à l'azimuth selector pour alignement vertical
+                        marginTop: 8, // réduit pour s'adapter à la nouvelle hauteur
                         textAlign: "center",
-                        minHeight: 20, // pour garder l'alignement même si la taille du texte change
+                        minHeight: 20,
                       }}
                     >
                       {elevation}°
@@ -833,8 +862,8 @@ export default function SatelliteTracker() {
                   </div>
                 </div>
                 <div className="md:w-1/2 flex flex-col items-center justify-center w-full h-full">
-                  <div className="flex flex-col h-full w-full">
-                    <p className="text-white mb-3 text-center pl-6">{t("satellite.azimuthFilter")}</p>
+                  <div className="flex flex-col h-full w-full items-center">
+                    <p className="text-white mb-2 text-center pl-6" style={{ marginBottom: 8 }}>{t("satellite.azimuthFilter")}</p>
                     <AzimuthSelector
                       minAzimuth={minAzimuth}
                       maxAzimuth={maxAzimuth}
@@ -850,7 +879,7 @@ export default function SatelliteTracker() {
         <div className="mt-4 sm:mt-8 w-full flex flex-col items-center">
           <button
             onClick={getPredictions}
-            className="w-full max-w-xs sm:max-w-fit px-[20px] sm:px-[40px] py-[12px] sm:py-[17px] rounded-full cursor-pointer border-0 bg-white shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[14px] sm:text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"
+            className="w-full max-w-xs sm:max-w-fit px-[20px] sm:px-[40px] py-[12px] sm:py-[17px] rounded-full cursor-pointer border-0 bg-white text-purple shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[14px] sm:text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px]"
           >
             {t("satellite.predict")}
           </button>

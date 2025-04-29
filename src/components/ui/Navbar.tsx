@@ -137,7 +137,8 @@ export const Navbar = () => {
                 width={60}
                 height={60}
                 priority // Ensures the image is loaded as soon as possible
-                className="rounded-full"
+                className="rounded-full navbar-logo"
+                style={{ opacity: 1, transition: "none" }} // Force no opacity/transition
               />
             </Link>
           </div>
@@ -163,14 +164,14 @@ export const Navbar = () => {
               
               <Link
                 href="/"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
               >
                 {t("navbar.home")}
               </Link>
               <Link
                 href="/blog"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
               >
                 {t("navbar.blog")}
@@ -232,7 +233,7 @@ export const Navbar = () => {
               </div>
               <Link
                 href="/gallery"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10"
+                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
               >
                 {t("navbar.gallery")}

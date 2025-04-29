@@ -34,14 +34,15 @@ What is its orbit (expressed as Keplerian elements a, e, i, Ω, ω, and υ)?
 Semimajor axis, a (km):
 ```
 
-We need to determine the orbital parameters from the given Cartesian position and velocity. It’s important to understand what these orbital elements represent. For a refresher on orbital data, check out this lesson on [TLE basics](<SmartLink slug="tle">just here</SmartLink>) :)
+We need to determine the **orbital parameters** from the given **Cartesian position** and **velocity**.  
+It's important to understand what these **orbital elements** represent. If you need a refresher, check out this lesson on **TLE** basics (<SmartLink slug="tle">just here</SmartLink>) :)
 
 Below is a diagram illustrating the various parameters (note: the spacecraft’s placement is arbitrary for illustration):
 ![Kepler Diagram](/images/blog/2024/kepler/kepler1.svg)
 
-The calculations to extract the orbital elements can be pretty involved. So instead, we’ll use the Python library [poliastro](https://github.com/poliastro/poliastro) to do the heavy lifting.
+The calculations to extract the **orbital elements** can be pretty involved. So instead, we’ll use the **Python** library [poliastro](https://github.com/poliastro/poliastro) to do the heavy lifting.
 
-First, convert our lists for position and velocity into quantities with proper physical units:
+First, let's convert our lists for **position** and **velocity** into objects with proper physical units so we can perform calculations:
 ```py
 from poliastro.twobody.orbit import u
 
@@ -51,9 +52,11 @@ vel = [-1.419072, 6.780149, 0.002865]
 pos_km = [*pos] * u.km
 vel_kms = [*vel] * u.km / u.s
 ```
-Here, multiplying by `u.km` and `u.km/u.s` (from [astropy](https://github.com/astropy/astropy)) converts each coordinate into a `Quantity` with the appropriate units.
+Here, `u.km` and `u.km / u.s` are **units** from the [astropy](https://github.com/astropy/astropy) library.  
+By multiplying our lists by these units, each coordinate is converted into a `Quantity` object, so `x`, `y`, and `z` are now properly treated as being in **kilometers** and **km/s**. This allows us to perform physical calculations directly.  
+Similarly, `u.s` stands for **seconds**, so `u.km / u.s` "transforms" our velocity list into the correct unit (**km/s**).
 
-Next, we call the method `Orbit.from_vectors` to calculate the orbital elements:
+Next, and this is where the magic happens, we just call the method `Orbit.from_vectors` which will do all the calculations for us so we can retrieve everything we need:
 ```py
 from poliastro.bodies import Earth
 from poliastro.twobody import Orbit
@@ -61,9 +64,10 @@ from poliastro.twobody import Orbit
 time = "2021-06-26 19:20:00.000"
 orb = Orbit.from_vectors(Earth, pos_km, vel_kms, time)
 ```
-Here, `Earth` provides the necessary gravitational parameters. And specifying the exact time is crucial since orbital parameters can change over time.
+Here, `Earth` is just an object containing the **gravitational and geometric parameters** of Earth, which are necessary for the calculation (no need to go into detail).  
+Don't forget to specify the exact **time** (`time`) at which the position and velocity were measured. **Orbital parameters can change over time** due to various gravitational perturbations, so specifying the time is important.
 
-Once the orbit has been computed, we can extract the six Keplerian elements:
+Once we've called `Orbit.from_vectors`, we just need to extract our **six Keplerian elements**:
 ```py
 a = orb.a              # Semimajor axis in km
 e = orb.ecc            # Eccentricity
@@ -72,9 +76,9 @@ Omega = orb.raan.to_value(u.deg)   # Right ascension of the ascending node (deg)
 omega = orb.argp.to_value(u.deg)   # Argument of perigee (deg)
 nu = orb.nu.to_value(u.deg)    # True anomaly (deg)
 ```
-Using `to_value(u.deg)` (from astropy) converts the angles from radians to degrees.
+With the `to_value(u.deg)` method from **astropy**, we can directly convert a value to the unit of our choice. Since the angles are returned in **radians**, we use this to convert them to **degrees**.
 
-Finally, print all the orbital parameters and verify:
+Now, just print all the orbital parameters and fill in the challenge:
 ```bash
 > docker run --rm -i -e FLAG=pouet kepler:challenge
          KEPLER
@@ -104,4 +108,4 @@ True anomaly, υ (deg): 90.389955034578
 
 You got it! Here's your flag:
 pouet
-```	
+```

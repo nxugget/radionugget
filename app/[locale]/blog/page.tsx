@@ -52,14 +52,14 @@ export default async function Blog({
     const displayedArticles = filteredArticles.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
 
     return (
-      <main className="min-h-screen flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-5">
+      <main className="min-h-screen flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-3">
 
-        <div className="flex flex-wrap gap-3 mb-6 justify-center">
+        <div className="flex flex-wrap gap-2 mt-0 mb-8 justify-center">
           {allTags.map((tag) => (
             <Link
               key={tag}
               href={activeTag === tag ? "/blog" : `/blog?tag=${tag}`}
-              className={`px-4 py-2 rounded-md text-white font-bold ${
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-md text-white font-bold text-sm sm:text-base ${
                 activeTag === tag ? "bg-purple" : "bg-gray-900 hover:bg-purple"
               }`}
             >

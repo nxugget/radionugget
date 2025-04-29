@@ -38,24 +38,26 @@ export function useScroll() {
     };
   }, [scrollPhase]);
 
-  // Add touch support for touchpads/mobile devices with a flag to prevent multiple triggers
+  // Gestion du swipe mobile avec touch events
   useEffect(() => {
-    let pointerStartY: number | null = null;
-    let pointerHandled = false;
-    const threshold = 150; // Increased threshold for a deliberate swipe
+    let touchStartY: number | null = null;
+    let touchHandled = false;
+    const threshold = 80; // seuil de swipe vertical
 
-    const handlePointerDown = (e: PointerEvent) => {
-      pointerStartY = e.clientY;
-      pointerHandled = false;
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+        touchHandled = false;
+      }
     };
 
-    const handlePointerMove = (e: PointerEvent) => {
-      if (pointerStartY === null || pointerHandled) return;
-      const deltaY = pointerStartY - e.clientY;
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchStartY === null || touchHandled) return;
+      const deltaY = touchStartY - e.touches[0].clientY;
       if (Math.abs(deltaY) >= threshold) {
-        pointerHandled = true;
+        touchHandled = true;
         if (deltaY > 0) {
-          // Swipe up: scroll down logic
+          // Swipe up
           if (scrollPhase === 0) {
             setScrollPhase(1);
             setStep(1);
@@ -64,7 +66,7 @@ export function useScroll() {
             setScrollPhase(2);
           }
         } else {
-          // Swipe down: scroll up logic
+          // Swipe down
           if (scrollPhase === 2) {
             setScrollPhase(1);
           } else if (scrollPhase === 1) {
@@ -78,18 +80,18 @@ export function useScroll() {
       }
     };
 
-    const handlePointerUp = () => {
-      pointerStartY = null;
+    const handleTouchEnd = () => {
+      touchStartY = null;
     };
 
-    window.addEventListener("pointerdown", handlePointerDown);
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [scrollPhase]);
 

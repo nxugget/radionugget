@@ -77,6 +77,9 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   const [mapInitialized, setMapInitialized] = useState(false);
   const satrec = useRef<any>(null);
 
+  // Ajout d'un état pour forcer le resize sur mobile
+  const [forceResize, setForceResize] = useState(false);
+
   // Constants
   const CALC_POINTS_INTERVAL = 1000 * 30; // Reduced to 30 seconds per point for smoother orbits
   const ORBIT_DURATION_PAST = 1000 * 60 * 60; // 1 hour of past orbit
@@ -167,7 +170,6 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   useEffect(() => {
     if (!mapContainerRef.current || mapInitialized) return;
 
-    // Add a small delay to ensure the DOM is fully rendered
     const timer = setTimeout(() => {
       try {
         // Custom dark style for map tiles
@@ -227,17 +229,41 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
         }
 
         // Add dark-themed tile layer
-        L.tileLayer(darkMapUrl, {
+        const tileLayer = L.tileLayer(darkMapUrl, {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
 
-        // Ensure the map is properly sized
-        map.invalidateSize();
-        
+        // Correction : forcer le resize sur mobile après le chargement des tuiles
+        tileLayer.on("load", () => {
+          setTimeout(() => {
+            map.invalidateSize();
+          }, 100);
+        });
+
+        // Correction : forcer le resize sur mobile après un court délai
+        setTimeout(() => {
+          map.invalidateSize();
+        }, 400);
+
         // Store map reference
         mapRef.current = map;
         setMapInitialized(true);
-        
+
+        // Correction mobile : forcer un resize si la taille change
+        if (L.Browser.mobile) {
+          window.addEventListener("resize", () => {
+            map.invalidateSize();
+          });
+        }
+
+        // Correction : forcer le resize si le conteneur change de taille (ex: orientation)
+        const resizeObserver = new window.ResizeObserver(() => {
+          map.invalidateSize();
+        });
+        if (mapContainerRef.current) {
+          resizeObserver.observe(mapContainerRef.current);
+        }
+
         console.log("Map initialized successfully");
       } catch (error) {
         console.error("Error initializing map:", error);
@@ -250,6 +276,12 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
         mapRef.current.remove();
         mapRef.current = null;
         setMapInitialized(false);
+      }
+      // Nettoyage de l'event resize mobile
+      if (L.Browser.mobile) {
+        window.removeEventListener("resize", () => {
+          if (mapRef.current) mapRef.current.invalidateSize();
+        });
       }
     };
   }, [L, tle1, tle2]);
@@ -389,7 +421,12 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   // Set up areaSat tracking and regular updates
   useEffect(() => {
     if (!mapInitialized || !mapRef.current || !satrec.current) return;
-    
+
+    // Correction : s'assurer que le conteneur a une taille correcte avant d'ajouter les éléments
+    setTimeout(() => {
+      mapRef.current.invalidateSize();
+    }, 200);
+
     // Create custom areaSat icon with white color - Fix the icon path
     const areaSatIcon = L.icon({
       iconUrl: '/images/icon/satellite-icon.svg', // Match the path where we created the SVG
@@ -442,9 +479,19 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     };
   }, [mapInitialized, areaSatId]);
 
+  // Correction : styles pour garantir la taille sur mobile et desktop
   return (
-    <div style={styles.mapContainer}>
-      <div ref={mapContainerRef} style={styles.leafletMap} />
+    <div style={{ ...styles.mapContainer, minHeight: "220px", height: "100%", maxHeight: "100vh" }}>
+      <div
+        ref={mapContainerRef}
+        style={{
+          ...styles.leafletMap,
+          minHeight: "220px",
+          height: "100%",
+          width: "100%",
+          maxHeight: "100vh",
+        }}
+      />
     </div>
   );
 };
