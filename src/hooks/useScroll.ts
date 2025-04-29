@@ -78,6 +78,10 @@ export function useScroll() {
           }
         }
       }
+      // Empêche le scroll natif pendant toute phase d'animation (scrollPhase !== 0)
+      if (scrollPhase !== 0) {
+        e.preventDefault();
+      }
     };
 
     const handleTouchEnd = () => {

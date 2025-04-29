@@ -211,97 +211,110 @@ export default function GridSquareCalculator() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start min-h-screen p-3 sm:px-4">
-        <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[800px] mx-auto mb-4">
-          <div className="bg-black/50 rounded-lg p-6 shadow-lg">
-            <div className="w-full flex justify-center">
-              {hasLoaded && (
-                <TypewriterEffectSmooth
-                  as="h1"
-                  words={[
-                    { text: "Grid", className: "text-[#b400ff]" },
-                    { text: "Square", className: "text-[#b400ff]" },
-                    { text: t("gridSquareCalculator.calculator"), className: "text-white" }
-                  ]}
-                  // Container class to ensure proper width constraints
-                  className="text-center mb-2 w-full"
-                  cursorClassName="bg-[#b400ff]"
-                />
-              )}
-            </div>
-            <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
-
-            <GridSquareInfo />
-            <div ref={searchRef} className="relative flex justify-center w-full my-2">
-              <div className="flex items-center gap-2 w-full max-w-sm mx-auto">
-                <div className="relative flex-1">
-                  <InputSearch
-                    placeholder={t("address.placeholder")}
-                    value={query}
-                    onChange={(e) => {
-                      setSuppressSuggestions(false);
-                      setQuery(e.target.value);
-                    }}
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (query.trim() !== "") {
-                        fetchCoordinates(query);
-                        setSuggestions([]);
-                      }
-                    }}
-                  />
-                  {suggestions.length > 0 && (
-                    <ul className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]">
-                      {suggestions.map((sugg, idx) => (
-                        <li
-                          key={idx}
-                          className="px-4 py-3 cursor-pointer border-b border-gray-800 last:border-none transition-colors duration-300 ease-in-out hover:text-purple"
-                          onClick={() => handleSuggestionClick(sugg)}
-                        >
-                          {sugg.display_name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                
-                <span className="text-white font-bold">{t("or")}</span>
-                
-                <LocationButton 
-                  onClick={useCurrentLocation}
-                  loading={locationLoading}
-                  title={t("useMyLocation")}
-                  size={40}
-                />
-              </div>
-            </div>
-
-            <p className="text-zinc-400 text-xs md:text-sm text-center">
-              {t("address.example")} {/* traduction de l'exemple */}
-            </p>
-
-            {error && (
-              <div className="text-red-500 py-2 mt-2 text-center">
-                {error}
-              </div>
-            )}
-
-            {gridSquare && (
-              <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
-                <span className="font-bold text-white">
-                  Grid Square: <span className="text-orange">{gridSquare}</span>
-                </span>
-                <button
-                  onClick={handleCopy}
-                  className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
-                >
-                  {copied ? "✅" : "📋"}
-                </button>
-              </div>
+      <div className="flex flex-col items-center justify-start min-h-screen">
+        <div
+          className="
+            w-full
+            max-w-full
+            sm:max-w-[800px]
+            bg-black bg-opacity-70
+            rounded-2xl
+            shadow-lg
+            mt-2
+            mb-4
+            px-1
+            py-2
+            sm:px-4
+            sm:py-6
+            mx-1
+          "
+        >
+          <div className="w-full flex justify-center">
+            {hasLoaded && (
+              <TypewriterEffectSmooth
+                as="h1"
+                words={[
+                  { text: "Grid", className: "text-[#b400ff]" },
+                  { text: "Square", className: "text-[#b400ff]" },
+                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
+                ]}
+                // Container class to ensure proper width constraints
+                className="text-center mb-2 w-full"
+                cursorClassName="bg-[#b400ff]"
+              />
             )}
           </div>
-        </div>
+          <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
 
+          <GridSquareInfo />
+          <div ref={searchRef} className="relative flex justify-center w-full my-2">
+            <div className="flex items-center gap-2 w-full max-w-sm mx-auto">
+              <div className="relative flex-1">
+                <InputSearch
+                  placeholder={t("address.placeholder")}
+                  value={query}
+                  onChange={(e) => {
+                    setSuppressSuggestions(false);
+                    setQuery(e.target.value);
+                  }}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (query.trim() !== "") {
+                      fetchCoordinates(query);
+                      setSuggestions([]);
+                    }
+                  }}
+                />
+                {suggestions.length > 0 && (
+                  <ul className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]">
+                    {suggestions.map((sugg, idx) => (
+                      <li
+                        key={idx}
+                        className="px-4 py-3 cursor-pointer border-b border-gray-800 last:border-none transition-colors duration-300 ease-in-out hover:text-purple"
+                        onClick={() => handleSuggestionClick(sugg)}
+                      >
+                        {sugg.display_name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              
+              <span className="text-white font-bold">{t("or")}</span>
+              
+              <LocationButton 
+                onClick={useCurrentLocation}
+                loading={locationLoading}
+                title={t("useMyLocation")}
+                size={40}
+              />
+            </div>
+          </div>
+
+          <p className="text-zinc-400 text-xs md:text-sm text-center">
+            {t("address.example")} {/* traduction de l'exemple */}
+          </p>
+
+          {error && (
+            <div className="text-red-500 py-2 mt-2 text-center">
+              {error}
+            </div>
+          )}
+
+          {gridSquare && (
+            <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
+              <span className="font-bold text-white">
+                Grid Square: <span className="text-orange">{gridSquare}</span>
+              </span>
+              <button
+                onClick={handleCopy}
+                className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
+              >
+                {copied ? "✅" : "📋"}
+              </button>
+            </div>
+          )}
+        </div>
         <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
           {/* Map placed immediately after with increased mobile height */}
           <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />

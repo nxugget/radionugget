@@ -400,9 +400,25 @@ export default function SatelliteTracker() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-1 sm:p-3">
-      <div className="w-full max-w-full sm:max-w-[1400px] bg-black bg-opacity-70 rounded-x2 p-1 sm:p-3">
-        <div className="w-full flex justify-center mb-2 sm:mb-3">
+    <div className="flex flex-col items-center justify-start min-h-screen">
+      <div
+        className="
+          w-full
+          max-w-full
+          sm:max-w-[1400px]
+          bg-black bg-opacity-70
+          rounded-2xl
+          shadow-lg
+          mt-2
+          mb-4
+          px-1
+          py-2
+          sm:px-4
+          sm:py-6
+          mx-1
+        "
+      >
+        <div className="w-full flex justify-center sm:mb-1">
           <TypewriterEffectSmooth
             as="h1"
             words={[
@@ -829,7 +845,7 @@ export default function SatelliteTracker() {
                             
                             if (e.touches && e.touches[0]) {
                               calculateElevation(e.touches[0].clientY);
-                            }
+                            };
                             
                             const handleTouchMove = (touchEvent: TouchEvent) => {
                               touchEvent.preventDefault();

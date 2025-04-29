@@ -34,8 +34,6 @@ const COLORS = {
 const styles = {
   mapContainer: {
     width: "100%",
-    height: "100%",
-    minHeight: 0,
     position: "relative",
     borderRadius: "8px",
     overflow: "hidden",
@@ -44,12 +42,10 @@ const styles = {
   } as React.CSSProperties,
   leafletMap: {
     width: "100%",
-    height: "100%",
     backgroundColor: "#111",
     zIndex: 1,
     margin: "0",
     padding: "0",
-    minHeight: 0,
   } as React.CSSProperties,
   loadingContainer: {
     width: "100%",
@@ -163,6 +159,33 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     return () => {
       // Clean up the style element when component unmounts
       document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  // Inject responsive CSS for map height (mobile/desktop)
+  useEffect(() => {
+    const responsiveStyle = document.createElement("style");
+    responsiveStyle.textContent = `
+      /* Mobile: force explicit height */
+      @media (max-width: 640px) {
+        .area-sat-map-container, .area-sat-leaflet-map {
+          height: 220px !important;
+          min-height: 220px !important;
+          max-height: 300px !important;
+        }
+      }
+      /* Desktop: fill parent */
+      @media (min-width: 641px) {
+        .area-sat-map-container, .area-sat-leaflet-map {
+          height: 100% !important;
+          min-height: 220px !important;
+          max-height: 100vh !important;
+        }
+      }
+    `;
+    document.head.appendChild(responsiveStyle);
+    return () => {
+      document.head.removeChild(responsiveStyle);
     };
   }, []);
 
@@ -285,6 +308,25 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
       }
     };
   }, [L, tle1, tle2]);
+
+  // Correction : forcer le resize après le premier rendu pour mobile
+  useEffect(() => {
+    if (!mapRef.current) return;
+    setTimeout(() => {
+      mapRef.current.invalidateSize();
+    }, 500);
+
+    // Ajout : forcer le resize sur orientationchange (utile sur mobile)
+    const handleResize = () => {
+      if (mapRef.current) mapRef.current.invalidateSize();
+    };
+    window.addEventListener("orientationchange", handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("orientationchange", handleResize);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mapInitialized]);
 
   // Initialize areaSat tracking when TLEs are provided
   useEffect(() => {
@@ -481,16 +523,14 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
 
   // Correction : styles pour garantir la taille sur mobile et desktop
   return (
-    <div style={{ ...styles.mapContainer, minHeight: "220px", height: "100%", maxHeight: "100vh" }}>
+    <div
+      className="area-sat-map-container"
+      style={styles.mapContainer}
+    >
       <div
         ref={mapContainerRef}
-        style={{
-          ...styles.leafletMap,
-          minHeight: "220px",
-          height: "100%",
-          width: "100%",
-          maxHeight: "100vh",
-        }}
+        className="area-sat-leaflet-map"
+        style={styles.leafletMap}
       />
     </div>
   );

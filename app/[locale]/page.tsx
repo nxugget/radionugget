@@ -32,6 +32,20 @@ export default function Home() {
     };
   }, []);
 
+  // Gère le scroll body selon le scrollPhase (mobile)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (scrollPhase !== 0) {
+        document.body.style.overflowY = "hidden";
+      } else {
+        document.body.style.overflowY = "auto";
+      }
+    }
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [scrollPhase]);
+
   // Update scroll handling for both directions
   useEffect(() => {
     if (scrollPhase === 2) {
