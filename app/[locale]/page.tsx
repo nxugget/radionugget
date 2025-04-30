@@ -32,17 +32,93 @@ export default function Home() {
     };
   }, []);
 
-  // Gère le scroll body selon le scrollPhase (mobile)
+  // Gère le scroll body ET html selon le scrollPhase (mobile)
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const html = document.documentElement;
       if (scrollPhase !== 0) {
+        // Body
         document.body.style.overflowY = "hidden";
+        document.body.style.overscrollBehavior = "none";
+        document.body.style.position = "fixed";
+        document.body.style.width = "100vw";
+        document.body.style.height = "100dvh";
+        document.body.style.top = "0";
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.bottom = "0";
+        document.body.style.inset = "0";
+        document.body.style.padding = "0";
+        document.body.style.margin = "0";
+        // HTML
+        html.style.overflowY = "hidden";
+        html.style.overscrollBehavior = "none";
+        html.style.position = "fixed";
+        html.style.width = "100vw";
+        html.style.height = "100dvh";
+        html.style.top = "0";
+        html.style.left = "0";
+        html.style.right = "0";
+        html.style.bottom = "0";
+        html.style.inset = "0";
+        html.style.padding = "0";
+        html.style.margin = "0";
       } else {
+        // Body
         document.body.style.overflowY = "auto";
+        document.body.style.overscrollBehavior = "";
+        document.body.style.position = "";
+        document.body.style.width = "";
+        document.body.style.height = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.bottom = "";
+        document.body.style.inset = "";
+        document.body.style.padding = "";
+        document.body.style.margin = "";
+        // HTML
+        html.style.overflowY = "auto";
+        html.style.overscrollBehavior = "";
+        html.style.position = "";
+        html.style.width = "";
+        html.style.height = "";
+        html.style.top = "";
+        html.style.left = "";
+        html.style.right = "";
+        html.style.bottom = "";
+        html.style.inset = "";
+        html.style.padding = "";
+        html.style.margin = "";
       }
     }
     return () => {
+      // Body
       document.body.style.overflowY = "auto";
+      document.body.style.overscrollBehavior = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.height = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.bottom = "";
+      document.body.style.inset = "";
+      document.body.style.padding = "";
+      document.body.style.margin = "";
+      // HTML
+      document.documentElement.style.overflowY = "auto";
+      document.documentElement.style.overscrollBehavior = "";
+      document.documentElement.style.position = "";
+      document.documentElement.style.width = "";
+      document.documentElement.style.height = "";
+      document.documentElement.style.top = "";
+      document.documentElement.style.left = "";
+      document.documentElement.style.right = "";
+      document.documentElement.style.bottom = "";
+      document.documentElement.style.inset = "";
+      document.documentElement.style.padding = "";
+      document.documentElement.style.margin = "";
     };
   }, [scrollPhase]);
 
