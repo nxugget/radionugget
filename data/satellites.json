@@ -554,15 +554,15 @@
     "tle2": "2 39440  97.8475  67.8988 0060816 305.0545  54.4977 14.89651981617058",
     "transmitters": [
       {
-        "description": "9k6 FSK TLM",
-        "mode": "FSK",
+        "description": "UHF 1K2 AFSK Telemetry",
+        "mode": "AFSK",
         "status": "active",
         "uplink": null,
         "downlink": 437445000
       },
       {
-        "description": "UHF 1K2 AFSK Telemetry",
-        "mode": "AFSK",
+        "description": "Mode U - FSK9k6 - AX.25 TLM",
+        "mode": "FSK",
         "status": "active",
         "uplink": null,
         "downlink": 437445000
