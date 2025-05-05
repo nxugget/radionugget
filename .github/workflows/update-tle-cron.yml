@@ -31,5 +31,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/satellites.json public/tle-last-update.json
-          git diff --quiet && git commit -m "Update TLE"
-          git push
+          git diff --quiet && git commit -m "Update TLE" && git push || true

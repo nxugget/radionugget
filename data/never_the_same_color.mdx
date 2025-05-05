@@ -1,0 +1,97 @@
+---
+title: "Writeup GRCon 2022 : Never the same color"
+date: "2025-04-30"
+summary: "Writeup du challenge GRCon 2022 Never the same color"
+thumbnail: "/images/blog/thumbnail/never_the_same_color.webp"
+tags: ["writeup", "radio"]
+slug: "never_the_same_color"
+---
+Description du challenge : *While sitting on my back porch, I noticed a strange signal and made a SigMF recording. Can you make any sense of it?*
+
+Le challenge nous fournit un fichier binaire contenant un signal `never_the_same_color.sigmf-data` ainsi qu'un fichier contenant ses metadonnées `never_the_same_color.sigmf-meta` au format [SigMF](https://github.com/sigmf/SigMF).
+Ouvrons-le avec [Inspectrum](https://github.com/miek/inspectrum) :
+![Inspetrum](/images/blog/2025/never_the_same_color/never_the_same_color1.png)
+
+On a un signal qui fait à peu près `6MHz` de bande passante. D'après les **métadonnées**, on sait que c'est un signal **complexe** échantilloné à `8MHz`. Pas trop d'idée du type de signal, mais en recherchant sur le web le nom du challenge **Never the same color**, on tombe sur [NTSC](https://en.wikipedia.org/wiki/NTSC), un standard de diffusion vidéo. En se baladant sur la [page Wikipedia](https://en.wikipedia.org/wiki/NTSC#Transmission_modulation_method), on voit qu'un signal **NTSC** a une bande passante de `6MHz`, bref, on est sur la bonne voie :)
+Le signal contient plusieurs composantes pour former une image et du son. Pour mieux y voir, j'ai refais à peu près le schéma de la page Wikipedia mais avec notre signal :
+![NTSC drawing](/images/blog/2025/never_the_same_color/never_the_same_color2.svg)
+Sachant qu'on a 7 flags à trouver, ils doivent probablement être réparties dans les différentes composantes du signal. Je ne les es pas trouvé dans le bon ordre donc c'est normal que ça commence pas par **Flag 1**.
+
+# Flag 2
+Commençons simplement en ouvrant le signal avec [SDRangel](https://www.sdrangel.org/) qui contient un plugin permettant de décoder des signaux [ATV](https://fr.wikipedia.org/wiki/T%C3%A9l%C3%A9vision_amateur) dont justement le **NTSC**. 
+![SDRangel NTSC](/images/blog/2025/never_the_same_color/never_the_same_color7.png)
+
+D'abord, on applique le [ATV Demodulator](https://github.com/f4exb/sdrangel/blob/master/plugins/channelrx/demodatv/readme.md), puis, comme on sait que le signal vidéo est modulé en **amplitude**, on choisit `AM`. On peut aussi déjà cocher le `Hsync` et le `Vsync` car pour une image à la télé, l'image est affichée **ligne par ligne**, de gauche à droite, puis de haut en bas. Ainsi, pour s'y retrouver, le signal doit savoir quand une ligne (**Hsync**) ou toutes les lignes (**Vsync**) finissent. En activant ces deux options, on dit au plugin d'utiliser ces **impulsions** dans le signal pour bien reconstruire l'image.
+![SDRangel ATV Demodulator](/images/blog/2025/never_the_same_color/never_the_same_color6.png)
+Ok, on voit apparaître un début d'image avec un **QRCode** qui en l'étant ne peut pas être scanné, va falloir continuer de paramétrer ce plugin.
+
+Déjà, on peut placer la fréquence centrale sur la porteuse vidéo à environ `439.25MHz`. Ensuite, l'**AM** génère **2 bandes latérales** contenant la même information : une au-dessus de la porteuse appelée **bande latérale supérieure** (**USB**) et une en dessous appelée **bande latérale inférieure** (**LSB**). 
+Chaque bande fait `4.2MHz` de large donc si on transmettait les deux, ça ferait `8.4MHz` au total. Du coup, pour économiser, le **NTSC** garde **toute** la bande du haut et seulement une petite partie (`1.25MHz`) de la bande du bas, c'est ce qu'on appelle une **bande latéralle résiduelle** ([vestigial sideband](https://fr.wikipedia.org/wiki/Bande_lat%C3%A9rale_unique)).
+![USB LSB NTSC](/images/blog/2025/never_the_same_color/never_the_same_color8.svg)
+
+Bref, pour gérer ça, on active le **filtre asymétrique** (bouton `FFT asymmetrical filter`) qui va nous permettre de mieux extraire l'image en tenant compte que notre signal n'est pas **symétrique** vu qu'on a une **bande latérale résiduelle**. 
+
+2 curseurs à droite permettent de régler le filtre, le `Opposite band cutoff` (bande inférieure) et le `In band cutoff` (bande supérieure). À eux deux, on aura une plage du spectre parfaite pour obtenir une image stable et lisible.
+Dans notre cas, on peut mettre le `Opposite bande cutoff` à `1200kHz` (`1.25MHz`) et le `In band cutoff` à `4200kHz` (`4.2MHz`).
+
+Enfin, les paramètres vidéos, toujours grâce à **Wikipedia**, on peut remplir comme suit : 
+- `L` (Nombre de lignes) : `525`.
+- `F` (FPS) : `30`.
+- `S` (Format de synchronisation) : `PAL525` (car la synchro est sur 525 lignes).
+
+Aussi, j'ai du activer le `Invert video` pour que l'image soit bien nette sans clignotement.
+D'ailleurs, n'hésitez pas à appuyer sur le bouton stop puis relancer le signal, parfois ça aide.
+![NTSC SDRAngel](/images/blog/2025/never_the_same_color/never_the_same_color9.png)
+C'est parfois capricieux comme plugin, donc si ça marche pas de cotr ecôté, relancer le, essayez de changer l'ordre dans lequel vous paramétrez.
+Bon cool, on peut scanner le QRCode, sauf que... C'est un joli [RickRoll](https://www.youtube.com/watch?v=dQw4w9WgXcQ). En regardant de plus près, on peut voir que notre signal vidéo, bien qu'il apparaisse statique, a une frame qui semble changer à environ **3s** qui fait changer le QRCode. Bref go extraire les frames de cette vidéo. 
+
+Et là pour le coup, je sais pas du tout comment faire avec **SDRAngel** donc j'ai fais une capture vidéo de mon écran autour des **3 secondes**, puis avec [ce site](https://frame-extractor.com/) j'ai extrait **100 frames** toutes les **10ms** jusqu'à scroller pour trouver LA frame avec le QRCode différent qui contient le flag de la **Partie 2** : `flag{2OBGfE29cR1SpOXuJpI832FyAWvNPLtC}` !
+
+# Flag 1
+En **NTSC**, le signal audio est modulé en **fréquence** (**FM**) à une [fréquence de déviation](https://en.wikipedia.org/wiki/Frequency_deviation) de `25kHz`. Pour estimer la bande passante de ce signal, en peut utiliser la [règle de Carson](https://fr.wikipedia.org/wiki/R%C3%A8gle_de_Carson) qui nous dit que la **bande passante** d'un signal **FM** vaut `≈2(Δf+fm)`, où `Δf` est la fréquence de déviation et `fm` la fréquence maximale du signal audio (souvent `15kHz` pour du contenu audio). Donc en appliquant la formule, ça nous ferait `≈2(25kHz+15kHz)=80kHz`.
+
+Bref ajoutons un bloc [WFM Demodulator](https://github.com/f4exb/sdrangel/blob/master/plugins/channelrx/demodwfm/readme.md). 
+On place la fréquence centrale sur le pic audio à droite, ne pas hésiter à zoomer pour être plus précis et tout est déjà bien configuré pour qu'on entende une voix qui nous donne le flag pour le **Partie 1** : `stream`.
+![SDRangel WFM Demodulator](/images/blog/2025/never_the_same_color/never_the_same_color10.png)
+
+# Flag 3-4-5
+Sur **Wikipedia**, ça nous parle aussi que le signal audio peut contenir un signal [MTS](https://en.wikipedia.org/wiki/Multichannel_Television_Sound) (**M**ultichannel **T**elevision **S**ound) et c'est vrai que quand on regarde notre spectre **audio**, on voit plusieurs pics en plus de la fréquence centrale. En fait, le **MTS** permet d'ajouter de la **stéréo**, une deuxième langue ([SAP](https://en.wikipedia.org/wiki/Second_audio_program)) ou d'autres canaux audio.
+Le truc, c'est que faut puvoir travailler sur notre signal après modulation en **FM** si non, c'est hyper compliqué de bien entendre les différents flags, **SDRangel** ne permet pas d'enregistrer au format complex un signal démodulé (ou je sais pas faire) donc pour faire simple j'ai crop la partie audio, démodulé en FM et enregistré dans un nouveau fichier avec **GNURadio** : 
+![GnuRadio NTSC Audio](/images/blog/2025/never_the_same_color/never_the_same_color4.png)
+Le bloc [Frequency Xlating FIR Filter](https://wiki.gnuradio.org/index.php/Frequency_Xlating_FIR_Filter) va **déplacer** et **filtrer** un signal pour ne garder qu'une plage qui nous convient. 
+Notre signal audio fait à peu près `400Khz` de bande passante et il est à peu près situé à `+2.75MHz`, et au lieu de garder un taux d'échantillonage de `8MHz`, on va effectuer une **décimation** du signal, soit réduire sa fréquence d'échantillonage pour être plus précis. 
+
+Pour savoir le facteur de décimation, on utilise le [théorème de Nyquist-Shannon](https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage) qui en gros nous dit qu'il faut une **fréquence d'échantillonage** au moins **deux fois** plus grande que la **bande passante** du signal. Donc pour un signal audio de `400Khz`, on peut se permettre de le décimer à `800kHz` soit un facteur de `10` (`8MHz/10=800kHz`).
+
+Ensuite, la `Center Frequency` qu'on met à `2.75MHz` qui représente la porteuse du signal audio. Le filtre va se baser sur cette fréquence centrale pour faire son filtrage. 
+
+Enfin, le **coefficient de filtre** (**taps**) : 
+```bash
+firdes.low_pass(1, samp_rate, 200e3, 100e3)
+```
+- `firdes.low_pas` -> [Filtre passe-bas](https://fr.wikipedia.org/wiki/Filtre_passe-bas) qui ne laisse donc que passer les fréquences sous une certaine limite (fréquence de coupure) et bloque celles qui sont au-dessus.
+- `1` -> Gain du filtre, ici on met `1` ce qui veut dire qu'on ne modifie pas l'**amplitude** du signal (pas d'amplification ou d'atténuation).
+- `samp_rate` -> Fréquence d'échantillonage du signal d'entrée, donc pour nous `8MHz`.
+- `200e3` -> Fréquence de coupure du filtre **après décimation**, nous on veut une bande de `200kHz` autour de la fréquence centrale (`2.75MHz`). 
+- `100e3` -> Zone de transition du filtre, donc on aura `100KHz` qui seront progessivement atténuées autour des zones à éliminer plutôt que coupées brutalement. C'est juste au cas où pour pas avoir de distortions ou quoi.
+
+Ensuite, le bloc [Quadrature Demod](https://wiki.gnuradio.org/index.php/Quadrature_Demod) qui va nous permettre de **démoduler en fréquence** le signal audio qui je le rapelle est modulé en **FM**. Le gain à `1` car on ne veut pas amplifier ou atténuer le signal.
+Ce dernier transorme le signal **complexe** en un **signal réel**, or on veut récupérer un fichier au format **SigMF** pour le reprendre avec **SDRangel** donc faut faut le remettre en **complexe** avec le bloc [Complex to Real](https://wiki.gnuradio.org/index.php/Complex_to_Real). 
+On veut pas de **partie imaginaire** donc on va mettre cette dernière à `0` avec le bloc [Null Source](https://wiki.gnuradio.org/index.php/Null_Source).
+
+J'ai aussi mis un [Audio Sink](https://wiki.gnuradio.org/index.php/Audio_Source) pour déterminer la durée du signal car lorsque l'on va lancer le programme, notre fichier d'output va se remplir tant qu'on arrête pas le programme. Bref, on lance, (on entend d'ailleurs le premier flag) et quand ça dit plus rien, on stoppe et nous voilà avec notre signal audio extrait et on le réouvre avec **SDRangel**.
+
+Le truc, c'est que j'ai pas réussi à trouver de bons articles ou quoi pour comprendre comment était répartie les différeux canaux, je sais que le **stéréo** est modulé en **AM** et que le **SAP** est modulé en **FM**. Mais qui est qui, je sais pas donc j'ai un peu fait au pif. 
+
+J'ai donc trouvé le **SAP**, avec le bloc [NFM](https://github.com/f4exb/sdrangel/blob/master/plugins/channelrx/demodnfm/readme.md)qui m'a donné le flag de la **Partie 4** : `cucumber`. 
+![SDRangel WFM](/images/blog/2025/never_the_same_color/never_the_same_color11.png)
+
+Puis, toujours en **NFM**, sur le pic à côté, le flag de la **Partie 5** : `vertex` (je sais pas à quoi il correspond).
+
+Enfin, avec le bloc [AM](https://github.com/f4exb/sdrangel/blob/master/plugins/channelrx/demodam/readme.md), on récupère le flag de la **Partie 3** : `hologram` qui représente je crois la partie **stéréo**. Pour lui, j'ai galéré à avoir une voix claire, peut-être la limitation de bandwith en **AM** sur **SDRangel**.
+![SDRangel AM](/images/blog/2025/never_the_same_color/never_the_same_color12.png)
+
+# Flag 6-7 
+
+
+
