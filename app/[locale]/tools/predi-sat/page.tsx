@@ -9,7 +9,7 @@ import SatelliteTab from "./SatelliteTab"; // new import
 import AzimuthSelector from "./AzimuthSelector"; // Import du nouveau composant
 import { getGridSquareCoords } from "@/src/lib/gridSquare";
 import { useI18n } from "@/locales/client"; // Add i18n import
-import { getCookieValue, setCookie } from "@/src/lib/cookies"; // Restore cookie functions for favorites
+import { getCookieValue, setCookie } from "@/src/lib/cookies"; 
 import LocationButton from "@/src/components/features/LocationButton";
 
 interface Satellite {

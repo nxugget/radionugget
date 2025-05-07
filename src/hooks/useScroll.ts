@@ -1,12 +1,21 @@
 // src/hooks/useScroll.ts
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function useScroll() {
-  const [scrollPhase, setScrollPhase] = useState(0); // 0: initial, 1: parallax, 2: best-projects
-  const [step, setStep] = useState(0); // Animation step for parallax
-  const [passed, setPassed] = useState(false); // Animation state for parallax
+  const [scrollPhase, setScrollPhase] = useState(0); 
+  const [step, setStep] = useState(0); 
+  const [passed, setPassed] = useState(false); 
+  const scrollLocked = useRef(false); 
+
+  const lockScroll = () => {
+    scrollLocked.current = true;
+    setTimeout(() => {
+      scrollLocked.current = false;
+    }, 900); 
+  };
 
   const handleWheel = (event: WheelEvent) => {
+    if (scrollLocked.current) return;
     event.preventDefault(); // Prevent default page scrolling
     if (event.deltaY > 0) {
       // Scroll down
@@ -14,19 +23,24 @@ export function useScroll() {
         setScrollPhase(1); // Trigger parallax animation
         setStep(1);
         setPassed(true);
+        lockScroll();
       } else if (scrollPhase === 1) {
-        setScrollPhase(2); // Move to best-projects
+        setScrollPhase(3); 
+        lockScroll();
       }
     } else if (event.deltaY < 0) {
-      // Scroll up (reverse animation)
-      if (scrollPhase === 2) {
-        setScrollPhase(1); // Begin reverse from best-projects to parallax state
+      if (scrollPhase === 3) {
+        setScrollPhase(1);
+        setStep(1);
+        setPassed(true);
+        lockScroll();
       } else if (scrollPhase === 1) {
         setStep(0);
         setPassed(false);
+        lockScroll();
         setTimeout(() => {
-          setScrollPhase(0); // Return to initial state after animation duration
-        }, 1500); // Match transition duration in milliseconds
+          setScrollPhase(0); 
+        }, 800); 
       }
     }
   };
@@ -38,54 +52,69 @@ export function useScroll() {
     };
   }, [scrollPhase]);
 
-  // Gestion du swipe mobile avec touch events
   useEffect(() => {
     let touchStartY: number | null = null;
     let touchHandled = false;
+    let touchDeltaY = 0;
+    let hasMoved = false;
     const threshold = 80; // seuil de swipe vertical
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
         touchStartY = e.touches[0].clientY;
         touchHandled = false;
+        touchDeltaY = 0;
+        hasMoved = false;
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (touchStartY === null || touchHandled) return;
-      const deltaY = touchStartY - e.touches[0].clientY;
-      if (Math.abs(deltaY) >= threshold) {
+      touchDeltaY = touchStartY - e.touches[0].clientY;
+      // Dès qu'il y a un mouvement vertical, on bloque le scroll natif
+      if (!hasMoved && Math.abs(touchDeltaY) > 2) {
+        hasMoved = true;
+      }
+      if (hasMoved || scrollPhase !== 0) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchHandled || touchStartY === null || scrollLocked.current) return;
+      if (Math.abs(touchDeltaY) >= threshold) {
         touchHandled = true;
-        if (deltaY > 0) {
+        if (touchDeltaY > 0) {
           // Swipe up
           if (scrollPhase === 0) {
             setScrollPhase(1);
             setStep(1);
             setPassed(true);
+            lockScroll();
           } else if (scrollPhase === 1) {
-            setScrollPhase(2);
+            setScrollPhase(3);
+            lockScroll();
           }
         } else {
           // Swipe down
-          if (scrollPhase === 2) {
+          if (scrollPhase === 3) {
             setScrollPhase(1);
+            setStep(1);
+            setPassed(true);
+            lockScroll();
           } else if (scrollPhase === 1) {
             setStep(0);
             setPassed(false);
+            lockScroll();
             setTimeout(() => {
               setScrollPhase(0);
-            }, 1500);
+            }, 800);
           }
         }
       }
-      // Empêche le scroll natif pendant toute phase d'animation (scrollPhase !== 0)
-      if (scrollPhase !== 0) {
-        e.preventDefault();
-      }
-    };
-
-    const handleTouchEnd = () => {
       touchStartY = null;
+      touchDeltaY = 0;
+      hasMoved = false;
     };
 
     window.addEventListener("touchstart", handleTouchStart, { passive: true });

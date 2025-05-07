@@ -8,7 +8,7 @@ import GridSquareInfo from "./GridSquareInfo";
 import { useI18n } from "@/locales/client";
 import InputSearch from "@/src/components/ui/InputSearch";
 import LocationButton from "@/src/components/features/LocationButton";
-import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import isValidGridSquare
+import { isValidGridSquare } from "@/src/lib/checkGridSquare"; 
 
 // Import dynamique du composant Map
 const Map = dynamic(() => import("./GridSquareMap"), { ssr: false });

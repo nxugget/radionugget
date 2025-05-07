@@ -6,8 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { ShootingStars } from "@/src/components/ui/ShootingStars";
+import { useI18n } from "@/locales/client";
 
-// Mise à jour du type Project pour inclure "image"
 interface Project {
   title: string;
   summary: string;
@@ -17,9 +17,60 @@ interface Project {
 
 export default function Home() {
   const { scrollPhase, step, passed } = useScroll();
-  const [randomProjects, setRandomProjects] = useState<Project[]>([]);
   const [preview, setPreview] = useState<Project | { message: string } | null>(null);
-  const planetNames = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"];
+  const t = useI18n();
+
+  // Exemples d'articles et outils (remplace par tes vraies données)
+  const projectItems = [
+    {
+      title: t("projectsSection.weatherSatelliteStation"),
+      image: "/images/blog/thumbnail/noaa.webp",
+      link: "/blog/noaa",
+      type: "article",
+    },
+    {
+      title: t("projectsSection.satellitePrediction"),
+      image: "/images/selection/predisat.png",
+      link: "tools/predi-sat",
+      type: "tool",
+    },
+    {
+      title: t("projectsSection.decodingSignal"),
+      image: "/images/blog/thumbnail/never_the_same_color.webp",
+      link: "/blog/never_the_same_color",
+      type: "article",
+    },
+    {
+      title: t("projectsSection.satelliteExplorer"),
+      image: "/images/selection/areasat.png",
+      link: "tools/area-sat",
+      type: "tool",
+    },
+    {
+      title: t("projectsSection.homemadeQfhAntenna"),
+      image: "/images/blog/thumbnail/qfh.webp",
+      link: "/blog/qfh",
+      type: "article",
+    },
+    {
+      title: t("projectsSection.sstvReception"),
+      image: "/images/blog/thumbnail/sstv.webp",
+      link: "/blog/sstv",
+      type: "article",
+    },
+    {
+      title: t("projectsSection.gridSquareCalculator"),
+      image: "/images/selection/gridsquare.png",
+      link: "tools/grid-square",
+      type: "tool",
+    },
+    {
+      title: t("projectsSection.airTrafficCommunication"),
+      image: "/images/blog/thumbnail/pilots.webp",
+      link: "/blog/pilots",
+      type: "article",
+    },
+  ];
 
   useEffect(() => {
     document.body.style.height = "100%";
@@ -50,6 +101,7 @@ export default function Home() {
         document.body.style.inset = "0";
         document.body.style.padding = "0";
         document.body.style.margin = "0";
+        document.body.style.touchAction = "none";
         // HTML
         html.style.overflowY = "hidden";
         html.style.overscrollBehavior = "none";
@@ -63,6 +115,7 @@ export default function Home() {
         html.style.inset = "0";
         html.style.padding = "0";
         html.style.margin = "0";
+        html.style.touchAction = "none";
       } else {
         // Body
         document.body.style.overflowY = "auto";
@@ -77,6 +130,7 @@ export default function Home() {
         document.body.style.inset = "";
         document.body.style.padding = "";
         document.body.style.margin = "";
+        document.body.style.touchAction = "";
         // HTML
         html.style.overflowY = "auto";
         html.style.overscrollBehavior = "";
@@ -90,8 +144,18 @@ export default function Home() {
         html.style.inset = "";
         html.style.padding = "";
         html.style.margin = "";
+        html.style.touchAction = "";
       }
     }
+
+    // Empêche le scroll natif sur mobile pendant l'animation
+    const preventTouchMove = (e: TouchEvent) => {
+      if (scrollPhase !== 0) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("touchmove", preventTouchMove, { passive: false });
+
     return () => {
       // Body
       document.body.style.overflowY = "auto";
@@ -106,6 +170,7 @@ export default function Home() {
       document.body.style.inset = "";
       document.body.style.padding = "";
       document.body.style.margin = "";
+      document.body.style.touchAction = "";
       // HTML
       document.documentElement.style.overflowY = "auto";
       document.documentElement.style.overscrollBehavior = "";
@@ -119,16 +184,18 @@ export default function Home() {
       document.documentElement.style.inset = "";
       document.documentElement.style.padding = "";
       document.documentElement.style.margin = "";
+      document.documentElement.style.touchAction = "";
+      // Retire le listener
+      window.removeEventListener("touchmove", preventTouchMove);
     };
   }, [scrollPhase]);
 
-  // Update scroll handling for both directions
+  // Scroll automatique vers la section projets dès scrollPhase 3, sinon vers space-explore ou top
   useEffect(() => {
-    if (scrollPhase === 2) {
-      // Modifier ici pour cibler "solar-system" au lieu de "best-projects"
-      const solarSystemSection = document.getElementById("solar-system");
-      if (solarSystemSection) {
-        solarSystemSection.scrollIntoView({ behavior: "smooth" });
+    if (scrollPhase === 3) {
+      const projectsSection = document.getElementById("projects-section");
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: "smooth" });
       }
     } else if (scrollPhase === 1) {
       const spaceSection = document.getElementById("space-explore");
@@ -140,12 +207,6 @@ export default function Home() {
     }
   }, [scrollPhase]);
 
-  useEffect(() => {
-    fetch("/api/random-projects")
-      .then((res) => res.json())
-      .then(setRandomProjects);
-  }, []);
-
   return (
     <>
       <style>{`
@@ -153,26 +214,24 @@ export default function Home() {
           display: none !important;
         }
       `}</style>
-      <main className="min-h-screen">
-        {/* ShootingStars au premier plan */}
-        <ShootingStars className="fixed inset-0 pointer-events-none z-[30]" />
-        
+      <main className="min-h-screen bg-transparent">
         {/* Section SpaceExplore */}
         <section id="space-explore" className="-mt-24 min-h-screen w-full overflow-hidden relative z-0">
           <div className="relative w-full h-screen overflow-hidden">
             <div
-              className={`absolute top-0 left-0 w-full h-full md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"}`}
-              style={{ backgroundImage: "url('/images/background1.png')", zIndex: -10 }}
+              className={`absolute top-0 left-0 w-full h-full md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}
+              style={{ backgroundImage: "url('/images/background1.png')" }}
+            ></div>
+            {/* ShootingStars local, devant background1 mais derrière background2 */}
+            <ShootingStars className="absolute inset-0 w-full h-full z-[-9] pointer-events-none" />
+            <div
+              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}
+              style={{ backgroundImage: "url('/images/background2.png')" }}
             ></div>
             <div
-              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"}`}
-              style={{ backgroundImage: "url('/images/background2.png')", zIndex: -9 }}
+              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-7]`}
+              style={{ backgroundImage: "url('/images/background3.png')" }}
             ></div>
-            <div
-              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"}`}
-              style={{ backgroundImage: "url('/images/background3.png')", zIndex: -8 }}
-            ></div>
-            {/* Texte de SpaceExplore */}
             <div
               className={`absolute inset-0 flex flex-col items-center justify-center md:items-end md:justify-end mx-auto text-center transition-all duration-[1500ms] ${step === 1 ? "opacity-100" : "opacity-0"} ${step === 1 && "md:translate-y-[-50vh]"} md:inset-auto md:right-12 md:bottom-12`}
               style={{ 
@@ -194,21 +253,23 @@ export default function Home() {
                 >
                   EXPLORE
                 </p>
-                <div className="flex flex-row items-center justify-center w-full">
+                <div className="flex flex-row items-center justify-center w-full relative" style={{ minHeight: "calc(2 * clamp(4rem, 12vw, 7rem))" }}>
                   <span
-                    className="text-white font-alien inline-block"
+                    className="text-white font-alien inline-block absolute left-0"
                     style={{
                       fontSize: "clamp(4rem, 12vw, 7rem)",
                       lineHeight: "1",
-                      height: "100%",
-                      marginTop: "0", 
-                      paddingRight: "0.1em", // Petit espace après le & sur mobile
+                      height: "auto",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      zIndex: 1,
+                      paddingRight: "0.1em",
                     }}
                   >
                     &amp;
                   </span>
                   <div
-                    className="inline-flex flex-col items-center justify-center"
+                    className="inline-flex flex-col items-center justify-center w-full pl-[2.3em]"
                     style={{ 
                       gap: "0.05em"
                     }}
@@ -308,6 +369,105 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Section Projects Cards - occupe tout l'écran, grille responsive */}
+        <section
+          id="projects-section"
+          className="relative flex flex-col items-center z-0 min-h-screen w-full justify-start bg-transparent"
+        >
+          {/* Titre bien placé sous la navbar */}
+          <div className="h-20 md:h-24" />
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-purple font-alien tracking-wide z-10 mb-6 text-center px-2 drop-shadow-lg">
+            {t("projectsSection.title")}
+          </h2>
+          <div className="w-full flex justify-center z-10 relative flex-1">
+            <div className="w-full max-w-[100vw] px-2 sm:px-4 md:px-8 flex-1 flex">
+              <div
+                className={`
+                  grid w-full
+                  gap-x-3 gap-y-3
+                  sm:gap-x-6 sm:gap-y-6
+                  grid-cols-2 grid-rows-4
+                  sm:grid-cols-2 sm:grid-rows-4
+                  md:grid-cols-3 md:grid-rows-3
+                  lg:grid-cols-4 lg:grid-rows-2
+                  items-stretch justify-center
+                  mb-4 md:mb-8
+                `}
+                style={{
+                  minHeight: "0",
+                  height: "auto",
+                  maxHeight: "none",
+                }}
+              >
+                {projectItems.map((item, idx) => (
+                  <Link
+                    href={item.link}
+                    key={idx}
+                    className="
+                      group
+                      rounded-2xl
+                      overflow-hidden
+                      bg-[#181028]/90
+                      shadow-2xl
+                      border border-purple/40
+                      transition-all
+                      duration-300
+                      hover:shadow-[0_0_24px_4px_rgba(180,0,255,0.25)]
+                      hover:border-purple
+                      hover:scale-[1.04]
+                      focus:outline-none
+                      focus:ring-2
+                      focus:ring-purple
+                      flex flex-col
+                      cursor-pointer
+                      aspect-[4/3]
+                      max-w-full
+                    "
+                  >
+                    <div
+                      className="
+                        relative w-full flex-1 min-h-0
+                        sm:min-h-[90px] md:min-h-[110px] lg:min-h-[130px]
+                      "
+                      style={{ flexBasis: "70%" }}
+                    >
+                      <div className="absolute inset-0">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover transition-all duration-300 group-hover:scale-105"
+                          sizes="(max-width: 480px) 50vw, (max-width: 768px) 25vw, 20vw"
+                          priority={idx < 2}
+                        />
+                      </div>
+                      <span className="
+                        absolute top-1 right-1
+                        bg-purple/90 text-white text-[0.55rem] xs:text-xs sm:text-sm px-1.5 xs:px-2 py-[1.5px] rounded-full font-bold uppercase tracking-wider
+                        shadow
+                        pointer-events-none
+                        drop-shadow-lg
+                        z-10
+                        select-none
+                      ">
+                        {item.type}
+                      </span>
+                    </div>
+                    <div className="flex flex-col items-center justify-center px-2 py-1 flex-[0_0_30%]">
+                      <h3 className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-1 font-alien text-center drop-shadow">
+                        {item.title}
+                      </h3>
+                      {/* Ajoute ici un résumé ou autre info si besoin */}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* Marge basse uniquement sur mobile */}
+          <div className="h-4 sm:h-0" />
         </section>
       </main>
     </>

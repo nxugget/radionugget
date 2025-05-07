@@ -12,16 +12,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export default async function RootLayout({ params, children }: { params: { locale: string }, children: ReactElement }) {
   const { locale } = params;
   return (
-    <html lang={locale} className="min-h-screen">
-      <body className="bg-black relative min-h-screen">
+    <html lang={locale} className="min-h-screen bg-black">
+      <body className="relative min-h-screen bg-transparent">
         {/* Background layers */}
-        <StarsBackground className="absolute inset-0 z-[-3]" />
-        <ShootingStars className="absolute inset-0 z-[-2]" />
-        <BlackHole className="absolute inset-0 z-[-3]" />
+        <StarsBackground className="absolute inset-0 z-[-30]" />
+        <ShootingStars className="absolute inset-0 z-[-20]" />
+        <BlackHole className="absolute inset-0 z-[-10]" />
         {/* Foreground elements */}
         <I18nProviderClient locale={locale}>
           <Navbar />
-          <main className="pt-24 pb-[60px] relative z-10">
+          <main className="pt-24 pb-[60px] relative">
             {children}
           </main>
         </I18nProviderClient>

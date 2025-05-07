@@ -30,11 +30,16 @@ export default {
   gridSquareCalculator: {
     calculator: "Calculator"
   },
-  projects: {
-    "1": { title: "Build an ADS-B station connected to FlightRadar" },
-    "2": { title: "Automatic reception of NOAA satellite images" },
-    "3": { title: "Receive images from the ISS" },
-    "4": { title: "Build a Quadrifilar Antenna (QFH)" },
+  projectsSection: {
+    title: "Selection of my projects",
+    weatherSatelliteStation: "Weather Satellite Station",
+    satellitePrediction: "Satellite Prediction",
+    decodingSignal: "Decoding signal",
+    satelliteExplorer: "Satellite Explorer",
+    homemadeQfhAntenna: "Homemade QFH antenna",
+    sstvReception: "SSTV reception",
+    gridSquareCalculator: "Grid Square calculator",
+    airTrafficCommunication: "Air traffic communication"
   },
   footer: {
     thanks: "Thanks",
