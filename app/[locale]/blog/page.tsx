@@ -52,9 +52,16 @@ export default async function Blog({
     const displayedArticles = filteredArticles.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
 
     return (
-      <main className="min-h-screen flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-3">
-
-        <div className="flex flex-wrap gap-2 mt-0 mb-8 justify-center">
+      <main
+        className={`
+          flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-3
+          sm:h-screen sm:min-h-0 sm:overflow-hidden
+        `}
+        style={{
+          height: "100vh",
+        }}
+      >
+        <div className="flex flex-wrap gap-2 mt-0 mb-4 justify-center">
           {allTags.map((tag) => (
             <Link
               key={tag}
@@ -68,70 +75,86 @@ export default async function Blog({
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          {displayedArticles.map(({ slug, metadata }) => (
-            <CardContainer
-              key={slug}
-              className={`inter-var h-full ${"sm:perspective-1000"}`} 
-            >
-              <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
-                <div
-                  className="w-full h-full  bg-grid rounded-xl overflow-hidden"
-                  style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
-                >
-                  <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
-                    
-                    <CardItem as="h2" translateZ="60" className="text-2xl font-bold text-white">
-                      {locale === "fr" && metadata.title_fr ? metadata.title_fr : metadata.title}
-                    </CardItem>
-
-                    <CardItem as="p" translateZ="50" className="text-gray-400 text-sm mt-2">
-                      {new Date(metadata.date).toLocaleDateString('fr-FR')}
-                    </CardItem>
-
-                    <CardItem translateZ="120" className="w-full mt-3">
-                      <Image
-                        src={metadata.thumbnail}
-                        alt={metadata.title}
-                        width={800}
-                        height={200}
-                        loading="lazy"
-                        className="w-full h-auto aspect-video object-cover rounded-lg filter brightness-100" 
-                      />
-                    </CardItem>
-
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {metadata.tags.map((tag: string) => (
-                        <CardItem key={tag} translateZ="30" as="span" className="bg-purple text-white px-4 py-2 text-sm font-medium rounded-md">
-                          #{tag}
-                        </CardItem>
-                      ))}
-                    </div>
-
-                  </CardBody>
-                </div>
-              </Link>
-            </CardContainer>
-          ))}
-        </div>
-
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-8 space-x-2 mb-2">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <Link
-                key={index}
-                href={`/blog?page=${index + 1}${activeTag ? `&tag=${activeTag}` : ""}`}
-                aria-current={index + 1 === currentPage ? "page" : undefined} 
-                className={`px-5 py-3 rounded-lg text-white font-bold text-sm sm:text-base ${
-                  index + 1 === currentPage ? "bg-purple" : "bg-gray-900 hover:bg-purple"
-                }`}
+        <div
+          className="
+            w-full flex-1 flex flex-col
+            sm:overflow-visible
+          "
+        >
+          <div
+            className="
+              grid w-full flex-1
+              grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6
+              items-stretch
+              "
+            style={{
+              minHeight: 0,
+              gridAutoRows: "1fr",
+            }}
+          >
+            {displayedArticles.map(({ slug, metadata }) => (
+              <CardContainer
+                key={slug}
+                className={`inter-var h-full ${"sm:perspective-1000"}`} 
               >
-                {index + 1}
-              </Link>
+                <Link href={`/${locale}/blog/${slug}`} className="w-full h-full">
+                  <div
+                    className="w-full h-full  bg-grid rounded-xl overflow-hidden"
+                    style={{ "--gap": "2em", "--line": "1px", "--color": "rgba(255,255,255,0.2)" } as React.CSSProperties}
+                  >
+                    <CardBody className="bg-transparent relative group/card border border-white/[0.2] h-full flex flex-col justify-between rounded-xl p-6">
+                      
+                      <CardItem as="h2" translateZ={120} className="text-2xl font-bold text-white">
+                        {locale === "fr" && metadata.title_fr ? metadata.title_fr : metadata.title}
+                      </CardItem>
+
+                      <CardItem as="p" translateZ={80} className="text-gray-400 text-sm mt-1">
+                        {new Date(metadata.date).toLocaleDateString('fr-FR')}
+                      </CardItem>
+
+                      <CardItem translateZ={240} className="w-full mt-2">
+                        <Image
+                          src={metadata.thumbnail}
+                          alt={metadata.title}
+                          width={800}
+                          height={200}
+                          loading="lazy"
+                          className="w-full h-auto aspect-video object-cover rounded-lg filter brightness-100" 
+                        />
+                      </CardItem>
+
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {metadata.tags.map((tag: string) => (
+                          <CardItem key={tag} translateZ={60} as="span" className="bg-purple text-white px-4 py-2 text-sm font-medium rounded-md">
+                            #{tag}
+                          </CardItem>
+                        ))}
+                      </div>
+                      
+                    </CardBody>
+                  </div>
+                </Link>
+              </CardContainer>
             ))}
           </div>
-        )}
 
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-8 mb-0 space-x-2">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <Link
+                  key={index}
+                  href={`/blog?page=${index + 1}${activeTag ? `&tag=${activeTag}` : ""}`}
+                  aria-current={index + 1 === currentPage ? "page" : undefined}
+                  className={`px-5 py-3 rounded-lg text-white font-bold text-sm sm:text-base ${
+                    index + 1 === currentPage ? "bg-purple" : "bg-gray-900 hover:bg-purple"
+                  }`}
+                >
+                  {index + 1}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </main>
     );
   } catch (error) {

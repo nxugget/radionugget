@@ -20,7 +20,6 @@ export default function Home() {
   const [preview, setPreview] = useState<Project | { message: string } | null>(null);
   const t = useI18n();
 
-  // Exemples d'articles et outils (remplace par tes vraies données)
   const projectItems = [
     {
       title: t("projectsSection.weatherSatelliteStation"),
