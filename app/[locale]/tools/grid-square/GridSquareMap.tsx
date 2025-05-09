@@ -193,8 +193,10 @@ const GridLayer = () => {
             pathOptions={{
               color: "rgba(255, 170, 0, 0.8)",
               weight: 1,
+              fill: false, // Ajouté pour éviter tout remplissage
               fillOpacity: 0,
               opacity: 0.4,
+              lineCap: "butt", // Ajouté pour éviter les dépassements de bord
             }}
           />
           <GridLabel
@@ -262,6 +264,22 @@ export default function Map({
           margin: 0;
           white-space: nowrap;
           pointer-events: none;
+        }
+        /* Ajout pour améliorer le rendu des lignes SVG */
+        .leaflet-interactive {
+          shape-rendering: geometricPrecision;
+        }
+        /* Correction: forcer la transparence du fond des tuiles Leaflet */
+        .leaflet-tile {
+          background: transparent !important;
+        }
+        /* Correction: forcer le fond noir du conteneur Leaflet */
+        .leaflet-container {
+          background: #111 !important;
+        }
+        /* Correction: s'assurer que les rectangles SVG n'ont pas de fond blanc */
+        .leaflet-interactive[fill] {
+          fill: none !important;
         }
       `}</style>
     </>

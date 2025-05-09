@@ -57,18 +57,6 @@ export default function Home() {
       link: "/blog/sstv",
       type: "article",
     },
-    {
-      title: t("projectsSection.gridSquareCalculator"),
-      image: "/images/selection/gridsquare.png",
-      link: "tools/grid-square",
-      type: "tool",
-    },
-    {
-      title: t("projectsSection.airTrafficCommunication"),
-      image: "/images/blog/thumbnail/pilots.webp",
-      link: "/blog/pilots",
-      type: "article",
-    },
   ];
 
   useEffect(() => {
@@ -213,7 +201,7 @@ export default function Home() {
           display: none !important;
         }
       `}</style>
-      <main className="min-h-screen bg-transparent">
+      <main className="bg-transparent">
         {/* Section SpaceExplore */}
         <section id="space-explore" className="-mt-24 min-h-screen w-full overflow-hidden relative z-0">
           <div className="relative w-full h-screen overflow-hidden">
@@ -373,31 +361,31 @@ export default function Home() {
         {/* Section Projects Cards - occupe tout l'écran, grille responsive */}
         <section
           id="projects-section"
-          className="relative flex flex-col items-center z-0 min-h-screen w-full justify-start bg-transparent"
+          className="relative flex flex-col items-center z-0 w-full justify-start bg-transparent pb-4 md:pb-16"
         >
           {/* Titre bien placé sous la navbar */}
-          <div className="h-20 md:h-24" />
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-purple font-alien tracking-wide z-10 mb-6 text-center px-2 drop-shadow-lg">
+          <div className="h-10 md:h-24" />
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-6xl font-bold text-purple font-alien tracking-wide z-10 mb-4 md:mb-6 text-center px-2 drop-shadow-lg">
             {t("projectsSection.title")}
           </h2>
-          <div className="w-full flex justify-center z-10 relative flex-1">
-            <div className="w-full max-w-[100vw] px-2 sm:px-4 md:px-8 flex-1 flex">
+          <div className="w-full flex justify-center z-10 relative">
+            <div className="w-full max-w-[100vw] px-1 sm:px-4 md:px-8 flex">
               <div
                 className={`
                   grid w-full
-                  gap-x-3 gap-y-3
-                  sm:gap-x-6 sm:gap-y-6
-                  grid-cols-2 grid-rows-4
-                  sm:grid-cols-2 sm:grid-rows-4
-                  md:grid-cols-3 md:grid-rows-3
-                  lg:grid-cols-4 lg:grid-rows-2
+                  gap-x-3 gap-y-4
+                  sm:gap-x-8 sm:gap-y-8
+                  md:gap-x-10 md:gap-y-10
+                  grid-cols-2 grid-rows-3
+                  sm:grid-cols-2 sm:grid-rows-3
+                  md:grid-cols-3 md:grid-rows-2
+                  lg:grid-cols-3 lg:grid-rows-2
                   items-stretch justify-center
-                  mb-4 md:mb-8
+                  overflow-visible
+                  min-h-[calc(100dvh-120px)] md:min-h-0
                 `}
                 style={{
-                  minHeight: "0",
-                  height: "auto",
-                  maxHeight: "none",
+                  // On retire toute hauteur forcée
                 }}
               >
                 {projectItems.map((item, idx) => (
@@ -413,7 +401,7 @@ export default function Home() {
                       border border-purple/40
                       transition-all
                       duration-300
-                      hover:shadow-[0_0_24px_4px_rgba(180,0,255,0.25)]
+                      hover:shadow-[0_0_24px_4px_rgba(180,0,255,0.25),0_0_32px_8px_rgba(180,0,255,0.10)]
                       hover:border-purple
                       hover:scale-[1.04]
                       focus:outline-none
@@ -421,14 +409,14 @@ export default function Home() {
                       focus:ring-purple
                       flex flex-col
                       cursor-pointer
-                      aspect-[4/3]
+                      aspect-[4/2.8]
                       max-w-full
                     "
                   >
                     <div
                       className="
                         relative w-full flex-1 min-h-0
-                        sm:min-h-[90px] md:min-h-[110px] lg:min-h-[130px]
+                        sm:min-h-[40px] md:min-h-[55px] lg:min-h-[65px]
                       "
                       style={{ flexBasis: "70%" }}
                     >
@@ -455,7 +443,7 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="flex flex-col items-center justify-center px-2 py-1 flex-[0_0_30%]">
-                      <h3 className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white mb-1 font-alien text-center drop-shadow">
+                      <h3 className="text-[0.8rem] xs:text-xs sm:text-sm md:text-xl lg:text-2xl font-bold text-white mb-1 font-alien text-center drop-shadow">
                         {item.title}
                       </h3>
                       {/* Ajoute ici un résumé ou autre info si besoin */}
@@ -465,8 +453,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Marge basse uniquement sur mobile */}
-          <div className="h-4 sm:h-0" />
         </section>
       </main>
     </>

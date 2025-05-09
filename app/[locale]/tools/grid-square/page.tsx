@@ -231,17 +231,18 @@ export default function GridSquareCalculator() {
         >
           <div className="w-full flex justify-center">
             {hasLoaded && (
-              <TypewriterEffectSmooth
-                as="h1"
-                words={[
-                  { text: "Grid", className: "text-[#b400ff]" },
-                  { text: "Square", className: "text-[#b400ff]" },
-                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
-                ]}
-                // Container class to ensure proper width constraints
-                className="text-center mb-2 w-full"
-                cursorClassName="bg-[#b400ff]"
-              />
+              <div style={{ minHeight: 48 }}> {/* Réserve l'espace pour le titre animé */}
+                <TypewriterEffectSmooth
+                  as="h1"
+                  words={[
+                    { text: "Grid", className: "text-[#b400ff]" },
+                    { text: "Square", className: "text-[#b400ff]" },
+                    { text: t("gridSquareCalculator.calculator"), className: "text-white" }
+                  ]}
+                  className="text-center mb-2 w-full"
+                  cursorClassName="bg-[#b400ff]"
+                />
+              </div>
             )}
           </div>
           <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
@@ -265,8 +266,12 @@ export default function GridSquareCalculator() {
                     }
                   }}
                 />
+                {/* Correction: minHeight appliqué seulement quand suggestions visibles */}
                 {suggestions.length > 0 && (
-                  <ul className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]">
+                  <ul
+                    className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]"
+                    style={{ minHeight: 180 }}
+                  >
                     {suggestions.map((sugg, idx) => (
                       <li
                         key={idx}
@@ -301,19 +306,21 @@ export default function GridSquareCalculator() {
             </div>
           )}
 
-          {gridSquare && (
-            <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
-              <span className="font-bold text-white">
-                Grid Square: <span className="text-orange">{gridSquare}</span>
-              </span>
-              <button
-                onClick={handleCopy}
-                className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
-              >
-                {copied ? "✅" : "📋"}
-              </button>
-            </div>
-          )}
+          <div style={{ minHeight: 56 }}> {/* Réserve l'espace pour le résultat Grid Square */}
+            {gridSquare && (
+              <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
+                <span className="font-bold text-white">
+                  Grid Square: <span className="text-orange">{gridSquare}</span>
+                </span>
+                <button
+                  onClick={handleCopy}
+                  className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
+                >
+                  {copied ? "✅" : "📋"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
           {/* Map placed immediately after with increased mobile height */}

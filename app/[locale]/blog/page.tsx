@@ -55,10 +55,9 @@ export default async function Blog({
       <main
         className={`
           flex flex-col items-center mx-auto w-full px-4 sm:px-10 lg:px-20 pt-3
-          sm:h-screen sm:min-h-0 sm:overflow-hidden
         `}
         style={{
-          height: "100vh",
+          minHeight: "100vh",
         }}
       >
         <div className="flex flex-wrap gap-2 mt-0 mb-4 justify-center">
@@ -77,18 +76,16 @@ export default async function Blog({
 
         <div
           className="
-            w-full flex-1 flex flex-col
-            sm:overflow-visible
+            w-full flex flex-col
           "
         >
           <div
             className="
-              grid w-full flex-1
+              grid w-full
               grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6
               items-stretch
               "
             style={{
-              minHeight: 0,
               gridAutoRows: "1fr",
             }}
           >
