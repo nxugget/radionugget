@@ -43,12 +43,17 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
     return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
   });
 
-  const timeFormat = d3.timeFormat("%I:%M %p");
+  // Formatters pour UTC et Local
+  const timeFormatUTC = d3.utcFormat("%I:%M %p");
+  const timeFormatLocal = d3.timeFormat("%I:%M %p");
 
   const formatTime = (timeStr: string) => {
     const date = new Date(timeStr);
-    if (useLocalTime) date.setHours(date.getHours() + utcOffset);
-    return timeFormat(date);
+    if (useLocalTime) {
+      return timeFormatLocal(date);
+    } else {
+      return timeFormatUTC(date);
+    }
   };
 
   const getCardinalDirection = (azimuth: number): string => {

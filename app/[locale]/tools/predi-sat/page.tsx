@@ -329,9 +329,11 @@ export default function SatelliteTracker() {
   const handleLocalTimeChange = (checked: boolean) => {
     setUseLocalTime(checked);
     if (checked) {
+      // Local time: utcOffset = browser offset (in hours)
       const offset = -new Date().getTimezoneOffset() / 60;
       setUtcOffset(offset);
     } else {
+      // UTC: utcOffset = 0
       setUtcOffset(0);
     }
   };
@@ -926,7 +928,7 @@ export default function SatelliteTracker() {
               <button
                 onClick={() => {
                   setUseLocalTime(false);
-                  setUtcOffset(0);
+                  setUtcOffset(0); // UTC: offset = 0
                 }}
                 className={`px-3 py-1 text-sm text-white ${
                   !useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
@@ -937,6 +939,7 @@ export default function SatelliteTracker() {
               <button
                 onClick={() => {
                   setUseLocalTime(true);
+                  // Local time: offset = browser offset
                   const offset = -new Date().getTimezoneOffset() / 60;
                   setUtcOffset(offset);
                 }}

@@ -104,8 +104,11 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .padding(0);
 
     // Time format and X axis drawing
-    const timeFormat = d3.timeFormat(containerWidth < 500 ? "%H" : "%H");
-    const tooltipTimeFormat = d3.timeFormat("%I:%M %p");
+    // Utilise un formatteur UTC pour la vue UTC, sinon local
+    const timeFormatUTC = d3.utcFormat(containerWidth < 500 ? "%H" : "%H");
+    const timeFormatLocal = d3.timeFormat(containerWidth < 500 ? "%H" : "%H");
+    const tooltipTimeFormatUTC = d3.utcFormat("%I:%M %p");
+    const tooltipTimeFormatLocal = d3.timeFormat("%I:%M %p");
 
     const tickInterval = width > 600 ? 1 : 3; // Fewer ticks on mobile
 
@@ -114,9 +117,13 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .tickSize(0)
       .ticks(d3.timeHour.every(tickInterval))
       .tickFormat((d) => {
-        const date = new Date(d as Date);
-        if (useLocalTime) date.setHours(date.getHours() + utcOffset);
-        return timeFormat(date);
+        if (useLocalTime) {
+          // Affiche l'heure locale du navigateur
+          return timeFormatLocal(new Date(d as Date));
+        } else {
+          // Affiche l'heure UTC
+          return timeFormatUTC(new Date(d as Date));
+        }
       });
     const xAxisGroup = svg
       .append("g")
@@ -262,12 +269,14 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
       .on("mouseover", (event, d) => {
         const aosDate = new Date(d.startTime);
         const losDate = new Date(d.endTime);
+        let aosLabel, losLabel;
         if (useLocalTime) {
-          aosDate.setHours(aosDate.getHours() + utcOffset);
-          losDate.setHours(losDate.getHours() + utcOffset);
+          aosLabel = tooltipTimeFormatLocal(aosDate);
+          losLabel = tooltipTimeFormatLocal(losDate);
+        } else {
+          aosLabel = tooltipTimeFormatUTC(aosDate);
+          losLabel = tooltipTimeFormatUTC(losDate);
         }
-        const aosLabel = tooltipTimeFormat(aosDate);
-        let losLabel = tooltipTimeFormat(losDate);
         const diffLOS = dayDifference(aosDate, losDate);
         if (diffLOS > 0) {
           losLabel += `<sup>+${diffLOS}</sup>`;
