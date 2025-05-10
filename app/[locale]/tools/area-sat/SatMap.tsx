@@ -39,6 +39,8 @@ const styles = {
     overflow: "hidden",
     padding: "0",
     margin: "0",
+    height: "100%", // Ensure the container has height
+    minHeight: "300px", // Add a minimum height to ensure visibility
   } as React.CSSProperties,
   leafletMap: {
     width: "100%",
@@ -46,11 +48,13 @@ const styles = {
     zIndex: 1,
     margin: "0",
     padding: "0",
+    height: "100%", // Ensure the map has height
+    minHeight: "300px", // Add a minimum height to ensure visibility
   } as React.CSSProperties,
   loadingContainer: {
     width: "100%",
     height: "100%",
-    minHeight: 0,
+    minHeight: "300px", // Increased from 0 to ensure visibility
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -169,16 +173,16 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
       /* Mobile: force explicit height */
       @media (max-width: 640px) {
         .area-sat-map-container, .area-sat-leaflet-map {
-          height: 220px !important;
-          min-height: 220px !important;
-          max-height: 300px !important;
+          height: 300px !important; /* Increased from 220px */
+          min-height: 300px !important; /* Increased from 220px */
+          max-height: 350px !important; /* Increased from 300px */
         }
       }
       /* Desktop: fill parent */
       @media (min-width: 641px) {
         .area-sat-map-container, .area-sat-leaflet-map {
           height: 100% !important;
-          min-height: 220px !important;
+          min-height: 300px !important; /* Increased from 220px */
           max-height: 100vh !important;
         }
       }
@@ -192,6 +196,8 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   // Initialize map
   useEffect(() => {
     if (!mapContainerRef.current || mapInitialized) return;
+
+    console.log("Initializing map..."); // Add debug log
 
     const timer = setTimeout(() => {
       try {
@@ -240,37 +246,37 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
           attributionControl: false,
           maxBounds: bounds,
           maxBoundsViscosity: 1.0,
-          dragging: !L.Browser.mobile,
-          tap: !L.Browser.mobile,
+          dragging: true, // Enable dragging for all devices
+          tap: true, // Enable tap for all devices
           crs: L.CRS.EPSG3857,
         });
-
-        // Add touch support for mobile
-        if (L.Browser.mobile) {
-          map.dragging.enable();
-          map.tap.enable();
-        }
 
         // Add dark-themed tile layer
         const tileLayer = L.tileLayer(darkMapUrl, {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
 
-        // Correction : forcer le resize sur mobile après le chargement des tuiles
+        // Force multiple resize operations to ensure the map renders properly
         tileLayer.on("load", () => {
+          console.log("Map tiles loaded"); // Add debug log
           setTimeout(() => {
-            map.invalidateSize();
+            map.invalidateSize({ animate: false, pan: false });
+            console.log("Map resized after tiles loaded"); // Add debug log
           }, 100);
         });
 
-        // Correction : forcer le resize sur mobile après un court délai
+        // Additional resize after a short delay
         setTimeout(() => {
-          map.invalidateSize();
-        }, 400);
+          if (map) {
+            map.invalidateSize({ animate: false, pan: false });
+            console.log("Map resized after timeout"); // Add debug log
+          }
+        }, 500);
 
         // Store map reference
         mapRef.current = map;
         setMapInitialized(true);
+        console.log("Map initialized successfully"); // Add debug log
 
         // Correction mobile : forcer un resize si la taille change
         if (L.Browser.mobile) {
@@ -286,8 +292,6 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
         if (mapContainerRef.current) {
           resizeObserver.observe(mapContainerRef.current);
         }
-
-        console.log("Map initialized successfully");
       } catch (error) {
         console.error("Error initializing map:", error);
       }
@@ -464,17 +468,22 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   useEffect(() => {
     if (!mapInitialized || !mapRef.current || !satrec.current) return;
 
+    console.log("Setting up satellite tracking..."); // Add debug log
+
     // Correction : s'assurer que le conteneur a une taille correcte avant d'ajouter les éléments
     setTimeout(() => {
-      mapRef.current.invalidateSize();
+      if (mapRef.current) {
+        mapRef.current.invalidateSize({ animate: false, pan: false });
+        console.log("Map resized before adding satellite marker"); // Add debug log
+      }
     }, 200);
 
     // Create custom areaSat icon with white color - Fix the icon path
     const areaSatIcon = L.icon({
-      iconUrl: '/images/icon/satellite-icon.svg', // Match the path where we created the SVG
+      iconUrl: '/images/icon/satellite-icon.svg', // Verify this path exists
       iconSize: [32, 32], 
       iconAnchor: [16, 16],
-      className: 'areaSat-icon white-areaSat' // Add class for white styling
+      className: 'areaSat-icon white-areaSat'
     });
 
     // Add custom styling for white areaSat icon
@@ -482,6 +491,17 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     styleElement.textContent = `
       .white-areaSat {
         filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+      }
+      /* Ensure container visibility */
+      .area-sat-map-container {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      .area-sat-leaflet-map {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
       }
     `;
     document.head.appendChild(styleElement);

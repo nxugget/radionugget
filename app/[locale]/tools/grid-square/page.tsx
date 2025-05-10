@@ -216,7 +216,7 @@ export default function GridSquareCalculator() {
           className="
             w-full
             max-w-full
-            sm:max-w-[800px]
+            sm:max-w-[1400px]
             bg-black bg-opacity-70
             rounded-2xl
             shadow-lg
@@ -229,23 +229,20 @@ export default function GridSquareCalculator() {
             mx-1
           "
         >
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center sm:mb-1">
             {hasLoaded && (
-              <div style={{ minHeight: 48 }}> {/* Réserve l'espace pour le titre animé */}
-                <TypewriterEffectSmooth
-                  as="h1"
-                  words={[
-                    { text: "Grid", className: "text-[#b400ff]" },
-                    { text: "Square", className: "text-[#b400ff]" },
-                    { text: t("gridSquareCalculator.calculator"), className: "text-white" }
-                  ]}
-                  className="text-center mb-2 w-full"
-                  cursorClassName="bg-[#b400ff]"
-                />
-              </div>
+              <TypewriterEffectSmooth
+                as="h1"
+                words={[
+                  { text: "Grid", className: "text-[#b400ff]" },
+                  { text: "Square", className: "text-[#b400ff]" },
+                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
+                ]}
+                className="text-lg xs:text-xl md:text-3xl font-bold text-center text-white overflow-hidden"
+                cursorClassName="bg-[#b400ff]"
+              />
             )}
           </div>
-          <p className="text-center text-gray-400 mb-6 text-xs sm:text-sm">{t("betaDescription")}</p>
 
           <GridSquareInfo />
           <div ref={searchRef} className="relative flex justify-center w-full my-2">
@@ -321,80 +318,81 @@ export default function GridSquareCalculator() {
               </div>
             )}
           </div>
-        </div>
-        <div className="w-full max-w-full sm:max-w-[600px] lg:max-w-[1600px] mb-0">
-          {/* Map placed immediately after with increased mobile height */}
-          <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
-          {/* Nouvelle bannière pour la vue desktop sur une seule ligne */}
-          <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0 items-center justify-between">
-            <div className="flex-shrink-0 mr-4">
-              <InputSearch
-                placeholder={t("gridSquare.directSearchPlaceholder")}
-                value={directSearch}
-                onChange={(e) => setDirectSearch(e.target.value)}
-                onSubmit={handleDirectSearchSubmit}
-                className="w-auto min-w-[250px]" // increased minimum width from 200px to 250px
-              />
-              <div className="text-center">
-                {directSearchError && (
-                  <span className="text-red-500 text-sm mt-1 block">
-                    {directSearchError}
-                  </span>
-                )}
+          
+          {/* Map intégrée dans la div principale */}
+          <div className="w-full mt-6">
+            <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
+            {/* Nouvelle bannière pour la vue desktop sur une seule ligne */}
+            <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0 items-center justify-between">
+              <div className="flex-shrink-0 mr-4">
+                <InputSearch
+                  placeholder={t("gridSquare.directSearchPlaceholder")}
+                  value={directSearch}
+                  onChange={(e) => setDirectSearch(e.target.value)}
+                  onSubmit={handleDirectSearchSubmit}
+                  className="w-auto min-w-[250px]" // increased minimum width from 200px to 250px
+                />
+                <div className="text-center">
+                  {directSearchError && (
+                    <span className="text-red-500 text-sm mt-1 block">
+                      {directSearchError}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex space-x-4 items-center">
-              <div>
-                <span className="font-bold">Latitude:</span> <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
-              </div>
-              <div>
-                <span className="font-bold">Longitude:</span> <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
-              </div>
-              <div>
-                <span className="font-bold">Grid Square:</span> <span className="text-orange">{mousePosition.grid}</span>
-              </div>
-            </div>
-            <div>
-              <span className="text-gray-400 text-base">
-                UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
-              </span>
-            </div>
-          </div>
-          {/* Pour la vue mobile, garder l'ancienne bannière si nécessaire */}
-          <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0">
-            <div className="w-full mb-2">
-              <InputSearch
-                placeholder={t("gridSquare.directSearchPlaceholder")}
-                value={directSearch}
-                onChange={(e) => setDirectSearch(e.target.value)}
-                onSubmit={handleDirectSearchSubmit}
-              />
-              <div className="text-center">
-                {directSearchError && (
-                  <span className="text-red-500 text-sm mt-1 block">
-                    {directSearchError}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="w-full text-center mb-2 flex flex-wrap justify-center gap-2">
-              <div>
-                <span className="font-bold">Latitude: </span>
-                <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+              <div className="flex space-x-4 items-center">
+                <div>
+                  <span className="font-bold">Latitude:</span> <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+                </div>
+                <div>
+                  <span className="font-bold">Longitude:</span> <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+                </div>
+                <div>
+                  <span className="font-bold">Grid Square:</span> <span className="text-orange">{mousePosition.grid}</span>
+                </div>
               </div>
               <div>
-                <span className="font-bold">Longitude: </span>
-                <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+                <span className="text-gray-400 text-base">
+                  UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+                </span>
               </div>
             </div>
-            <div className="w-full text-center mb-2">
-              <span className="font-bold">Grid Square: </span>
-              <span className="text-orange break-all">{mousePosition.grid}</span>
-            </div>
-            <div className="w-full text-center">
-              <span className="text-gray-400 text-xs">
-                UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
-              </span>
+            {/* Pour la vue mobile, garder l'ancienne bannière si nécessaire */}
+            <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0">
+              <div className="w-full mb-2">
+                <InputSearch
+                  placeholder={t("gridSquare.directSearchPlaceholder")}
+                  value={directSearch}
+                  onChange={(e) => setDirectSearch(e.target.value)}
+                  onSubmit={handleDirectSearchSubmit}
+                />
+                <div className="text-center">
+                  {directSearchError && (
+                    <span className="text-red-500 text-sm mt-1 block">
+                      {directSearchError}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="w-full text-center mb-2 flex flex-wrap justify-center gap-2">
+                <div>
+                  <span className="font-bold">Latitude: </span>
+                  <span className="text-purple">{mousePosition.lat.toFixed(4)}</span>
+                </div>
+                <div>
+                  <span className="font-bold">Longitude: </span>
+                  <span className="text-purple">{mousePosition.lon.toFixed(4)}</span>
+                </div>
+              </div>
+              <div className="w-full text-center mb-2">
+                <span className="font-bold">Grid Square: </span>
+                <span className="text-orange break-all">{mousePosition.grid}</span>
+              </div>
+              <div className="w-full text-center">
+                <span className="text-gray-400 text-xs">
+                  UTC Time: {utcTime ? utcTime.toISOString().split("T")[1].split(".")[0] : "Loading..."}
+                </span>
+              </div>
             </div>
           </div>
         </div>

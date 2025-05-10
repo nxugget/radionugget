@@ -108,6 +108,9 @@ export default function SatelliteTracker() {
   const [selectedAvailableId, setSelectedAvailableId] = useState<string | null>(null);
   const [selectedChosenId, setSelectedChosenId] = useState<string | null>(null);
 
+  // Ajout d'un état pour fixer le startTime de prédiction
+  const [predictionStartTime, setPredictionStartTime] = useState<number>(() => Math.floor(Date.now() / 1000));
+
   // Charger les favoris depuis les cookies au chargement
   useEffect(() => {
     const favCookie = getCookieValue("favorites");
@@ -302,6 +305,11 @@ export default function SatelliteTracker() {
     // Réinitialise les prédictions pour forcer la mise à jour
     setAllPredictions([]);
 
+    // Fixer le startTime à la première prédiction de la session
+    if (!predictionStartTime) {
+      setPredictionStartTime(Math.floor(Date.now() / 1000));
+    }
+
     try {
       const results = await Promise.all(
         selectedSatellites.map(async (sat) => {
@@ -311,7 +319,7 @@ export default function SatelliteTracker() {
             longitude,
             elevation, // Utilise l'élévation actuelle
             utcOffset,
-            undefined, // utiliser le temps de début par défaut
+            predictionStartTime, // Utilise toujours le même startTime
             undefined, // utiliser le temps de fin par défaut
             minAzimuth, // Nouvel argument pour l'azimut minimum
             maxAzimuth // Nouvel argument pour l'azimut maximum
@@ -437,7 +445,6 @@ export default function SatelliteTracker() {
             cursorClassName="bg-purple"
           />
         </div>
-        <p className="text-center text-gray-400 mb-2 sm:mb-3 text-xs sm:text-sm">{t("betaDescription")}</p>
         <div className="flex flex-col md:flex-row gap-3 sm:gap-6">
           {/* PARTIE GAUCHE */}
           <div className="md:w-1/2 w-full flex flex-col gap-3 sm:gap-6">
@@ -1245,7 +1252,7 @@ export default function SatelliteTracker() {
               <button
                 onClick={() => {
                   setUseLocalTime(false);
-                  setUtcOffset(0); // UTC: offset = 0
+                  setUtcOffset(0);
                 }}
                 className={`px-2 sm:px-3 py-1 text-xs sm:text-sm text-white ${
                   !useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
@@ -1256,7 +1263,6 @@ export default function SatelliteTracker() {
               <button
                 onClick={() => {
                   setUseLocalTime(true);
-                  // Local time: offset = browser offset
                   const offset = -new Date().getTimezoneOffset() / 60;
                   setUtcOffset(offset);
                 }}

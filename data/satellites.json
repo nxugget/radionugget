@@ -14,7 +14,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/AAUSAT-2.jpg",
-    "country": "DK"
+    "country": "DK",
+    "names": "CUBESAT-2; AAUSAT-2"
   },
   {
     "norad_id": "22825",
@@ -52,7 +53,8 @@
       }
     ],
     "image": "satellites/AO-27-PreFlight.jpg",
-    "country": "US"
+    "country": "US",
+    "names": "AO-27, EYESAT A"
   },
   {
     "norad_id": "39444",
@@ -83,7 +85,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/FUNCUBE-1.jpg",
-    "country": "GB"
+    "country": "GB",
+    "names": "AO-73"
   },
   {
     "norad_id": "43017",
@@ -107,7 +110,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/RadFxSat_Flight-300x300.jpg",
-    "country": "US"
+    "country": "US",
+    "names": "AO-91\r\nRADFXSAT"
   },
   {
     "norad_id": "61781",
@@ -145,7 +149,8 @@
       }
     ],
     "image": "satellites/300px-阿斯图友谊号_IPvWmAo.jpg",
-    "country": "CN,RU"
+    "country": "CN,RU",
+    "names": "AO-123, ASRTU Friendship, Druzhba ATURK, Дружба АТУРК, BJ2CR, RS64S"
   },
   {
     "norad_id": "57175",
@@ -169,7 +174,8 @@
       }
     ],
     "image": "satellites/CUBEBEL-2-resize.jpg",
-    "country": "BY"
+    "country": "BY",
+    "names": "BSUSAT-2, EU11S"
   },
   {
     "norad_id": "41847",
@@ -193,7 +199,8 @@
       }
     ],
     "image": "satellites/cas-2t-145-435-mhz-fm-transponder-cubesat.jpg",
-    "country": "CN"
+    "country": "CN",
+    "names": "OBJECT E"
   },
   {
     "norad_id": "40908",
@@ -238,7 +245,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/LILACSAT-2.jpg",
-    "country": "CN"
+    "country": "CN",
+    "names": "CAS-3H XW-2H"
   },
   {
     "norad_id": "44881",
@@ -283,7 +291,8 @@
       }
     ],
     "image": "",
-    "country": "CN"
+    "country": "CN",
+    "names": "2019-093C"
   },
   {
     "norad_id": "50466",
@@ -321,7 +330,8 @@
       }
     ],
     "image": "satellites/cas9.png",
-    "country": "CN"
+    "country": "CN",
+    "names": "HO-113, CAS-9"
   },
   {
     "norad_id": "60246",
@@ -359,7 +369,8 @@
       }
     ],
     "image": "",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "27844",
@@ -390,7 +401,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/cute-1__1.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "CO-55"
   },
   {
     "norad_id": "27848",
@@ -421,7 +433,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/xi-4__1.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "CO-57"
   },
   {
     "norad_id": "28895",
@@ -445,7 +458,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/XI-V-Sai-Five-300x225.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "CO-58, Cubesat OSCAR 58"
   },
   {
     "norad_id": "32785",
@@ -483,7 +497,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/CO-65-300x197.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "CO-65"
   },
   {
     "norad_id": "32791",
@@ -528,7 +543,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/SEEDS.gif",
-    "country": "JP"
+    "country": "JP",
+    "names": "CO-66"
   },
   {
     "norad_id": "43793",
@@ -545,7 +561,8 @@
       }
     ],
     "image": "satellites/CSIM_Image_Instrument.jpeg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "39440",
@@ -569,7 +586,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/cubebug-1__1.jpg",
-    "country": "AR"
+    "country": "AR",
+    "names": "LO-74"
   },
   {
     "norad_id": "47952",
@@ -600,7 +618,8 @@
       }
     ],
     "image": "",
-    "country": "RU"
+    "country": "RU",
+    "names": "RS13S, MIEM 3U, NRU HSE-DZZ"
   },
   {
     "norad_id": "47951",
@@ -624,7 +643,8 @@
       }
     ],
     "image": "",
-    "country": "RU"
+    "country": "RU",
+    "names": "RS14S, SiriusSat 3U, Sirius-DZZ"
   },
   {
     "norad_id": "49263",
@@ -655,7 +675,8 @@
       }
     ],
     "image": "satellites/cute.png",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "43678",
@@ -693,7 +714,8 @@
       }
     ],
     "image": "satellites/diwata-2__1.jpg",
-    "country": "PH"
+    "country": "PH",
+    "names": "PO-101"
   },
   {
     "norad_id": "44909",
@@ -738,7 +760,8 @@
       }
     ],
     "image": "satellites/dosaaf-85.jpg",
-    "country": "RU"
+    "country": "RU",
+    "names": "RS-44"
   },
   {
     "norad_id": "43879",
@@ -769,7 +792,8 @@
       }
     ],
     "image": "",
-    "country": "CZ,DE"
+    "country": "CZ,DE",
+    "names": "DP1GOS"
   },
   {
     "norad_id": "43881",
@@ -800,7 +824,8 @@
       }
     ],
     "image": "",
-    "country": "DE"
+    "country": "DE",
+    "names": "DP1GOS"
   },
   {
     "norad_id": "58472",
@@ -817,7 +842,8 @@
       }
     ],
     "image": "satellites/eirsat-1.png",
-    "country": "IE"
+    "country": "IE",
+    "names": "Educational Irish Research Satellite 1"
   },
   {
     "norad_id": "58470",
@@ -848,7 +874,8 @@
       }
     ],
     "image": "satellites/Patch-ENSO-1024x1024.png",
-    "country": "FR"
+    "country": "FR",
+    "names": "ROBUSTA 1E"
   },
   {
     "norad_id": "43700",
@@ -1019,7 +1046,8 @@
       }
     ],
     "image": "satellites/Eshail_2.jpg",
-    "country": "QA"
+    "country": "QA",
+    "names": "QO-100"
   },
   {
     "norad_id": "24278",
@@ -1050,7 +1078,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/fo29.gif",
-    "country": "JP"
+    "country": "JP",
+    "names": "FO-29"
   },
   {
     "norad_id": "43792",
@@ -1095,7 +1124,8 @@
       }
     ],
     "image": "satellites/ESEO_bottom_view_pillars.png",
-    "country": "DK,GB,HU,IT"
+    "country": "DK,GB,HU,IT",
+    "names": "FunCube 4"
   },
   {
     "norad_id": "43803",
@@ -1126,7 +1156,8 @@
       }
     ],
     "image": "satellites/jy1sat-cubesat.jpg",
-    "country": "JO"
+    "country": "JO",
+    "names": "JO-97, Jordan-OSCAR 97"
   },
   {
     "norad_id": "39430",
@@ -1157,7 +1188,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/GOMX1_AutoE.jpeg",
-    "country": "DK"
+    "country": "DK",
+    "names": "GATOSS"
   },
   {
     "norad_id": "25397",
@@ -1223,7 +1255,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/gurwinIIb.gif",
-    "country": "IL"
+    "country": "IL",
+    "names": "GO-32 TechSat, Gurwin-II"
   },
   {
     "norad_id": "47959",
@@ -1254,7 +1287,8 @@
       }
     ],
     "image": "satellites/grbalpha.png",
-    "country": "HU"
+    "country": "HU",
+    "names": "OM9GRB"
   },
   {
     "norad_id": "60237",
@@ -1292,7 +1326,8 @@
       }
     ],
     "image": "satellites/grbbeta.png",
-    "country": "SK"
+    "country": "SK",
+    "names": "HA2GRB"
   },
   {
     "norad_id": "53106",
@@ -1330,7 +1365,8 @@
       }
     ],
     "image": "satellites/greencube__1.jpg",
-    "country": "IT"
+    "country": "IT",
+    "names": "IO-117"
   },
   {
     "norad_id": "62690",
@@ -1396,7 +1432,8 @@
       }
     ],
     "image": "satellites/HADES-R.jpg",
-    "country": "ES"
+    "country": "ES",
+    "names": "SO-124"
   },
   {
     "norad_id": "41340",
@@ -1434,7 +1471,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/horyu-4__1.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "JG6YBW"
   },
   {
     "norad_id": "62692",
@@ -1443,7 +1481,8 @@
     "tle2": "2 62692  97.4104 210.6903 0004247 176.6676 183.4592 15.27214018 17437",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": []
   },
   {
     "norad_id": "40931",
@@ -1488,7 +1527,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/LAPAN-A2_12tCGA2.jpg",
-    "country": "ID"
+    "country": "ID",
+    "names": "ORARI, IO-86, YB0X"
   },
   {
     "norad_id": "51044",
@@ -1512,7 +1552,8 @@
       }
     ],
     "image": "satellites/IRIS-A.jpg",
-    "country": "TW"
+    "country": "TW",
+    "names": ""
   },
   {
     "norad_id": "25544",
@@ -1851,7 +1892,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/ISS.jpg",
-    "country": "RU,US"
+    "country": "RU,US",
+    "names": "ZARYA"
   },
   {
     "norad_id": "49402",
@@ -1889,7 +1931,8 @@
       }
     ],
     "image": "",
-    "country": "JP"
+    "country": "JP",
+    "names": "JR5YGJ"
   },
   {
     "norad_id": "49069",
@@ -1913,7 +1956,8 @@
       }
     ],
     "image": "satellites/ledsat.png",
-    "country": "IT"
+    "country": "IT",
+    "names": ""
   },
   {
     "norad_id": "60209",
@@ -1944,7 +1988,8 @@
       }
     ],
     "image": "satellites/IMG_0571-317x422.jpg",
-    "country": "US"
+    "country": "US",
+    "names": "MESAT1-OSCAR 122, MO-122"
   },
   {
     "norad_id": "43780",
@@ -1975,7 +2020,8 @@
       }
     ],
     "image": "",
-    "country": "DE"
+    "country": "DE",
+    "names": "DP0MVE"
   },
   {
     "norad_id": "26931",
@@ -2006,7 +2052,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/no44.gif",
-    "country": "US"
+    "country": "US",
+    "names": "NO-44, W3ADO"
   },
   {
     "norad_id": "63211",
@@ -2023,7 +2070,8 @@
       }
     ],
     "image": "",
-    "country": "SG"
+    "country": "SG",
+    "names": ""
   },
   {
     "norad_id": "60243",
@@ -2047,7 +2095,8 @@
       }
     ],
     "image": "satellites/ROBUSTA-3A.png",
-    "country": "FR"
+    "country": "FR",
+    "names": ""
   },
   {
     "norad_id": "27607",
@@ -2071,7 +2120,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/saudisat-so-50.jpg",
-    "country": "SA"
+    "country": "SA",
+    "names": "SO-50"
   },
   {
     "norad_id": "59112",
@@ -2116,7 +2166,8 @@
       }
     ],
     "image": "satellites/sonate-2.png",
-    "country": "DE"
+    "country": "DE",
+    "names": "DP0SNX"
   },
   {
     "norad_id": "43804",
@@ -2133,7 +2184,8 @@
       }
     ],
     "image": "satellites/suomi1001.png",
-    "country": "FI"
+    "country": "FI",
+    "names": ""
   },
   {
     "norad_id": "43188",
@@ -2157,7 +2209,8 @@
       }
     ],
     "image": "",
-    "country": "DE"
+    "country": "DE",
+    "names": "DP0TBB"
   },
   {
     "norad_id": "49396",
@@ -2202,7 +2255,8 @@
       }
     ],
     "image": "satellites/TS4_patch.jpg",
-    "country": "JP"
+    "country": "JP",
+    "names": "JS1YHH, Ooruri, TS-4"
   },
   {
     "norad_id": "63217",
@@ -2226,7 +2280,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63218",
@@ -2235,7 +2290,8 @@
     "tle2": "2 63218  97.4342  24.6048 0005867 102.6446 257.5444 15.19580049  8634",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": []
   },
   {
     "norad_id": "63219",
@@ -2244,7 +2300,8 @@
     "tle2": "2 63219  97.4342  24.6045 0005847 102.3200 257.8690 15.19576610  8630",
     "transmitters": [],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": []
   },
   {
     "norad_id": "63213",
@@ -2268,7 +2325,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63214",
@@ -2292,7 +2350,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63215",
@@ -2316,7 +2375,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63239",
@@ -2340,7 +2400,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63237",
@@ -2364,7 +2425,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "63238",
@@ -2388,7 +2450,8 @@
       }
     ],
     "image": "satellites/transit-o__1.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "57172",
@@ -2447,7 +2510,8 @@
       }
     ],
     "image": "satellites/umka.jpeg",
-    "country": "RU"
+    "country": "RU",
+    "names": "RS40S, УмКА-1"
   },
   {
     "norad_id": "14781",
@@ -2485,7 +2549,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/UoSat-2.jpg",
-    "country": "GB"
+    "country": "GB",
+    "names": "UO-11OSCAR-11"
   },
   {
     "norad_id": "46276",
@@ -2509,7 +2574,8 @@
       }
     ],
     "image": "satellites/upmsat-2__1.jpg",
-    "country": "ES"
+    "country": "ES",
+    "names": ""
   },
   {
     "norad_id": "43880",
@@ -2533,7 +2599,8 @@
       }
     ],
     "image": "",
-    "country": "DE"
+    "country": "DE",
+    "names": "DP0UWH"
   },
   {
     "norad_id": "58261",
@@ -2564,7 +2631,8 @@
       }
     ],
     "image": "satellites/veronika_G6OopQK.jpg",
-    "country": ""
+    "country": "",
+    "names": "Veronica"
   },
   {
     "norad_id": "39417",
@@ -2595,7 +2663,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/index.jpeg",
-    "country": "ZA"
+    "country": "ZA",
+    "names": "South Africa CubeSat-1, TshepisoSat, ZA003"
   },
   {
     "norad_id": "42759",
@@ -2626,7 +2695,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/cas-4-satellite_27im88Z.jpg",
-    "country": "CN"
+    "country": "CN",
+    "names": "CAS 4B"
   },
   {
     "norad_id": "49399",
@@ -2657,7 +2727,8 @@
       }
     ],
     "image": "",
-    "country": "JP"
+    "country": "JP",
+    "names": ""
   },
   {
     "norad_id": "25338",
@@ -2716,7 +2787,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/satellite_NOAA-15.jpg",
-    "country": "US"
+    "country": "US",
+    "names": "NOAA-K"
   },
   {
     "norad_id": "28654",
@@ -2782,7 +2854,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/NOAA-18_or_19_rendering.jpg",
-    "country": "US"
+    "country": "US",
+    "names": ""
   },
   {
     "norad_id": "33591",
@@ -2855,7 +2928,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/NOAA-18_or_19_rendering.jpg",
-    "country": "US"
+    "country": "US",
+    "names": "NOAA-N Prime"
   },
   {
     "norad_id": "57166",
@@ -2949,7 +3023,8 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites",
-    "country": "US"
+    "country": "US",
+    "names": "METEOR 2 2-3, METEOR-M N2-3"
   },
   {
     "norad_id": "59051",
@@ -3029,6 +3104,7 @@
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/2922080812.jpeg",
-    "country": "US"
+    "country": "US",
+    "names": "METEOR 2 2-4, METEOR-M N2-4"
   }
 ]

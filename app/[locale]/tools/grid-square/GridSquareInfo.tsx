@@ -10,11 +10,19 @@ export default function GridSquareInfo() {
 
   return (
     <div className="w-full flex flex-col items-center relative">
-      {/* Interactive button using translated label */}
+      {/* Bouton interactif amélioré avec icône et style visuel - animation plus discrète */}
       <button
         onClick={() => setShowInfo(true)}
-        className="mb-4 text-white text-lg font-bold relative transition-all duration-300 hover:text-[#b400ff]"
+        className="mb-4 flex items-center gap-2 px-4 py-2 bg-purple/10 hover:bg-purple/20 rounded-full border border-purple/30 text-white font-bold transition-all duration-300 hover:scale-105"
       >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="currentColor" 
+          className="w-5 h-5 text-[#b400ff]"
+        >
+          <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
+        </svg>
         {t("gridSquareInfo.question")}
       </button>
 

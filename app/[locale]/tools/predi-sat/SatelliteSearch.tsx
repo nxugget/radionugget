@@ -8,7 +8,7 @@ interface Satellite {
   id: string;
   category?: string;
   country?: string;
-  transmitters?: { mode: string }[];
+  transmitters?: { mode: string; description?: string }[];
 }
 
 interface SatelliteSearchProps {
@@ -22,7 +22,7 @@ interface SatelliteSearchProps {
 
 const CATEGORIES = [
   { key: "all", label: "All" },
-  { key: "fm", label: "FM" },
+  { key: "fmvoice", label: "FM Voice" },
   { key: "weather", label: "Weather" },
 ];
 
@@ -31,10 +31,10 @@ function isWeatherSatellite(sat: Satellite) {
   return name.includes("noaa") || name.includes("meteor");
 }
 
-function isFMSatellite(sat: Satellite) {
+function isFMVoiceSatellite(sat: Satellite) {
   if (!sat.transmitters) return false;
   return sat.transmitters.some((tx) =>
-    tx.mode && tx.mode.toLowerCase().includes("fm")
+    tx.description && tx.description.toLowerCase().includes("fm voice")
   );
 }
 
@@ -49,7 +49,7 @@ export default function SatelliteSearch({
   const t = useI18n();
   const [query, setQuery] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
-  const [category, setCategory] = useState<"all" | "weather" | "fm">("all");
+  const [category, setCategory] = useState<"all" | "weather" | "fmvoice">("all");
   const [selectOpen, setSelectOpen] = useState(false);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -57,8 +57,8 @@ export default function SatelliteSearch({
     let filtered = satellites;
     if (category === "weather") {
       filtered = filtered.filter(isWeatherSatellite);
-    } else if (category === "fm") {
-      filtered = filtered.filter(isFMSatellite);
+    } else if (category === "fmvoice") {
+      filtered = filtered.filter(isFMVoiceSatellite);
     }
     return filtered.filter((sat) => {
       const matchesQuery = sat.name.toLowerCase().includes(query.toLowerCase());

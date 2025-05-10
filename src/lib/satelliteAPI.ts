@@ -14,6 +14,7 @@ function rad2deg(rad: number): number {
 export interface Satellite {
   id: string;
   name: string;
+  names?: string;
   tle1: string;
   tle2: string;
   description: string;
@@ -123,15 +124,15 @@ export async function getSatellitePasses(
         passMaxElevation = elevationDeg;
         
         currentPass = {
-          startTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
-          endTime: new Date((t + utcOffset * 3600) * 1000).toISOString(),
+          startTime: new Date(t * 1000).toISOString(), // UTC uniquement
+          endTime: new Date(t * 1000).toISOString(),   // UTC uniquement
           maxElevation: elevationDeg,
           aosAzimuth: azimuthDeg,
           losAzimuth: azimuthDeg,
         };
       } else {
         // Mise à jour du passage en cours
-        currentPass.endTime = new Date((t + utcOffset * 3600) * 1000).toISOString();
+        currentPass.endTime = new Date(t * 1000).toISOString(); // UTC uniquement
         currentPass.losAzimuth = azimuthDeg; // Mettre à jour l'azimut de fin
         
         // Mettre à jour l'élévation maximale si nécessaire

@@ -91,7 +91,7 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
                   )}`}
                   legacyBehavior
                 >
-                  <a className="hover:underline">{pass.satelliteName}</a>
+                  <a className="hover:brightness-125 transition-all duration-200">{pass.satelliteName}</a>
                 </Link>
               </td>
               <td className="px-1 sm:px-4 py-1 sm:py-2">{formatTime(pass.startTime)}</td>

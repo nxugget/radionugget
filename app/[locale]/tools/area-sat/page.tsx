@@ -663,7 +663,6 @@ export default function AreaSatInfoPage() {
               cursorClassName="bg-purple"
             />
           </div>
-          <p className="text-center text-gray-400 mb-3 sm:mb-5 text-xs sm:text-base">{t("betaDescription")}</p>
           <div className="relative mx-auto w-full max-w-2xl mb-4 sm:mb-6">
             {lastTleUpdate && (
               <p className="text-center text-xs text-gray-400 mb-1">
@@ -935,8 +934,8 @@ export default function AreaSatInfoPage() {
                   <h2 className="relative z-10 text-white text-center text-xl sm:text-3xl font-bold my-1">
                     {t("satellites.explorer.satMap")}
                   </h2>
-                  <div className="flex-grow flex w-full">
-                    <div className="w-full aspect-[16/9] md:aspect-auto">
+                  <div className="flex-grow flex w-full h-full" style={{ minHeight: "300px" }}>
+                    <div className="w-full h-full" style={{ minHeight: "300px" }}>
                       {details?.tle1 && details?.tle2 && (
                         <AreaSatMap 
                           areaSatId={selectedAreaSat.id}

@@ -24,8 +24,8 @@ export default {
   gridSquareInfo: {
     question: "Qu'est-ce qu'une Grid Square ?",
     description1: "Une Grid Square est un système de coordonnées utilisé par les radioamateurs pour localiser précisément un point sur la Terre.",
-    description2: "Plutôt que de donner des coordonnées GPS précises comme 37°14'3.60\" N -115°48'23.99\" W, on dira simplement DM27bf. C'est quand même plus pratique :).",
-    description3: "Les grid squares divisent le globe en 324 grands territoires (10° par 20°), chacun subdivisé en 100 carrés. Des lettres supplémentaires affinent encore votre position en subdivisant chaque carré.",
+    description2: "Plutôt que de donner des coordonnées GPS précises comme 37°14'3.60\" N -115°48'23.99\" W, on dira simplement DM27bf. C'est quand même plus pratique :)",
+    description3: "Les grid squares divisent le globe en 324 grands territoires (10° par 20°), chacun subdivisé en 100 carrés. Des lettres supplémentaires affinent encore ta position en subdivisant chaque carré.",
   },
   gridSquareCalculator: {
     calculator: "Calculateur"
@@ -50,8 +50,7 @@ export default {
   },
   locationError: "Impossible d'accéder à votre localisation",
   useMyLocation: "Utiliser ma position actuelle",
-  or: "OU", // Ajout de la traduction pour "OU" en français
-  betaDescription: "Cet outil est en version beta, si vous voyez des bugs ou des idées d'amélioration, je suis extrêmement preneur et réactif :) Vous pouvez m'envoyer un mail à cette adresse : contact@radionugget.com",
+  or: "OU",
   satellites: {
     explorer: {
       title: "Area Satellite",

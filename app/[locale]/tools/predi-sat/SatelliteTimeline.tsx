@@ -201,6 +201,8 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
             .attr("target", "_blank")
             .style("text-decoration", "none")
             .style("fill", colorMap[d] || "#fff")
+            .style("cursor", "pointer") // Gardons le curseur pointer
+            .style("transition", "all 0.2s ease") // Transition douce pour les effets
             .text(function() {
               if (textNode && (textNode as SVGTextElement).getComputedTextLength() > (margin.left - 30)) {
                 const text = d;
@@ -211,8 +213,20 @@ const SatelliteTimeline: React.FC<TimelineProps> = ({
               }
               return d;
             })
+            .on("mouseover", function() {
+              // Effet au survol - plus subtil
+              d3.select(this)
+                .style("filter", "brightness(1.2)") // Légère luminosité
+                .style("transform", "scale(1.03)") // Très léger zoom
+                .style("transform-origin", "left"); // Zoom depuis la gauche
+            })
+            .on("mouseout", function() {
+              // Retour à l'état normal
+              d3.select(this)
+                .style("filter", "brightness(1)")
+                .style("transform", "scale(1)");
+            })
             .append("title")
-            .text(d);
         }
       });
 
