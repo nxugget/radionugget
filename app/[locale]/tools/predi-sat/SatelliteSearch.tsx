@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useI18n } from "@/locales/client";
 
 interface Satellite {
@@ -8,6 +8,7 @@ interface Satellite {
   id: string;
   category?: string;
   country?: string;
+  transmitters?: { mode: string }[];
 }
 
 interface SatelliteSearchProps {
@@ -17,6 +18,24 @@ interface SatelliteSearchProps {
   favorites: string[];
   onToggleFavorite: (id: string) => void;
   onAddAll?: (satellites: Satellite[]) => void;
+}
+
+const CATEGORIES = [
+  { key: "all", label: "All" },
+  { key: "fm", label: "FM" },
+  { key: "weather", label: "Weather" },
+];
+
+function isWeatherSatellite(sat: Satellite) {
+  const name = sat.name.toLowerCase();
+  return name.includes("noaa") || name.includes("meteor");
+}
+
+function isFMSatellite(sat: Satellite) {
+  if (!sat.transmitters) return false;
+  return sat.transmitters.some((tx) =>
+    tx.mode && tx.mode.toLowerCase().includes("fm")
+  );
 }
 
 export default function SatelliteSearch({
@@ -30,40 +49,130 @@ export default function SatelliteSearch({
   const t = useI18n();
   const [query, setQuery] = useState("");
   const [showFavorites, setShowFavorites] = useState(false);
+  const [category, setCategory] = useState<"all" | "weather" | "fm">("all");
+  const [selectOpen, setSelectOpen] = useState(false);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const filteredSatellites = useMemo(() => {
-    return satellites.filter((sat) => {
+    let filtered = satellites;
+    if (category === "weather") {
+      filtered = filtered.filter(isWeatherSatellite);
+    } else if (category === "fm") {
+      filtered = filtered.filter(isFMSatellite);
+    }
+    return filtered.filter((sat) => {
       const matchesQuery = sat.name.toLowerCase().includes(query.toLowerCase());
       const matchesFavorite = !showFavorites || favorites.includes(sat.id);
       return matchesQuery && matchesFavorite;
     });
-  }, [satellites, query, showFavorites, favorites]);
+  }, [satellites, query, showFavorites, favorites, category]);
+
+  // Gestion ouverture/fermeture du select pour l'animation de la flèche
+  const handleSelectFocus = () => setSelectOpen(true);
+  const handleSelectBlur = () => setSelectOpen(false);
+  const handleSelectClick = () => setSelectOpen((v) => !v);
 
   return (
     <div className="flex flex-col gap-2 sm:gap-3 bg-nottooblack p-2 sm:p-4 rounded-md">
       <div className="flex gap-1 sm:gap-2 items-center">
+        {/* Input recherche */}
         <input
           type="text"
           placeholder={t("satellite.search")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-zinc-700 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-purple text-xs sm:text-base"
+          className="bg-zinc-700 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-purple text-xs sm:text-base"
+          style={{ minHeight: 36, height: 36 }}
         />
+        {/* Liste déroulante catégorie */}
+        <div
+          className="relative"
+          style={{ minWidth: 90, maxWidth: 120, width: "auto" }}
+        >
+          <select
+            ref={selectRef}
+            value={category}
+            onChange={e => setCategory(e.target.value as any)}
+            onFocus={handleSelectFocus}
+            onBlur={handleSelectBlur}
+            onClick={handleSelectClick}
+            className={`
+              appearance-none
+              bg-zinc-700
+              text-white
+              px-2 sm:px-2
+              py-1.5 sm:py-2
+              rounded-md
+              focus:outline-none
+              focus:ring-2
+              focus:ring-purple
+              text-[11px] sm:text-xs
+              transition-colors
+              border border-zinc-700
+              hover:border-purple
+              cursor-pointer
+              w-full
+              font-semibold
+              shadow-none
+              duration-200
+              `}
+            style={{
+              height: 36,
+              minHeight: 36,
+              maxHeight: 40,
+              boxShadow: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              appearance: "none",
+              paddingRight: "2.2em",
+              backgroundImage: "none",
+            }}
+          >
+            {CATEGORIES.map(cat => (
+              <option
+                key={cat.key}
+                value={cat.key}
+                style={{
+                  background: "#18181b",
+                  color: "#fff",
+                  fontWeight: category === cat.key ? "bold" : "normal",
+                  fontSize: "12px",
+                  padding: "6px 10px",
+                }}
+                className={category === cat.key ? "bg-purple text-white" : "bg-zinc-700 text-white"}
+              >
+                {cat.label}
+              </option>
+            ))}
+          </select>
+          {/* Custom caret avec rotation animée */}
+          <span
+            className={`pointer-events-none absolute right-2 top-1/2 transform -translate-y-1/2 text-white transition-transform duration-200
+              ${selectOpen ? "rotate-180" : "rotate-0"}
+            `}
+            style={{ fontSize: "1em" }}
+          >
+            ▼
+          </span>
+        </div>
+        {/* Favoris */}
         <button
           onClick={() => setShowFavorites((v) => !v)}
-          className={`ml-1 sm:ml-2 flex items-center justify-center px-2 sm:px-3 py-1 sm:py-2 rounded-md font-bold transition-colors duration-200 ${
+          className={`flex items-center justify-center px-2 py-1.5 rounded-md font-bold transition-colors duration-200 ${
             showFavorites
               ? "bg-orange text-black"
               : "bg-zinc-800 text-white hover:bg-orange hover:text-black"
           }`}
           title={t("satellite.filterFavorites")}
+          style={{ height: 36, minHeight: 36 }}
         >
           <span className="text-xl">{showFavorites ? "★" : "☆"}</span>
         </button>
+        {/* Add all */}
         <button
           onClick={() => onAddAll && onAddAll(filteredSatellites)}
-          className="ml-1 sm:ml-2 text-xs sm:text-sm font-bold text-white hover:text-orange transition-colors bg-transparent px-1 sm:px-2 py-1 rounded-md"
-          style={{ boxShadow: "none", background: "none" }}
+          className="text-xs sm:text-sm font-bold text-white hover:text-green-400 transition-colors bg-transparent px-1 sm:px-2 py-1.5 rounded-md"
+          style={{ boxShadow: "none", background: "none", height: 36, minHeight: 36 }}
         >
           {t("satellite.addAll")}
         </button>

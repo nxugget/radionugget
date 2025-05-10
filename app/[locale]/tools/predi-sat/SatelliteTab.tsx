@@ -66,15 +66,15 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto bg-nottooblack rounded-md p-2 sm:p-4 text-base sm:text-lg">
-      <table className="w-full min-w-[420px]">
+    <div className="overflow-x-auto bg-nottooblack rounded-md p-2 sm:p-4 text-xs sm:text-lg">
+      <table className="w-full min-w-[340px] sm:min-w-[420px]">
         <thead>
           <tr className="text-center bg-gray-800">
-            <th className="px-2 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Satellite</th>
-            <th className="px-2 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">AOS</th>
-            <th className="px-2 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">LOS</th>
-            <th className="px-2 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Max Élévation</th>
-            <th className="px-2 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Azimuth</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Satellite</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">AOS</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">LOS</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Max Élévation</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Azimuth</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
               className="border-b border-gray-600 text-center"
               style={{ color: colorMap[pass.satelliteName] }}
             >
-              <td className="px-2 sm:px-4 py-1 sm:py-2">
+              <td className="px-1 sm:px-4 py-1 sm:py-2">
                 <Link
                   href={`/${"fr" /* ou dynamique */}/tools/area-sat?satelliteId=${encodeURIComponent(
                     pass.satelliteId
@@ -94,10 +94,10 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
                   <a className="hover:underline">{pass.satelliteName}</a>
                 </Link>
               </td>
-              <td className="px-2 sm:px-4 py-1 sm:py-2">{formatTime(pass.startTime)}</td>
-              <td className="px-2 sm:px-4 py-1 sm:py-2">{formatTime(pass.endTime)}</td>
-              <td className="px-2 sm:px-4 py-1 sm:py-2">{Math.round(pass.maxElevation)}°</td>
-              <td className="px-2 sm:px-4 py-1 sm:py-2">
+              <td className="px-1 sm:px-4 py-1 sm:py-2">{formatTime(pass.startTime)}</td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">{formatTime(pass.endTime)}</td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">{Math.round(pass.maxElevation)}°</td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">
                 {Math.round(pass.aosAzimuth)}° ({getCardinalDirection(pass.aosAzimuth)}) →
                 {Math.round(pass.losAzimuth)}° ({getCardinalDirection(pass.losAzimuth)})
               </td>
