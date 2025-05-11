@@ -1886,7 +1886,7 @@
       {
         "description": "Mode V Imaging",
         "mode": "SSTV",
-        "status": "inactive",
+        "status": "active",
         "uplink": null,
         "downlink": 145800000
       }
@@ -1980,8 +1980,8 @@
         "downlink": 435800000
       },
       {
-        "description": "Mode V/U - BPSK1k2 - Transponder",
-        "mode": "BPSK",
+        "description": "Mode V/U - SSB - Transponder",
+        "mode": "USB",
         "status": "active",
         "uplink": "145910000-145940000",
         "downlink": "435810000-435840000"
