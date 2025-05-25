@@ -8,7 +8,7 @@
       {
         "description": "Mode U 1k2 AFSK TLM",
         "mode": "AFSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437425000
       }
