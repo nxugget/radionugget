@@ -1886,7 +1886,7 @@
       {
         "description": "Mode V Imaging",
         "mode": "SSTV",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145800000
       }
