@@ -6,8 +6,8 @@ export default function Head({ params }: { params: { locale: string } }) {
 
   const isFr = locale.startsWith('fr');
   const title = isFr
-    ? 'Map & Calculateur de Grid Square'
-    : 'Grid Square Calculator & Map';
+    ? 'Map & Calculateur de Grid Square | RadioNugget'
+    : 'Grid Square Calculator & Map | RadioNugget';
   const description = isFr
     ? 'Entrez une adresse pour obtenir son Grid Square, visualisez-la sur une carte interactive, et explorez ses coordonnées.'
     : 'Enter an address to get its Grid Square, view it on an interactive map, and explore its coordinates.';
