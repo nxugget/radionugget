@@ -1539,14 +1539,14 @@
       {
         "description": "Mode U - GMSK9k6 AX.25",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 436915000
       },
       {
         "description": "Mode U - LoRa",
         "mode": "LoRa",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 435575000
       }
