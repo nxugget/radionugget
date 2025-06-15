@@ -596,13 +596,6 @@
     "tle2": "2 47952  97.3980  72.5414 0010307 219.3637 140.6911 16.34906352233436",
     "transmitters": [
       {
-        "description": "Mode X - DVB-S2",
-        "mode": "DVB-S2",
-        "status": "active",
-        "uplink": null,
-        "downlink": 10455000000
-      },
-      {
         "description": "Mode U - GMSK9k6 USP FEC",
         "mode": "GMSK",
         "status": "inactive",
@@ -610,9 +603,16 @@
         "downlink": 435650000
       },
       {
+        "description": "Mode X - DVB-S2",
+        "mode": "DVB-S2",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 10455000000
+      },
+      {
         "description": "Mode U - GMSK2k4 USP FEC",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 435650000
       }
@@ -630,14 +630,14 @@
       {
         "description": "Mode X - DVB-S2",
         "mode": "DVB-S2",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 10465000000
       },
       {
         "description": "Mode U - GMSK2k4 USP FEC",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": 437050000,
         "downlink": 437050000
       }
@@ -1267,21 +1267,21 @@
       {
         "description": "Mode U - GFSK9k6 - AX.25 G3RUH",
         "mode": "GFSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437025000
       },
       {
         "description": "Mode U/U - GFSK9k6 Digipeater",
         "mode": "GFSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": 437025000,
         "downlink": 437025000
       },
       {
         "description": "Mode U - CW Beacon",
         "mode": "CW",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437025000
       }
