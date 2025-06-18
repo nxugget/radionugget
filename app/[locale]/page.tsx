@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     : 'Explore the fascinating world of radio frequencies, satellites, SDR, antennas with simple and clear explanations for all radio and space enthusiasts';
 
   const url = isFr
-    ? 'https://radionugget.com/fr'
+    ? 'https://radionugget.fr/fr'
     : 'https://radionugget.com/en';
     
   const keywords = isFr
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     alternates: {
       languages: {
         'en': 'https://radionugget.com/en',
-        'fr': 'https://radionugget.com/fr',
+        'fr': 'https://radionugget.fr/fr',
         'x-default': 'https://radionugget.com/en',
       },
       canonical: url, 

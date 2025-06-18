@@ -26,17 +26,18 @@ To verify its status, you can use [this site](https://usradioguy.com/meteor-sate
 
 # Time to Listen
 On the antenna side, I use a <SmartLink slug="qfh">QFH</SmartLink> for `137MHz`. It features **left-hand circular polarization**, ideal for METEOR since they transmit with **right-hand circular polarization**.
-For reception, we use [SatDump](https://www.satdump.org/download/). I won’t go into all the configuration details (I’ve already done a tutorial on **SatDump** [here](https://www.satdump.org/download/)), but here’s the gist:
-- First, using the `Tracking` section in SatDump or via [this website](https://www.n2yo.com/?s=33591), check when the satellite will pass by. This section also shows the satellite's current **elevation**.
+For reception, we use [SatDump](https://www.satdump.org/download/). I won’t go into all the configuration details (I’ve already done a tutorial on **SatDump** [here](https://www.satdump.org/download/)).
+
+First, using the `Tracking` section in SatDump or via [my tool](https://www.radionugget.com/fr/tools/predi-sat), check when the satellite will pass by. This section also shows the satellite's current **elevation**.
   
   ![SatDump Tracking](/images/blog/2024/meteor/meteor5.webp)
   
-- In the `Device` section, select your **SDR** receiver, in my case, an [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html), then hit **Start** to begin recording.
-- I recommend adjusting the `FFT Min` and `FFT Max` values in the `FFT` section: set `FFT Min` low enough that noise is barely visible, and then set `FFT Max` to `FFT Min + 30`.
+In the `Device` section, select your **SDR** receiver, in my case, an [SDRPlay RSP1B](https://www.passion-radio.fr/recepteurs-sdr/rsp1-b-2669.html), then hit **Start** to begin recording.
+I recommend adjusting the `FFT Min` and `FFT Max` values in the `FFT` section: set `FFT Min` low enough that noise is barely visible, and then set `FFT Max` to `FFT Min + 30`.
 
   ![SatDump METEOR](/images/blog/2024/meteor/meteor4.webp)
   
-- In the `Processing` section, choose **METEOR M2-x LRPT 72k**. Set `Primary` to `137.900MHz` and `Backup` to `137.100MHz`.  
+In the `Processing` section, choose **METEOR M2-x LRPT 72k**. Set `Primary` to `137.900MHz` and `Backup` to `137.100MHz`.  
 Click **Start** again to begin the decoding process. If everything is set correctly, you should see the signal from **METEOR M2-4** 🛰️!
 To ensure the decoding is going smoothly, check that:
   - The SNR (displayed at the bottom) is ideally **10** or above. Even if it’s **>2**, you should still see something.
