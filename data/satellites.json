@@ -2705,23 +2705,23 @@
     "tle2": "2 49399  97.3784 220.1524 0019079  44.1728 316.1024 15.14541604199795",
     "transmitters": [
       {
-        "description": "Mode V - CW Beacon",
-        "mode": "CW",
+        "description": "Mode V - 9K6 GMSK",
+        "mode": "GMSK",
         "status": "active",
         "uplink": null,
         "downlink": 145875000
       },
       {
-        "description": "Mode U/V - BBS",
-        "mode": "FSK",
+        "description": "Mode U/V (1k2/9k6) - BBS",
+        "mode": "GMSK",
         "status": "active",
         "uplink": 435480000,
         "downlink": 145875000
       },
       {
-        "description": "Mode V - 9K6 GMSK",
-        "mode": "GMSK",
-        "status": "active",
+        "description": "Mode V - CW Beacon",
+        "mode": "CW",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145875000
       }
