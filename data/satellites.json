@@ -1639,13 +1639,6 @@
         "downlink": 2265000000
       },
       {
-        "description": "Mode V/U FM - Voice Repeater",
-        "mode": "FM",
-        "status": "active",
-        "uplink": 145990000,
-        "downlink": 437800000
-      },
-      {
         "description": "Mode V/V APRS",
         "mode": "AFSK",
         "status": "inactive",
@@ -1889,6 +1882,13 @@
         "status": "inactive",
         "uplink": null,
         "downlink": 145800000
+      },
+      {
+        "description": "Mode V/U FM - Voice Repeater CTCSS 67.0 Hz",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145990000,
+        "downlink": 437800000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/ISS.jpg",
@@ -2705,13 +2705,6 @@
     "tle2": "2 49399  97.3788 226.9460 0018391  20.9300 339.2682 15.14590055200856",
     "transmitters": [
       {
-        "description": "Mode V - 9K6 GMSK",
-        "mode": "GMSK",
-        "status": "active",
-        "uplink": null,
-        "downlink": 145875000
-      },
-      {
         "description": "Mode U/V (1k2/9k6) - BBS",
         "mode": "GMSK",
         "status": "active",
@@ -2722,6 +2715,13 @@
         "description": "Mode V - CW Beacon",
         "mode": "CW",
         "status": "inactive",
+        "uplink": null,
+        "downlink": 145875000
+      },
+      {
+        "description": "Mode V - 9K6 GMSK",
+        "mode": "FSK AX.25 G3RUH",
+        "status": "active",
         "uplink": null,
         "downlink": 145875000
       }
