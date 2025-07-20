@@ -507,13 +507,6 @@
     "tle2": "2 32791  97.7292 181.1763 0004978  54.5784 305.5914 15.19458995936593",
     "transmitters": [
       {
-        "description": "Mode U TLM",
-        "mode": "AFSK",
-        "status": "active",
-        "uplink": null,
-        "downlink": 437485000
-      },
-      {
         "description": "Mode U Digi",
         "mode": "FMN",
         "status": "active",
@@ -533,6 +526,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 437485700
+      },
+      {
+        "description": "Mode U TLM",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437485000
       },
       {
         "description": "CW",
@@ -1877,18 +1877,18 @@
         "downlink": 437800000
       },
       {
-        "description": "Mode V Imaging",
-        "mode": "SSTV",
-        "status": "inactive",
-        "uplink": null,
-        "downlink": 145800000
-      },
-      {
         "description": "Mode V/U FM - Voice Repeater CTCSS 67.0 Hz",
         "mode": "FM",
         "status": "active",
         "uplink": 145990000,
         "downlink": 437800000
+      },
+      {
+        "description": "Mode V Imaging",
+        "mode": "SSTV",
+        "status": "active",
+        "uplink": null,
+        "downlink": 145800000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/ISS.jpg",
@@ -2000,21 +2000,21 @@
       {
         "description": "CW Beacon",
         "mode": "CW",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145950000
       },
       {
         "description": "BPSK Telemetry",
         "mode": "BPSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145950000
       },
       {
         "description": "BPSK TLM IQ recording usage",
         "mode": "BPSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145950000
       }
