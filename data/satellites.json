@@ -2067,6 +2067,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 436200000
+      },
+      {
+        "description": "AX.100 2400 baud",
+        "mode": "FSK AX.100 Mode 5",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436200000
       }
     ],
     "image": "",
