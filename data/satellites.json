@@ -2616,25 +2616,25 @@
     "tle2": "2 58261  97.3922 318.3866 0015160 267.1721  92.7843 16.39664098 99160",
     "transmitters": [
       {
+        "description": "Mode V/V - GFSK9k6 AX.25 G3RUH",
+        "mode": "GFSK",
+        "status": "inactive",
+        "uplink": 145925000,
+        "downlink": 145925000
+      },
+      {
         "description": "Mode U/U - GFSK9k6 AX.25 G3RUH",
         "mode": "GFSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": 436680000,
         "downlink": 436680000
       },
       {
         "description": "Mode U - CW",
         "mode": "CW",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 436680000
-      },
-      {
-        "description": "Mode V/V - GFSK9k6 AX.25 G3RUH",
-        "mode": "GFSK",
-        "status": "inactive",
-        "uplink": 145925000,
-        "downlink": 145925000
       }
     ],
     "image": "satellites/veronika_G6OopQK.jpg",
