@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       staticPages.push({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: new Date(),
+        priority: 0.8,
       });
     }
   }
@@ -29,9 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const formattedSlug = post.slug.replace(/\/\d{4}(?=\/)/, '');
       postPages.push({
         url: `${baseUrl}/${locale}${formattedSlug}`,
-        lastModified: new Date(post.metadata.date),
-        changeFrequency: 'weekly',
-        priority: 0.8,
+        priority: 1.0,
       });
     }
   }
@@ -44,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}/${locale}/tools/area-sat?satelliteId=${encodeURIComponent(satellite.id)}`,
         lastModified: new Date(),
         changeFrequency: 'daily',
-        priority: 0.7,
+        priority: 0.9,
       });
     }
   }
