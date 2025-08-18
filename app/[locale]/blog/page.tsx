@@ -105,9 +105,7 @@ export default async function Blog({
                         {locale === "fr" && metadata.title_fr ? metadata.title_fr : metadata.title}
                       </CardItem>
 
-                      <CardItem as="p" translateZ={80} className="text-gray-400 text-sm mt-1">
-                        {new Date(metadata.date).toLocaleDateString('fr-FR')}
-                      </CardItem>
+                    
 
                       <CardItem translateZ={240} className="w-full mt-2">
                         <Image

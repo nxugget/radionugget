@@ -12,7 +12,6 @@ import dynamic from "next/dynamic";
 import ZoomImage from "../ZoomImage";
 import Head from "./head";
 
-// Génération statique des slugs pour Next.js App Router
 export async function generateStaticParams() {
   const localesDir = path.join(process.cwd(), "content");
   const locales = fs.readdirSync(localesDir).filter((locale) =>
@@ -38,7 +37,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-// Extraction du contenu et metadata à build-time
 async function getArticleData(locale: string, slug: string) {
   const contentDir = path.join(process.cwd(), "content", locale);
   const years = fs.readdirSync(contentDir).filter((year) =>
@@ -63,7 +61,6 @@ const DynamicTypewriterEffect = dynamic(() => import("@/src/components/features/
 export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
 
-  // Utilise la fonction statique pour récupérer les données
   const article = await getArticleData(params.locale, params.slug);
 
   if (!article) return <p className="text-white text-center">404</p>;
@@ -82,7 +79,7 @@ export default async function Article({ params }: { params: { locale: string; sl
                 fill 
                 sizes="(max-width: 768px) 100vw, 1200px"
                 className="object-cover"
-                quality={60} // Baisse la qualité pour accélérer le FCP
+                quality={60} 
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
               />
@@ -97,7 +94,6 @@ export default async function Article({ params }: { params: { locale: string; sl
                   {metadata.title}
                 </h1>
                 <div className="border-b-4 border-purple w-1/2 mx-auto mt-2"></div>
-                <p className="text-base md:text-2xl opacity-80 text-white mt-2">{metadata.date}</p>
               </div>
             </div>
           </div>
