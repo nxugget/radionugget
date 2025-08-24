@@ -1166,13 +1166,6 @@
     "tle2": "2 39430  97.6759  88.6955 0130959 316.0528  43.0321 14.67893123626086",
     "transmitters": [
       {
-        "description": "4k8 AFSK",
-        "mode": "AFSK",
-        "status": "active",
-        "uplink": null,
-        "downlink": 437250000
-      },
-      {
         "description": "PE0SAT - CW Beacon",
         "mode": "CW",
         "status": "inactive",
@@ -1185,6 +1178,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 8198000000
+      },
+      {
+        "description": "4k8 GMSK",
+        "mode": "GMSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437250000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/GOMX1_AutoE.jpeg",
@@ -2295,7 +2295,22 @@
     "name": "TEVEL2-2",
     "tle1": "1 63218U 25052J   25234.16889916  .00009740  00000+0  43182-3 0  9998\r",
     "tle2": "2 63218  97.4203 127.0649 0005873 100.6201 259.5697 15.21792940 24435",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH - Beacon",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US",
     "names": []
@@ -2305,7 +2320,22 @@
     "name": "TEVEL2-3",
     "tle1": "1 63219U 25052K   25234.49814594  .00009038  00000+0  40104-3 0  9996\r",
     "tle2": "2 63219  97.4200 127.3877 0005817  99.4881 260.7012 15.21788056 24489",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "Mode U - BPSK9k6 G3RUH",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 436400000
+      },
+      {
+        "description": "Mode V/U - FM Transponder - Beacon",
+        "mode": "FM",
+        "status": "active",
+        "uplink": 145970000,
+        "downlink": 436400000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US",
     "names": []
