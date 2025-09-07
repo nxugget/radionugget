@@ -514,13 +514,6 @@
         "downlink": 437485000
       },
       {
-        "description": "Mode U SSTV",
-        "mode": "SSTV",
-        "status": "active",
-        "uplink": null,
-        "downlink": 437485000
-      },
-      {
         "description": "PE0SAT - CW Beacon",
         "mode": "CW",
         "status": "active",
@@ -537,6 +530,13 @@
       {
         "description": "CW",
         "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437485000
+      },
+      {
+        "description": "Mode U SSTV",
+        "mode": "SSTV",
         "status": "active",
         "uplink": null,
         "downlink": 437485000
@@ -836,7 +836,7 @@
       {
         "description": "Mode U - GMSK9k6",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437100000
       }
