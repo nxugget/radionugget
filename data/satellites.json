@@ -770,8 +770,8 @@
     "tle2": "2 43879  97.5878 179.6151 0007703 173.5745 186.5598 15.34071989369339",
     "transmitters": [
       {
-        "description": "MODE U/U FM VOICE",
-        "mode": "FM",
+        "description": "MODE U/U DSTAR VOICE",
+        "mode": "DSTAR",
         "status": "active",
         "uplink": 437325000,
         "downlink": 435525000
@@ -779,13 +779,6 @@
       {
         "description": "GMSK4k8 Mobitex TLM",
         "mode": "GMSK",
-        "status": "active",
-        "uplink": null,
-        "downlink": 435700000
-      },
-      {
-        "description": "TLM",
-        "mode": "FM",
         "status": "active",
         "uplink": null,
         "downlink": 435700000
@@ -802,18 +795,18 @@
     "tle2": "2 43881  97.6041 183.2131 0004233 204.4958 155.6084 15.35639957369488",
     "transmitters": [
       {
-        "description": "MODE U/U FM VOICE",
-        "mode": "FM",
-        "status": "active",
-        "uplink": 437325000,
-        "downlink": 435525000
-      },
-      {
         "description": "TLM",
         "mode": "FM",
         "status": "inactive",
         "uplink": null,
         "downlink": 435700000
+      },
+      {
+        "description": "MODE U/U DSTAR VOICE",
+        "mode": "DSTAR",
+        "status": "active",
+        "uplink": 437325000,
+        "downlink": 435525000
       },
       {
         "description": "GMSK4k8 Mobitex TLM",
@@ -1886,7 +1879,7 @@
       {
         "description": "Mode V Imaging",
         "mode": "SSTV",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145800000
       }
@@ -2774,13 +2767,6 @@
     "tle2": "2 25338  98.5316 285.7580 0011265  62.3886 297.8437 14.27018074422774",
     "transmitters": [
       {
-        "description": "APT",
-        "mode": "APT",
-        "status": "active",
-        "uplink": null,
-        "downlink": 137620000
-      },
-      {
         "description": "SARSAT L-Band",
         "mode": "BPSK",
         "status": "active",
@@ -2821,6 +2807,13 @@
         "status": "inactive",
         "uplink": null,
         "downlink": 137500000
+      },
+      {
+        "description": "APT",
+        "mode": "APT",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 137620000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/satellite_NOAA-15.jpg",
@@ -2833,13 +2826,6 @@
     "tle1": "1 28654U 05018A   25263.04025645  .00000090  00000+0  71129-4 0  9995\r",
     "tle2": "2 28654  98.8365 341.3379 0014034 194.6076 165.4692 14.13638483 48142",
     "transmitters": [
-      {
-        "description": "APT Downlink",
-        "mode": "APT",
-        "status": "active",
-        "uplink": null,
-        "downlink": 137912500
-      },
       {
         "description": "ARGOS-3 A-DCS 465.9875MHz",
         "mode": "BPSK",
@@ -2888,6 +2874,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 137912500
+      },
+      {
+        "description": "APT Downlink",
+        "mode": "APT",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 137912500
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/NOAA-18_or_19_rendering.jpg",
@@ -2900,13 +2893,6 @@
     "tle1": "1 33591U 09005A   25263.13402682  .00000106  00000+0  80209-4 0  9998\r",
     "tle2": "2 33591  98.9880 328.3701 0014748  75.7176 284.5633 14.13408321856339",
     "transmitters": [
-      {
-        "description": "APT Downlink",
-        "mode": "APT",
-        "status": "active",
-        "uplink": null,
-        "downlink": 137100000
-      },
       {
         "description": "ARGOS-3 A-DCS 465.9875MHz",
         "mode": "BPSK PMT-A3",
@@ -2957,9 +2943,9 @@
         "downlink": 1702500000
       },
       {
-        "description": "APT IQ recording usage",
-        "mode": "FSK",
-        "status": "active",
+        "description": "APT Downlink",
+        "mode": "APT",
+        "status": "inactive",
         "uplink": null,
         "downlink": 137100000
       }
