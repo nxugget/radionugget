@@ -1879,16 +1879,9 @@
       {
         "description": "Mode V Imaging",
         "mode": "SSTV",
-        "status": "inactive",
-        "uplink": null,
-        "downlink": 145800000
-      },
-      {
-        "description": "Unknown Transmission",
-        "mode": "FM",
         "status": "active",
         "uplink": null,
-        "downlink": 437025000
+        "downlink": 145800000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/ISS.jpg",
@@ -2094,18 +2087,18 @@
         "downlink": 436750000
       },
       {
-        "description": "Mode S - Transmitter",
-        "mode": "FM",
-        "status": "active",
-        "uplink": null,
-        "downlink": 2202000000
-      },
-      {
         "description": "Mode U - GMSK38k4 - AX.25",
         "mode": "GMSK",
         "status": "active",
         "uplink": null,
         "downlink": 436750000
+      },
+      {
+        "description": "Mode S - Transmitter",
+        "mode": "BPSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 2202000000
       }
     ],
     "image": "satellites/ROBUSTA-3A.png",
