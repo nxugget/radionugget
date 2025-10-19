@@ -1936,14 +1936,14 @@
       {
         "description": "Mode U - Beacon GMSK9k6 AX.100",
         "mode": "MSK AX.100 Mode 5",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 435190000
       },
       {
         "description": "Mode U/U - Digipeater GMSK1k2 AX.100",
         "mode": "MSK AX.100 Mode 5",
-        "status": "active",
+        "status": "inactive",
         "uplink": 435310000,
         "downlink": 435190000
       }
@@ -2605,7 +2605,7 @@
       {
         "description": "Mode U - FSK1k2 - AX.25",
         "mode": "FSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437405000
       }
@@ -2712,21 +2712,21 @@
       {
         "description": "CW Beacon",
         "mode": "CW",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145910000
       },
       {
         "description": "Linear Transponder",
         "mode": "USB",
-        "status": "active",
+        "status": "inactive",
         "uplink": "435270000-435290000",
         "downlink": "145915000-145935000"
       },
       {
         "description": "Mode U GMSK4k8 - TLM",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 145893000
       }
