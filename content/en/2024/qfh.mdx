@@ -7,7 +7,7 @@ tags: ["radio"]
 slug: "qfh"
 ---
 In my very first project to <SmartLink slug="noaa">receive satellite images</SmartLink>, I built a **V-dipole** antenna. It’s very easy to make and produces convincing results.  
-The downside ? All those gray interference bands on every image.  
+The downside? All those gray interference bands on every image.  
 I tried countless fixes to remove them but to no avail, so I decided to switch to a **quadrifilar** antenna, or **QFH** (**Q**uadri**F**ilar **H**elicoidal). Let’s see if this solves the problem :)
 
 # How a QFH Antenna Works
@@ -33,7 +33,7 @@ You’ll get an approximate schematic. Note the `-0.5cm` on the **top 4 wires on
 ![QFH Antenna Schematic](/images/blog/2024/qfh/qfh1.svg)
 
 ## DIY Build
-Let’s start by listing the supplies (excluding tools). For the copper, I used spare copper crowns from air conditioning work. It’s **annealed copper**, so it’s very malleable.
+Let’s start by listing the supplies (excluding tools). For the copper, I used spare copper crowns from air conditioning work. It’s **annealed copper**, so it’s very malleable. Sorry, the drawings are in French for now. 
 
 ![DIY QFH Parts List](/images/blog/2024/qfh/qfh2.svg)
 
@@ -76,7 +76,7 @@ A **balun** converts from **balanced** to **unbalanced** (or vice versa), resolv
 
 ![QFH Balun](/images/blog/2024/qfh/qfh15.webp)
 This is a **1:1 balun**. The first “1” represents the impedance on the balanced side (the antenna, approximately `50Ω`), and the second “1” is for the unbalanced side (the cable, also `50Ω`). In a 1:1 balun, these two impedances are equal.  
-The choice of **4 turns** is not absolute but appears optimal for [VHF waves](https://en.wikipedia.org/wiki/Très_haute_fréquence).
+The choice of **4 turns** is not absolute but appears optimal for [VHF waves](https://en.wikipedia.org/wiki/Very_high_frequency).
 
 ### Wiring
 There are several ways to connect the rods. Here’s a schematic of the proper wiring:
