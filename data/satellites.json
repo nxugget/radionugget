@@ -216,13 +216,6 @@
         "downlink": 437200000
       },
       {
-        "description": "FM Transponder",
-        "mode": "FM",
-        "status": "active",
-        "uplink": 144350000,
-        "downlink": 437200000
-      },
-      {
         "description": "APRS Digipeater",
         "mode": "AFSK",
         "status": "active",
@@ -241,6 +234,13 @@
         "mode": "BPSK",
         "status": "active",
         "uplink": null,
+        "downlink": 437200000
+      },
+      {
+        "description": "FM Transponder",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": 144350000,
         "downlink": 437200000
       }
     ],
@@ -1472,7 +1472,15 @@
     "name": "HYDRA-T",
     "tle1": "1 62692U 25009CM  25304.15242052  .00121536  00000+0  24133-2 0  9998\r",
     "tle2": "2 62692  97.3967  25.7062 0003246 278.4102  81.6780 15.46536160 44183",
-    "transmitters": [],
+    "transmitters": [
+      {
+        "description": "TLM",
+        "mode": "FSK",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437780000
+      }
+    ],
     "image": "satellites/transit-o__1.jpg",
     "country": "US",
     "names": []
