@@ -845,13 +845,6 @@
     "tle2": "2 58470  97.3304  36.0765 0010794 270.9690  89.0371 16.36702678108938",
     "transmitters": [
       {
-        "description": "HF Transmitter",
-        "mode": "FM",
-        "status": "active",
-        "uplink": null,
-        "downlink": 14099000
-      },
-      {
         "description": "Mode U - 2k4 Transmitter",
         "mode": "GMSK",
         "status": "inactive",
@@ -859,9 +852,16 @@
         "downlink": 436500000
       },
       {
+        "description": "HF Transmitter",
+        "mode": "FM",
+        "status": "inactive",
+        "uplink": null,
+        "downlink": 14099000
+      },
+      {
         "description": "Mode U - 9k6 Transmitter",
         "mode": "GMSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 436500000
       }
