@@ -2552,6 +2552,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 437625000
+      },
+      {
+        "description": "Mode U - CW",
+        "mode": "CW",
+        "status": "active",
+        "uplink": null,
+        "downlink": 437625000
       }
     ],
     "image": "satellites/umka.jpeg",
