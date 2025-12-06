@@ -28,7 +28,7 @@ export function ProjectsGrid({ title, items, priorityCount = 2 }: ProjectsGridPr
       id="projects-section"
       className="relative flex flex-col items-center z-0 w-full justify-start h-auto sm:h-screen bg-black overflow-visible sm:overflow-hidden"
     >
-      <div className="h-16 sm:h-18 md:h-20" />
+      <div className="h-24 sm:h-18 md:h-20" />
       <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-6xl font-bold text-white font-alien tracking-wide z-10 mb-4 sm:mb-4 md:mb-5 text-center px-6 drop-shadow-[0_6px_18px_rgba(0,0,0,0.6)] flex-shrink-0">
         {title}
       </h2>

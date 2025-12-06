@@ -7,7 +7,7 @@ import { ProjectsGrid } from "./ProjectsGrid";
 import { HeroSection } from "./HeroSection";
 
 export default function Homepage({ locale }: { locale: string }) {
-  const { scrollPhase, step, passed, triggerScrollDown } = useScroll();
+  const { scrollPhase, step, passed, triggerScrollDown, isTouchDevice } = useScroll();
   const t = useI18n();
 
   const handleScrollClick = () => {
@@ -65,6 +65,8 @@ export default function Homepage({ locale }: { locale: string }) {
 
   // Gère le scroll body ET html selon le scrollPhase (mobile)
   useEffect(() => {
+    if (isTouchDevice) return; // Sur mobile, laisser le scroll natif
+
     if (typeof window !== "undefined") {
       const html = document.documentElement;
       if (scrollPhase !== 0) {
@@ -128,7 +130,7 @@ export default function Homepage({ locale }: { locale: string }) {
       }
     }
 
-    // Empêche le scroll natif sur mobile pendant l'animation
+    // Empêche le scroll natif pendant l'animation (desktop)
     const preventTouchMove = (e: TouchEvent) => {
       if (scrollPhase !== 0) {
         e.preventDefault();
@@ -168,7 +170,7 @@ export default function Homepage({ locale }: { locale: string }) {
       // Retire le listener
       window.removeEventListener("touchmove", preventTouchMove);
     };
-  }, [scrollPhase]);
+  }, [scrollPhase, isTouchDevice]);
 
   // Scroll automatique vers la section projets dès scrollPhase 3, sinon vers space-explore ou top
   useEffect(() => {

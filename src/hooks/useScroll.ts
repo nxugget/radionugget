@@ -6,6 +6,23 @@ export function useScroll() {
   const [step, setStep] = useState(0); 
   const [passed, setPassed] = useState(false); 
   const scrollLocked = useRef(false); 
+  const [isTouchDevice, setIsTouchDevice] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches
+    );
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const touch =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches;
+    setIsTouchDevice(touch);
+  }, []);
 
   const lockScroll = () => {
     scrollLocked.current = true;
@@ -46,13 +63,15 @@ export function useScroll() {
   };
 
   useEffect(() => {
+    if (isTouchDevice) return;
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
-  }, [scrollPhase]);
+  }, [scrollPhase, isTouchDevice]);
 
   useEffect(() => {
+    // Touch logic needed on mobile to trigger phases but must not block native scroll
     let touchStartY: number | null = null;
     let touchHandled = false;
     let touchDeltaY = 0;
@@ -68,15 +87,11 @@ export function useScroll() {
       }
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
+    const handleTouchMove = (_e: TouchEvent) => {
       if (touchStartY === null || touchHandled) return;
-      touchDeltaY = touchStartY - e.touches[0].clientY;
-      // Dès qu'il y a un mouvement vertical, on bloque le scroll natif
+      touchDeltaY = touchStartY - _e.touches[0].clientY;
       if (!hasMoved && Math.abs(touchDeltaY) > 2) {
         hasMoved = true;
-      }
-      if (hasMoved || scrollPhase !== 0) {
-        e.preventDefault();
       }
     };
 
@@ -129,6 +144,21 @@ export function useScroll() {
   }, [scrollPhase]);
 
   const triggerScrollDown = () => {
+    if (isTouchDevice) {
+      // Mobile: mimic desktop behavior with phases
+      if (scrollPhase === 0) {
+        setScrollPhase(1);
+        setStep(1);
+        setPassed(true);
+      } else if (scrollPhase === 1) {
+        setScrollPhase(3);
+        const projectsSection = document.getElementById("projects-section");
+        if (projectsSection) {
+          projectsSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+      return;
+    }
     if (scrollLocked.current) return;
     if (scrollPhase === 0) {
       setScrollPhase(1);
@@ -141,5 +171,5 @@ export function useScroll() {
     }
   };
 
-  return { scrollPhase, step, passed, triggerScrollDown };
+  return { scrollPhase, step, passed, triggerScrollDown, isTouchDevice };
 }
