@@ -17,7 +17,10 @@ const ScrollToTopButton = () => {
 
   return (
     <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() => {
+        if (navigator.vibrate) navigator.vibrate(50);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`fixed bottom-14 right-0 h-16 w-8 sm:h-20 sm:w-10 flex items-center justify-center 

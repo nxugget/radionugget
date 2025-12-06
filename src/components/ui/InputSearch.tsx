@@ -33,13 +33,15 @@ const InputSearch = forwardRef<HTMLFormElement, InputSearchProps>(
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onFocus={onFocus} // Ajout de l'événement onFocus
+          onFocus={onFocus}
+          aria-label={placeholder || "Search"}
           className={`bg-gray-700 text-white ${textSize} rounded-full pl-4 ${showButton ? "pr-12" : "pr-4"} py-2 ${inputWidthClass} focus:outline-none focus:ring-1 focus:ring-purple focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
         />
         {showButton && (
           <button
             type="submit"
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-purple text-white rounded-full px-3 py-1 transition-colors duration-200 hover:bg-white hover:text-purple"
+            aria-label="Search"
           >
             {buttonContent}
           </button>

@@ -13,54 +13,29 @@ export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // MOBILE MENU STATE
   let timeoutRef: NodeJS.Timeout | null = null;
 
-  // New state for language dropdown
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const langTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const pathname = usePathname() || ""; // Default to empty string if null
+  const langDropdownDesktopRef = useRef<HTMLDivElement | null>(null);
+  const langDropdownMobileRef = useRef<HTMLDivElement | null>(null);
+  
+  const pathname = usePathname() || "";
   const currentLocale = pathname.startsWith("/fr") ? "fr" : "en";
+  const flagSrc = (locale: string) => `/images/flags/${locale === "en" ? "gb" : locale}.png`;
 
-  // Ajoute ce mapping juste après la déclaration de currentLocale
-  const flagSrc = (locale: string) => {
-    if (locale === "en") return "/images/flags/gb.png";
-    if (locale === "fr") return "/images/flags/fr.png";
-    return `/images/flags/${locale}.png`;
-  };
-
-  // Indicator states for the smooth navigation effect
   const [indicatorStyle, setIndicatorStyle] = useState({
     left: 0,
     width: 0,
     display: "none"
   });
   const navLinksRef = useRef<HTMLDivElement>(null);
-
-  // Function to generate the new path by replacing the language prefix
-  const getNewLocalePath = (targetLocale: string) => {
-    let rest = pathname;
-    if (pathname.startsWith("/fr") || pathname.startsWith("/en"))
-      rest = pathname.slice(3) || "/";
-    return `/${targetLocale}${rest}`;
-  };
-
-  // Nouvelle reference pour le Tools menu
   const toolsTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const openToolsMenu = () => {
-    if (timeoutRef) clearTimeout(timeoutRef);
-    setIsAnimating(false);
-    setIsToolsOpen(true);
+  const getNewLocalePath = (targetLocale: string) => {
+    const rest = pathname.startsWith("/fr") || pathname.startsWith("/en") 
+      ? pathname.slice(3) || "/" 
+      : pathname;
+    return `/${targetLocale}${rest}`;
   };
-
-  const closeToolsMenu = () => {
-    setIsAnimating(true);
-    timeoutRef = setTimeout(() => {
-      setIsToolsOpen(false);
-      setIsAnimating(false);
-    }, 500);
-  };
-
-  const langDropdownDesktopRef = useRef<HTMLDivElement | null>(null); // Desktop language dropdown ref
-  const langDropdownMobileRef = useRef<HTMLDivElement | null>(null); // Mobile language dropdown ref
 
   // Close the language dropdown when clicking outside or toggling the mobile menu
   useEffect(() => {
@@ -166,6 +141,7 @@ export const Navbar = () => {
                 href="/"
                 className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
+                aria-label={t("navbar.home")}
               >
                 {t("navbar.home")}
               </Link>
@@ -173,6 +149,7 @@ export const Navbar = () => {
                 href="/blog"
                 className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
+                aria-label={t("navbar.blog")}
               >
                 {t("navbar.blog")}
               </Link>
@@ -192,6 +169,8 @@ export const Navbar = () => {
                 <button 
                   className="text-xl font-medium flex items-center gap-1 transition-colors duration-300 hover:text-purple-400 z-10"
                   onMouseEnter={handleLinkHover}
+                  aria-label={`${t("navbar.tools")} menu`}
+                  aria-expanded={isToolsOpen}
                 >
                   {t("navbar.tools")}
                   <svg

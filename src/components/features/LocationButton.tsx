@@ -291,11 +291,19 @@ const LocationButton: FC<LocationButtonProps> = ({
   className = "",
   size = 40
 }) => {
+  const handleClick = () => {
+    // Vibration haptic feedback
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+    onClick();
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       disabled={loading}
-      className={`bg-purple text-white rounded-full flex items-center justify-center transition-colors duration-200 hover:bg-white hover:text-purple disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+      className={`bg-purple text-white rounded-full flex items-center justify-center transition-colors duration-200 hover:bg-white hover:text-purple disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 ${className}`}
       title={title}
       style={{ 
         width: `${size}px`, 

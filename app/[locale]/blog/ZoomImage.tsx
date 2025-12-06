@@ -15,7 +15,8 @@ export default function ZoomImage(props: ZoomImageProps) {
   const { src, alt, ...rest } = props;
 
   useEffect(() => {
-    document.body.style.overflow = modalVisible ? "hidden" : "";
+    if (!modalVisible) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
