@@ -8,7 +8,6 @@ import SmartLink from "../SmartLink";
 import ScrollToTopButton from "../ScrollToTopButton"; 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import dynamic from "next/dynamic";
 import ZoomImage from "../ZoomImage";
 import Head from "./head";
 
@@ -55,8 +54,6 @@ async function getArticleData(locale: string, slug: string) {
   }
   return null;
 }
-
-const DynamicTypewriterEffect = dynamic(() => import("@/src/components/features/Typewritter").then(mod => mod.TypewriterEffectSmooth), { ssr: false });
 
 export default async function Article({ params }: { params: { locale: string; slug: string } }) {
   if (!params?.slug) return <p className="text-white text-center">404</p>;
