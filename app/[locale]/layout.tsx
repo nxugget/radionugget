@@ -1,13 +1,12 @@
 import "@/app/styles/globals.css";
 import { Navbar } from "@/src/components/ui/Navbar";
-import { StarsBackground } from "@/src/components/ui/StarsBackground";
-import { ShootingStars } from "@/src/components/ui/ShootingStars";
-import { BlackHole } from "@/src/components/ui/BlackHole";
+import { BackgroundLayer } from "@/src/components/ui/BackgroundLayer";
 import type { ReactNode } from "react";
 import { I18nProviderClient } from "@/locales/client";
 import { Footer } from "@/src/components/ui/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { poppins, roboto, firaCode, alien } from "@/src/lib/fonts";
 
 export default async function RootLayout({
   params,
@@ -19,12 +18,19 @@ export default async function RootLayout({
   const { locale } = await params;
 
   return (
-    <html lang={locale} className="min-h-screen bg-black">
+    <html
+      lang={locale}
+      className="min-h-screen bg-black"
+      style={{
+        ...poppins.style,
+        ...(roboto.style.fontFamily && { "--font-roboto": roboto.style.fontFamily }),
+        ...(firaCode.style.fontFamily && { "--font-fira-code": firaCode.style.fontFamily }),
+        ...(alien.style.fontFamily && { "--font-alien": alien.style.fontFamily }),
+      } as React.CSSProperties}
+    >
       <body className="relative min-h-screen bg-transparent">
         {/* Background layers */}
-        <StarsBackground className="absolute inset-0 z-[-30]" />
-        <ShootingStars className="absolute inset-0 z-[-20]" />
-        <BlackHole className="absolute inset-0 z-[-10]" />
+        <BackgroundLayer />
 
         {/* Foreground elements */}
         <I18nProviderClient locale={locale}>

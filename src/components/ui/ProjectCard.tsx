@@ -17,7 +17,7 @@ export function ProjectCard({
   image,
   label,
   priority = false,
-  sizes = "(max-width: 480px) 90vw, (max-width: 768px) 45vw, 30vw",
+  sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   className = "",
 }: ProjectCardProps) {
   return (
@@ -33,6 +33,7 @@ export function ProjectCard({
         className="object-cover transition-transform duration-700 group-hover:scale-110"
         sizes={sizes}
         priority={priority}
+        quality={85}
       />
       <div className="absolute inset-0 bg-black/25 transition-colors duration-300 group-hover:bg-black/35" />
       <div className="absolute inset-0 flex items-center justify-center text-center px-4">
@@ -48,3 +49,4 @@ export function ProjectCard({
     </Link>
   );
 }
+

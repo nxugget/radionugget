@@ -49,7 +49,13 @@ export default function ZoomImage(props: ZoomImageProps) {
   return (
     <>
       <div onClick={handleOpen} className="cursor-pointer">
-        <Image src={src} alt={alt || "Image"} {...rest} />
+        <Image 
+          src={src} 
+          alt={alt || "Image"} 
+          {...rest}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8VAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
+        />
       </div>
       {modalVisible && (
         <div
@@ -67,6 +73,7 @@ export default function ZoomImage(props: ZoomImageProps) {
               alt={alt || "Image"} 
               {...rest} 
               quality={100}
+              priority
               className="object-contain"
             />
           </div>
