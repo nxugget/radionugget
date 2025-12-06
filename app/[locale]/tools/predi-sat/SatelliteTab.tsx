@@ -70,11 +70,21 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
       <table className="w-full min-w-[340px] sm:min-w-[420px]">
         <thead>
           <tr className="text-center bg-gray-800">
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Satellite</th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">AOS</th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">LOS</th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Max Élévation</th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">Azimuth</th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+              Satellite
+            </th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+              AOS
+            </th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+              LOS
+            </th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+              Max Élévation
+            </th>
+            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+              Azimuth
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -89,17 +99,25 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
                   href={`/${"fr" /* ou dynamique */}/tools/area-sat?satelliteId=${encodeURIComponent(
                     pass.satelliteId
                   )}`}
-                  legacyBehavior
+                  className="hover:brightness-125 transition-all duration-200"
                 >
-                  <a className="hover:brightness-125 transition-all duration-200">{pass.satelliteName}</a>
+                  {pass.satelliteName}
                 </Link>
               </td>
-              <td className="px-1 sm:px-4 py-1 sm:py-2">{formatTime(pass.startTime)}</td>
-              <td className="px-1 sm:px-4 py-1 sm:py-2">{formatTime(pass.endTime)}</td>
-              <td className="px-1 sm:px-4 py-1 sm:py-2">{Math.round(pass.maxElevation)}°</td>
               <td className="px-1 sm:px-4 py-1 sm:py-2">
-                {Math.round(pass.aosAzimuth)}° ({getCardinalDirection(pass.aosAzimuth)}) →
-                {Math.round(pass.losAzimuth)}° ({getCardinalDirection(pass.losAzimuth)})
+                {formatTime(pass.startTime)}
+              </td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">
+                {formatTime(pass.endTime)}
+              </td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">
+                {Math.round(pass.maxElevation)}°
+              </td>
+              <td className="px-1 sm:px-4 py-1 sm:py-2">
+                {Math.round(pass.aosAzimuth)}° (
+                {getCardinalDirection(pass.aosAzimuth)}) →
+                {Math.round(pass.losAzimuth)}° (
+                {getCardinalDirection(pass.losAzimuth)})
               </td>
             </tr>
           ))}

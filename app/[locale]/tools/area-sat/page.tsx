@@ -5,9 +5,8 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation"; // Ad
 import SatelliteSearch from "../predi-sat/SatelliteSearch";
 import Link from "next/link";
 import PolarChart from "./PolarChart";
-import AreaSatMap from "./SatMap"; // Renamed import
+import dynamic from "next/dynamic";
 import TLEDisplay from "./tle";
-import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getFavorites, setFavorites } from "@/src/lib/favorites";
 import { getSatellites } from "@/src/lib/satelliteAPI";
 import { getGridSquareCoords } from "@/src/lib/gridSquare";
@@ -15,6 +14,16 @@ import { twoline2satrec, propagate, gstime, eciToEcf, ecfToLookAngles, EciVec3 }
 import { useI18n } from "@/locales/client"; // Add i18n import
 import InputSearch from "@/src/components/ui/InputSearch"; // Import du composant InputSearch
 import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import the validation function
+
+// Import dynamique pour éviter les erreurs SSR avec Leaflet
+const AreaSatMap = dynamic(() => import("./SatMap"), { 
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center h-full min-h-[300px] bg-gray-900 rounded-md">
+      <div className="text-white">Chargement de la carte...</div>
+    </div>
+  )
+});
 
 interface AreaSat {
   id: string;
@@ -647,21 +656,19 @@ export default function AreaSatInfoPage() {
       {gridSquareLoaded ? (
         <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-1 sm:p-6">
           <div className="w-full flex justify-center mb-2">
-            <TypewriterEffectSmooth
-              as="h2"
-              words={
-                (() => {
-                  const title = t("satellites.explorer.title");
-                  const [first, ...rest] = title.split(" ");
-                  return [
-                    { text: first, className: "text-white" },
-                    { text: rest.join(" "), className: "text-purple" }
-                  ];
-                })()
-              }
-              className="text-2xl font-bold text-center text-white"
-              cursorClassName="bg-purple"
-            />
+            <h2 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden font-alien">
+              {(() => {
+                const title = t("satellites.explorer.title");
+                const [first, ...rest] = title.split(" ");
+                return (
+                  <>
+                    <span className="text-white">{first}</span>
+                    {" "}
+                    <span className="text-purple">{rest.join(" ")}</span>
+                  </>
+                );
+              })()}
+            </h2>
           </div>
           <div className="relative mx-auto w-full max-w-2xl mb-4 sm:mb-6">
             {lastTleUpdate && (
@@ -926,24 +933,20 @@ export default function AreaSatInfoPage() {
                   </div>
                 </div>
                 {/* Carte avec aspect ratio responsive */}
-                <div className={`
-                  flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg 
-                  transition-shadow duration-300 rounded-md flex flex-col 
-                  p-0 mt-2 lg:mt-0
-                `}>
+                <div className="flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg transition-shadow duration-300 rounded-md flex flex-col p-0 mt-2 lg:mt-0" style={{ minHeight: '500px' }}>
                   <h2 className="relative z-10 text-white text-center text-xl sm:text-3xl font-bold my-1">
                     {t("satellites.explorer.satMap")}
                   </h2>
-                  <div className="flex-grow flex w-full h-full" style={{ minHeight: "300px" }}>
-                    <div className="w-full h-full" style={{ minHeight: "300px" }}>
-                      {details?.tle1 && details?.tle2 && (
+                  <div className="flex-1 w-full relative" style={{ minHeight: '450px' }}>
+                    {details?.tle1 && details?.tle2 && (
+                      <div className="absolute inset-0">
                         <AreaSatMap 
                           areaSatId={selectedAreaSat.id}
                           tle1={details.tle1}
                           tle2={details.tle2}
                         />
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

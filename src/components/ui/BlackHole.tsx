@@ -1,30 +1,38 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { cn } from "@/src/lib/utils"; // Import de la fonction cn si nécessaire
+import { cn } from "@/src/lib/utils";
 
 interface BlackHoleProps {
   className?: string;
 }
 
 export const BlackHole: React.FC<BlackHoleProps> = ({ className }) => {
-  const [viewportHeight, setViewportHeight] = useState(
-    typeof window !== "undefined" ? window.innerHeight : 800
-  );
+  // 1. Même valeur côté serveur et premier rendu client
+  const [viewportHeight, setViewportHeight] = useState(800);
 
   useEffect(() => {
-    const handleResize = () => setViewportHeight(window.innerHeight);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // 2. On met à jour uniquement côté client après le montage
+    const updateHeight = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
+    updateHeight(); // première mise à jour
+    window.addEventListener("resize", updateHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
   }, []);
 
   const scale = viewportHeight / 700;
-  const containerOffset = 150 * scale; 
-  const videoOffset = 250 * scale;     
-  
+  const containerOffset = 150 * scale;
+  const videoOffset = 250 * scale;
+
   const containerStyle = {
     top: `-${containerOffset}px`,
     height: `${viewportHeight + containerOffset}px`,
   };
+
   const videoStyle = {
     top: `-${videoOffset}px`,
   };
