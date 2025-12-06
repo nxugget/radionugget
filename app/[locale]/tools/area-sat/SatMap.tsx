@@ -1,8 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { twoline2satrec, propagate, gstime, eciToGeodetic, EciVec3 } from "satellite.js";
-import dynamic from "next/dynamic";
+import type { CSSProperties } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import {
+  twoline2satrec,
+  propagate,
+  gstime,
+  eciToGeodetic,
+  EciVec3,
+} from "satellite.js";
+
 
 // Define interfaces outside the dynamic import
 interface AreaSatMapProps {
@@ -20,37 +29,37 @@ interface GeoPoint {
 
 // Function to check if a value is a valid EciVec3 object
 function isValidEciVec3(value: any): value is EciVec3<number> {
-  return value && typeof value === "object" && "x" in value && "y" in value && "z" in value;
+  return (
+    value && typeof value === "object" && "x" in value && "y" in value && "z" in value
+  );
 }
 
 // Colors matching PolarChart
 const COLORS = {
-  PAST_ORBIT: '#dc2626', // Red for LOS - matching text-red-600
-  FUTURE_ORBIT: '#228B22', // Green for AOS - matching text-[#228B22]
-  AREA_SAT: 'white' // Changed to white for the areaSat marker
+  PAST_ORBIT: "#dc2626", // Red for LOS - matching text-red-600
+  FUTURE_ORBIT: "#228B22", // Green for AOS - matching text-[#228B22]
+  AREA_SAT: "white", // Changed to white for the areaSat marker
 };
 
 // Define styles as a JavaScript object to keep everything in one file
 const styles = {
   mapContainer: {
     width: "100%",
+    height: "100%",
     position: "relative",
     borderRadius: "8px",
     overflow: "hidden",
     padding: "0",
     margin: "0",
-    height: "100%", // Ensure the container has height
-    minHeight: "300px", // Add a minimum height to ensure visibility
-  } as React.CSSProperties,
+  } as CSSProperties,
   leafletMap: {
     width: "100%",
+    height: "100%",
     backgroundColor: "#111",
     zIndex: 1,
     margin: "0",
     padding: "0",
-    height: "100%", // Ensure the map has height
-    minHeight: "300px", // Add a minimum height to ensure visibility
-  } as React.CSSProperties,
+  } as CSSProperties,
   loadingContainer: {
     width: "100%",
     height: "100%",
@@ -61,42 +70,54 @@ const styles = {
     backgroundColor: "#1a1a1a",
     color: "white",
     borderRadius: "8px",
-  } as React.CSSProperties,
+  } as CSSProperties,
 };
 
 // Create the component that will be dynamically loaded
 const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
-  // We need to import Leaflet inside the component to avoid SSR issues
-  const L = require("leaflet");
-  require("leaflet/dist/leaflet.css");
-  
+  // sécurité supplémentaire côté client
+  if (typeof window === "undefined") return null;
+
   const mapRef = useRef<any>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const areaSatMarkerRef = useRef<any>(null);
   const orbitPathsRef = useRef<any[]>([]);
   const [mapInitialized, setMapInitialized] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const satrec = useRef<any>(null);
 
-  // Ajout d'un état pour forcer le resize sur mobile
+  // Attendre que le composant soit monté avant d'initialiser la carte
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Ajout d'un état pour forcer le resize sur mobile (si besoin)
   const [forceResize, setForceResize] = useState(false);
 
   // Constants
-  const CALC_POINTS_INTERVAL = 1000 * 30; // Reduced to 30 seconds per point for smoother orbits
-  const ORBIT_DURATION_PAST = 1000 * 60 * 60; // 1 hour of past orbit
-  const ORBIT_DURATION_FUTURE = 1000 * 60 * 90; // 1.5 hours of future orbit
-  const POSITION_UPDATE_INTERVAL = 1000; // Update position every second
-  const TRAJECTORY_UPDATE_INTERVAL = 10000; // Update trajectory every 10 seconds
+  const CALC_POINTS_INTERVAL = 1000 * 30; // 30s entre points pour l'orbite
+  const ORBIT_DURATION_PAST = 1000 * 60 * 60; // 1h passée
+  const ORBIT_DURATION_FUTURE = 1000 * 60 * 90; // 1.5h future
+  const POSITION_UPDATE_INTERVAL = 1000; // maj position toutes les secondes
+  const TRAJECTORY_UPDATE_INTERVAL = 10000; // maj trajectoire toutes les 10s
 
   // Function to calculate areaSat position at a given time
   const calculatePosition = (satrecObj: any, date: Date): GeoPoint | null => {
     try {
       const positionAndVelocity = propagate(satrecObj, date);
-      
+
       // Check if positionAndVelocity is a valid object with a position property
-      if (!positionAndVelocity || typeof positionAndVelocity === 'boolean' || !positionAndVelocity.position) {
+      if (
+        !positionAndVelocity ||
+        typeof positionAndVelocity === "boolean" ||
+        !positionAndVelocity.position
+      ) {
         return null;
       }
-      
+
       // Check if the position is a valid EciVec3 object
       if (!isValidEciVec3(positionAndVelocity.position)) {
         return null;
@@ -119,14 +140,20 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
 
   // Handle Leaflet CSS injection
   useEffect(() => {
-    // Add Leaflet specific CSS to handle zoom controls and other elements
     const leafletStyles = `
+      .area-sat-map-container {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+      }
+      .area-sat-leaflet-map {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+      }
       .leaflet-container {
         width: 100% !important;
         height: 100% !important;
-        min-height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
         background: #111 !important;
         border-radius: 8px;
       }
@@ -155,63 +182,36 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
       }
     `;
 
-    // Create a style element and append it to the head
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.textContent = leafletStyles;
     document.head.appendChild(styleElement);
 
     return () => {
-      // Clean up the style element when component unmounts
       document.head.removeChild(styleElement);
     };
   }, []);
 
-  // Inject responsive CSS for map height (mobile/desktop)
-  useEffect(() => {
-    const responsiveStyle = document.createElement("style");
-    responsiveStyle.textContent = `
-      /* Mobile: force explicit height */
-      @media (max-width: 640px) {
-        .area-sat-map-container, .area-sat-leaflet-map {
-          height: 300px !important; /* Increased from 220px */
-          min-height: 300px !important; /* Increased from 220px */
-          max-height: 350px !important; /* Increased from 300px */
-        }
-      }
-      /* Desktop: fill parent */
-      @media (min-width: 641px) {
-        .area-sat-map-container, .area-sat-leaflet-map {
-          height: 100% !important;
-          min-height: 300px !important; /* Increased from 220px */
-          max-height: 100vh !important;
-        }
-      }
-    `;
-    document.head.appendChild(responsiveStyle);
-    return () => {
-      document.head.removeChild(responsiveStyle);
-    };
-  }, []);
+  // Simplify: no responsive CSS override needed
+  // Parent container controls the height
 
   // Initialize map
   useEffect(() => {
-    if (!mapContainerRef.current || mapInitialized) return;
+    if (!mapContainerRef.current || mapInitialized || !isReady) return;
 
-    console.log("Initializing map..."); // Add debug log
+    console.log("Initializing map...");
 
     const timer = setTimeout(() => {
       try {
-        // Custom dark style for map tiles
-        const darkMapUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-        
-        // Définir les limites de la carte pour éviter le défilement au-delà des bords du monde
+        const darkMapUrl =
+          "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+
         const southWest = L.latLng(-85, -180);
         const northEast = L.latLng(85, 180);
         const bounds = L.latLngBounds(southWest, northEast);
 
-        // Calculer la position initiale du satellite si possible
         let initialCenter: [number, number] = [0, 0];
         let initialZoom = 1;
+
         if (tle1 && tle2) {
           try {
             const satrecObj = twoline2satrec(tle1.trim(), tle2.trim());
@@ -229,14 +229,15 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
                 (pos.latitude * 180) / Math.PI,
                 (pos.longitude * 180) / Math.PI,
               ];
-              initialZoom = 3; // Zoom légèrement sur la position du satellite
+              initialZoom = 3;
             }
           } catch {
             // fallback: [0,0], zoom 1
           }
         }
 
-        // Create map instance with modified options
+        if (!mapContainerRef.current) return;
+
         const map = L.map(mapContainerRef.current, {
           center: initialCenter,
           zoom: initialZoom,
@@ -246,48 +247,51 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
           attributionControl: false,
           maxBounds: bounds,
           maxBoundsViscosity: 1.0,
-          dragging: true, // Enable dragging for all devices
-          tap: true, // Enable tap for all devices
+          dragging: true,
           crs: L.CRS.EPSG3857,
         });
 
-        // Add dark-themed tile layer
         const tileLayer = L.tileLayer(darkMapUrl, {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
 
-        // Force multiple resize operations to ensure the map renders properly
         tileLayer.on("load", () => {
-          console.log("Map tiles loaded"); // Add debug log
+          console.log("Map tiles loaded");
           setTimeout(() => {
             map.invalidateSize({ animate: false, pan: false });
-            console.log("Map resized after tiles loaded"); // Add debug log
+            console.log("Map resized after tiles loaded");
           }, 100);
         });
 
-        // Additional resize after a short delay
         setTimeout(() => {
           if (map) {
             map.invalidateSize({ animate: false, pan: false });
-            console.log("Map resized after timeout"); // Add debug log
+            console.log("Map resized after timeout");
           }
         }, 500);
 
-        // Store map reference
         mapRef.current = map;
         setMapInitialized(true);
-        console.log("Map initialized successfully"); // Add debug log
+        console.log("Map initialized successfully");
 
-        // Correction mobile : forcer un resize si la taille change
         if (L.Browser.mobile) {
-          window.addEventListener("resize", () => {
-            map.invalidateSize();
-          });
+          const handleResize = () => {
+            try {
+              if (map) map.invalidateSize();
+            } catch (e) {
+              // Ignore resize errors
+            }
+          };
+          window.addEventListener("resize", handleResize);
         }
 
-        // Correction : forcer le resize si le conteneur change de taille (ex: orientation)
         const resizeObserver = new window.ResizeObserver(() => {
-          map.invalidateSize();
+          try {
+            if (map) map.invalidateSize();
+          } catch (e) {
+            // Ignore resize errors
+          }
         });
         if (mapContainerRef.current) {
           resizeObserver.observe(mapContainerRef.current);
@@ -296,36 +300,38 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
         console.error("Error initializing map:", error);
       }
     }, 300);
-    
+
     return () => {
       clearTimeout(timer);
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
-        setMapInitialized(false);
-      }
-      // Nettoyage de l'event resize mobile
-      if (L.Browser.mobile) {
-        window.removeEventListener("resize", () => {
-          if (mapRef.current) mapRef.current.invalidateSize();
-        });
       }
     };
-  }, [L, tle1, tle2]);
+  }, [tle1, tle2, isReady]);
 
   // Correction : forcer le resize après le premier rendu pour mobile
   useEffect(() => {
     if (!mapRef.current) return;
     setTimeout(() => {
-      mapRef.current.invalidateSize();
+      try {
+        if (mapRef.current) mapRef.current.invalidateSize();
+      } catch (e) {
+        // Ignore resize errors
+      }
     }, 500);
 
-    // Ajout : forcer le resize sur orientationchange (utile sur mobile)
     const handleResize = () => {
-      if (mapRef.current) mapRef.current.invalidateSize();
+      try {
+        if (mapRef.current) mapRef.current.invalidateSize();
+      } catch (e) {
+        // Ignore resize errors
+      }
     };
+
     window.addEventListener("orientationchange", handleResize);
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("orientationchange", handleResize);
       window.removeEventListener("resize", handleResize);
@@ -335,7 +341,7 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   // Initialize areaSat tracking when TLEs are provided
   useEffect(() => {
     if (!tle1 || !tle2) return;
-    
+
     try {
       satrec.current = twoline2satrec(tle1.trim(), tle2.trim());
     } catch (e) {
@@ -343,16 +349,13 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
       satrec.current = null;
     }
 
-    // Clean up existing paths and markers when TLEs change
     return () => {
       if (mapRef.current) {
-        // Clean up paths
-        orbitPathsRef.current.forEach(path => {
+        orbitPathsRef.current.forEach((path) => {
           if (path) path.removeFrom(mapRef.current);
         });
         orbitPathsRef.current = [];
-        
-        // Clean up marker
+
         if (areaSatMarkerRef.current) {
           areaSatMarkerRef.current.removeFrom(mapRef.current);
           areaSatMarkerRef.current = null;
@@ -366,99 +369,99 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     if (!mapRef.current || !satrec.current) return;
 
     const map = mapRef.current;
-    
-    // Clear existing paths
-    orbitPathsRef.current.forEach(path => {
+
+    orbitPathsRef.current.forEach((path) => {
       if (path) path.removeFrom(map);
     });
     orbitPathsRef.current = [];
 
     const now = new Date();
 
-    // Calculate past orbit points
     const pastSegments: Array<[number, number][]> = [[]];
     let currentPastSegment = 0;
     const pastStartTime = new Date(now.getTime() - ORBIT_DURATION_PAST);
 
-    // Create points for the past orbit path
-    for (let time = pastStartTime.getTime(); time <= now.getTime(); time += CALC_POINTS_INTERVAL) {
+    for (
+      let time = pastStartTime.getTime();
+      time <= now.getTime();
+      time += CALC_POINTS_INTERVAL
+    ) {
       const date = new Date(time);
       const position = calculatePosition(satrec.current, date);
-      
+
       if (position) {
-        // Handle the antimeridian crossing
         if (pastSegments[currentPastSegment].length > 0) {
-          const prevPoint = pastSegments[currentPastSegment][pastSegments[currentPastSegment].length - 1];
-          
-          // If there's a big jump in longitude, it indicates crossing the antimeridian
+          const prevPoint =
+            pastSegments[currentPastSegment][
+              pastSegments[currentPastSegment].length - 1
+            ];
+
           if (Math.abs(prevPoint[1] - position.lng) > 180) {
-            // Start a new segment
             currentPastSegment++;
             pastSegments[currentPastSegment] = [];
           }
         }
-        
+
         pastSegments[currentPastSegment].push([position.lat, position.lng]);
       }
     }
 
-    // Add the past orbit paths to the map with smooth curves
-    pastSegments.forEach(segment => {
+    pastSegments.forEach((segment) => {
       if (segment.length > 1) {
         const path = L.polyline(segment, {
           color: COLORS.PAST_ORBIT,
           weight: 2,
           opacity: 0.7,
-          dashArray: '5, 5', // Past orbit is dashed
-          smoothFactor: 1, // Smooth the curve (lower = smoother)
-          lineJoin: 'round', // Use round joints between segments
-          lineCap: 'round', // Use round caps at the ends of the line
+          dashArray: "5, 5",
+          smoothFactor: 1,
+          lineJoin: "round",
+          lineCap: "round",
         }).addTo(map);
-        
+
         orbitPathsRef.current.push(path);
       }
     });
 
-    // Calculate future orbit points
     const futureSegments: Array<[number, number][]> = [[]];
     let currentFutureSegment = 0;
     const futureEndTime = new Date(now.getTime() + ORBIT_DURATION_FUTURE);
 
-    // Create points for the future orbit path
-    for (let time = now.getTime(); time <= futureEndTime.getTime(); time += CALC_POINTS_INTERVAL) {
+    for (
+      let time = now.getTime();
+      time <= futureEndTime.getTime();
+      time += CALC_POINTS_INTERVAL
+    ) {
       const date = new Date(time);
       const position = calculatePosition(satrec.current, date);
-      
+
       if (position) {
-        // Handle the antimeridian crossing
         if (futureSegments[currentFutureSegment].length > 0) {
-          const prevPoint = futureSegments[currentFutureSegment][futureSegments[currentFutureSegment].length - 1];
-          
-          // If there's a big jump in longitude, it indicates crossing the antimeridian
+          const prevPoint =
+            futureSegments[currentFutureSegment][
+              futureSegments[currentFutureSegment].length - 1
+            ];
+
           if (Math.abs(prevPoint[1] - position.lng) > 180) {
-            // Start a new segment
             currentFutureSegment++;
             futureSegments[currentFutureSegment] = [];
           }
         }
-        
+
         futureSegments[currentFutureSegment].push([position.lat, position.lng]);
       }
     }
 
-    // Add the future orbit paths to the map with smooth curves
-    futureSegments.forEach(segment => {
+    futureSegments.forEach((segment) => {
       if (segment.length > 1) {
         const path = L.polyline(segment, {
           color: COLORS.FUTURE_ORBIT,
           weight: 2,
           opacity: 0.8,
-          // No dashArray for future orbit (solid line)
-          smoothFactor: 1, // Smooth the curve (lower = smoother)
-          lineJoin: 'round', // Use round joints between segments
-          lineCap: 'round', // Use round caps at the ends of the line
+          smoothFactor: 1,
+          lineJoin: "round",
+          lineCap: "round",
         }).addTo(map);
-        
+
         orbitPathsRef.current.push(path);
       }
     });
@@ -468,31 +471,31 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   useEffect(() => {
     if (!mapInitialized || !mapRef.current || !satrec.current) return;
 
-    console.log("Setting up satellite tracking..."); // Add debug log
+    console.log("Setting up satellite tracking...");
 
-    // Correction : s'assurer que le conteneur a une taille correcte avant d'ajouter les éléments
     setTimeout(() => {
-      if (mapRef.current) {
-        mapRef.current.invalidateSize({ animate: false, pan: false });
-        console.log("Map resized before adding satellite marker"); // Add debug log
+      try {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize({ animate: false, pan: false });
+          console.log("Map resized before adding satellite marker");
+        }
+      } catch (e) {
+        console.log("Resize error (safe to ignore):", e);
       }
     }, 200);
 
-    // Create custom areaSat icon with white color - Fix the icon path
     const areaSatIcon = L.icon({
-      iconUrl: '/images/icon/satellite-icon.svg', // Verify this path exists
-      iconSize: [32, 32], 
+      iconUrl: "/images/icon/satellite-icon.svg",
+      iconSize: [32, 32],
       iconAnchor: [16, 16],
-      className: 'areaSat-icon white-areaSat'
+      className: "areaSat-icon white-areaSat",
     });
 
-    // Add custom styling for white areaSat icon
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.textContent = `
       .white-areaSat {
         filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
       }
-      /* Ensure container visibility */
       .area-sat-map-container {
         display: block !important;
         visibility: visible !important;
@@ -506,30 +509,28 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     `;
     document.head.appendChild(styleElement);
 
-    // Initial orbit path drawing
     updateOrbitPaths();
 
-    // Initial areaSat marker (icon only, no point)
     const currentPosition = calculatePosition(satrec.current, new Date());
     if (currentPosition && mapRef.current) {
-      areaSatMarkerRef.current = L.marker([currentPosition.lat, currentPosition.lng], {
-        icon: areaSatIcon,
-        title: areaSatId
-      }).addTo(mapRef.current);
-
+      areaSatMarkerRef.current = L.marker(
+        [currentPosition.lat, currentPosition.lng],
+        {
+          icon: areaSatIcon,
+          title: areaSatId,
+        }
+      ).addTo(mapRef.current);
     }
 
-    // Update the areaSat position regularly
     const positionInterval = setInterval(() => {
       if (!mapRef.current || !satrec.current) return;
-      
+
       const position = calculatePosition(satrec.current, new Date());
       if (position && areaSatMarkerRef.current) {
         areaSatMarkerRef.current.setLatLng([position.lat, position.lng]);
       }
     }, POSITION_UPDATE_INTERVAL);
 
-    // Update the orbit paths regularly to reflect the current time
     const trajectoryInterval = setInterval(() => {
       updateOrbitPaths();
     }, TRAJECTORY_UPDATE_INTERVAL);
@@ -537,16 +538,20 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
     return () => {
       clearInterval(positionInterval);
       clearInterval(trajectoryInterval);
-      document.head.removeChild(styleElement); // Clean up style element
+      document.head.removeChild(styleElement);
     };
   }, [mapInitialized, areaSatId]);
 
-  // Correction : styles pour garantir la taille sur mobile et desktop
+  if (!isReady) {
+    return (
+      <div className="flex items-center justify-center w-full h-full min-h-[300px] bg-gray-900 rounded-md">
+        <div className="text-white">Initialisation...</div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className="area-sat-map-container"
-      style={styles.mapContainer}
-    >
+    <div className="area-sat-map-container" style={styles.mapContainer}>
       <div
         ref={mapContainerRef}
         className="area-sat-leaflet-map"
@@ -556,14 +561,5 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
   );
 };
 
-// Disable SSR for this component since Leaflet requires browser-only APIs
-const AreaSatMap = dynamic(() => Promise.resolve(AreaSatMapComponent), {
-  ssr: false,
-  loading: () => (
-    <div style={styles.loadingContainer}>
-      <p>Loading map...</p>
-    </div>
-  ),
-});
+export default AreaSatMapComponent;
 
-export default AreaSatMap;

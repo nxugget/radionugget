@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -6,10 +6,10 @@ import matter from "gray-matter";
 const baseUrl = 'https://radionugget.com';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { locale: string } }
+  request: NextRequest,
+  context: { params: Promise<{ locale: string }> }
 ) {
-  const locale = params.locale;
+  const { locale } = await context.params;
   let items: string[] = [];
   const contentDir = path.join(process.cwd(), "content", locale);
   let years: string[] = [];

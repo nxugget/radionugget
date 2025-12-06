@@ -128,5 +128,18 @@ export function useScroll() {
     };
   }, [scrollPhase]);
 
-  return { scrollPhase, step, passed };
+  const triggerScrollDown = () => {
+    if (scrollLocked.current) return;
+    if (scrollPhase === 0) {
+      setScrollPhase(1);
+      setStep(1);
+      setPassed(true);
+      lockScroll();
+    } else if (scrollPhase === 1) {
+      setScrollPhase(3);
+      lockScroll();
+    }
+  };
+
+  return { scrollPhase, step, passed, triggerScrollDown };
 }

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import SatelliteSearch from "./SatelliteSearch";
-import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import { getSatellites, getSatellitePasses } from "@/src/lib/satelliteAPI";
 import SatelliteTimeline from "./SatelliteTimeline";
 import SatelliteTab from "./SatelliteTab"; // new import
@@ -435,15 +434,11 @@ export default function SatelliteTracker() {
         "
       >
         <div className="w-full flex justify-center sm:mb-1">
-          <TypewriterEffectSmooth
-            as="h1"
-            words={[
-              { text: t("satellite.name"), className: "text-purple" },
-              { text: t("satellite.prediction"), className: "text-white" },
-            ]}
-            className="text-lg xs:text-xl md:text-3xl font-bold text-center text-white overflow-hidden font-alien"
-            cursorClassName="bg-purple"
-          />
+          <h1 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden font-alien">
+            <span className="text-purple">{t("satellite.name")}</span>
+            {" "}
+            <span className="text-white">{t("satellite.prediction")}</span>
+          </h1>
         </div>
         <div className="flex flex-col md:flex-row gap-3 sm:gap-6">
           {/* PARTIE GAUCHE */}

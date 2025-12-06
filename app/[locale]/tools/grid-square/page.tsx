@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { getGridSquare, getGridSquareCoords } from "@/src/lib/gridSquare";
-import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
 import dynamic from "next/dynamic";
 import GridSquareInfo from "./GridSquareInfo";
 import { useI18n } from "@/locales/client";
@@ -231,16 +230,11 @@ export default function GridSquareCalculator() {
         >
           <div className="w-full flex justify-center sm:mb-1">
             {hasLoaded && (
-              <TypewriterEffectSmooth
-                as="h1"
-                words={[
-                  { text: "Grid", className: "text-[#b400ff]" },
-                  { text: "Square", className: "text-[#b400ff]" },
-                  { text: t("gridSquareCalculator.calculator"), className: "text-white" }
-                ]}
-                className="text-lg xs:text-xl md:text-3xl font-bold text-center text-white overflow-hidden"
-                cursorClassName="bg-[#b400ff]"
-              />
+              <h1 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden">
+                <span className="text-[#b400ff]">Grid Square</span>
+                {" "}
+                <span className="text-white">{t("gridSquareCalculator.calculator")}</span>
+              </h1>
             )}
           </div>
 

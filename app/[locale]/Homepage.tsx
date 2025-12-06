@@ -1,24 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useScroll } from "@/src/hooks/useScroll";
-import Image from "next/image";
-import Link from "next/link";
-import { TypewriterEffectSmooth } from "@/src/components/features/Typewritter";
-import { ShootingStars } from "@/src/components/ui/ShootingStars";
 import { useI18n } from "@/locales/client";
-
-interface Project {
-  title: string;
-  summary: string;
-  path: string;
-  image: string;
-}
+import { ProjectsGrid } from "./ProjectsGrid";
+import { HeroSection } from "./HeroSection";
 
 export default function Homepage({ locale }: { locale: string }) {
-  const { scrollPhase, step, passed } = useScroll();
-  const [preview, setPreview] = useState<Project | { message: string } | null>(null);
+  const { scrollPhase, step, passed, triggerScrollDown } = useScroll();
   const t = useI18n();
+
+  const handleScrollClick = () => {
+    triggerScrollDown();
+  };
 
   const projectItems = [
     {
@@ -58,7 +52,6 @@ export default function Homepage({ locale }: { locale: string }) {
       type: "article",
     },
   ];
-
   useEffect(() => {
     document.body.style.height = "100%";
     document.body.style.overflowY = "auto";
@@ -202,254 +195,9 @@ export default function Homepage({ locale }: { locale: string }) {
         }
       `}</style>
       <main className="bg-transparent">
-        {/* Section SpaceExplore */}
-        <section id="space-explore" className="-mt-24 min-h-screen w-full overflow-hidden relative z-0">
-          <div className="relative w-full h-screen overflow-hidden">
-            <div
-              className={`absolute top-0 left-0 w-full h-full md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}
-              style={{ backgroundImage: "url('/images/background1.png')" }}
-            ></div>
-            {/* ShootingStars local, devant background1 mais derrière background2 */}
-            <ShootingStars className="absolute inset-0 w-full h-full z-[-9] pointer-events-none" />
-            <div
-              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}
-              style={{ backgroundImage: "url('/images/background2.png')" }}
-            ></div>
-            <div
-              className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-7]`}
-              style={{ backgroundImage: "url('/images/background3.png')" }}
-            ></div>
-            <div
-              className={`absolute inset-0 flex flex-col items-center justify-center md:items-end md:justify-end mx-auto text-center transition-all duration-[1500ms] ${step === 1 ? "opacity-100" : "opacity-0"} ${step === 1 && "md:translate-y-[-50vh]"} md:inset-auto md:right-12 md:bottom-12`}
-              style={{ 
-                zIndex: 20, 
-                width: "min(90vw, 600px)", 
-                maxWidth: "100%"
-              }}
-            >
-              {/* Vue Mobile uniquement */}
-              <div className="md:hidden grid w-full">
-                <p
-                  className="text-white font-alien leading-[0.9] mb-0 w-full text-center col-span-2"
-                  style={{
-                    fontSize: "clamp(4.5rem, 15vw, 8rem)",
-                    fontWeight: 700,
-                    letterSpacing: "0.02em",
-                    width: "100%"
-                  }}
-                >
-                  EXPLORE
-                </p>
-                <div className="flex flex-row items-center justify-center w-full relative" style={{ minHeight: "calc(2 * clamp(4rem, 12vw, 7rem))" }}>
-                  <span
-                    className="text-white font-alien inline-block absolute left-0"
-                    style={{
-                      fontSize: "clamp(4rem, 12vw, 7rem)",
-                      lineHeight: "1",
-                      height: "auto",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      zIndex: 1,
-                      paddingRight: "0.1em",
-                    }}
-                  >
-                    &amp;
-                  </span>
-                  <div
-                    className="inline-flex flex-col items-center justify-center w-full pl-[2.3em]"
-                    style={{ 
-                      gap: "0.05em"
-                    }}
-                  >
-                    <span
-                      className="text-white font-alien leading-[0.9] text-center"
-                      style={{ 
-                        fontSize: "clamp(4rem, 12vw, 7rem)",
-                      }}
-                    >
-                      RADIO
-                    </span>
-                    <span
-                      className="text-white font-alien leading-[0.9] text-center"
-                      style={{ 
-                        fontSize: "clamp(4rem, 12vw, 7rem)",
-                      }}
-                    >
-                      SPACE
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <HeroSection step={step} passed={passed} onCtaClick={handleScrollClick} />
 
-              {/* Vue Desktop inchangée */}
-              <div
-                className="hidden md:grid md:mr-0"
-                style={{
-                  gridTemplateColumns: "0.5fr 4.5fr",
-                  gridTemplateRows: "auto 1fr",
-                  width: "100%",
-                  height: "auto",
-                  gap: "0",
-                }}
-              >
-                <p
-                  className="text-white font-alien leading-[0.9] mb-0 w-full text-right col-span-2"
-                  style={{
-                    gridColumn: "1 / span 2",
-                    fontSize: "clamp(4.5rem, 15vw, 8rem)",
-                    fontWeight: 700,
-                    letterSpacing: "0.02em",
-                    paddingRight: "0",
-                    marginRight: "0",
-                    width: "100%"
-                  }}
-                >
-                  EXPLORE
-                </p>
-                <span
-                  className="text-white font-alien flex justify-end"
-                  style={{
-                    fontSize: "clamp(4rem, 12vw, 7rem)",
-                    lineHeight: "1",
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    gridRow: 2,
-                    gridColumn: 1,
-                    marginTop: "0", 
-                    paddingRight: "0",
-                    transform: "none"
-                  }}
-                >
-                  &amp;
-                </span>
-                <div
-                  className="flex flex-col items-start justify-center h-full w-full"
-                  style={{ 
-                    gridRow: 2, 
-                    gridColumn: 2,
-                    paddingLeft: "0",
-                    paddingTop: "0",
-                    gap: "0.05em"
-                  }}
-                >
-                  <span
-                    className="text-white font-alien leading-[0.9] w-full text-left"
-                    style={{ 
-                      fontSize: "clamp(4rem, 12vw, 7rem)",
-                      paddingLeft: "0"
-                    }}
-                  >
-                    RADIO
-                  </span>
-                  <span
-                    className="text-white font-alien leading-[0.9] w-full text-left"
-                    style={{ 
-                      fontSize: "clamp(4rem, 12vw, 7rem)",
-                      paddingLeft: "0"
-                    }}
-                  >
-                    SPACE
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section Projects Cards - occupe tout l'écran, grille responsive */}
-        <section
-          id="projects-section"
-          className="relative flex flex-col items-center z-0 w-full justify-start bg-transparent pb-4 md:pb-16"
-        >
-          {/* Titre bien placé sous la navbar */}
-          <div className="h-10 md:h-24" />
-          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-6xl font-bold text-purple font-alien tracking-wide z-10 mb-4 md:mb-6 text-center px-2 drop-shadow-lg">
-            {t("projectsSection.title")}
-          </h2>
-          <div className="w-full flex justify-center z-10 relative">
-            <div className="w-full max-w-[100vw] px-1 sm:px-4 md:px-8 flex">
-              <div
-                className={`
-                  grid w-full
-                  gap-x-3 gap-y-4
-                  sm:gap-x-8 sm:gap-y-8
-                  md:gap-x-10 md:gap-y-10
-                  grid-cols-2 grid-rows-3
-                  sm:grid-cols-2 sm:grid-rows-3
-                  md:grid-cols-3 md:grid-rows-2
-                  lg:grid-cols-3 lg:grid-rows-2
-                  items-stretch justify-center
-                  overflow-visible
-                  min-h-[calc(100dvh-120px)] md:min-h-0
-                `}
-              >
-                {projectItems.map((item, idx) => (
-                  <Link
-                    href={item.link}
-                    key={idx}
-                    className="
-                      group
-                      rounded-2xl
-                      overflow-hidden
-                      bg-[#181028]/90
-                      shadow-2xl
-                      border border-purple/40
-                      transition-all
-                      duration-300
-                      hover:shadow-[0_0_24px_4px_rgba(180,0,255,0.25),0_0_32px_8px_rgba(180,0,255,0.10)]
-                      hover:border-purple
-                      hover:scale-[1.04]
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple
-                      flex flex-col
-                      cursor-pointer
-                      aspect-[4/2.8]
-                      max-w-full
-                    "
-                  >
-                    <div
-                      className="
-                        relative w-full flex-1 min-h-0
-                        sm:min-h-[40px] md:min-h-[55px] lg:min-h-[65px]
-                      "
-                      style={{ flexBasis: "70%" }}
-                    >
-                      <div className="absolute inset-0">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          className="object-cover transition-all duration-300 group-hover:scale-105"
-                          sizes="(max-width: 480px) 50vw, (max-width: 768px) 25vw, 20vw"
-                          priority={idx < 2}
-                        />
-                      </div>
-                      <span className="
-                        absolute top-1 right-1
-                        bg-purple/90 text-white text-[0.55rem] xs:text-xs sm:text-sm px-1.5 xs:px-2 py-[1.5px] rounded-full font-bold uppercase tracking-wider
-                        shadow
-                        pointer-events-none
-                        drop-shadow-lg
-                        z-10
-                        select-none
-                      ">
-                        {item.type}
-                      </span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center px-2 py-1 flex-[0_0_30%]">
-                      <h3 className="text-[0.8rem] xs:text-xs sm:text-sm md:text-xl lg:text-2xl font-bold text-white mb-1 font-alien text-center drop-shadow">
-                        {item.title}
-                      </h3>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProjectsGrid title={t("projectsSection.title")} items={projectItems} />
       </main>
     </>
   );
