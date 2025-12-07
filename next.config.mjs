@@ -27,6 +27,7 @@ const nextConfig = {
     ],
     // Optimize images aggressively
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year cache
+    qualities: [75, 85],
   },
 
   // Headers for caching
