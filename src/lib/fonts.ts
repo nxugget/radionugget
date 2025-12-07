@@ -7,6 +7,8 @@ export const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   display: "swap", // Utilise fallback pendant que la font charge
   fallback: ["system-ui", "sans-serif"],
+  preload: true,
+  variable: "--font-poppins",
 });
 
 export const roboto = Roboto({
@@ -14,6 +16,8 @@ export const roboto = Roboto({
   weight: ["400", "500", "700"],
   display: "swap",
   fallback: ["system-ui", "sans-serif"],
+  preload: true,
+  variable: "--font-roboto",
 });
 
 export const firaCode = Fira_Code({
@@ -21,6 +25,8 @@ export const firaCode = Fira_Code({
   weight: ["400", "500", "700"],
   display: "swap",
   fallback: ["monospace"],
+  preload: false, // Pas critique pour FCP
+  variable: "--font-fira",
 });
 
 // Local font (self-hosted)

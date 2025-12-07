@@ -8,8 +8,76 @@ import SmartLink from "../SmartLink";
 import ScrollToTopButton from "../ScrollToTopButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { synthwave84 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import ZoomImage from "../ZoomImage";
-import Head from "./head";
+import type { Metadata } from "next";
+
+async function getArticleData(locale: string, slug: string) {
+  const contentDir = path.join(process.cwd(), "content", locale);
+  const years = fs
+    .readdirSync(contentDir)
+    .filter((year) =>
+      fs.statSync(path.join(contentDir, year)).isDirectory()
+    );
+
+  for (const year of years) {
+    const possiblePath = path.join(contentDir, year, `${slug}.mdx`);
+    if (fs.existsSync(possiblePath)) {
+      const fileContent = fs.readFileSync(possiblePath, "utf-8");
+      const parsed = matter(fileContent);
+      return {
+        metadata: parsed.data as any,
+        content: parsed.content,
+      };
+    }
+  }
+  return null;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const article = await getArticleData(locale, slug);
+
+  if (!article) {
+    return {
+      title: "Article not found",
+    };
+  }
+
+  const { metadata } = article;
+  const url = `https://radionugget.com/${locale}/blog/${slug}`;
+
+  return {
+    title: metadata.title,
+    description: metadata.summary,
+    openGraph: {
+      type: "article",
+      locale: locale,
+      url: url,
+      siteName: "RadioNugget",
+      title: metadata.title,
+      description: metadata.summary,
+      images: [
+        {
+          url: metadata.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: metadata.title,
+        },
+      ],
+      publishedTime: metadata.date,
+      modifiedTime: metadata.modifiedDate || metadata.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.summary,
+      images: [metadata.thumbnail],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const localesDir = path.join(process.cwd(), "content");
@@ -44,28 +112,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-async function getArticleData(locale: string, slug: string) {
-  const contentDir = path.join(process.cwd(), "content", locale);
-  const years = fs
-    .readdirSync(contentDir)
-    .filter((year) =>
-      fs.statSync(path.join(contentDir, year)).isDirectory()
-    );
-
-  for (const year of years) {
-    const possiblePath = path.join(contentDir, year, `${slug}.mdx`);
-    if (fs.existsSync(possiblePath)) {
-      const fileContent = fs.readFileSync(possiblePath, "utf-8");
-      const parsed = matter(fileContent);
-      return {
-        metadata: parsed.data as any,
-        content: parsed.content,
-      };
-    }
-  }
-  return null;
-}
-
 export default async function Article({
   params,
 }: {
@@ -86,25 +132,26 @@ export default async function Article({
   const { metadata, content } = article;
 
   return (
-    <>
-      <Head params={{ locale, slug }} metadata={metadata} />
       <main className="flex justify-center py-8 min-h-screen relative">
         <div className="w-full max-w-7xl px-0 sm:px-8">
-          <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden rounded-lg shadow-lg">
-            <div className="absolute inset-0">
-              <Image
-                src={metadata.thumbnail || "/default-thumbnail.jpg"}
-                alt={metadata.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 1200px"
-                className="object-cover"
-                quality={60}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
-              />
-            </div>
-
-            <div className="relative z-10 flex items-center justify-center h-full px-4">
+          {/* Hero image with fixed aspect ratio to prevent CLS */}
+          <div 
+            className="relative w-full overflow-hidden rounded-lg shadow-lg"
+            style={{ aspectRatio: '16 / 9' }}
+          >
+            <Image
+              src={metadata.thumbnail || "/default-thumbnail.jpg"}
+              alt={metadata.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover"
+              quality={75}
+              priority
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
+            />
+            
+            <div className="absolute inset-0 z-10 flex items-center justify-center px-4">
               <div
                 className="bg-black/50 rounded-lg py-2 px-4 text-center w-full break-words whitespace-normal max-w-full"
                 style={{
@@ -174,12 +221,13 @@ export default async function Article({
                   const isGif = props.src?.toLowerCase().endsWith(".gif");
                   return (
                     <figure className="flex justify-center my-6 w-full">
-                      <ZoomImage
-                        {...props}
-                        className="rounded-lg shadow-lg max-w-full shadow-black/50"
+                      <Image
+                        src={props.src || ""}
                         alt={props.alt || "Image"}
                         width={900}
                         height={500}
+                        sizes="(max-width: 768px) 100vw, 900px"
+                        className="rounded-lg shadow-lg max-w-full shadow-black/50"
                         style={{ width: "auto", height: "auto" }}
                         loading="lazy"
                         unoptimized={isGif}
@@ -222,6 +270,5 @@ export default async function Article({
         </div>
         <ScrollToTopButton />
       </main>
-    </>
   );
 }

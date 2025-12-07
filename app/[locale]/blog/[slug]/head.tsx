@@ -30,6 +30,14 @@ export default function Head({ params, metadata }: { params: { locale: string; s
       <title>{title}</title>
       <meta name="description" content={description} />
 
+      {/* Preload hero image for better LCP */}
+      <link
+        rel="preload"
+        as="image"
+        href={image}
+        fetchPriority="high"
+      />
+
       {/* Open Graph */}
       <meta property="og:type" content="article" />
       <meta property="og:locale" content={baseSeo.openGraph.locale} />
