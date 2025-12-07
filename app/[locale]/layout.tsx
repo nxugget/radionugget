@@ -7,6 +7,7 @@ import { Footer } from "@/src/components/ui/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { poppins, roboto, firaCode, alien } from "@/src/lib/fonts";
+import { GeoRedirectBanner } from "@/src/components/ui/GeoRedirectBanner";
 
 export default async function RootLayout({
   params,
@@ -34,6 +35,7 @@ export default async function RootLayout({
 
         {/* Foreground elements */}
         <I18nProviderClient locale={locale}>
+          <GeoRedirectBanner />
           <Navbar />
           <main className="pt-24 pb-[60px] relative">
             {children}
