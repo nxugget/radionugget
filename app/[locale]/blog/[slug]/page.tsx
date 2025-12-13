@@ -143,7 +143,7 @@ export default async function Article({
               src={metadata.thumbnail || "/default-thumbnail.jpg"}
               alt={metadata.title}
               fill
-              sizes="(max-width: 768px) 100vw, 1200px"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
               className="object-cover"
               quality={75}
               priority

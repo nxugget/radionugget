@@ -43,6 +43,7 @@ export function ProjectsGrid({ title, items, priorityCount = 2 }: ProjectsGridPr
                 image={item.image}
                 label={item.type}
                 priority={idx < priorityCount}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             ))}
           </div>

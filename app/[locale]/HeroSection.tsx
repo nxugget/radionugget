@@ -1,4 +1,5 @@
 import { ShootingStars } from "@/src/components/ui/ShootingStars";
+import Image from "next/image";
 
 interface HeroSectionProps {
   step: number;
@@ -12,20 +13,37 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
     <section id="space-explore" className="-mt-20 md:-mt-24 min-h-screen w-full overflow-hidden relative z-0">
       <div className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60 z-[-6]" />
-        <div
-          className={`absolute top-0 left-0 w-full h-full md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}
-          style={{ backgroundImage: "url('/images/background1.png')" }}
-        ></div>
+        {/* Replace background1 with optimized next/image */}
+        <div className={`absolute top-0 left-0 w-full h-full transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}>
+          <Image
+            src="/images/background1.png"
+            alt="Background layer 1"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover md:object-center"
+          />
+        </div>
         {/* ShootingStars local, devant background1 mais derrière background2 */}
         <ShootingStars className="absolute inset-0 w-full h-full z-[-9] pointer-events-none" />
-        <div
-          className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}
-          style={{ backgroundImage: "url('/images/background2.png')" }}
-        ></div>
-        <div
-          className={`absolute inset-0 md:bg-center bg-[15%_center] bg-cover transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-7]`}
-          style={{ backgroundImage: "url('/images/background3.png')" }}
-        ></div>
+        <div className={`absolute inset-0 transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}>
+          <Image
+            src="/images/background2.png"
+            alt="Background layer 2"
+            fill
+            sizes="100vw"
+            className="object-cover md:object-center"
+          />
+        </div>
+        <div className={`absolute inset-0 transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-7]`}>
+          <Image
+            src="/images/background3.png"
+            alt="Background layer 3"
+            fill
+            sizes="100vw"
+            className="object-cover md:object-center"
+          />
+        </div>
         <div
           className={`absolute inset-0 flex flex-col items-center justify-center md:items-end md:justify-end mx-auto text-center transition-all duration-[1500ms] ${step === 1 ? "opacity-100" : "opacity-0"} ${step === 1 && "md:translate-y-[-50vh]"} md:inset-auto md:right-12 md:bottom-12`}
           style={{ zIndex: 20, width: "min(90vw, 600px)", maxWidth: "100%" }}

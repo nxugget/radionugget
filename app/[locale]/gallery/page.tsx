@@ -27,18 +27,7 @@ const Gallery = () => {
         }
         // --- FIN DES CHANGEMENTS ---
 
-        // Preload images
-        await Promise.all(
-          shuffledImages.map(
-            (image) =>
-              new Promise<void>((resolve) => {
-                const img = new Image();
-                img.src = image.src;
-                img.onload = () => resolve();
-                img.onerror = () => resolve(); // Resolve même en cas d'erreur
-              })
-          )
-        );
+        // Avoid preloading all images to not compete with LCP
 
         setImages(shuffledImages);
         setLoading(false);
