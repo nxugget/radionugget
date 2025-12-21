@@ -18,37 +18,37 @@ export default function Homepage({ locale }: { locale: string }) {
     {
       title: t("projectsSection.weatherSatelliteStation"),
       image: "/images/blog/thumbnail/noaa.webp",
-      link: "/blog/noaa",
+      link: `/${locale}/blog/noaa`,
       type: "article",
     },
     {
       title: t("projectsSection.satellitePrediction"),
       image: "/images/selection/predisat.png",
-      link: "tools/predi-sat",
+      link: `/${locale}/tools/predi-sat`,
       type: "tool",
     },
     {
       title: t("projectsSection.decodingSignal"),
       image: "/images/blog/thumbnail/never_the_same_color.webp",
-      link: "/blog/never_the_same_color",
+      link: `/${locale}/blog/never_the_same_color`,
       type: "article",
     },
     {
       title: t("projectsSection.satelliteExplorer"),
       image: "/images/selection/areasat.png",
-      link: "tools/area-sat",
+      link: `/${locale}/tools/area-sat`,
       type: "tool",
     },
     {
       title: t("projectsSection.homemadeQfhAntenna"),
       image: "/images/blog/thumbnail/qfh.webp",
-      link: "/blog/qfh",
+      link: `/${locale}/blog/qfh`,
       type: "article",
     },
     {
       title: t("projectsSection.sstvReception"),
       image: "/images/blog/thumbnail/sstv.webp",
-      link: "/blog/sstv",
+      link: `/${locale}/blog/sstv`,
       type: "article",
     },
   ];
