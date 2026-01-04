@@ -3120,13 +3120,6 @@
         "downlink": 137100000
       },
       {
-        "description": "LRPT IQ recording usage",
-        "mode": "FSK",
-        "status": "active",
-        "uplink": null,
-        "downlink": 137900000
-      },
-      {
         "description": "SARSAT L-band",
         "mode": "BPSK",
         "status": "active",
@@ -3143,6 +3136,13 @@
       {
         "description": "LRPT S-E RHCP D 72 kbps",
         "mode": "LRPT",
+        "status": "active",
+        "uplink": null,
+        "downlink": 137900000
+      },
+      {
+        "description": "LRPT IQ recording usage",
+        "mode": "FSK",
         "status": "active",
         "uplink": null,
         "downlink": 137900000
