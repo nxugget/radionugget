@@ -1476,7 +1476,7 @@
       {
         "description": "TLM",
         "mode": "FSK",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 437780000
       }
