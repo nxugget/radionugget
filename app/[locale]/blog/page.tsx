@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
-import Image from "next/image";
 
 const POSTS_PER_PAGE = 6;
 
@@ -125,13 +124,11 @@ export default async function Blog({
                 >
                   {/* Image */}
                   <div className="absolute inset-0 overflow-hidden rounded-[inherit]">
-                    <Image
+                    <img
                       src={metadata.thumbnail}
                       alt={title}
-                      fill
-                      className="object-cover blog-card-image"
-                      sizes="(max-width: 480px) 90vw, (max-width: 768px) 45vw, 30vw"
-                      quality={85}
+                      className="object-cover blog-card-image w-full h-full"
+                      loading="lazy"
                     />
                   </div>
                   {/* Gradient overlay */}

@@ -35,7 +35,10 @@ const nextConfig = {
     // Cache transformed images for 1 year (images never change)
     minimumCacheTTL: 60 * 60 * 24 * 365,
     // Only allow q75 (single quality = fewer variants)
-    qualities: [75],
+    // Disable Next.js on-demand image optimization to avoid Vercel
+    // Image Optimization transformation limits. With `unoptimized: true`
+    // Next will serve source images directly (no transformations).
+    unoptimized: true,
   },
 
   // Headers for caching

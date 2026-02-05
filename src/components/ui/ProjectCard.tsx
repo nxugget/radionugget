@@ -1,4 +1,4 @@
-import Image from "next/image";
+// Using native <img> to avoid on-demand transformations
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -27,14 +27,11 @@ export function ProjectCard({
       aria-label={title}
     >
       <div className="absolute inset-0 overflow-hidden rounded-xl">
-        <Image
+        <img
           src={image}
           alt={title}
-          fill
-          className="object-cover transition-transform duration-700 ease-expo-out group-hover:scale-110"
-          sizes={sizes}
-          priority={priority}
-          quality={85}
+          className="object-cover transition-transform duration-700 ease-expo-out group-hover:scale-110 w-full h-full"
+          loading={priority ? "eager" : "lazy"}
         />
       </div>
       {/* Gradient overlay */}

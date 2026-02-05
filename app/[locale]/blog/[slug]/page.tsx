@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import Image from "next/image";
 import SmartLink from "../SmartLink";
 import ScrollToTopButton from "../ScrollToTopButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -139,16 +138,11 @@ export default async function Article({
             className="relative w-full overflow-hidden rounded-2xl border border-white/[0.06] shadow-card"
             style={{ aspectRatio: '16 / 9' }}
           >
-            <Image
+            <img
               src={metadata.thumbnail || "/default-thumbnail.jpg"}
               alt={metadata.title}
-              fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-              className="object-cover"
-              quality={75}
-              priority
-              placeholder="blur"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
+              className="object-cover w-full h-full"
+              loading="eager"
             />
             
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 px-6 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
@@ -213,16 +207,14 @@ export default async function Article({
                   const isGif = props.src?.toLowerCase().endsWith(".gif");
                   return (
                     <figure className="flex justify-center my-8 w-full">
-                      <Image
+                      <img
                         src={props.src || ""}
                         alt={props.alt || "Image"}
                         width={900}
                         height={500}
-                        sizes="(max-width: 768px) 100vw, 900px"
                         className="rounded-xl border border-white/[0.06] max-w-full shadow-card"
                         style={{ width: "auto", height: "auto" }}
                         loading="lazy"
-                        unoptimized={isGif}
                       />
                     </figure>
                   );

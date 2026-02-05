@@ -1,5 +1,5 @@
 import { ShootingStars } from "@/src/components/ui/ShootingStars";
-import Image from "next/image";
+// Using native <img> for static backgrounds and logo to avoid transformations
 
 interface HeroSectionProps {
   step: number;
@@ -15,36 +15,29 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60 z-[-6]" />
         {/* Background layer 1 */}
         <div className={`absolute top-0 left-0 w-full h-full transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}>
-          <Image
+          <img
             src="/images/background1.png"
             alt="Background layer 1"
-            fill
-            priority
-            unoptimized
-            sizes="100vw"
-            className="object-cover md:object-center"
+            className="object-cover md:object-center w-full h-full"
+            loading="eager"
           />
         </div>
         {/* ShootingStars local */}
         <ShootingStars className="absolute inset-0 w-full h-full z-[-9] pointer-events-none" />
         <div className={`absolute inset-0 transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}>
-          <Image
+          <img
             src="/images/background2.png"
             alt="Background layer 2"
-            fill
-            unoptimized
-            sizes="100vw"
-            className="object-cover md:object-center"
+            className="object-cover md:object-center w-full h-full"
+            loading="lazy"
           />
         </div>
         <div className={`absolute inset-0 transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-7]`}>
-          <Image
+          <img
             src="/images/background3.png"
             alt="Background layer 3"
-            fill
-            unoptimized
-            sizes="100vw"
-            className="object-cover md:object-center"
+            className="object-cover md:object-center w-full h-full"
+            loading="lazy"
           />
         </div>
 
@@ -56,14 +49,13 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
           {/* Logo - prominent, glowing, floating */}
           <div className="animate-logo-float mb-6 md:mb-8">
             <div className="animate-logo-glow">
-              <Image
+              <img
                 src="/images/logo.webp"
                 alt="RadioNugget"
                 width={140}
                 height={140}
-                priority
-                unoptimized
                 className="rounded-full w-24 h-24 sm:w-32 sm:h-32 md:w-[140px] md:h-[140px] ring-2 ring-purple/30 ring-offset-2 ring-offset-transparent"
+                loading="eager"
               />
             </div>
           </div>

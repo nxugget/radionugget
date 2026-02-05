@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/locales/client";
 
@@ -106,15 +105,14 @@ export const Navbar = () => {
           {/* Left: Logo + Name */}
           <div className="flex items-center gap-3">
             <Link href="/">
-              <Image
+              <img
                 src="/images/logo.webp"
                 alt="Logo"
                 width={60}
                 height={60}
-                priority
-                unoptimized
                 className="rounded-full navbar-logo"
                 style={{ opacity: 1, transition: "none" }}
+                loading="eager"
               />
             </Link>
           </div>
@@ -224,14 +222,14 @@ export const Navbar = () => {
           {/* Desktop: Language Switcher */}
           <div className="hidden md:flex items-center gap-2" ref={langDropdownDesktopRef}>
             <div className="relative cursor-pointer">
-              <Image
+              <img
                 src={flagSrc(currentLocale)}
                 alt="Current Language"
                 width={40}
                 height={30}
-                unoptimized
                 className="rounded-sm transition-transform duration-300 hover:scale-110"
                 onClick={() => setLangDropdownOpen(prev => !prev)}
+                loading="eager"
               />
               {langDropdownOpen && (
                 <div
@@ -241,13 +239,13 @@ export const Navbar = () => {
                   {currentLocale !== "en" && (
                     <Link href={getNewLocalePath("en")} onClick={() => setLangDropdownOpen(false)}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
-                        <Image
+                        <img
                           src="/images/flags/gb.png"
                           alt="English"
                           width={40}
                           height={30}
-                          unoptimized
                           className="rounded-sm"
+                          loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">English</span>
                       </div>
@@ -256,13 +254,13 @@ export const Navbar = () => {
                   {currentLocale !== "fr" && (
                     <Link href={getNewLocalePath("fr")} onClick={() => setLangDropdownOpen(false)}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
-                        <Image
+                        <img
                           src="/images/flags/fr.png"
                           alt="Français"
                           width={40}
                           height={30}
-                          unoptimized
                           className="rounded-sm"
+                          loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">Français</span>
                       </div>
@@ -338,15 +336,15 @@ export const Navbar = () => {
             </Link>
             
             <div className="relative cursor-pointer" ref={langDropdownMobileRef}>
-              <Image
+              <img
                 src={flagSrc(currentLocale)}
                 alt="Current Language"
                 width={30}
                 height={20}
-                unoptimized
                 className="rounded-sm transition-transform duration-300 hover:scale-110"
                 onClick={() => setLangDropdownOpen((prev) => !prev)}
                 style={{ width: "auto", height: "auto" }}
+                loading="eager"
               />
               {langDropdownOpen && (
                 <div
@@ -359,14 +357,14 @@ export const Navbar = () => {
                       setIsMobileMenuOpen(false);
                     }}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
-                        <Image
+                        <img
                           src="/images/flags/gb.png"
                           alt="English"
                           width={30}
                           height={20}
-                          unoptimized
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
+                          loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">English</span>
                       </div>
@@ -378,14 +376,14 @@ export const Navbar = () => {
                       setIsMobileMenuOpen(false);
                     }}>
                       <div className="flex items-center justify-center p-1 rounded-sm">
-                        <Image
+                        <img
                           src="/images/flags/fr.png"
                           alt="Français"
                           width={30}
                           height={20}
-                          unoptimized
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
+                          loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">Français</span>
                       </div>

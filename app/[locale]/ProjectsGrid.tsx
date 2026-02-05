@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+// Using native <img> to avoid Next.js image transformations
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 
@@ -74,19 +74,16 @@ export function ProjectsGrid({ title, items }: ProjectsGridProps) {
       <div className="hidden sm:block relative w-full h-screen overflow-hidden">
         {/* All slides stacked, only active visible */}
         {items.map((item, idx) => (
-          <div
+            <div
             key={idx}
             className="absolute inset-0 transition-opacity duration-700 ease-out"
             style={{ opacity: idx === active ? 1 : 0, zIndex: idx === active ? 1 : 0 }}
           >
-            <Image
+            <img
               src={item.image}
               alt={item.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority={idx < 2}
-              quality={90}
+              className="object-cover w-full h-full"
+              loading={idx < 2 ? "eager" : "lazy"}
             />
             {/* Gradient overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -206,14 +203,11 @@ export function ProjectsGrid({ title, items }: ProjectsGridProps) {
             className="absolute inset-0 transition-opacity duration-500 ease-out"
             style={{ opacity: idx === active ? 1 : 0, zIndex: idx === active ? 1 : 0 }}
           >
-            <Image
+            <img
               src={item.image}
               alt={item.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority={idx < 2}
-              quality={85}
+              className="object-cover w-full h-full"
+              loading={idx < 2 ? "eager" : "lazy"}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           </div>

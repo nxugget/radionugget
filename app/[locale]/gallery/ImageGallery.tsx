@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+// Use native <img> to avoid on-demand transformations
 import React, { useState } from "react";
 import { cn } from "@/src/lib/utils";
 
@@ -33,12 +33,11 @@ export const Card = React.memo(
         )}
       >
         {/* Image */}
-        <Image
+        <img
           src={card.src}
           alt={card.title}
-          fill
-          unoptimized
-          className="object-cover absolute inset-0 transition-transform duration-300 ease-out"
+          className="object-cover absolute inset-0 transition-transform duration-300 ease-out w-full h-full"
+          loading="lazy"
         />
 
         {/* Image Title with Black Transparent Background */}
