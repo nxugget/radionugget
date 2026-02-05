@@ -17,17 +17,25 @@ const nextConfig = {
     ],
   },
 
-  // Image optimization
+  // Image optimization — reduce Vercel usage
   images: {
+    // Only generate WebP (skip AVIF → halves transformations)
+    formats: ["image/webp"],
+    // Only allow remote optimization for satellite DB images
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "db-satnogs.freetls.fastly.net",
+        pathname: "/media/**",
       },
     ],
-    // Optimize images aggressively
-    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year cache
-    qualities: [75, 85],
+    // Fewer size variants = fewer transformations & cache writes
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [96, 256, 384],
+    // Cache transformed images for 1 year (images never change)
+    minimumCacheTTL: 60 * 60 * 24 * 365,
+    // Only allow q75 (single quality = fewer variants)
+    qualities: [75],
   },
 
   // Headers for caching

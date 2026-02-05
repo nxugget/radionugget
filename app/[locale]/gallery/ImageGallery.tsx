@@ -27,9 +27,9 @@ export const Card = React.memo(
         onMouseLeave={() => setHovered(null)}
         onClick={() => onSelect(card.src)}
         className={cn(
-          "relative rounded-lg overflow-hidden h-[400px] md:h-[500px] w-full transition-all duration-300 ease-out cursor-pointer",
-          hovered !== null && !isHovered ? "blur-[3px] scale-[0.98]" : "",
-          isHovered ? "scale-105" : ""
+          "relative rounded-xl overflow-hidden h-[400px] md:h-[500px] w-full transition-all duration-500 ease-expo-out cursor-pointer border border-white/[0.06]",
+          hovered !== null && !isHovered ? "blur-[2px] scale-[0.98] opacity-70" : "",
+          isHovered ? "scale-[1.02] shadow-card-hover border-purple/20" : ""
         )}
       >
         {/* Image */}
@@ -37,17 +37,18 @@ export const Card = React.memo(
           src={card.src}
           alt={card.title}
           fill
+          unoptimized
           className="object-cover absolute inset-0 transition-transform duration-300 ease-out"
         />
 
         {/* Image Title with Black Transparent Background */}
         <div
           className={cn(
-            "absolute bottom-2 left-2 bg-black/60 px-3 py-2 rounded-md transition-opacity duration-300",
-            isHovered ? "opacity-100" : "opacity-0"
+            "absolute bottom-3 left-3 bg-surface-2/80 backdrop-blur-md px-3 py-2 rounded-lg border border-white/[0.06] transition-all duration-300",
+            isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           )}
         >
-          <div className="text-white text-lg md:text-xl font-medium">
+          <div className="text-white text-sm md:text-base font-medium">
             {card.title}
           </div>
         </div>
@@ -90,7 +91,7 @@ export function FocusCards({ cards }: { cards: CardProps[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-[98vw] mx-auto w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto w-full">
         {cards.map((card, index) => (
           <Card
             key={`${card.title}-${card.src}`}
@@ -108,7 +109,7 @@ export function FocusCards({ cards }: { cards: CardProps[] }) {
       {selectedImage && (
         <div 
           className={cn(
-            "fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-lg z-50 transition-opacity duration-300",
+            "fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-2xl z-50 transition-opacity duration-300",
             isVisible ? "opacity-100" : "opacity-0"
           )}
           onClick={closeImage}

@@ -544,7 +544,7 @@ const AreaSatMapComponent = ({ areaSatId, tle1, tle2 }: AreaSatMapProps) => {
 
   if (!isReady) {
     return (
-      <div className="flex items-center justify-center w-full h-full min-h-[300px] bg-gray-900 rounded-md">
+      <div className="flex items-center justify-center w-full h-full min-h-[300px] glass-light rounded-xl">
         <div className="text-white">Initialisation...</div>
       </div>
     );

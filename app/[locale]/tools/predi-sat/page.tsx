@@ -46,18 +46,18 @@ function CookieBanner() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-2 sm:p-4 flex flex-col md:flex-row justify-between items-center z-50"
+      className="fixed bottom-0 left-0 right-0 glass border-t border-white/[0.06] text-white p-3 sm:p-4 flex flex-col md:flex-row justify-between items-center z-50"
       style={{
-        fontSize: "12px", // plus petit sur mobile
+        fontSize: "12px",
         lineHeight: "1.2",
       }}
     >
-      <p className="text-xs sm:text-sm mb-1 md:mb-0 text-center md:text-left">
+      <p className="text-xs sm:text-sm mb-1 md:mb-0 text-center md:text-left text-gray-300">
         {t("cookies.message")}
       </p>
       <button
         onClick={handleAccept}
-        className="bg-purple hover:bg-orange hover:text-black text-white px-3 py-1 sm:px-4 sm:py-2 transition-colors rounded-md text-xs sm:text-base"
+        className="bg-purple hover:bg-purple-300 text-white px-4 py-1.5 sm:px-5 sm:py-2 transition-all duration-200 rounded-lg text-xs sm:text-sm font-medium hover:shadow-glow-sm"
         style={{
           minWidth: "80px",
         }}
@@ -421,31 +421,30 @@ export default function SatelliteTracker() {
           w-full
           max-w-full
           sm:max-w-[1400px]
-          bg-black bg-opacity-70
+          glass-card
           rounded-2xl
-          shadow-lg
           mt-2
           mb-4
-          px-1
-          py-2
-          sm:px-4
+          px-2
+          py-3
+          sm:px-6
           sm:py-6
           mx-1
         "
       >
         <div className="w-full flex justify-center sm:mb-1">
           <h1 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden font-alien">
-            <span className="text-purple">{t("satellite.name")}</span>
+            <span className="text-gradient-purple">{t("satellite.name")}</span>
             {" "}
-            <span className="text-white">{t("satellite.prediction")}</span>
+            <span className="text-gray-200">{t("satellite.prediction")}</span>
           </h1>
         </div>
         <div className="flex flex-col md:flex-row gap-3 sm:gap-6">
           {/* PARTIE GAUCHE */}
           <div className="md:w-1/2 w-full flex flex-col gap-3 sm:gap-6">
             {/* Box Satellite Predictable */}
-            <div className="bg-nottooblack p-2 sm:p-4 rounded-md flex flex-col justify-start">
-              <h2 className="text-white text-lg font-bold text-center">
+            <div className="glass-light rounded-xl p-3 sm:p-4 flex flex-col justify-start">
+              <h2 className="text-gray-200 text-base font-semibold text-center mb-1">
                 {t("satellite.predictableSatellites")}
               </h2>
               <SatelliteSearch
@@ -498,7 +497,7 @@ export default function SatelliteTracker() {
               </button>
             </div>
             {/* Box Satellite To Predict */}
-            <div className="bg-zinc-800 p-2 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4">
+            <div className="glass-light rounded-xl p-3 sm:p-4 flex flex-col gap-2 sm:gap-4">
               <div className="flex items-center justify-between relative">
                 <h2 className="text-white text-lg text-center w-full">{t("satellite.satellitesToPredict")}</h2>
                 <button
@@ -529,7 +528,7 @@ export default function SatelliteTracker() {
                         ${
                           isSelected
                             ? "bg-purple text-white"
-                            : "bg-zinc-700 text-white hover:bg-purple hover:text-white"
+                            : "bg-white/[0.03] border border-white/[0.06] text-gray-300 hover:bg-purple/10 hover:border-purple/20 hover:text-white"
                         }`}
                     >
                       <div className="flex items-center justify-between">
@@ -629,11 +628,11 @@ export default function SatelliteTracker() {
           {/* PARTIE DROITE */}
           <div className="md:w-1/2 w-full flex flex-col gap-3 sm:gap-6">
             {/* Section "choose your position" dépliable sur mobile */}
-            <div className="bg-nottooblack p-2 sm:p-4 rounded-md h-full justify-start flex flex-col">
+            <div className="glass-light rounded-xl p-3 sm:p-4 h-full justify-start flex flex-col">
               {/* Mobile: bouton pour déplier/replier */}
               <div className="block sm:hidden">
                 <button
-                  className="w-full flex items-center justify-between px-3 py-2 bg-zinc-900 rounded-md text-white font-bold text-lg font-alien text-center focus:outline-none"
+                  className="w-full flex items-center justify-between px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white font-bold text-lg font-alien text-center focus:outline-none"
                   onClick={() => setShowPosition((v) => !v)}
                   aria-expanded={showPosition}
                   aria-controls="position-section"
@@ -669,7 +668,7 @@ export default function SatelliteTracker() {
                         value={cityQuery}
                         onChange={(e) => setCityQuery(e.target.value)}
                         placeholder={t("satellite.cityPlaceholder")}
-                        className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                        className={`bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 ${
                           cityError ? "border-red-500 border" : ""
                         }`}
                         style={{
@@ -703,7 +702,7 @@ export default function SatelliteTracker() {
                         onChange={(e) => handleGridSquareChange(e.target.value)}
                         onBlur={validateGridSquare}
                         placeholder={t("satellite.gridSquarePlaceholder")}
-                        className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                        className={`bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 ${
                           gridSquareError ? "border-red-500 border" : ""
                         }`}
                         style={{
@@ -740,7 +739,7 @@ export default function SatelliteTracker() {
                             }
                           }}
                           placeholder={t("satellite.latitude")}
-                          className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                          className="bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full text-center font-bold text-lg focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20"
                         />
                       </div>
                       <div className="flex flex-col items-center w-1/2">
@@ -756,7 +755,7 @@ export default function SatelliteTracker() {
                             }
                           }}
                           placeholder={t("satellite.longitude")}
-                          className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                          className="bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full text-center font-bold text-lg focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20"
                         />
                       </div>
                     </div>
@@ -787,7 +786,7 @@ export default function SatelliteTracker() {
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
                       placeholder={t("satellite.cityPlaceholder")}
-                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                      className={`bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 ${
                         cityError ? "border-red-500 border" : ""
                       }`}
                       style={{
@@ -821,7 +820,7 @@ export default function SatelliteTracker() {
                       onChange={(e) => handleGridSquareChange(e.target.value)}
                       onBlur={validateGridSquare}
                       placeholder={t("satellite.gridSquarePlaceholder")}
-                      className={`bg-zinc-700 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-purple ${
+                      className={`bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 ${
                         gridSquareError ? "border-red-500 border" : ""
                       }`}
                       style={{
@@ -858,7 +857,7 @@ export default function SatelliteTracker() {
                           }
                         }}
                         placeholder={t("satellite.latitude")}
-                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                        className="bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full text-center font-bold text-lg focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20"
                       />
                     </div>
                     <div className="flex flex-col items-center w-1/2">
@@ -874,7 +873,7 @@ export default function SatelliteTracker() {
                           }
                         }}
                         placeholder={t("satellite.longitude")}
-                        className="bg-zinc-700 text-white px-4 py-2 rounded-md w-full text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-purple"
+                        className="bg-white/[0.04] border border-white/[0.08] text-white px-4 py-2 rounded-lg w-full text-center font-bold text-lg focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20"
                       />
                     </div>
                   </div>
@@ -885,11 +884,11 @@ export default function SatelliteTracker() {
               </div>
             </div>
             {/* Trajectory section repliée sur mobile */}
-            <div className="bg-nottooblack p-2 sm:p-4 rounded-md">
+            <div className="glass-light rounded-xl p-3 sm:p-4">
               {/* Mobile: bouton pour déplier/replier */}
               <div className="block sm:hidden">
                 <button
-                  className="w-full flex items-center justify-between px-3 py-2 bg-zinc-900 rounded-md text-white font-bold text-lg font-alien text-center focus:outline-none"
+                  className="w-full flex items-center justify-between px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-white font-bold text-lg font-alien text-center focus:outline-none"
                   onClick={() => setShowTrajectory((v) => !v)}
                   aria-expanded={showTrajectory}
                   aria-controls="trajectory-section"
@@ -1216,41 +1215,41 @@ export default function SatelliteTracker() {
         <div className="mt-4 sm:mt-8 w-full flex flex-col items-center">
           <button
             onClick={getPredictions}
-            className="w-full max-w-xs sm:max-w-fit px-[20px] sm:px-[40px] py-[12px] sm:py-[17px] rounded-full cursor-pointer border-0 bg-white text-purple shadow-[0_0_8px_rgba(0,0,0,0.05)] tracking-[1.5px] uppercase text-[14px] sm:text-[15px] transition-all duration-500 ease-in-out hover:tracking-[3px] hover:bg-purple hover:text-white hover:shadow-[0_7px_29px_0_rgb(93_24_220)] active:tracking-[3px] active:bg-purple active:text-white active:shadow-none active:translate-y-[10px] mb-4 sm:mb-0"
+            className="w-full max-w-xs sm:max-w-fit px-8 sm:px-12 py-3 sm:py-4 rounded-xl cursor-pointer bg-purple text-white font-semibold tracking-wider uppercase text-sm sm:text-base transition-all duration-300 ease-expo-out hover:bg-purple-300 hover:shadow-glow-lg hover:scale-[1.02] active:scale-[0.98] mb-4 sm:mb-0"
           >
             {t("satellite.predict")}
           </button>
-          {error && <p className="text-red-500 mt-2 sm:mt-4 text-center text-sm">{error}</p>}
+          {error && <p className="text-red-400 mt-2 sm:mt-4 text-center text-sm">{error}</p>}
         </div>
         {/* Timeline/Table view toggles */}
         {allPredictions.length > 0 && (
           <div className="mt-2 sm:mt-4 flex flex-wrap gap-2 sm:gap-4">
-            <div className="flex items-center bg-nottooblack rounded-md overflow-hidden">
+            <div className="flex items-center bg-white/[0.04] border border-white/[0.06] rounded-xl overflow-hidden">
               <button
                 onClick={() => setViewMode("timeline")}
-                className={`px-2 sm:px-3 py-1 text-xs sm:text-sm text-white ${
-                  viewMode === "timeline" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+                  viewMode === "timeline" ? "bg-purple text-white" : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {t("satellite.timelineView")}
               </button>
               <button
                 onClick={() => setViewMode("table")}
-                className={`px-2 sm:px-3 py-1 text-xs sm:text-sm text-white ${
-                  viewMode === "table" ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+                  viewMode === "table" ? "bg-purple text-white" : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {t("satellite.tableView")}
               </button>
             </div>
-            <div className="flex items-center bg-nottooblack rounded-md overflow-hidden">
+            <div className="flex items-center bg-white/[0.04] border border-white/[0.06] rounded-xl overflow-hidden">
               <button
                 onClick={() => {
                   setUseLocalTime(false);
                   setUtcOffset(0);
                 }}
-                className={`px-2 sm:px-3 py-1 text-xs sm:text-sm text-white ${
-                  !useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+                  !useLocalTime ? "bg-purple text-white" : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {t("satellite.utcTime")}
@@ -1261,8 +1260,8 @@ export default function SatelliteTracker() {
                   const offset = -new Date().getTimezoneOffset() / 60;
                   setUtcOffset(offset);
                 }}
-                className={`px-2 sm:px-3 py-1 text-xs sm:text-sm text-white ${
-                  useLocalTime ? "bg-purple" : "bg-gray-800 hover:bg-purple"
+                className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 ${
+                  useLocalTime ? "bg-purple text-white" : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {t("satellite.localTime")}

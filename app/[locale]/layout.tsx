@@ -29,7 +29,7 @@ export default async function RootLayout({
         ...(alien.style.fontFamily && { "--font-alien": alien.style.fontFamily }),
       } as React.CSSProperties}
     >
-      <body className="relative min-h-screen bg-transparent">
+      <body className="relative min-h-screen bg-transparent text-white">
         {/* Background layers */}
         <BackgroundLayer />
 
@@ -37,7 +37,7 @@ export default async function RootLayout({
         <I18nProviderClient locale={locale}>
           <GeoRedirectBanner />
           <Navbar />
-          <main className="pt-24 pb-[60px] relative">
+          <main className="pt-24 pb-16 relative">
             {children}
           </main>
         </I18nProviderClient>

@@ -13,7 +13,7 @@ export default function GridSquareInfo() {
       {/* Bouton interactif amélioré avec icône et style visuel - animation plus discrète */}
       <button
         onClick={() => setShowInfo(true)}
-        className="mb-4 flex items-center gap-2 px-4 py-2 bg-purple/10 hover:bg-purple/20 rounded-full border border-purple/30 text-white font-bold transition-all duration-300 hover:scale-105"
+        className="mb-4 flex items-center gap-2 px-4 py-2 bg-purple/8 hover:bg-purple/15 rounded-xl border border-purple/20 text-gray-300 hover:text-white text-sm font-medium transition-all duration-300"
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -40,7 +40,7 @@ export default function GridSquareInfo() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="bg-black text-white p-6 rounded-lg shadow-xl w-[90vw] max-w-lg sm:w-[80vw] sm:max-w-md md:w-[60vw] md:max-w-lg absolute top-full mt-4 left-[3%] sm:left-[43%] transform sm:-translate-x-1/2 z-[1000] h-auto sm:h-[70vh] md:h-auto overflow-y-auto"
+              className="bg-surface-2 border border-white/[0.06] text-white p-6 rounded-2xl shadow-float w-[90vw] max-w-lg sm:w-[80vw] sm:max-w-md md:w-[60vw] md:max-w-lg absolute top-full mt-4 left-[3%] sm:left-[43%] transform sm:-translate-x-1/2 z-[1000] h-auto sm:h-[70vh] md:h-auto overflow-y-auto backdrop-blur-xl"
             >
               {/* Close button */}
               <button

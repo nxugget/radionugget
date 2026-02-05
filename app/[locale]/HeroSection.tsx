@@ -13,24 +13,26 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
     <section id="space-explore" className="-mt-20 md:-mt-24 min-h-screen w-full overflow-hidden relative z-0">
       <div className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60 z-[-6]" />
-        {/* Replace background1 with optimized next/image */}
+        {/* Background layer 1 */}
         <div className={`absolute top-0 left-0 w-full h-full transition-transform duration-[1500ms] ${passed ? "scale-[1]" : "scale-[1.4]"} z-[-10]`}>
           <Image
             src="/images/background1.png"
             alt="Background layer 1"
             fill
             priority
+            unoptimized
             sizes="100vw"
             className="object-cover md:object-center"
           />
         </div>
-        {/* ShootingStars local, devant background1 mais derrière background2 */}
+        {/* ShootingStars local */}
         <ShootingStars className="absolute inset-0 w-full h-full z-[-9] pointer-events-none" />
         <div className={`absolute inset-0 transition-transform duration-[1500ms] ${passed ? "scale-[1.4]" : "scale-[1]"} z-[-8]`}>
           <Image
             src="/images/background2.png"
             alt="Background layer 2"
             fill
+            unoptimized
             sizes="100vw"
             className="object-cover md:object-center"
           />
@@ -40,135 +42,86 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
             src="/images/background3.png"
             alt="Background layer 3"
             fill
+            unoptimized
             sizes="100vw"
             className="object-cover md:object-center"
           />
         </div>
+
+        {/* ─── Central Hero Content ─── */}
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center md:items-end md:justify-end mx-auto text-center transition-all duration-[1500ms] ${step === 1 ? "opacity-100" : "opacity-0"} ${step === 1 && "md:translate-y-[-50vh]"} md:inset-auto md:right-12 md:bottom-12`}
-          style={{ zIndex: 20, width: "min(90vw, 600px)", maxWidth: "100%" }}
+          className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-[1500ms] ${step === 1 ? "opacity-100" : "opacity-0"}`}
+          style={{ zIndex: 20 }}
         >
-          {/* Vue Mobile uniquement */}
-          <div className="md:hidden grid w-full">
+          {/* Logo - prominent, glowing, floating */}
+          <div className="animate-logo-float mb-6 md:mb-8">
+            <div className="animate-logo-glow">
+              <Image
+                src="/images/logo.webp"
+                alt="RadioNugget"
+                width={140}
+                height={140}
+                priority
+                unoptimized
+                className="rounded-full w-24 h-24 sm:w-32 sm:h-32 md:w-[140px] md:h-[140px] ring-2 ring-purple/30 ring-offset-2 ring-offset-transparent"
+              />
+            </div>
+          </div>
+
+          {/* Typography */}
+          <div className="text-center px-4" style={{ maxWidth: "min(95vw, 900px)" }}>
+            {/* EXPLORE */}
             <p
-              className="text-white font-alien leading-[0.9] mb-0 w-full text-center col-span-2"
+              className="text-white font-alien leading-[0.85] mb-1"
               style={{
-                fontSize: "clamp(4.5rem, 15vw, 8rem)",
+                fontSize: "clamp(5rem, 18vw, 11rem)",
                 fontWeight: 700,
-                letterSpacing: "0.02em",
-                width: "100%",
+                letterSpacing: "0.03em",
               }}
             >
               EXPLORE
             </p>
-            <div className="flex flex-row items-center justify-center w-full relative" style={{ minHeight: "calc(2 * clamp(4rem, 12vw, 7rem))" }}>
+
+            {/* & RADIO SPACE - side by side */}
+            <div className="flex items-center justify-center gap-3 sm:gap-5">
               <span
-                className="text-white font-alien inline-block absolute left-0"
+                className="text-white font-alien"
                 style={{
-                  fontSize: "clamp(4rem, 12vw, 7rem)",
+                  fontSize: "clamp(3.5rem, 12vw, 8rem)",
                   lineHeight: "1",
-                  height: "auto",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 1,
-                  paddingRight: "0.1em",
                 }}
               >
                 &
               </span>
-              <div
-                className="inline-flex flex-col items-center justify-center w-full pl-[2.3em]"
-                style={{ gap: "0.05em" }}
-              >
+              <div className="flex flex-col items-start" style={{ gap: "0.02em" }}>
                 <span
-                  className="text-white font-alien leading-[0.9] text-center"
-                  style={{ fontSize: "clamp(4rem, 12vw, 7rem)" }}
+                  className="text-gradient-purple font-alien leading-[0.9]"
+                  style={{ fontSize: "clamp(3.5rem, 12vw, 8rem)" }}
                 >
                   RADIO
                 </span>
                 <span
-                  className="text-white font-alien leading-[0.9] text-center"
-                  style={{ fontSize: "clamp(4rem, 12vw, 7rem)" }}
+                  className="text-white font-alien leading-[0.9]"
+                  style={{ fontSize: "clamp(3.5rem, 12vw, 8rem)" }}
                 >
                   SPACE
                 </span>
               </div>
             </div>
           </div>
-
-          {/* Vue Desktop */}
-          <div
-            className="hidden md:grid md:mr-0"
-            style={{
-              gridTemplateColumns: "0.5fr 4.5fr",
-              gridTemplateRows: "auto 1fr",
-              width: "100%",
-              height: "auto",
-              gap: "0",
-            }}
-          >
-            <p
-              className="text-white font-alien leading-[0.9] mb-0 w-full text-right col-span-2"
-              style={{
-                gridColumn: "1 / span 2",
-                fontSize: "clamp(4.5rem, 15vw, 8rem)",
-                fontWeight: 700,
-                letterSpacing: "0.02em",
-                paddingRight: "0",
-                marginRight: "0",
-                width: "100%",
-              }}
-            >
-              EXPLORE
-            </p>
-            <span
-              className="text-white font-alien flex justify-end"
-              style={{
-                fontSize: "clamp(4rem, 12vw, 7rem)",
-                lineHeight: "1",
-                height: "100%",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                gridRow: 2,
-                gridColumn: 1,
-                marginTop: "0",
-                paddingRight: "0",
-                transform: "none",
-              }}
-            >
-              &
-            </span>
-            <div
-              className="flex flex-col items-start justify-center h-full w-full"
-              style={{ gridRow: 2, gridColumn: 2, paddingLeft: "0", paddingTop: "0", gap: "0.05em" }}
-            >
-              <span
-                className="text-white font-alien leading-[0.9] w-full text-left"
-                style={{ fontSize: "clamp(4rem, 12vw, 7rem)", paddingLeft: "0" }}
-              >
-                RADIO
-              </span>
-              <span
-                className="text-white font-alien leading-[0.9] w-full text-left"
-                style={{ fontSize: "clamp(4rem, 12vw, 7rem)", paddingLeft: "0" }}
-              >
-                SPACE
-              </span>
-            </div>
-          </div>
         </div>
-        {/* Bouton scroll large et visible */}
+
+        {/* Scroll CTA */}
         <button
           onClick={onCtaClick}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 group"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 group"
           type="button"
           aria-label="Scroll down"
         >
-          <div className="flex flex-col items-center gap-4">
-            <div className="px-10 py-6 rounded-full bg-white/15 backdrop-blur-xl border-2 border-white/30 shadow-2xl transition-all duration-300 group-hover:bg-white/25 group-hover:border-white/40 group-hover:scale-110 group-active:scale-95">
+          <div className="flex flex-col items-center gap-2">
+            <div className="p-3 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/[0.1] transition-all duration-500 ease-expo-out group-hover:bg-white/[0.12] group-hover:border-purple/30 group-hover:scale-110 group-hover:shadow-glow group-active:scale-95">
               <svg
-                className="w-10 h-10 md:w-12 md:h-12 text-white animate-bounce"
+                className="w-5 h-5 md:w-6 md:h-6 text-white/70 animate-bounce-smooth group-hover:text-purple-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -177,12 +130,12 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={3}
+                  strokeWidth={2}
                   d="M19 14l-7 7m0 0l-7-7m7 7V3"
                 />
               </svg>
             </div>
-            <span className="text-white text-base md:text-lg font-medium tracking-wide opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="text-white/40 text-xs font-medium tracking-[0.2em] uppercase group-hover:text-white/60 transition-colors duration-300">
               Scroll
             </span>
           </div>

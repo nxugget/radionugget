@@ -66,23 +66,23 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto bg-nottooblack rounded-md p-2 sm:p-4 text-xs sm:text-lg">
+    <div className="overflow-x-auto glass-light rounded-xl p-2 sm:p-4 text-xs sm:text-sm">
       <table className="w-full min-w-[340px] sm:min-w-[420px]">
         <thead>
-          <tr className="text-center bg-gray-800">
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+          <tr className="text-center border-b border-white/[0.06]">
+            <th className="px-1 sm:px-4 py-2 sm:py-3 text-gray-400 text-xs sm:text-sm font-medium">
               Satellite
             </th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+            <th className="px-1 sm:px-4 py-2 sm:py-3 text-gray-400 text-xs sm:text-sm font-medium">
               AOS
             </th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+            <th className="px-1 sm:px-4 py-2 sm:py-3 text-gray-400 text-xs sm:text-sm font-medium">
               LOS
             </th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+            <th className="px-1 sm:px-4 py-2 sm:py-3 text-gray-400 text-xs sm:text-sm font-medium">
               Max Élévation
             </th>
-            <th className="px-1 sm:px-4 py-1 sm:py-2 text-white text-xs sm:text-base">
+            <th className="px-1 sm:px-4 py-2 sm:py-3 text-gray-400 text-xs sm:text-sm font-medium">
               Azimuth
             </th>
           </tr>
@@ -91,7 +91,7 @@ const SatelliteTab: React.FC<SatelliteTabProps> = ({
           {sortedPasses.map((pass, idx) => (
             <tr
               key={idx}
-              className="border-b border-gray-600 text-center"
+              className="border-b border-white/[0.04] text-center hover:bg-white/[0.02] transition-colors"
               style={{ color: colorMap[pass.satelliteName] }}
             >
               <td className="px-1 sm:px-4 py-1 sm:py-2">

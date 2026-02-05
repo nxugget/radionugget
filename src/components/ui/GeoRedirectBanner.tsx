@@ -77,14 +77,14 @@ export function GeoRedirectBanner() {
 
   return (
     <div className="fixed top-20 left-0 right-0 z-50 mx-auto max-w-4xl px-4">
-      <div className="bg-nottooblack rounded-lg shadow-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-slide-down">
+      <div className="glass border border-white/[0.08] rounded-2xl shadow-float p-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-slide-down">
         <p className="text-white text-sm sm:text-base text-center sm:text-left flex-1">
           {text.message}
         </p>
         <div className="flex gap-2 shrink-0">
           <button
             onClick={handleSwitch}
-            className="relative overflow-hidden group rounded"
+            className="relative overflow-hidden group rounded-xl"
           >
             {/* Drapeau net en fond */}
             <div 
@@ -92,7 +92,7 @@ export function GeoRedirectBanner() {
               style={{ backgroundImage: `url(${switchFlagImage})` }}
             />
             {/* Overlay semi-transparent pour texte lisible */}
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/30" />
             {/* Texte */}
             <div className="relative px-3 py-1.5 text-white text-sm font-medium drop-shadow-lg">
               {text.switch}
@@ -100,7 +100,7 @@ export function GeoRedirectBanner() {
           </button>
           <button
             onClick={handleDismiss}
-            className="relative overflow-hidden group rounded"
+            className="relative overflow-hidden group rounded-xl"
           >
             {/* Drapeau net en fond */}
             <div 
@@ -108,7 +108,7 @@ export function GeoRedirectBanner() {
               style={{ backgroundImage: `url(${dismissFlagImage})` }}
             />
             {/* Overlay semi-transparent pour texte lisible */}
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/30" />
             {/* Texte */}
             <div className="relative px-3 py-1.5 text-white text-sm font-medium drop-shadow-lg">
               {text.dismiss}

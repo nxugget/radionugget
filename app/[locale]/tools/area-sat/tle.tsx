@@ -95,7 +95,7 @@ export default function TLEDisplay({ tle1, tle2 }: TLEDisplayProps) {
       </div>
       {popup && (
         <div 
-          className="fixed bg-black text-white text-xs sm:text-sm px-2 py-1 rounded z-50"
+          className="fixed bg-surface-2/95 backdrop-blur-xl text-white text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-white/[0.06] shadow-float z-50"
           style={{ left: popup.x, top: popup.y }}
         >
           {popup.text}

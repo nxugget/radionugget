@@ -132,11 +132,11 @@ export default async function Article({
   const { metadata, content } = article;
 
   return (
-      <main className="flex justify-center py-8 min-h-screen relative">
-        <div className="w-full max-w-7xl px-0 sm:px-8">
+      <main className="flex justify-center py-6 min-h-screen relative">
+        <div className="w-full max-w-6xl px-0 sm:px-6">
           {/* Hero image with fixed aspect ratio to prevent CLS */}
           <div 
-            className="relative w-full overflow-hidden rounded-lg shadow-lg"
+            className="relative w-full overflow-hidden rounded-2xl border border-white/[0.06] shadow-card"
             style={{ aspectRatio: '16 / 9' }}
           >
             <Image
@@ -151,26 +151,18 @@ export default async function Article({
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFdgI2gSHnWAAAAABJRU5ErkJggg=="
             />
             
-            <div className="absolute inset-0 z-10 flex items-center justify-center px-4">
-              <div
-                className="bg-black/50 rounded-lg py-2 px-4 text-center w-full break-words whitespace-normal max-w-full"
-                style={{
-                  overflowWrap: "break-word",
-                  wordBreak: "break-word",
-                }}
-              >
-                <h1 className="text-3xl md:text-6xl font-bold text-white break-words max-w-full overflow-hidden text-ellipsis leading-tight pb-2">
-                  {metadata.title}
-                </h1>
-                <div className="border-b-4 border-purple w-1/2 mx-auto mt-2"></div>
-              </div>
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-8 px-6 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+              <h1 className="text-2xl md:text-5xl font-bold text-white text-center leading-tight max-w-3xl">
+                {metadata.title}
+              </h1>
+              <div className="w-16 h-0.5 bg-purple mt-4 rounded-full" />
             </div>
           </div>
 
           {/* ARTICLE CONTAINER */}
           <article
-            style={{ fontSize: "calc(0.8rem + 0.5vw)" }}
-            className="font-roboto bg-[#0f0e11] text-white rounded-lg shadow-xl p-4 md:p-8 mt-10 prose prose-invert max-w-none relative mx-0 sm:mx-2"
+            style={{ fontSize: "calc(0.85rem + 0.4vw)" }}
+            className="font-roboto glass-card rounded-2xl p-5 md:p-10 mt-8 prose prose-invert max-w-none relative mx-0 sm:mx-0"
           >
             <MDXRemote
               source={content}
@@ -195,39 +187,39 @@ export default async function Article({
                   />
                 ),
                 p: (props) => (
-                  <div className="mb-4 leading-relaxed">
+                  <div className="mb-5 leading-relaxed text-gray-200">
                     {props.children}
                   </div>
                 ),
                 h1: (props) => (
                   <h1
-                    className="text-4xl font-bold mt-8 mb-4 text-white border-b-4 border-gray-500 pb-2"
+                    className="text-3xl md:text-4xl font-bold mt-10 mb-5 text-white pb-3 border-b border-white/[0.08]"
                     {...props}
                   />
                 ),
                 h2: (props) => (
                   <h2
-                    className="text-3xl font-bold mt-6 mb-3 text-white"
+                    className="text-2xl md:text-3xl font-bold mt-8 mb-4 text-white"
                     {...props}
                   />
                 ),
                 h3: (props) => (
                   <h3
-                    className="text-2xl font-semibold mt-5 mb-2 text-white"
+                    className="text-xl md:text-2xl font-semibold mt-6 mb-3 text-white"
                     {...props}
                   />
                 ),
                 img: (props) => {
                   const isGif = props.src?.toLowerCase().endsWith(".gif");
                   return (
-                    <figure className="flex justify-center my-6 w-full">
+                    <figure className="flex justify-center my-8 w-full">
                       <Image
                         src={props.src || ""}
                         alt={props.alt || "Image"}
                         width={900}
                         height={500}
                         sizes="(max-width: 768px) 100vw, 900px"
-                        className="rounded-lg shadow-lg max-w-full shadow-black/50"
+                        className="rounded-xl border border-white/[0.06] max-w-full shadow-card"
                         style={{ width: "auto", height: "auto" }}
                         loading="lazy"
                         unoptimized={isGif}
@@ -237,7 +229,7 @@ export default async function Article({
                 },
                 div: (props) => <div {...props} />,
                 code: (props) => (
-                  <code className="font-fira bg-[#2e2c2c] px-2 py-0.5 rounded text-base align-middle">
+                  <code className="font-fira bg-white/[0.06] border border-white/[0.06] px-2 py-0.5 rounded-md text-[0.9em] text-purple-300">
                     {props.children}
                   </code>
                 ),
@@ -258,11 +250,11 @@ export default async function Article({
                 },
                 ul: (props) => (
                   <ul
-                    className="list-disc list-outside pl-16 mb-2"
+                    className="list-disc list-outside pl-8 mb-4 text-gray-200 space-y-1"
                     {...props}
                   />
                 ),
-                li: (props) => <li className="mb-1" {...props} />,
+                li: (props) => <li className="mb-1 leading-relaxed" {...props} />,
                 head: () => null,
               }}
             />

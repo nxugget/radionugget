@@ -19,7 +19,7 @@ import { isValidGridSquare } from "@/src/lib/checkGridSquare"; // Import the val
 const AreaSatMap = dynamic(() => import("./SatMap"), { 
   ssr: false,
   loading: () => (
-    <div className="flex items-center justify-center h-full min-h-[300px] bg-gray-900 rounded-md">
+    <div className="flex items-center justify-center h-full min-h-[300px] glass-light rounded-xl">
       <div className="text-white">Chargement de la carte...</div>
     </div>
   )
@@ -654,17 +654,17 @@ export default function AreaSatInfoPage() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-1 sm:p-3">
       {gridSquareLoaded ? (
-        <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-1 sm:p-6">
-          <div className="w-full flex justify-center mb-2">
+        <div className="w-full max-w-[1400px] glass-card rounded-2xl p-2 sm:p-6">
+          <div className="w-full flex justify-center mb-3">
             <h2 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden font-alien">
               {(() => {
                 const title = t("satellites.explorer.title");
                 const [first, ...rest] = title.split(" ");
                 return (
                   <>
-                    <span className="text-white">{first}</span>
+                    <span className="text-gray-200">{first}</span>
                     {" "}
-                    <span className="text-purple">{rest.join(" ")}</span>
+                    <span className="text-gradient-purple">{rest.join(" ")}</span>
                   </>
                 );
               })()}
@@ -711,12 +711,12 @@ export default function AreaSatInfoPage() {
             {showSuggestions && filteredAreaSats.length > 0 && (
               <div
                 ref={suggestionsRef}
-                className="absolute top-full left-1/2 transform -translate-x-1/2 w-full sm:w-80 bg-black/70 rounded-lg mt-2 max-h-[150px] overflow-y-auto z-50 shadow-lg"
+                className="absolute top-full left-1/2 transform -translate-x-1/2 w-full sm:w-80 bg-surface-2/95 backdrop-blur-2xl border border-white/[0.06] rounded-xl mt-2 max-h-[150px] overflow-y-auto z-50 shadow-float"
               >
                 {filteredAreaSats.map((sat, index) => (
                   <div
                     key={`${sat.id}-${index}`}
-                    className="p-2 text-white hover:bg-zinc-700 cursor-pointer"
+                    className="p-2 text-white hover:bg-white/[0.05] cursor-pointer rounded-lg transition-colors duration-150"
                     onClick={() => handleAreaSatSelect(sat.id)}
                   >
                     {sat.name}
@@ -810,13 +810,13 @@ export default function AreaSatInfoPage() {
                           return (
                             <div
                               key={index}
-                              className={`relative bg-black bg-opacity-60 rounded-lg p-2 border shadow-md w-full h-36 ${isActive ? "border-green-500" : "border-red-500"}`}
+                              className={`relative glass-light rounded-xl p-3 border w-full h-36 ${isActive ? "border-green-500/30" : "border-red-500/30"}`}
                             >
-                              <div className={`absolute top-2 right-2 bg-black bg-opacity-50 border rounded-md px-1 py-0.5 text-xs ${isActive ? "border-green-500 text-green-500" : "border-red-500 text-red-500"}`}>
+                              <div className={`absolute top-2 right-2 rounded-lg px-2 py-0.5 text-xs font-medium ${isActive ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
                                 {isActive ? t("satellites.transmitter.active") : t("satellites.transmitter.inactive")}
                               </div>
                               <div className="flex flex-col gap-1 h-full">
-                                <div className="flex items-center flex-wrap justify-between border-b border-gray-700 pb-1 mb-1 pr-12">
+                                <div className="flex items-center flex-wrap justify-between border-b border-white/[0.06] pb-1 mb-1 pr-12">
                                   <span className="font-medium text-white text-lg break-words">
                                     {tx.description || `Transmitter ${index + 1}`}
                                   </span>
@@ -867,8 +867,8 @@ export default function AreaSatInfoPage() {
                 flex-col lg:flex-row w-full gap-4 items-stretch min-h-[400px] sm:min-h-[650px] lg:min-h-[650px]
               `}>
                 <div className={`
-                  flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg 
-                  transition-shadow duration-300 rounded-md flex flex-col
+                  flex-1 relative glass-light rounded-xl 
+                  transition-shadow duration-300 flex flex-col
                   p-2 sm:p-4
                   min-h-[320px]
                 `}>
@@ -910,7 +910,7 @@ export default function AreaSatInfoPage() {
                             defaultValue={gridSquare || ""}
                             onBlur={handleGridSquareBlur}
                             onKeyDown={handleGridSquareKeyDown}
-                            className={`bg-gray-700 text-white rounded px-3 py-1 w-24 focus:outline-none focus:ring-1 ${
+                            className={`bg-white/[0.04] border border-white/[0.08] text-white rounded-lg px-3 py-1 w-24 focus:outline-none focus:ring-1 ${
                               gridSquareError ? "ring-red-500" : "ring-purple"
                             } focus:ring-opacity-75 transition-colors ease-in-out duration-300`}
                             autoFocus
@@ -924,7 +924,7 @@ export default function AreaSatInfoPage() {
                       ) : (
                         <button
                           onClick={() => setIsEditingGridSquare(true)}
-                          className="bg-gray-700 text-white rounded px-3 py-1 w-24 text-center border border-gray-600 hover:bg-gray-600 transition-colors"
+                          className="bg-white/[0.04] border border-white/[0.08] text-white rounded-lg px-3 py-1 w-24 text-center hover:bg-white/[0.08] transition-colors"
                         >
                           {gridSquare || t("satellites.explorer.setGrid")}
                         </button>
@@ -933,7 +933,7 @@ export default function AreaSatInfoPage() {
                   </div>
                 </div>
                 {/* Carte avec aspect ratio responsive */}
-                <div className="flex-1 relative bg-gray-800 bg-opacity-30 shadow-lg transition-shadow duration-300 rounded-md flex flex-col p-0 mt-2 lg:mt-0" style={{ minHeight: '500px' }}>
+                <div className="flex-1 relative glass-light rounded-xl transition-shadow duration-300 flex flex-col p-0 mt-2 lg:mt-0" style={{ minHeight: '500px' }}>
                   <h2 className="relative z-10 text-white text-center text-xl sm:text-3xl font-bold my-1">
                     {t("satellites.explorer.satMap")}
                   </h2>
@@ -954,7 +954,7 @@ export default function AreaSatInfoPage() {
           )}
           {selectedAreaSat && (
             <div className="mt-4 sm:mt-6 w-full text-center">
-              <div className="bg-gray-800 bg-opacity-30 shadow-lg hover:shadow-xl transition-shadow duration-300 p-2 sm:p-4 rounded-md w-full inline-block">
+              <div className="glass-light rounded-xl hover:shadow-xl transition-shadow duration-300 p-2 sm:p-4 w-full inline-block">
                 <h2 className="relative z-10 text-white text-center text-xl sm:text-3xl font-bold mt-2 sm:mt-4 mb-1">
                   {t("satellites.explorer.tleTitle")}
                 </h2>
@@ -972,7 +972,7 @@ export default function AreaSatInfoPage() {
           )}
         </div>
       ) : (
-        <div className="w-full max-w-[1400px] bg-black bg-opacity-70 rounded-lg p-3 sm:p-6 flex justify-center items-center min-h-[200px] sm:min-h-[300px]">
+        <div className="w-full max-w-[1400px] glass-card rounded-2xl p-3 sm:p-6 flex justify-center items-center min-h-[200px] sm:min-h-[300px]">
           <p className="text-white text-base sm:text-xl">{t("satellites.explorer.loading")}</p>
         </div>
       )}

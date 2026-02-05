@@ -73,7 +73,7 @@ export default function SatelliteSearch({
   const handleSelectClick = () => setSelectOpen((v) => !v);
 
   return (
-    <div className="flex flex-col gap-2 sm:gap-3 bg-nottooblack p-2 sm:p-4 rounded-md">
+    <div className="flex flex-col gap-2 sm:gap-3 glass-light rounded-xl p-3 sm:p-4">
       <div className="flex gap-1 sm:gap-2 items-center">
         {/* Input recherche */}
         <input
@@ -81,7 +81,7 @@ export default function SatelliteSearch({
           placeholder={t("satellite.search")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-zinc-700 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-purple text-xs sm:text-base"
+          className="bg-white/[0.04] border border-white/[0.08] text-white px-3 sm:px-3 py-1.5 sm:py-2 rounded-lg flex-1 focus:outline-none focus:border-purple/40 focus:ring-1 focus:ring-purple/20 text-xs sm:text-sm placeholder:text-gray-500 transition-all duration-200"
           style={{ minHeight: 36, height: 36 }}
         />
         {/* Liste déroulante catégorie */}
@@ -98,21 +98,22 @@ export default function SatelliteSearch({
             onClick={handleSelectClick}
             className={`
               appearance-none
-              bg-zinc-700
+              bg-white/[0.04]
+              border border-white/[0.08]
               text-white
               px-2 sm:px-2
               py-1.5 sm:py-2
-              rounded-md
+              rounded-lg
               focus:outline-none
-              focus:ring-2
-              focus:ring-purple
+              focus:border-purple/40
+              focus:ring-1
+              focus:ring-purple/20
               text-[11px] sm:text-xs
-              transition-colors
-              border border-zinc-700
-              hover:border-purple
+              transition-all
+              hover:border-purple/30
               cursor-pointer
               w-full
-              font-semibold
+              font-medium
               shadow-none
               duration-200
               `}
@@ -139,7 +140,7 @@ export default function SatelliteSearch({
                   fontSize: "12px",
                   padding: "6px 10px",
                 }}
-                className={category === cat.key ? "bg-purple text-white" : "bg-zinc-700 text-white"}
+                className={category === cat.key ? "bg-purple text-white" : "bg-surface-2 text-white"}
               >
                 {cat.label}
               </option>
@@ -158,10 +159,10 @@ export default function SatelliteSearch({
         {/* Favoris */}
         <button
           onClick={() => setShowFavorites((v) => !v)}
-          className={`flex items-center justify-center px-2 py-1.5 rounded-md font-bold transition-colors duration-200 ${
+          className={`flex items-center justify-center px-2 py-1.5 rounded-lg font-bold transition-all duration-200 ${
             showFavorites
-              ? "bg-orange text-black"
-              : "bg-zinc-800 text-white hover:bg-orange hover:text-black"
+              ? "bg-orange/20 text-orange border border-orange/30"
+              : "bg-white/[0.04] border border-white/[0.08] text-gray-400 hover:text-orange hover:border-orange/30"
           }`}
           title={t("satellite.filterFavorites")}
           style={{ height: 36, minHeight: 36 }}
@@ -171,7 +172,7 @@ export default function SatelliteSearch({
         {/* Add all */}
         <button
           onClick={() => onAddAll && onAddAll(filteredSatellites)}
-          className="text-xs sm:text-sm font-bold text-white hover:text-green-400 transition-colors bg-transparent px-1 sm:px-2 py-1.5 rounded-md"
+          className="text-xs sm:text-sm font-medium text-gray-400 hover:text-green-400 transition-colors bg-transparent px-1 sm:px-2 py-1.5 rounded-lg"
           style={{ boxShadow: "none", background: "none", height: 36, minHeight: 36 }}
         >
           {t("satellite.addAll")}
@@ -187,11 +188,11 @@ export default function SatelliteSearch({
             <div
               key={sat.id}
               onClick={() => onSelect(sat.id)}
-              className={`group relative cursor-pointer rounded-md p-3 text-sm font-medium
+              className={`group relative cursor-pointer rounded-lg p-2.5 text-sm font-medium transition-all duration-200
                 ${
                   isSelected
-                    ? "bg-purple text-white"
-                    : "bg-zinc-700 text-white hover:bg-purple hover:text-white"
+                    ? "bg-purple/20 text-white border border-purple/30"
+                    : "bg-white/[0.03] border border-white/[0.06] text-gray-300 hover:bg-purple/10 hover:border-purple/20 hover:text-white"
                 }`}
             >
               <div className="flex items-center justify-between">

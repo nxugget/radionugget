@@ -101,7 +101,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-4 md:px-10">
+      <div className="w-full h-[65px] fixed top-0 bg-surface-1/70 backdrop-blur-2xl border-b border-white/[0.06] z-50 px-4 md:px-10 transition-all duration-500">
         <div className="w-full h-full flex items-center justify-between m-auto px-[5px]">
           {/* Left: Logo + Name */}
           <div className="flex items-center gap-3">
@@ -111,9 +111,10 @@ export const Navbar = () => {
                 alt="Logo"
                 width={60}
                 height={60}
-                priority // Ensures the image is loaded as soon as possible
+                priority
+                unoptimized
                 className="rounded-full navbar-logo"
-                style={{ opacity: 1, transition: "none" }} // Force no opacity/transition
+                style={{ opacity: 1, transition: "none" }}
               />
             </Link>
           </div>
@@ -122,12 +123,12 @@ export const Navbar = () => {
           <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex">
             <div 
               ref={navLinksRef}
-              className="flex items-center justify-between gap-6 md:gap-12 border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] px-[20px] py-[10px] rounded-full text-gray-200 relative"
+              className="flex items-center justify-between gap-6 md:gap-10 bg-white/[0.04] border border-white/[0.06] px-6 py-2.5 rounded-full text-gray-300 relative"
               onMouseLeave={handleNavMouseLeave}
             >
               {/* Smooth moving indicator - fixed positioning */}
               <div 
-                className="absolute h-[85%] bg-purple-900/30 backdrop-blur-sm rounded-full transition-all duration-300 ease-out"
+                className="absolute h-[85%] bg-purple/10 rounded-full transition-all duration-300 ease-expo-out"
                 style={{
                   left: `${indicatorStyle.left}px`, // Use direct left positioning instead of transform
                   width: `${indicatorStyle.width}px`,
@@ -139,7 +140,7 @@ export const Navbar = () => {
               
               <Link
                 href="/"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
+                className="text-[15px] font-medium text-gray-300 hover:text-white transition-colors duration-200 z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
                 aria-label={t("navbar.home")}
               >
@@ -147,7 +148,7 @@ export const Navbar = () => {
               </Link>
               <Link
                 href="/blog"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
+                className="text-[15px] font-medium text-gray-300 hover:text-white transition-colors duration-200 z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
                 aria-label={t("navbar.blog")}
               >
@@ -167,7 +168,7 @@ export const Navbar = () => {
                 }}
               >
                 <button 
-                  className="text-xl font-medium flex items-center gap-1 transition-colors duration-300 hover:text-purple-400 z-10"
+                  className="text-[15px] font-medium flex items-center gap-1 text-gray-300 hover:text-white transition-colors duration-200 z-10"
                   onMouseEnter={handleLinkHover}
                   aria-label={`${t("navbar.tools")} menu`}
                   aria-expanded={isToolsOpen}
@@ -187,23 +188,23 @@ export const Navbar = () => {
 
                 {isToolsOpen && (
                   <div
-                    className="absolute left-0 top-full mt-2 bg-black/80 backdrop-blur-xl rounded-2xl shadow-lg overflow-hidden transition-all duration-300 z-[60] flex flex-col gap-1 px-2 py-2 min-w-max"
+                    className="absolute left-0 top-full mt-3 bg-surface-2/95 backdrop-blur-2xl border border-white/[0.06] rounded-xl shadow-float overflow-hidden transition-all duration-200 z-[60] flex flex-col gap-0.5 p-1.5 min-w-max animate-slide-up-in"
                   >
                     <Link
                       href="/tools/grid-square"
-                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
+                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 whitespace-nowrap"
                     >
                       {t("navbar.gridSquare")}
                     </Link>
                     <Link
                       href="/tools/predi-sat"
-                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
+                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 whitespace-nowrap"
                     >
                       {t("navbar.satellitePrediction")}
                     </Link>
                     <Link
                       href="/tools/area-sat"
-                      className="block px-2 py-0.5 text-xl transition-colors duration-300 hover:text-[rgb(136,66,248)] whitespace-nowrap"
+                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 whitespace-nowrap"
                     >
                       {t("navbar.satelliteInfo")}
                     </Link>
@@ -212,7 +213,7 @@ export const Navbar = () => {
               </div>
               <Link
                 href="/gallery"
-                className="text-xl font-medium hover:text-[rgb(136,66,248)] transition hover:scale-[1.02] z-10 navbar-link"
+                className="text-[15px] font-medium text-gray-300 hover:text-white transition-colors duration-200 z-10 navbar-link"
                 onMouseEnter={handleLinkHover}
               >
                 {t("navbar.gallery")}
@@ -228,13 +229,13 @@ export const Navbar = () => {
                 alt="Current Language"
                 width={40}
                 height={30}
-                quality={75}
+                unoptimized
                 className="rounded-sm transition-transform duration-300 hover:scale-110"
                 onClick={() => setLangDropdownOpen(prev => !prev)}
               />
               {langDropdownOpen && (
                 <div
-                  className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[120px]"
+                  className="absolute right-0 mt-3 bg-surface-2/95 backdrop-blur-2xl border border-white/[0.06] rounded-xl shadow-float p-1.5 min-w-[120px] animate-slide-up-in"
                   onClick={preventClickPropagation} // Prevent closing when clicking inside
                 >
                   {currentLocale !== "en" && (
@@ -245,7 +246,7 @@ export const Navbar = () => {
                           alt="English"
                           width={40}
                           height={30}
-                          quality={75}
+                          unoptimized
                           className="rounded-sm"
                         />
                         <span className="ml-2 text-white text-sm font-medium">English</span>
@@ -260,7 +261,7 @@ export const Navbar = () => {
                           alt="Français"
                           width={40}
                           height={30}
-                          quality={75}
+                          unoptimized
                           className="rounded-sm"
                         />
                         <span className="ml-2 text-white text-sm font-medium">Français</span>
@@ -299,16 +300,16 @@ export const Navbar = () => {
 
       {/* Mobile Navigation Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed top-[65px] left-0 w-full bg-[#03001427] backdrop-blur-md z-40 transform transition-transform duration-300">
-          <div className="flex flex-col items-center gap-4 p-4 text-gray-200">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium hover:text-[rgb(136,66,248)] transition">
+        <div className="md:hidden fixed top-[65px] left-0 w-full bg-surface-1/90 backdrop-blur-2xl border-b border-white/[0.06] z-40 animate-slide-down">
+          <div className="flex flex-col items-center gap-3 p-5 text-gray-300">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium hover:text-white transition-colors duration-200 py-1">
               {t("navbar.home")}
             </Link>
-            <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium hover:text-[rgb(136,66,248)] transition">
+            <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium hover:text-white transition-colors duration-200 py-1">
               {t("navbar.blog")}
             </Link>
-            <div className="text-xl font-medium flex flex-col">
-              <button className="flex items-center gap-1 hover:text-[rgb(136,66,248)] transition" onClick={() => setIsToolsOpen(prev => !prev)}>
+            <div className="text-base font-medium flex flex-col items-center">
+              <button className="flex items-center gap-1 hover:text-white transition-colors duration-200 py-1" onClick={() => setIsToolsOpen(prev => !prev)}>              
                 {t("navbar.tools")}
                 <svg
                   className={`w-4 h-4 transition-transform duration-300 ${isToolsOpen ? "rotate-180" : ""}`}
@@ -319,20 +320,20 @@ export const Navbar = () => {
                 </svg>
               </button>
               {isToolsOpen && (
-                <div className="flex flex-col pl-4 mt-2">
-                  <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                <div className="flex flex-col items-center gap-1 mt-2">
+                  <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
                     {t("navbar.gridSquare")}
                   </Link>
-                  <Link href="/tools/predi-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  <Link href="/tools/predi-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
                     {t("navbar.satellitePrediction")}
                   </Link>
-                  <Link href="/tools/area-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-lg hover:text-[rgb(136,66,248)] transition">
+                  <Link href="/tools/area-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
                     {t("navbar.satelliteInfo")}
                   </Link>
                 </div>
               )}
             </div>
-            <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium hover:text-[rgb(136,66,248)] transition">
+            <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium hover:text-white transition-colors duration-200 py-1">
               {t("navbar.gallery")}
             </Link>
             
@@ -342,13 +343,14 @@ export const Navbar = () => {
                 alt="Current Language"
                 width={30}
                 height={20}
+                unoptimized
                 className="rounded-sm transition-transform duration-300 hover:scale-110"
                 onClick={() => setLangDropdownOpen((prev) => !prev)}
                 style={{ width: "auto", height: "auto" }}
               />
               {langDropdownOpen && (
                 <div
-                  className="absolute right-0 mt-2 bg-black/70 rounded-sm shadow-lg p-2 min-w-[100px]"
+                  className="absolute right-0 mt-3 bg-surface-2/95 backdrop-blur-2xl border border-white/[0.06] rounded-xl shadow-float p-1.5 min-w-[100px] animate-slide-up-in"
                   onClick={preventClickPropagation}
                 >
                   {currentLocale !== "en" && (
@@ -362,6 +364,7 @@ export const Navbar = () => {
                           alt="English"
                           width={30}
                           height={20}
+                          unoptimized
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
                         />
@@ -380,6 +383,7 @@ export const Navbar = () => {
                           alt="Français"
                           width={30}
                           height={20}
+                          unoptimized
                           className="rounded-sm"
                           style={{ width: "auto", height: "auto" }}
                         />

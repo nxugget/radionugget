@@ -27,7 +27,7 @@
     "leaflet-terminator": "^0.1.0",
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^12.5.0",
-    "next": "^16.0.10",
+    "next": "^16.1.6",
     "next-international": "^1.3.1",
     "next-mdx-remote": "^5.0.0",
     "next-seo": "^6.6.0",
@@ -52,6 +52,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9",
     "eslint-config-next": "^16.0.10",
     "typescript": "^5"

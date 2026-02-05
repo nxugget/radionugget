@@ -41,11 +41,11 @@ const Gallery = () => {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen flex justify-center items-center">Loading...</div>;
+    return <div className="min-h-screen flex justify-center items-center text-gray-400 text-sm tracking-wide">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen flex justify-center px-2 py-3">
+    <div className="min-h-screen flex justify-center px-3 py-4">
       <FocusCards cards={images} />
     </div>
   );

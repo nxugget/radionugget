@@ -11,7 +11,7 @@ export function SkeletonLoader({
   count = 1,
   className = "",
 }: SkeletonLoaderProps) {
-  const baseClasses = "animate-pulse-soft bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700 rounded";
+  const baseClasses = "animate-shimmer bg-white/[0.04] border border-white/[0.04] rounded-xl";
 
   const renderSkeleton = () => {
     switch (type) {

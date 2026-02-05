@@ -217,14 +217,13 @@ export default function GridSquareCalculator() {
             w-full
             max-w-full
             sm:max-w-[1400px]
-            bg-black bg-opacity-70
+            glass-card
             rounded-2xl
-            shadow-lg
             mt-2
             mb-4
-            px-1
-            py-2
-            sm:px-4
+            px-2
+            py-3
+            sm:px-6
             sm:py-6
             mx-1
           "
@@ -232,9 +231,9 @@ export default function GridSquareCalculator() {
           <div className="w-full flex justify-center sm:mb-1">
             {hasLoaded && (
               <h1 className="text-lg xs:text-xl md:text-3xl font-bold text-center overflow-hidden">
-                <span className="text-[#b400ff]">Grid Square</span>
+                <span className="text-gradient-purple">Grid Square</span>
                 {" "}
-                <span className="text-white">{t("gridSquareCalculator.calculator")}</span>
+                <span className="text-gray-200">{t("gridSquareCalculator.calculator")}</span>
               </h1>
             )}
           </div>
@@ -261,13 +260,13 @@ export default function GridSquareCalculator() {
                 {/* Correction: minHeight appliqué seulement quand suggestions visibles */}
                 {suggestions.length > 0 && (
                   <ul
-                    className="absolute left-0 right-0 bg-black/90 text-white rounded-md shadow-lg max-h-60 overflow-y-auto z-[1000]"
+                    className="absolute left-0 right-0 bg-surface-2/95 backdrop-blur-2xl border border-white/[0.06] text-white rounded-xl shadow-float max-h-60 overflow-y-auto z-[1000] mt-1"
                     style={{ minHeight: 180 }}
                   >
                     {suggestions.map((sugg, idx) => (
                       <li
                         key={idx}
-                        className="px-4 py-3 cursor-pointer border-b border-gray-800 last:border-none transition-colors duration-300 ease-in-out hover:text-purple"
+                        className="px-4 py-3 cursor-pointer border-b border-white/[0.04] last:border-none transition-colors duration-200 hover:text-purple hover:bg-white/[0.03] text-sm"
                         onClick={() => handleSuggestionClick(sugg)}
                       >
                         {sugg.display_name}
@@ -288,25 +287,25 @@ export default function GridSquareCalculator() {
             </div>
           </div>
 
-          <p className="text-zinc-400 text-xs md:text-sm text-center">
-            {t("address.example")} {/* traduction de l'exemple */}
+          <p className="text-gray-500 text-xs md:text-sm text-center">
+            {t("address.example")}
           </p>
 
           {error && (
-            <div className="text-red-500 py-2 mt-2 text-center">
+            <div className="text-red-400 py-2 mt-2 text-center text-sm">
               {error}
             </div>
           )}
 
           <div style={{ minHeight: 56 }}> {/* Réserve l'espace pour le résultat Grid Square */}
             {gridSquare && (
-              <div className="bg-gray-800 text-white font-mono px-4 py-2 rounded-md shadow-lg mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
-                <span className="font-bold text-white">
-                  Grid Square: <span className="text-orange">{gridSquare}</span>
+              <div className="glass-light rounded-xl font-mono px-4 py-3 mt-4 flex justify-between items-center w-full max-w-sm mx-auto">
+                <span className="font-semibold text-gray-200 text-sm">
+                  Grid Square: <span className="text-orange font-bold">{gridSquare}</span>
                 </span>
                 <button
                   onClick={handleCopy}
-                  className="text-white bg-gray-600 hover:bg-gray-700 px-2 py-1 rounded-md text-sm transition"
+                  className="text-white bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] px-2.5 py-1 rounded-lg text-sm transition-all duration-200"
                 >
                   {copied ? "✅" : "📋"}
                 </button>
@@ -316,9 +315,9 @@ export default function GridSquareCalculator() {
           
           {/* Map intégrée dans la div principale */}
           <div className="w-full mt-6">
-            <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-lg" />
+            <Map center={mapCenter} zoom={mapZoom} setMousePosition={setMousePosition} className="h-[50vh] sm:h-[calc(70vh-4rem)] w-full rounded-xl border border-white/[0.06]" />
             {/* Nouvelle bannière pour la vue desktop sur une seule ligne */}
-            <div className="hidden sm:flex w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0 items-center justify-between">
+            <div className="hidden sm:flex w-full glass-light rounded-b-xl py-3 px-5 mt-0 items-center justify-between text-sm">
               <div className="flex-shrink-0 mr-4">
                 <InputSearch
                   placeholder={t("gridSquare.directSearchPlaceholder")}
@@ -353,7 +352,7 @@ export default function GridSquareCalculator() {
               </div>
             </div>
             {/* Pour la vue mobile, garder l'ancienne bannière si nécessaire */}
-            <div className="block sm:hidden w-full bg-gray-900 text-white py-2 px-4 rounded-b-md shadow-md mt-0">
+            <div className="block sm:hidden w-full glass-light rounded-b-xl py-3 px-4 mt-0 text-sm">
               <div className="w-full mb-2">
                 <InputSearch
                   placeholder={t("gridSquare.directSearchPlaceholder")}

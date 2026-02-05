@@ -31,7 +31,7 @@ export default {
     calculator: "Calculateur"
   },
   projectsSection: {
-    title: "Sélection de mes projets",
+    title: "Sélection de mes meilleurs projets",
     weatherSatelliteStation: "Station satellite météo",
     satellitePrediction: "Prédiction de satellite",
     decodingSignal: "Décodage de signal",
