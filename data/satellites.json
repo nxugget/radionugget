@@ -1405,21 +1405,21 @@
       {
         "description": "Mode U - FSK200 Telemetry",
         "mode": "USB",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 436888000
       },
       {
         "description": "Mode U - CW Beacon",
         "mode": "CW",
-        "status": "active",
+        "status": "inactive",
         "uplink": null,
         "downlink": 436886500
       },
       {
         "description": "Mode V/U - FM Transceiver",
         "mode": "FM",
-        "status": "active",
+        "status": "inactive",
         "uplink": 145925000,
         "downlink": 436888000
       }
