@@ -1,6 +1,5 @@
 {
   "buildCommand": "npm install && npm run build",
-  "nodejs": "20.x",
   "github": {
     "silent": true
   },
