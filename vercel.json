@@ -1,5 +1,4 @@
 {
-  "buildCommand": "npm install && npm run build",
   "github": {
     "silent": true
   },
