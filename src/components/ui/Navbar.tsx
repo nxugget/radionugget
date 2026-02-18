@@ -343,7 +343,6 @@ export const Navbar = () => {
                 height={20}
                 className="rounded-sm transition-transform duration-300 hover:scale-110"
                 onClick={() => setLangDropdownOpen((prev) => !prev)}
-                style={{ width: "auto", height: "auto" }}
                 loading="eager"
               />
               {langDropdownOpen && (
@@ -363,7 +362,6 @@ export const Navbar = () => {
                           width={30}
                           height={20}
                           className="rounded-sm"
-                          style={{ width: "auto", height: "auto" }}
                           loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">English</span>
@@ -382,7 +380,6 @@ export const Navbar = () => {
                           width={30}
                           height={20}
                           className="rounded-sm"
-                          style={{ width: "auto", height: "auto" }}
                           loading="eager"
                         />
                         <span className="ml-2 text-white text-sm font-medium">Français</span>
