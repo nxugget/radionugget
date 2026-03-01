@@ -692,13 +692,6 @@
         "downlink": 2284991000
       },
       {
-        "description": "AFSK1k2",
-        "mode": "AFSK",
-        "status": "active",
-        "uplink": 437500000,
-        "downlink": 145900000
-      },
-      {
         "description": "FM VOICE",
         "mode": "FM",
         "status": "active",
@@ -710,6 +703,13 @@
         "mode": "CW",
         "status": "active",
         "uplink": null,
+        "downlink": 145900000
+      },
+      {
+        "description": "AFSK1k2",
+        "mode": "AFSK",
+        "status": "inactive",
+        "uplink": 437500000,
         "downlink": 145900000
       }
     ],
@@ -1890,6 +1890,13 @@
         "status": "active",
         "uplink": null,
         "downlink": 145800000
+      },
+      {
+        "description": "Mode U APRS test",
+        "mode": "AFSK",
+        "status": "active",
+        "uplink": 437825000,
+        "downlink": 437825000
       }
     ],
     "image": "https://db-satnogs.freetls.fastly.net/media/satellites/ISS.jpg",
