@@ -18,6 +18,7 @@ export default {
     satellitePrediction: "PrediSat", 
     satelliteInfo: "AreaSat",
     gallery: "Galerie",
+    trackingApp: "Tracking App",
     english: "English", 
     french: "Français"
   },

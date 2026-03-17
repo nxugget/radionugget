@@ -216,6 +216,15 @@ export const Navbar = () => {
               >
                 {t("navbar.gallery")}
               </Link>
+              <a
+                href="https://allmysat.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[15px] font-medium text-gray-300 hover:text-white transition-colors duration-200 z-10 navbar-link"
+                onMouseEnter={handleLinkHover}
+              >
+                {t("navbar.trackingApp")}
+              </a>
             </div>
           </div>
 
@@ -334,6 +343,9 @@ export const Navbar = () => {
             <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium hover:text-white transition-colors duration-200 py-1">
               {t("navbar.gallery")}
             </Link>
+            <a href="https://allmysat.com" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-base font-medium hover:text-white transition-colors duration-200 py-1">
+              {t("navbar.trackingApp")}
+            </a>
             
             <div className="relative cursor-pointer" ref={langDropdownMobileRef}>
               <img
