@@ -315,18 +315,18 @@
         "downlink": 435725000
       },
       {
-        "description": "Mode V/U - Transponder",
-        "mode": "USB",
-        "status": "active",
-        "uplink": "145855000-145885000",
-        "downlink": "435165000-435195000"
-      },
-      {
         "description": "Mode U Audio",
         "mode": "BPSK",
         "status": "active",
         "uplink": null,
         "downlink": 435180000
+      },
+      {
+        "description": "Mode V/U - Transponder",
+        "mode": "USB",
+        "status": "inactive",
+        "uplink": "145855000-145885000",
+        "downlink": "435165000-435195000"
       }
     ],
     "image": "satellites/cas9.png",
@@ -1990,7 +1990,7 @@
       {
         "description": "Mode V/U - SSB - Transponder",
         "mode": "USB",
-        "status": "active",
+        "status": "inactive",
         "uplink": "145910000-145940000",
         "downlink": "435810000-435840000"
       }
@@ -2764,13 +2764,6 @@
     "tle2": "2 49399  97.3453 114.4088 0016183 202.6634 157.3887 15.17504463239509",
     "transmitters": [
       {
-        "description": "Mode U/V (1k2/9k6) - BBS",
-        "mode": "GMSK",
-        "status": "active",
-        "uplink": 435480000,
-        "downlink": 145875000
-      },
-      {
         "description": "Mode V - CW Beacon",
         "mode": "CW",
         "status": "inactive",
@@ -2782,6 +2775,13 @@
         "mode": "FSK AX.25 G3RUH",
         "status": "active",
         "uplink": null,
+        "downlink": 145875000
+      },
+      {
+        "description": "Mode U/V (1k2/9k6) - BBS",
+        "mode": "FSK AX.25 G3RUH",
+        "status": "active",
+        "uplink": 435480000,
         "downlink": 145875000
       }
     ],
