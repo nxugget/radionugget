@@ -12,17 +12,11 @@ const ShootingStars = dynamic(
   { ssr: false }
 );
 
-const BlackHole = dynamic(
-  () => import("@/src/components/ui/BlackHole").then(m => ({ default: m.BlackHole })),
-  { ssr: false }
-);
-
 export function BackgroundLayer() {
   return (
     <>
       <StarsBackground className="absolute inset-0 z-[-30]" />
       <ShootingStars className="absolute inset-0 z-[-20]" />
-      <BlackHole className="absolute inset-0 z-[-10]" />
     </>
   );
 }

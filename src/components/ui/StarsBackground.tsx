@@ -76,8 +76,8 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         canvas.width = width;
         canvas.height = height;
 
-        // Ajout de la couleur de fond #030014
-        ctx.fillStyle = "#030014";
+        // Ajout de la couleur de fond #000000
+        ctx.fillStyle = "#000000";
         ctx.fillRect(0, 0, width, height);
 
         setStars(generateStars(width, height));
@@ -115,8 +115,8 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     let animationFrameId: number;
 
     const render = () => {
-      // Remplit le fond avec la couleur #030014
-      ctx.fillStyle = "#030014";
+      // Remplit le fond avec la couleur #000000
+      ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Supprime l'appel à ctx.clearRect pour ne pas effacer la couleur de fond

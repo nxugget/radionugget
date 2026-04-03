@@ -194,18 +194,6 @@ export const Navbar = () => {
                     >
                       {t("navbar.gridSquare")}
                     </Link>
-                    <Link
-                      href="/tools/predi-sat"
-                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 whitespace-nowrap"
-                    >
-                      {t("navbar.satellitePrediction")}
-                    </Link>
-                    <Link
-                      href="/tools/area-sat"
-                      className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors duration-150 whitespace-nowrap"
-                    >
-                      {t("navbar.satelliteInfo")}
-                    </Link>
                   </div>
                 )}
               </div>
@@ -330,12 +318,6 @@ export const Navbar = () => {
                 <div className="flex flex-col items-center gap-1 mt-2">
                   <Link href="/tools/grid-square" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
                     {t("navbar.gridSquare")}
-                  </Link>
-                  <Link href="/tools/predi-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
-                    {t("navbar.satellitePrediction")}
-                  </Link>
-                  <Link href="/tools/area-sat" onClick={() => setIsMobileMenuOpen(false)} className="text-sm text-gray-400 hover:text-white transition-colors duration-200 py-1">
-                    {t("navbar.satelliteInfo")}
                   </Link>
                 </div>
               )}

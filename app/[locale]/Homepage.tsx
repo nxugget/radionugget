@@ -22,9 +22,9 @@ export default function Homepage({ locale }: { locale: string }) {
       type: "article",
     },
     {
-      title: t("projectsSection.satellitePrediction"),
-      image: "/images/selection/predisat.png",
-      link: `/${locale}/tools/predi-sat`,
+      title: t("projectsSection.gridSquareCalculator"),
+      image: "/images/selection/gridsquare.webp",
+      link: `/${locale}/tools/grid-square`,
       type: "tool",
     },
     {
@@ -32,12 +32,6 @@ export default function Homepage({ locale }: { locale: string }) {
       image: "/images/blog/thumbnail/never_the_same_color.webp",
       link: `/${locale}/blog/never_the_same_color`,
       type: "article",
-    },
-    {
-      title: t("projectsSection.satelliteExplorer"),
-      image: "/images/selection/areasat.png",
-      link: `/${locale}/tools/area-sat`,
-      type: "tool",
     },
     {
       title: t("projectsSection.homemadeQfhAntenna"),

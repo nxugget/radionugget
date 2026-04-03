@@ -104,7 +104,7 @@ export function ProjectsGrid({ title, items }: ProjectsGridProps) {
                   ? "bg-orange/15 text-orange border-orange/25"
                   : "bg-purple/15 text-purple-300 border-purple/25"
               }`}>
-                {isToolType ? "⚡ Tool" : "📡 Article"}
+                {isToolType ? "Tool" : "Article"}
               </span>
               <span className="text-gray-500 text-sm">{String(active + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
             </div>
@@ -224,7 +224,7 @@ export function ProjectsGrid({ title, items }: ProjectsGridProps) {
                 ? "bg-orange/15 text-orange border-orange/25"
                 : "bg-purple/15 text-purple-300 border-purple/25"
             }`}>
-              {isToolType ? "⚡ Tool" : "📡 Article"}
+              {isToolType ? "Tool" : "Article"}
             </span>
             <span className="text-gray-500 text-xs">{String(active + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
           </div>
