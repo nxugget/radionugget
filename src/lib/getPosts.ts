@@ -68,12 +68,4 @@ export function getAllPosts(): Post[] {
   return posts;
 }
 
-export function getPaginatedPosts(page: number, postsPerPage: number) {
-  const allPosts = getAllPosts();
-  const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
-  return {
-    posts: allPosts.slice((page - 1) * postsPerPage, page * postsPerPage),
-    totalPages,
-  };
-}

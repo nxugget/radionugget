@@ -87,7 +87,7 @@ export function HeroSection({ step, passed, onCtaClick }: HeroSectionProps) {
               </span>
               <div className="flex flex-col items-start" style={{ gap: "0.02em" }}>
                 <span
-                  className="text-gradient-purple font-alien leading-[0.9]"
+                  className="text-gradient-orange font-alien leading-[0.9]"
                   style={{ fontSize: "clamp(3.5rem, 12vw, 8rem)" }}
                 >
                   RADIO

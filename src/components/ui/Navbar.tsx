@@ -10,10 +10,8 @@ export const Navbar = () => {
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // MOBILE MENU STATE
-  let timeoutRef: NodeJS.Timeout | null = null;
 
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
-  const langTimerRef = useRef<NodeJS.Timeout | null>(null);
   const langDropdownDesktopRef = useRef<HTMLDivElement | null>(null);
   const langDropdownMobileRef = useRef<HTMLDivElement | null>(null);
   

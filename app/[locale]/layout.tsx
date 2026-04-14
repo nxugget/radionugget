@@ -22,6 +22,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       className="min-h-screen bg-black"
+      data-scroll-behavior="smooth"
       style={{
         ...poppins.style,
         ...(roboto.style.fontFamily && { "--font-roboto": roboto.style.fontFamily }),

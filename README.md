@@ -1,13 +1,16 @@
 # RadioNugget
 
-A comprehensive website for amateur radio enthusiasts featuring satellite tracking tools, educational blog content, and practical utilities.
+My personal portfolio showcasing projects and experiments in amateur radio and satellite communications. This site documents my technical explorations, from satellite reception and tracking to software-defined radio (SDR) experiments.
 
 ![home_page](public/images/home_page.png)
 *designed by [Sol'hey](https://solhey.com/)*
 
-## Features
+## Projects
 
-- **Blog** - Technical articles and guides on radio communication topics
-- **Grid Square Calculator** - Maidenhead locator system utilities for location sharing
-- **Image Gallery** - Personal content and resources
-- **Multi-language Support** - Available in English and French
+- **Technical Articles** - In-depth guides on satellite reception, NOAA weather satellites, SSTV, antenna design, and radio signal processing
+- **AllMySat Tracking App** - My personal tracking satellite IOS app <3
+- **Grid Square Calculator** - Maidenhead locator system utility for location sharing in amateur radio
+
+
+
+Available in French and English (except for some diagrams)

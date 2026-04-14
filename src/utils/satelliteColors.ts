@@ -14,11 +14,4 @@ export const satelliteColors = [
   "#00F5D4"  // Vert-bleu néon
 ];
 
-// Fonction utilitaire pour obtenir une couleur cohérente pour le même satellite
-export const getSatelliteColorMap = (satellites: string[]): { [key: string]: string } => {
-  const colorMap: { [key: string]: string } = {};
-  satellites.forEach((sat, index) => {
-    colorMap[sat] = satelliteColors[index % satelliteColors.length];
-  });
-  return colorMap;
-};
+
