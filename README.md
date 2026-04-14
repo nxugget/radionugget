@@ -8,7 +8,7 @@ My personal portfolio showcasing projects and experiments in amateur radio and s
 ## Projects
 
 - **Technical Articles** - In-depth guides on satellite reception, NOAA weather satellites, SSTV, antenna design, and radio signal processing
-- **AllMySat Tracking App** - My personal tracking satellite IOS app <3
+- **[AllMySat Tracking App](https://allmysat.com)** - My personal tracking satellite iOS app <3
 - **Grid Square Calculator** - Maidenhead locator system utility for location sharing in amateur radio
 
 
